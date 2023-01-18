@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.print.attribute.standard.MediaSize.NA;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -23,7 +25,7 @@ public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
 
     // @Autowired
     public AuthDao() {
-        super(NAME, TABLE, mapper(), addFunction());
+        super(TABLE, NAME, mapper(), addFunction());
     }
     
     public static AuthDao create() {

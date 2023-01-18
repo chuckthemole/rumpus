@@ -40,4 +40,5 @@ out/
 application.properties
 database.properties
 tmp/
+src/main/java/com/rumpus/rumpus/spring.log
 ######################

@@ -36,13 +36,13 @@ public class User extends RumpusModel<User> {
     public Supplier<User> createFunction() {
         return () -> {
             User user = createNewUser();
-            if(!rawInitList.get("name").isEmpty()) {
+            if(rawInitList.containsKey("name")) {
                 user.setName(rawInitList.get("name"));
             }
-            if(!rawInitList.get("id").isEmpty()) {
+            if(rawInitList.containsKey("id")) {
                 user.setId(Long.parseLong(rawInitList.get("id")));
             }
-            if(!rawInitList.get("auth_id").isEmpty()) {
+            if(rawInitList.containsKey("auth_id")) {
                 user.setAuth(Integer.parseInt(rawInitList.get("auth_id")));
             }
             return user;

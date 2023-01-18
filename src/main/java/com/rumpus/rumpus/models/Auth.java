@@ -31,7 +31,7 @@ public class Auth extends RumpusModel<Auth> {
     public Supplier<Auth> createFunction() {
         return () -> {
             Auth auth = createNewAuth();
-            String level = rawInitList.get("level");
+            String level = rawInitList.containsKey("level") ? rawInitList.get("level") : "";
             if(level.equals("admin")) {
                 auth.setLevel(Level.ADMIN);
             } else if(level.equals("mod")) {
@@ -71,7 +71,7 @@ public class Auth extends RumpusModel<Auth> {
     public void setLevel(Level l) {
         this.level = l;
     }
-    
+
     @Override 
     public String toString() {
         return "User level: " + this.level + "\n";

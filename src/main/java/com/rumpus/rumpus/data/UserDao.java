@@ -29,7 +29,7 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
 
     // @Autowired
     public UserDao() {
-        super(NAME, TABLE, mapper(), add());
+        super(TABLE, NAME, mapper(), add());
     }
 
     public static UserDao create() {
