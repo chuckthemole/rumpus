@@ -36,9 +36,13 @@ out/
 ### VS Code ###
 .vscode/
 
+
 ### Added by Chuck ###
 application.properties
 database.properties
 tmp/
+
+## logging
 src/main/java/com/rumpus/rumpus/spring.log
+
 ######################
