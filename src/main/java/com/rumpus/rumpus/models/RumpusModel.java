@@ -7,7 +7,7 @@ public class RumpusModel<T extends Model<T>> extends Model<T> {
     public RumpusModel(String name) {
         super(name);
     }
-    public RumpusModel(String name, int id) {
+    public RumpusModel(String name, Long id) {
         super(name, id);
     }
 }

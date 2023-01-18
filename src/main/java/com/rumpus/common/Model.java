@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 public class Model<T extends RumpusObject> extends RumpusObject implements IModel<T> {
 
     protected static final String NAME = "rawModel";
-    protected int id;
+    protected Long id;
     protected Supplier<T> createFunction;
     protected Map<String, String> rawInitList; // TODO: Map<String, String> : String should be abstracted
 
@@ -17,22 +17,22 @@ public class Model<T extends RumpusObject> extends RumpusObject implements IMode
         super(name.isEmpty() ? NAME : name);
     }
     // Ctors with id params for testing
-    public Model(int id) {
+    public Model(Long id) {
         super(NAME);
         this.id = id;
     }
-    public Model(String name, int id) {
+    public Model(String name, Long id) {
         super(name);
         this.id = id;
     }
 
     @Override
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,5 +55,12 @@ public class Model<T extends RumpusObject> extends RumpusObject implements IMode
     @Override
     public Supplier<T> createFunction() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(NAME).append("  id: ").append(id);
+        return sb.toString();
     }
 }

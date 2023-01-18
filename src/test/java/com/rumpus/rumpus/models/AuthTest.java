@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthTest {
-    int id = 1;
+    Long id = Long.valueOf(1);
     private Auth auth = Auth.createAdminAuth(id);
 
     @BeforeAll

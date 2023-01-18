@@ -21,8 +21,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-// @Repository
-// @Profile("database")
+@Repository
+@Profile("database")
 public class UserDao extends RumpusDao<User> implements IUserDao {
     private static final String NAME = "userDao";
     private static final String TABLE = "user";
@@ -36,18 +36,18 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
         return new UserDao();
     }
 
-    public static Function<User, User> add() {
+    public final static Function<User, User> add() {
         return (User user) -> {
             final String sql = "INSERT INTO user(id, name) VALUES(?, ?);";
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update((Connection conn) -> {
                 PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                statement.setInt(1, user.getId());
+                statement.setLong(1, user.getId());
                 statement.setString(2, user.getName());
                 // statement.setInt(3, user.getAuth());
                 return statement;
             }, keyHolder);
-            user.setId(keyHolder.getKey().intValue());
+            user.setId(keyHolder.getKey().longValue());
             return user;
         };
     }
@@ -58,7 +58,7 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
         return jdbcTemplate.queryForObject(sql, mapper, name);
     }
 
-    private static Mapper<User> mapper() {
+    private final static Mapper<User> mapper() {
         Mapper<User> m = new Mapper<>();
         m.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();

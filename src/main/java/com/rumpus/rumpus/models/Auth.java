@@ -25,7 +25,7 @@ public class Auth extends RumpusModel<Auth> {
 
     // Ctors
     public Auth() {super(MODEL_NAME);}
-    public Auth(int id) {super(MODEL_NAME, id);}
+    public Auth(Long id) {super(MODEL_NAME, id);}
 
     @Override // Override Model impl
     public Supplier<Auth> createFunction() {
@@ -47,7 +47,7 @@ public class Auth extends RumpusModel<Auth> {
 
     // static factory methods
     public static Auth createNewAuth() {return new Auth();}
-    public static Auth createAdminAuth(int id) {
+    public static Auth createAdminAuth(Long id) {
         Auth a = new Auth(id);
         a.level = Level.ADMIN;
         a.privileges = new HashSet<Privilege>();
@@ -56,7 +56,7 @@ public class Auth extends RumpusModel<Auth> {
         a.privileges.add(Privilege.DELETE);
         return a;
     }
-    public static Auth createUserAuth(int id) {
+    public static Auth createUserAuth(Long id) {
         Auth a = new Auth(id);
         a.level = Level.USER;
         a.privileges = new HashSet<Privilege>();
@@ -67,9 +67,11 @@ public class Auth extends RumpusModel<Auth> {
     public Level getLevel() {
         return this.level;
     }
+
     public void setLevel(Level l) {
         this.level = l;
     }
+    
     @Override 
     public String toString() {
         return "User level: " + this.level + "\n";

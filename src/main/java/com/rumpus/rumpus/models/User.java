@@ -20,12 +20,12 @@ public class User extends RumpusModel<User> {
         super(MODEL_NAME);
         this.userName = user_name;
     }
-    public User(int id, String user_name) {
+    public User(Long id, String user_name) {
         super(MODEL_NAME);
         this.id = id;
         this.userName = user_name;
     }
-    public User(int id, String user_name, int auth_id) {
+    public User(Long id, String user_name, int auth_id) {
         super(MODEL_NAME);
         this.id = id;
         this.userName = user_name;
@@ -40,7 +40,7 @@ public class User extends RumpusModel<User> {
                 user.setName(rawInitList.get("name"));
             }
             if(!rawInitList.get("id").isEmpty()) {
-                user.setId(Integer.parseInt(rawInitList.get("id")));
+                user.setId(Long.parseLong(rawInitList.get("id")));
             }
             if(!rawInitList.get("auth_id").isEmpty()) {
                 user.setAuth(Integer.parseInt(rawInitList.get("auth_id")));
@@ -55,11 +55,11 @@ public class User extends RumpusModel<User> {
         User u = new User(name);
         return u;
     }
-    public static User createUser(int id, String name) {
+    public static User createUser(Long id, String name) {
         User u = new User(id, name);
         return u;
     }
-    public static User createUser(int id, String name, int auth_id) {
+    public static User createUser(Long id, String name, int auth_id) {
         User u = new User(id, name, auth_id);
         return u;
     }

@@ -26,15 +26,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/rumpus")
 public class RumpusRestController {
+
     @Autowired
     private RumpusView view;
     @Autowired
     private IUserService userService;
 
-    public RumpusRestController(IUserService userService, RumpusView view) {
-        this.userService = userService;
-        this.view = view;
-    }
+    // @Autowired
+    // public RumpusRestController(IUserService userService, RumpusView view) {
+    //     this.userService = userService;
+    //     this.view = view;
+    // }
     
     @GetMapping("/")
     public String index() {

@@ -13,7 +13,7 @@ public class GenericRumpusModel extends Model<GenericRumpusModel> {
     public GenericRumpusModel(String modelName) {
         super(modelName);
     }
-    public GenericRumpusModel(String modelName, int id) {
+    public GenericRumpusModel(String modelName, Long id) {
         super(modelName, id);
     }
     public GenericRumpusModel(RumpusModel<?> object) {

@@ -30,22 +30,22 @@ public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
         return new AuthDao();
     }
 
-    private static Function<Auth, Auth> addFunction() {
+    private final static Function<Auth, Auth> addFunction() {
         return (Auth auth) -> {
             final String sql = "INSERT INTO auth(id, authLevel) VALUES(?, ?);";
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update((Connection conn) -> {
                 PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                statement.setInt(1, auth.getId());
+                statement.setLong(1, auth.getId());
                 statement.setString(2, auth.getLevel().toString());
                 return statement;
             }, keyHolder);
-            auth.setId(keyHolder.getKey().intValue());
+            auth.setId(keyHolder.getKey().longValue());
             return auth;
         };
     }
 
-    private static Mapper<Auth> mapper() {
+    private final static Mapper<Auth> mapper() {
         Mapper<Auth> m = new Mapper<>();
         m.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
