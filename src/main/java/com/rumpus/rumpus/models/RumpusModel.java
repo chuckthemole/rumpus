@@ -1,12 +1,13 @@
 package com.rumpus.rumpus.models;
 
-public class RumpusModel {
-    protected int id;
+import com.rumpus.common.Model;
 
-    public int getId() {
-        return this.id;
+public class RumpusModel<T extends Model<T>> extends Model<T> {
+
+    public RumpusModel(String name) {
+        super(name);
     }
-    public void setId(int id) {
-        this.id = id;
+    public RumpusModel(String name, int id) {
+        super(name, id);
     }
 }

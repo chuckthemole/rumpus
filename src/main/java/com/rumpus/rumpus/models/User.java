@@ -1,38 +1,56 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rumpus.rumpus.models;
+import com.rumpus.common.Model;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  *
  * @author Chuck
  */
-public class User extends RumpusModel {
+public class User extends RumpusModel<User> {
     private String userName;
     private int authId;
+    private static final String MODEL_NAME = "userModel";
     
     // Ctors
-    public User(){}
+    public User(){super(MODEL_NAME);}
     public User(String user_name) {
+        super(MODEL_NAME);
         this.userName = user_name;
     }
     public User(int id, String user_name) {
+        super(MODEL_NAME);
         this.id = id;
         this.userName = user_name;
     }
     public User(int id, String user_name, int auth_id) {
+        super(MODEL_NAME);
         this.id = id;
         this.userName = user_name;
         this.authId = auth_id;
     }
 
+    @Override // Override Model impl
+    public Supplier<User> createFunction() {
+        return () -> {
+            User user = createNewUser();
+            if(!rawInitList.get("name").isEmpty()) {
+                user.setName(rawInitList.get("name"));
+            }
+            if(!rawInitList.get("id").isEmpty()) {
+                user.setId(Integer.parseInt(rawInitList.get("id")));
+            }
+            if(!rawInitList.get("auth_id").isEmpty()) {
+                user.setAuth(Integer.parseInt(rawInitList.get("auth_id")));
+            }
+            return user;
+        };
+    }
+
     // static factory methods
+    public static User createNewUser() {return new User();}
     public static User createUser(String name) {
         User u = new User(name);
         return u;

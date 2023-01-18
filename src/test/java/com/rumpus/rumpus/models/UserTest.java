@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     int id = 1;
-    Auth auth = Auth.createAdminAuth(1);
+    User user = User.createUser(id, "Frodo");
 
     @BeforeAll
     public static void setUpClass() {
@@ -31,6 +31,6 @@ public class UserTest {
 
     @Test
 	void testId() {
-        assertEquals(id, auth.getId());
+        assertEquals(id, user.getId());
 	}
 }

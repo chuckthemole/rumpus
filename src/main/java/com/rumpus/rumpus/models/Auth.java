@@ -5,21 +5,50 @@
  */
 package com.rumpus.rumpus.models;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.rumpus.common.Model;
+
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  *
  * @author Chuck
  */
 
-public class Auth extends RumpusModel {
+public class Auth extends RumpusModel<Auth> {
     private Level level;
     private Set<Privilege> privileges;
+    private static final String MODEL_NAME = "authModel";
 
+    // Ctors
+    public Auth() {super(MODEL_NAME);}
+    public Auth(int id) {super(MODEL_NAME, id);}
+
+    @Override // Override Model impl
+    public Supplier<Auth> createFunction() {
+        return () -> {
+            Auth auth = createNewAuth();
+            String level = rawInitList.get("level");
+            if(level.equals("admin")) {
+                auth.setLevel(Level.ADMIN);
+            } else if(level.equals("mod")) {
+                auth.setLevel(Level.MODERATOR);
+            } else if(level.equals("guest")) {
+                auth.setLevel(Level.GUEST);
+            } else if(level.equals("user")) {
+                auth.setLevel(Level.USER);
+            }
+            return auth;
+        };
+    }
+
+    // static factory methods
+    public static Auth createNewAuth() {return new Auth();}
     public static Auth createAdminAuth(int id) {
-        Auth a = new Auth();
+        Auth a = new Auth(id);
         a.level = Level.ADMIN;
         a.privileges = new HashSet<Privilege>();
         a.privileges.add(Privilege.READ);
@@ -28,7 +57,7 @@ public class Auth extends RumpusModel {
         return a;
     }
     public static Auth createUserAuth(int id) {
-        Auth a = new Auth();
+        Auth a = new Auth(id);
         a.level = Level.USER;
         a.privileges = new HashSet<Privilege>();
         a.privileges.add(Privilege.READ);

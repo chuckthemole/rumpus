@@ -1,8 +1,7 @@
 package com.rumpus.rumpus.data;
 
-import com.rumpus.rumpus.models.Auth;
+import com.rumpus.common.Mapper;
 import com.rumpus.rumpus.models.User;
-import java.util.List;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;

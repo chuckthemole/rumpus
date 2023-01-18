@@ -1,26 +1,18 @@
 package com.rumpus.rumpus.config;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;    
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.data.AuthDao;
-import com.rumpus.rumpus.data.IAuthDao;
-import com.rumpus.rumpus.data.IRumpusDao;
-import com.rumpus.rumpus.data.IUserDao;
 import com.rumpus.rumpus.data.RumpusDaoManager;
 import com.rumpus.rumpus.data.UserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
@@ -75,11 +67,15 @@ public class RumpusConfig {
 
     @Bean
     public UserDao rumpusUserDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return new UserDao(jdbcTemplate());
+        UserDao userDao = new UserDao();
+        userDao.setJdbcTemplate(jdbcTemplate());
+        return userDao;
     }
     @Bean
     public AuthDao rumpusAuthDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return new AuthDao(jdbcTemplate());
+        AuthDao authDao = new AuthDao();
+        authDao.setJdbcTemplate(jdbcTemplate());
+        return authDao;
     }
 
     @Bean
@@ -88,17 +84,18 @@ public class RumpusConfig {
     }
 
     @Bean
+    @DependsOn({"rumpusUserDao", "rumpusAuthDao"})
     RumpusDaoManager rumpusDaoManager() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        List<IRumpusDao<?>> list = new ArrayList<>();
-        list.add(rumpusUserDao());
-        list.add(rumpusAuthDao());
-        return new RumpusDaoManager(list);
+        // List<RumpusDao<?>> list = new ArrayList<>();
+        // list.add(rumpusUserDao());
+        // list.add(rumpusAuthDao());
+        return new RumpusDaoManager();
     }
 
     @Bean
     @DependsOn({"rumpusDaoManager"})
     public RumpusLoader rumpusLoader() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return new RumpusLoader(rumpusDaoManager());
+        return new RumpusLoader(rumpusUserDao(), rumpusAuthDao());
     }
 
     // @Bean

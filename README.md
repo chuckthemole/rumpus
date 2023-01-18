@@ -1,3 +1,5 @@
+Java 17
+
 Common commands
     Run
         ./gradlew bootRun
