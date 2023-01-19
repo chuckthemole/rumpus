@@ -26,7 +26,8 @@ import com.rumpus.rumpus.ui.RumpusView;
 @TestConfiguration
 @ComponentScan("com.rumpus.rumpus")
 @PropertySource("classpath:database.properties")
-public class RumpusConfig {
+@PropertySource("classpath:application.properties")
+public class RumpusTestConfig {
 
     @Autowired
 	Environment environment;
@@ -74,6 +75,7 @@ public class RumpusConfig {
         userDao.setJdbcTemplate(jdbcTemplate());
         return userDao;
     }
+
     @Bean
     public AuthDao rumpusAuthDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         AuthDao authDao = new AuthDao();

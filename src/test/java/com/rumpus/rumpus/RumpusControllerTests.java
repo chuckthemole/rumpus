@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.rumpus.rumpus.config.RumpusTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.UserService;
@@ -35,7 +36,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-@ContextConfiguration(locations={"classpath:config/RumpusConfig.java"})
+@ContextConfiguration(classes = RumpusTestConfig.class)
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RumpusRestController.class)
 public class RumpusControllerTests {

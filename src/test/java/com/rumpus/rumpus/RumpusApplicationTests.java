@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.rumpus.rumpus.config.RumpusTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 
-@ContextConfiguration(locations={"classpath:config/RumpusConfig.java"})
+@ContextConfiguration(classes = RumpusTestConfig.class)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class RumpusApplicationTests {
