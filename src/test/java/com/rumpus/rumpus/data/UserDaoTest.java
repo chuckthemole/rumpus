@@ -30,6 +30,7 @@ public class UserDaoTest {
     
     @AfterAll
     public static void tearDownClass() {
+        userDao.removeAll();
     }
     
     @BeforeEach

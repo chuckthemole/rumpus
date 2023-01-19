@@ -8,6 +8,7 @@ public interface IDao<T extends Model<T>> extends IRumpusObject {
     List<T> getAll();
     T add(T model);
     boolean remove(int id);
+    boolean removeAll();
     String getTable();
     Mapper<T> getMapper();
     Function<T, T> getAddFunction();

@@ -85,4 +85,15 @@ public class Dao<T extends Model<T>> extends RumpusObject implements IDao<T> {
     public Function<T, T> getAddFunction() {
         return this.add;
     }
+
+    @Override
+    public boolean removeAll() {
+        // TODO: Check dependencies to delete
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM ")
+            .append(table)
+            .append(";");
+        final String sql = sb.toString();
+        return jdbcTemplate.update(sql) > 0;
+    }
 }
