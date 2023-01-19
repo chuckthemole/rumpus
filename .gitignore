@@ -43,7 +43,6 @@ database.properties
 tmp/
 
 ## logging
-src/main/java/com/rumpus/rumpus/spring.log
-src/main/java/com/rumpus/rumpus/build.log
+src/main/java/com/rumpus/rumpus/log/
 
 ######################

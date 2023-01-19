@@ -4,9 +4,9 @@ import os
 import sys
 
 # Commands
-build = "./gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/build.log"
-buildTest = "./gradlew clean build --refresh-dependencies > src/main/java/com/rumpus/rumpus/build.log"
-run = "./gradlew bootRun > src/main/java/com/rumpus/rumpus/spring.log"
+build = "./gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/log/build.log"
+buildTest = "./gradlew clean build --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
+run = "./gradlew bootRun > src/main/java/com/rumpus/rumpus/log/spring.log"
 
 def commands():
     pass
