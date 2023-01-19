@@ -30,11 +30,11 @@ public class RumpusRestController {
     @Autowired
     private RumpusView view;
     @Autowired
-    private IUserService userService;
+    private IUserService rumpusUserService;
 
     // @Autowired
-    // public RumpusRestController(IUserService userService, RumpusView view) {
-    //     this.userService = userService;
+    // public RumpusRestController(IUserService rumpusUserService, RumpusView view) {
+    //     this.rumpusUserService = rumpusUserService;
     //     this.view = view;
     // }
     
@@ -45,16 +45,16 @@ public class RumpusRestController {
     
     @GetMapping("/userid/{id}")
     public User getUserById(@PathVariable int id) {
-        return userService.get(id);
+        return rumpusUserService.get(id);
     }
     
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userService.getAll();
+        return rumpusUserService.getAll();
     }
     
     @GetMapping("/username/{name}")
     public User getUserByName(@PathVariable String name) {
-        return userService.getUserByName(name);
+        return rumpusUserService.getUserByName(name);
     }
 }
