@@ -37,7 +37,7 @@ public class RumpusLoader implements CommandLineRunner {
         // IAuthDao authDao = (IAuthDao) dao.get("authDao");
         authDao.add(Auth.createAdminAuth(Long.valueOf(0)));
         // IUserDao userDao = (IUserDao) dao.get("userDao");
-        userDao.add(User.createUser(Long.valueOf(0), "Frodo"));
+        userDao.add(User.createUser(Long.valueOf(0), "Gandalf"));
 
         // System.out.println("* * Printing Keys * * ");
         // dao.getMap().forEach((k, v) -> {

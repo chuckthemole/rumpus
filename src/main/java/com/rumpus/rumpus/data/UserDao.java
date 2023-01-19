@@ -38,16 +38,21 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
 
     public final static Function<User, User> add() {
         return (User user) -> {
-            final String sql = "INSERT INTO user(id, name) VALUES(?, ?);";
+            Long userId = user.getId();
+            final String sql = "INSERT INTO user(name, id) VALUES(?, ?);";
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update((Connection conn) -> {
                 PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                statement.setLong(1, user.getId());
-                statement.setString(2, user.getName());
+                statement.setString(1, user.getName());
+                statement.setLong(2, userId);
                 // statement.setInt(3, user.getAuth());
                 return statement;
             }, keyHolder);
-            user.setId(keyHolder.getKey().longValue());
+            if(keyHolder.getKey() != null) {
+                user.setId(keyHolder.getKey().longValue());
+            } else {
+                user.setId(NO_ID);
+            }
             return user;
         };
     }

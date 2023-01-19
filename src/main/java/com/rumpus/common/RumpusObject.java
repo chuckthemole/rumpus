@@ -1,6 +1,6 @@
 package com.rumpus.common;
 
-public class RumpusObject implements IRumpusObject {
+public class RumpusObject extends Rumpus implements IRumpusObject {
     protected final String name;
 
     public RumpusObject(String name) {

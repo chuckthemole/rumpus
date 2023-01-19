@@ -12,9 +12,13 @@ public class Model<T extends RumpusObject> extends RumpusObject implements IMode
     protected Map<String, String> rawInitList; // TODO: Map<String, String> : String should be abstracted
 
     // Ctors
-    public Model() {super(NAME);}
+    public Model() {
+        super(NAME);
+        this.id = NO_ID;
+    }
     public Model(String name) {
         super(name.isEmpty() ? NAME : name);
+        this.id = NO_ID;
     }
     // Ctors with id params for testing
     public Model(Long id) {

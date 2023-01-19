@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.sql.DataSource;    
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -96,6 +97,7 @@ public class RumpusConfig {
 
     @Bean
     @DependsOn({"rumpusDaoManager"})
+    @ConditionalOnProperty(prefix = "database", name = "loader", havingValue = "true")
     public RumpusLoader rumpusLoader() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return new RumpusLoader(rumpusUserDao(), rumpusAuthDao());
     }

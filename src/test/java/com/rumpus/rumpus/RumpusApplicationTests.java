@@ -21,6 +21,6 @@ public class RumpusApplicationTests {
  
   @Test
   public void contextLoads() {
-    Assertions.assertThat(rumpusRestController).isNot(null);
+    Assertions.assertThat(rumpusRestController).isNotNull();
   }
 }

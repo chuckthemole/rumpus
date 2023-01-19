@@ -8,7 +8,7 @@ CREATE TABLE auth (
     CONSTRAINT pk_auth
 		PRIMARY KEY (auth_id),
 	
-    id INT NOT NULL,
+    id INT,
     authLevel VARCHAR(45)
 );
 
@@ -17,8 +17,9 @@ CREATE TABLE user (
     CONSTRAINT pk_user
 		PRIMARY KEY (user_id),
 	
-    id INT NOT NULL,
+    id INT, -- Maybe change to not null later
     name VARCHAR(45),
+    CONSTRAINT rumpus_user UNIQUE (name),
     
     auth_id INT,
     CONSTRAINT fk_auth

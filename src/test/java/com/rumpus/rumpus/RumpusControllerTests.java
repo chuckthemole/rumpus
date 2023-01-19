@@ -54,7 +54,7 @@ public class RumpusControllerTests {
 
         Mockito.when(userService.getAll()).thenReturn(users);
 
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/api/rumpus/users"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", Matchers.hasSize(1)))
             .andExpect(jsonPath("$[0].name", Matchers.is("Frodo")));

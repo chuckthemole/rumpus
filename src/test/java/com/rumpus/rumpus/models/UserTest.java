@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     Long id = Long.valueOf(1);
-    User user = User.createUser(id, "Frodo");
+    User user = User.createUser(id, "Pipin");
 
     @BeforeAll
     public static void setUpClass() {
