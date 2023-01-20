@@ -9,9 +9,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.rumpus.common.DaoTest;
 import com.rumpus.rumpus.models.User;
 
-public class UserDaoTest {
+public class UserDaoTest extends DaoTest<User> {
     private static IUserDao userDao;
     private static List<User> userList;
 
@@ -43,12 +44,12 @@ public class UserDaoTest {
 
     @Test
 	void testManager() {
-        System.out.println("* * * Test UserDao * * * ");
+        LOG.info("* * * Test UserDao * * * ");
         User temp = userDao.get("Frodo");
-        System.out.print(temp.toString());
+        LOG.info(temp.toString());
         temp = userDao.get("Sam");
-        System.out.print(temp.toString());
+        LOG.info(temp.toString());
         temp = userDao.get("Bilbo");
-        System.out.print(temp.toString());
+        LOG.info(temp.toString());
 	}
 }

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.rumpus.rumpus.config.RumpusTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.User;
+import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +43,7 @@ import org.springframework.test.web.servlet.MockMvc;
 public class RumpusControllerTests {
 
     @MockBean
-    UserService userService;
+    IUserService userService;
  
     @Autowired
     MockMvc mockMvc;

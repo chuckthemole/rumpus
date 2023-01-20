@@ -11,18 +11,18 @@ import com.rumpus.common.RumpusObject;
 import com.rumpus.common.util.Pair;
 
 public class RumpusDaoManager extends Manager implements IRumpusDaoManager {
-    private UserDao userDao;
-    private AuthDao authDao;
+    private IUserDao userDao;
+    private IAuthDao authDao;
 
-    public RumpusDaoManager() {
+    public RumpusDaoManager(IUserDao userDao, IAuthDao authDao) {
         super();
+        this.userDao = userDao;
+        this.authDao = authDao;
         init();
     }
 
     @Override
     public void init() {
-        userDao = UserDao.create();
-        authDao = AuthDao.create();
         itemList.add(userDao.name());
         itemList.add(authDao.name());
     }
@@ -39,11 +39,11 @@ public class RumpusDaoManager extends Manager implements IRumpusDaoManager {
         return null;
     }
 
-    public UserDao getUserDao() {
+    public IUserDao getUserDao() {
         return userDao;
     }
 
-    public AuthDao getAuthDao() {
+    public IAuthDao getAuthDao() {
         return authDao;
     }
 }

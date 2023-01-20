@@ -28,12 +28,13 @@ public class Dao<T extends Model<T>> extends RumpusObject implements IDao<T> {
     }
 
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         Dao.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public boolean remove(int id) {
+        LOG.info("Dao::remove()");
         // TODO: Check dependencies to delete
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ")
@@ -47,6 +48,7 @@ public class Dao<T extends Model<T>> extends RumpusObject implements IDao<T> {
 
     @Override
     public T get(int id) {
+        LOG.info("Dao::get()");
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM ")
             .append(table)
@@ -54,20 +56,24 @@ public class Dao<T extends Model<T>> extends RumpusObject implements IDao<T> {
             .append(id)
             .append(" = ?;");
         final String sql = sb.toString();
+        LOG.info(sql);
         return jdbcTemplate.queryForObject(sql, mapper, id);
     }
 
     @Override
     public List<T> getAll() {
+        LOG.info("Dao::getAll()");
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM ").append(table).append(";");
         final String sql = sb.toString();
+        LOG.info(sql);
         List<T> objects = jdbcTemplate.query(sql, mapper);
         return objects;
     }
 
     @Override
     public T add(T model) {
+        LOG.info("Dao::add()");
         return add.apply(model);
     }
 
@@ -88,6 +94,7 @@ public class Dao<T extends Model<T>> extends RumpusObject implements IDao<T> {
 
     @Override
     public boolean removeAll() {
+        LOG.info("Dao::removeAll()");
         // TODO: Check dependencies to delete
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ")

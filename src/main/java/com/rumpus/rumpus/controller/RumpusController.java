@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping("/rumpus")
 public class RumpusController {
+    
     private RumpusView view;
     private IUserService userService;
 
