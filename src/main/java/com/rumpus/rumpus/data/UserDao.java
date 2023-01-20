@@ -1,9 +1,7 @@
 package com.rumpus.rumpus.data;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import com.rumpus.rumpus.models.User;
 import com.rumpus.common.Mapper;
@@ -14,10 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -64,8 +59,8 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
     }
 
     private final static Mapper<User> mapper() {
-        Mapper<User> m = new Mapper<>();
-        m.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
+        Mapper<User> mapper = new Mapper<>();
+        mapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
             HashMap<String, String> map = new HashMap<>();
@@ -78,7 +73,7 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
             }
             return User.create(map);
         });
-        return m;
+        return mapper;
     }
 
     // // Row Mappers

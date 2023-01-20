@@ -1,10 +1,7 @@
 package com.rumpus.rumpus.models;
-import com.rumpus.common.Model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  *
@@ -24,21 +21,6 @@ public class User extends RumpusModel<User> {
         super(MODEL_NAME, initMap);
         init();
     }
-    // public User(String user_name) {
-    //     super(MODEL_NAME);
-    //     this.userName = user_name;
-    // }
-    // public User(Long id, String user_name) {
-    //     super(MODEL_NAME);
-    //     this.id = id;
-    //     this.userName = user_name;
-    // }
-    // public User(Long id, String user_name, int auth_id) {
-    //     super(MODEL_NAME);
-    //     this.id = id;
-    //     this.userName = user_name;
-    //     this.authId = auth_id;
-    // }
 
     @Override
     public int init() {
@@ -67,23 +49,6 @@ public class User extends RumpusModel<User> {
         return SUCCESS;
     }
 
-    // // @Override // Override Model impl
-    // public static Function<Map<String, String>, User> createFunction() {
-    //     return (Map<String, String> initMap) -> {
-    //         User user = new User();
-    //         if(initMap.containsKey("name")) {
-    //             user.setName(initMap.get("name"));
-    //         }
-    //         if(initMap.containsKey("id")) {
-    //             user.setId(Long.parseLong(initMap.get("id")));
-    //         }
-    //         if(initMap.containsKey("auth_id")) {
-    //             user.setAuth(Integer.parseInt(initMap.get("auth_id")));
-    //         }
-    //         return user;
-    //     };
-    // }
-
     // static factory methods
     public static User create(Map<String, String> initMap) {return new User(initMap);}
     public static User createWithName(String name) {
@@ -91,20 +56,8 @@ public class User extends RumpusModel<User> {
         map.put("name", name);
         return User.create(map);
     }
-
-    // public static User createUser(String name) {
-    //     User u = new User(name);
-    //     return u;
-    // }
-    // public static User createUser(Long id, String name) {
-    //     User u = new User(id, name);
-    //     return u;
-    // }
-    // public static User createUser(Long id, String name, int auth_id) {
-    //     User u = new User(id, name, auth_id);
-    //     return u;
-    // }
     
+    // Getters Setters
     public String getName() {
         return this.userName;
     }
@@ -117,6 +70,7 @@ public class User extends RumpusModel<User> {
     public void setAuth(int a) {
         this.authId = a;
     }
+
     @Override 
     public String toString() {
         return "Name: " + this.userName + " AuthId: " + this.authId + "\n";

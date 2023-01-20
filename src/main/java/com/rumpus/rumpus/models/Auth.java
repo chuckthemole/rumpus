@@ -5,11 +5,7 @@
  */
 package com.rumpus.rumpus.models;
 
-import com.rumpus.common.Model;
-
 import java.util.Set;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -25,10 +21,7 @@ public class Auth extends RumpusModel<Auth> {
 
     // Ctors
     public Auth() {super(MODEL_NAME);init();}
-    public Auth(Map<String, String> initMap) {
-        super(MODEL_NAME, initMap);
-        init();
-    }
+    public Auth(Map<String, String> initMap) {super(MODEL_NAME, initMap);init();}
 
     @Override
     public int init() {
@@ -52,23 +45,6 @@ public class Auth extends RumpusModel<Auth> {
         return SUCCESS;
     }
 
-    // public static Supplier<Auth> createFunction(Map<String, String> initMap) {
-    //     return () -> {
-    //         Auth auth = create(initMap);
-    //         String level = initMap.containsKey("level") ? initMap.get("level") : "";
-    //         if(level.equals("admin")) {
-    //             auth.setLevel(Level.ADMIN);
-    //         } else if(level.equals("mod")) {
-    //             auth.setLevel(Level.MODERATOR);
-    //         } else if(level.equals("guest")) {
-    //             auth.setLevel(Level.GUEST);
-    //         } else if(level.equals("user")) {
-    //             auth.setLevel(Level.USER);
-    //         }
-    //         return auth;
-    //     };
-    // }
-
     // static factory methods
     public static Auth create(Map<String, String> initMap) {return new Auth(initMap);}
     public static Auth createAdminAuth() {
@@ -88,10 +64,10 @@ public class Auth extends RumpusModel<Auth> {
         return a;
     }
     
+    // Getters Setters
     public Level getLevel() {
         return this.level;
     }
-
     public void setLevel(Level l) {
         this.level = l;
     }
@@ -101,6 +77,7 @@ public class Auth extends RumpusModel<Auth> {
         return "User level: " + this.level + "\n";
     }
 
+    // Auth Enums
     public enum Level {
         ADMIN("admin"),
         MODERATOR("mod"),
