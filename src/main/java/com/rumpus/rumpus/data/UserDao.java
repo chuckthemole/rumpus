@@ -68,7 +68,6 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
         m.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
-            User u = User.createNewUser();
             HashMap<String, String> map = new HashMap<>();
             try {
                 map.put("auth_id", Integer.toString(rs.getInt("auth_id")));
@@ -77,9 +76,7 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            u.init(map);
-            u.create();
-            return u;
+            return User.create(map);
         });
         return m;
     }

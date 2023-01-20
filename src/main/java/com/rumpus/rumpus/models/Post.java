@@ -1,17 +1,31 @@
 package com.rumpus.rumpus.models;
 
+import java.util.Map;
+import java.util.function.Supplier;
+
 public class Post extends RumpusModel<Post> {
-    private final int userId;
+    private final Long userId;
     private StringBuilder commentBuilder;
     private static final String MODEL_NAME = "postModel";
     
-    Post(int userId) {
+    Post(Map<String, String> initMap) {
         super(MODEL_NAME);
-        this.userId = userId;
+        if(initMap.containsKey("user_id")) {
+            this.userId = Long.valueOf(initMap.get("user_id"));
+        } else {
+            this.userId = NO_ID;
+        }
     }
 
-    public static Comment createComment(int userId) {
-        return new Comment(userId);
+    public static Post create(Map<String, String> initMap) {
+        return new Post(initMap);
+    }
+
+    public static Supplier<Post> createFunction(Map<String, String> initMap) {
+        return () -> {
+            Post post = create(initMap);
+            return post;
+        };
     }
 
     public void setComment(String newComment) {
@@ -21,5 +35,9 @@ public class Post extends RumpusModel<Post> {
 
     public String getComment() {
         return commentBuilder.toString();
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

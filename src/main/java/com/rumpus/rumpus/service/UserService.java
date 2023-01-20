@@ -1,44 +1,18 @@
 package com.rumpus.rumpus.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.rumpus.rumpus.data.IUserDao;
 import com.rumpus.rumpus.models.User;
 
-// @Component
-public class UserService implements IUserService {
+public class UserService extends RumpusService<User> implements IUserService {
 
-    IUserDao userDao;
+    protected static final String NAME = "userService";
 
     public UserService(IUserDao userDao) {
-        this.userDao = userDao;
+        super(NAME, userDao);
     }
 
     @Override
-    public User get(int id) {
-        return userDao.get(id);
+    public User get(String name) {
+        return IUserDao.class.cast(super.dao).get(name);
     }
-
-    @Override
-    public User getUserByName(String name) {
-        return userDao.get(name);
-    }
-
-    @Override
-    public List<User> getAll() {
-        return userDao.getAll();
-    }
-
-    @Override
-    public User add(User user) {
-        return userDao.add(user);
-    }
-
-    @Override
-    public boolean remove(int id) {
-        return userDao.remove(id);
-    }
-    
 }

@@ -50,7 +50,7 @@ public class RumpusControllerTests {
  
     @Test
     public void testfindAll() throws Exception {
-        User user = User.createUser("Frodo");
+        User user = User.createWithName("Frodo");
         List<User> users = Arrays.asList(user);
 
         Mockito.when(userService.getAll()).thenReturn(users);

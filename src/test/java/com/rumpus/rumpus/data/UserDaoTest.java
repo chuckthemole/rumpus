@@ -19,9 +19,9 @@ public class UserDaoTest extends DaoTest<User> {
     @BeforeAll
     public static void setUpClass() {
         userList = new ArrayList<>();
-        userList.add(User.createUser("Frodo"));
-        userList.add(User.createUser("Sam"));
-        userList.add(User.createUser("Bilbo"));
+        userList.add(User.createWithName("Frodo"));
+        userList.add(User.createWithName("Sam"));
+        userList.add(User.createWithName("Bilbo"));
 
         userDao = UserDao.create();
         userDao.add(userList.get(0));

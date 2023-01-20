@@ -13,7 +13,14 @@ import com.rumpus.common.IO.RumpusIO;
 public class Rumpus {
     protected IRumpusIO io;
     protected static final Logger LOG = LoggerFactory.getLogger(Rumpus.class);
+
     public final static Long NO_ID = Long.valueOf(-1);
+
+    public final static String NO_NAME = "NO_NAME";
+
+    public final static int SUCCESS = 1;
+    public final static int EMPTY = -1;
+    public final static int NOT_INITIALIZED = -10;
 
     @Autowired
     public Rumpus() {

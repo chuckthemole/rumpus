@@ -7,11 +7,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.rumpus.rumpus.models.Auth.Level;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthTest {
     Long id = Long.valueOf(1);
-    private Auth auth = Auth.createAdminAuth(id);
+    private Level level = Level.ADMIN;
+    private Auth auth = Auth.createAdminAuth();
 
     @BeforeAll
     public static void setUpClass() {
@@ -32,6 +36,6 @@ public class AuthTest {
     @Test
 	void testId() {
         System.out.println("* * * Test Id * * * ");
-        assertEquals(id, auth.getId());
+        assertEquals(level, auth.getLevel());
 	}
 }

@@ -35,9 +35,10 @@ public class RumpusLoader implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
         // IAuthDao authDao = (IAuthDao) dao.get("authDao");
-        authDao.add(Auth.createAdminAuth(Long.valueOf(0)));
+        Auth auth = Auth.createAdminAuth();
+        authDao.add(auth);
         // IUserDao userDao = (IUserDao) dao.get("userDao");
-        userDao.add(User.createUser(Long.valueOf(0), "Gandalf"));
+        userDao.add(User.createWithName("Gandalf"));
 
         // System.out.println("* * Printing Keys * * ");
         // dao.getMap().forEach((k, v) -> {

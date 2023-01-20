@@ -24,31 +24,55 @@ public class Auth extends RumpusModel<Auth> {
     private static final String MODEL_NAME = "authModel";
 
     // Ctors
-    public Auth() {super(MODEL_NAME);}
-    public Auth(Long id) {super(MODEL_NAME, id);}
-
-    @Override // Override Model impl
-    public Supplier<Auth> createFunction() {
-        return () -> {
-            Auth auth = createNewAuth();
-            String level = rawInitList.containsKey("level") ? rawInitList.get("level") : "";
-            if(level.equals("admin")) {
-                auth.setLevel(Level.ADMIN);
-            } else if(level.equals("mod")) {
-                auth.setLevel(Level.MODERATOR);
-            } else if(level.equals("guest")) {
-                auth.setLevel(Level.GUEST);
-            } else if(level.equals("user")) {
-                auth.setLevel(Level.USER);
-            }
-            return auth;
-        };
+    public Auth() {super(MODEL_NAME);init();}
+    public Auth(Map<String, String> initMap) {
+        super(MODEL_NAME, initMap);
+        init();
     }
 
+    @Override
+    public int init() {
+        if(initMap == null || initMap.isEmpty()) {
+            LOG.info("initMap is empty.");
+            this.setLevel(Level.NONE);
+            return EMPTY;
+        }
+        if(initMap.containsKey("level")) {
+            String level = initMap.get("level");
+            if(level.equals("admin")) {
+                this.setLevel(Level.ADMIN);
+            } else if(level.equals("mod")) {
+                this.setLevel(Level.MODERATOR);
+            } else if(level.equals("guest")) {
+                this.setLevel(Level.GUEST);
+            } else if(level.equals("user")) {
+                this.setLevel(Level.USER);
+            }
+        }
+        return SUCCESS;
+    }
+
+    // public static Supplier<Auth> createFunction(Map<String, String> initMap) {
+    //     return () -> {
+    //         Auth auth = create(initMap);
+    //         String level = initMap.containsKey("level") ? initMap.get("level") : "";
+    //         if(level.equals("admin")) {
+    //             auth.setLevel(Level.ADMIN);
+    //         } else if(level.equals("mod")) {
+    //             auth.setLevel(Level.MODERATOR);
+    //         } else if(level.equals("guest")) {
+    //             auth.setLevel(Level.GUEST);
+    //         } else if(level.equals("user")) {
+    //             auth.setLevel(Level.USER);
+    //         }
+    //         return auth;
+    //     };
+    // }
+
     // static factory methods
-    public static Auth createNewAuth() {return new Auth();}
-    public static Auth createAdminAuth(Long id) {
-        Auth a = new Auth(id);
+    public static Auth create(Map<String, String> initMap) {return new Auth(initMap);}
+    public static Auth createAdminAuth() {
+        Auth a = new Auth();
         a.level = Level.ADMIN;
         a.privileges = new HashSet<Privilege>();
         a.privileges.add(Privilege.READ);
@@ -56,8 +80,8 @@ public class Auth extends RumpusModel<Auth> {
         a.privileges.add(Privilege.DELETE);
         return a;
     }
-    public static Auth createUserAuth(Long id) {
-        Auth a = new Auth(id);
+    public static Auth createUserAuth() {
+        Auth a = new Auth();
         a.level = Level.USER;
         a.privileges = new HashSet<Privilege>();
         a.privileges.add(Privilege.READ);
@@ -81,7 +105,8 @@ public class Auth extends RumpusModel<Auth> {
         ADMIN("admin"),
         MODERATOR("mod"),
         GUEST("guest"),
-        USER("user");
+        USER("user"),
+        NONE("none");
     
         private final String level;
     
@@ -92,7 +117,8 @@ public class Auth extends RumpusModel<Auth> {
     public enum Privilege {
         READ("read"),
         WRITE("write"),
-        DELETE("delete");
+        DELETE("delete"),
+        NONE("none");
 
         private final String privilege;
 

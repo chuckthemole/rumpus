@@ -73,7 +73,7 @@ public class RumpusController {
     @ResponseStatus(HttpStatus.CREATED)
     private void addUser() {
         view.displayAddUserBanner();
-        User user = new User(view.readUserName());
+        User user = User.createWithName(view.readUserName());
         userService.add(user);
     }
 

@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     Long id = Long.valueOf(1);
-    User user = User.createUser(id, "Pipin");
+    String name = "Pipin";
+    User user = User.createWithName("Pipin");
 
     @BeforeAll
     public static void setUpClass() {
@@ -31,6 +32,6 @@ public class UserTest {
 
     @Test
 	void testId() {
-        assertEquals(id, user.getId());
+        assertEquals(name, user.getName());
 	}
 }

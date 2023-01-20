@@ -52,7 +52,6 @@ public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
         m.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
-            Auth u = Auth.createNewAuth();
             HashMap<String, String> map = new HashMap<>();
             try {
                 map.put("auth_id", Integer.toString(rs.getInt("auth_id")));
@@ -61,9 +60,7 @@ public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            u.init(map);
-            u.create();
-            return u;
+            return Auth.create(map);
         });
         return m;
     }
