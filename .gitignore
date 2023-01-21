@@ -42,8 +42,12 @@ application.properties
 database.properties
 tmp/
 
-## logging
+### logging
 src/main/java/com/rumpus/rumpus/log/
 src/test/java/com/rumpus/rumpus/log/
+
+### Node
+node/
+node_modules/
 
 ######################
