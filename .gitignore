@@ -49,6 +49,6 @@ src/test/java/com/rumpus/rumpus/log/
 ### Node
 node/
 node_modules/
-# src/main/resources/static/built
+src/main/resources/static/built
 
 ######################
