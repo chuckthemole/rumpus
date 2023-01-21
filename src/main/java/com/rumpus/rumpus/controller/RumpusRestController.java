@@ -1,5 +1,6 @@
 package com.rumpus.rumpus.controller;
 
+import com.google.gson.Gson;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
@@ -9,7 +10,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/api/rumpus")
+@RequestMapping("/api")
 public class RumpusRestController {
 
     // @Autowired
@@ -38,10 +41,10 @@ public class RumpusRestController {
         this.view = view;
     }
     
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
+    // @GetMapping("/")
+    // public String index() {
+    //     return "index";
+    // }
     
     @GetMapping("/userid/{id}")
     public User getUserById(@PathVariable int id) {
@@ -49,8 +52,10 @@ public class RumpusRestController {
     }
     
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return rumpusUserService.getAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        Gson gson = new Gson();
+        
+        return new ResponseEntity<List<User>>(rumpusUserService.getAll(), HttpStatusCode.valueOf(200));
     }
     
     @GetMapping("/username/{name}")

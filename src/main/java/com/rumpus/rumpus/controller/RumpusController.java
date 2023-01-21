@@ -28,72 +28,77 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @Controller
-@RequestMapping("/rumpus")
+@RequestMapping("/")
 public class RumpusController {
+
+    @GetMapping(value = "/")
+	public String index() {
+		return "index";
+	}
+
+    // private RumpusView view;
+    // private IUserService userService;
+
+    // public RumpusController(IUserService userService, RumpusView view) {
+    //     this.userService = userService;
+    //     this.view = view;
+    // }
     
-    private RumpusView view;
-    private IUserService userService;
-
-    public RumpusController(IUserService userService, RumpusView view) {
-        this.userService = userService;
-        this.view = view;
-    }
+    // public void run() {
+    //     boolean keepGoing = true;
+    //     while (keepGoing) {
+    //         int menuSelection = getMenuSelection();
+    //         switch(menuSelection) {
+    //             case 1:
+    //                 addUser();
+    //                 break;
+    //             case 2:
+    //                 displayUsers();
+    //                 break;
+    //             case 3:
+    //                 removeUser();
+    //                 break;
+    //             case 4:
+    //                 keepGoing = false;
+    //                 break;
+    //             default:
+    //                 unknownCommand();
+    //                 break;
+    //         }      
+    //     }
+    //     exitMessage();
+    //     System.exit(0);
+    // }
     
-    public void run() {
-        boolean keepGoing = true;
-        while (keepGoing) {
-            int menuSelection = getMenuSelection();
-            switch(menuSelection) {
-                case 1:
-                    addUser();
-                    break;
-                case 2:
-                    displayUsers();
-                    break;
-                case 3:
-                    removeUser();
-                    break;
-                case 4:
-                    keepGoing = false;
-                    break;
-                default:
-                    unknownCommand();
-                    break;
-            }      
-        }
-        exitMessage();
-        System.exit(0);
-    }
-    
-    private int getMenuSelection() {
-        return view.printMenuAndGetSelection();
-    }
+    // private int getMenuSelection() {
+    //     return view.printMenuAndGetSelection();
+    // }
 
-    @PostMapping("/add_user")
-    @ResponseStatus(HttpStatus.CREATED)
-    private void addUser() {
-        view.displayAddUserBanner();
-        User user = User.createWithName(view.readUserName());
-        userService.add(user);
-    }
+    // @PostMapping("/add_user")
+    // @ResponseStatus(HttpStatus.CREATED)
+    // private void addUser() {
+    //     view.displayAddUserBanner();
+    //     User user = User.createWithName(view.readUserName());
+    //     userService.add(user);
+    // }
 
-    @PostMapping("/remove_user")
-    @ResponseStatus(HttpStatus.CREATED)
-    private void removeUser() {
-        view.displayRemoveUserBanner();
-        userService.remove(view.readUserId());
-    }
+    // @PostMapping("/remove_user")
+    // @ResponseStatus(HttpStatus.CREATED)
+    // private void removeUser() {
+    //     view.displayRemoveUserBanner();
+    //     userService.remove(view.readUserId());
+    // }
 
-    @GetMapping("/all_users")
-    private List<User> displayUsers() {
-        List<User> list = new ArrayList();
-        userService.getAll().forEach(user -> {
-            list.add(user);
-        });
-        // Collections.sort(list);
-        view.displayUsers(list);
-        return list;
-    }
+    // @GetMapping("/all_users")
+    // private List<User> displayUsers() {
+    //     List<User> list = new ArrayList();
+    //     userService.getAll().forEach(user -> {
+    //         list.add(user);
+    //     });
+    //     // Collections.sort(list);
+    //     view.displayUsers(list);
+    //     return list;
+    // }
 
     
     // @PostMapping("/begin")
@@ -185,13 +190,13 @@ public class RumpusController {
     //     int guess = view.getGuessForGame();
     // }
     
-    private void unknownCommand() {
-        view.displayUnknownCommandBanner();
-    }
+    // private void unknownCommand() {
+    //     view.displayUnknownCommandBanner();
+    // }
     
-    private void exitMessage() {
-        view.displayExitBanner();
-    }
+    // private void exitMessage() {
+    //     view.displayExitBanner();
+    // }
     
     
 }

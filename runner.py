@@ -6,6 +6,8 @@ import sys
 # Commands
 build = "./gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/log/build.log"
 buildTest = "./gradlew clean build --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
+buildTestInfo = "./gradlew clean build --info --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
+buildTestDebug = "./gradlew clean build --debug --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
 test = "./gradlew test > src/test/java/com/rumpus/rumpus/log/test.log"
 run = "./gradlew bootRun > src/main/java/com/rumpus/rumpus/log/spring.log"
 
@@ -22,6 +24,10 @@ if __name__ == '__main__':
             os.system(build)
         elif arg == "buildTest":
             os.system(buildTest)
+        elif arg == "buildTestInfo":
+            os.system(buildTestInfo)
+        elif arg == "buildTestDebug":
+            os.system(buildTestDebug)
         elif arg == "test":
             os.system(test)
         elif arg == "run":

@@ -11,7 +11,8 @@ class App extends React.Component {
 
 	componentDidMount() {
 		client({method: 'GET', path: '/api/users'}).done(response => {
-			this.setState({users: response.entity._embedded.users});
+			this.setState({users: response.entity});
+            console.log(this.state);
 		});
 	}
 
@@ -25,7 +26,7 @@ class App extends React.Component {
 class UserList extends React.Component{
 	render() {
 		const users = this.props.users.map(user =>
-			<User key={user._links.self.href} user={user}/>
+			<User key={user.name} user={user}/>
 		);
 		return (
 			<table>

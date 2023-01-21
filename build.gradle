@@ -4,10 +4,19 @@ plugins {
     id 'application'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.siouan.frontend-jdk11' version '6.0.0'
 }
 
 application {
     mainClass = 'com.rumpus.rumpus.App'
+}
+
+frontend {
+    nodeVersion = '14.17.3'
+    assembleScript = 'run build'
+    cleanScript = 'run clean'
+    checkScript = 'run check'
+    // packageJsonDirectory.set(project.layout.projectDirectory)
 }
 
 group = 'com.rumpus'
@@ -16,6 +25,19 @@ sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
+    gradlePluginPortal()
+}
+
+import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
+tasks.register('npxVersion', RunNpx) {
+    // dependsOn tasks.named('installNode')
+    // dependsOn tasks.named('installFrontend')
+    script = '--version'
+}
+tasks.register('webpack', RunNpx) {
+    // dependsOn tasks.named('installNode')
+    // dependsOn tasks.named('installFrontend')
+    script = 'webpack'
 }
 
 dependencies {
@@ -45,7 +67,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
 
     // JS
-    implementation('com.github.eirslett:frontend-maven-plugin:1.12.1')
+    // implementation('com.github.eirslett:frontend-maven-plugin:1.12.1')
 }
 
 tasks.named('test') {

@@ -1,14 +1,11 @@
 package com.rumpus.rumpus;
 
-import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.Map;
 // import kong.unirest.JsonNode;
 // import kong.unirest.Unirest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+
 
 @SpringBootApplication
 public class App {
