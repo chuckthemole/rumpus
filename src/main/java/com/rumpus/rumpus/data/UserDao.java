@@ -5,6 +5,8 @@ import java.util.function.Function;
 
 import com.rumpus.rumpus.models.User;
 import com.rumpus.common.Mapper;
+import com.rumpus.common.ApiDB.IApi;
+import com.rumpus.common.ApiDB.IApiDB;
 import com.rumpus.common.util.Pair;
 
 import java.sql.Connection;
@@ -12,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
@@ -19,46 +23,53 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Profile("database")
 public class UserDao extends RumpusDao<User> implements IUserDao {
+    
     private static final String NAME = "userDao";
-    private static final String TABLE = "user";
+    public static final String TABLE = "user";
+    // private static RumpusApiDB<User> apiDB;
+    // private static IApi<User> api;
+
+    // static {
+    //     apiDB = new RumpusApiDB<>(TABLE, mapper());
+    // }
 
     // @Autowired
-    public UserDao() {
-        super(TABLE, NAME, mapper(), add());
+    public UserDao(IApi<User> api) {
+        super(api, TABLE, NAME);
     }
 
-    public static UserDao create() {
-        return new UserDao();
-    }
+    // public static UserDao create() {
+    //     return new UserDao();
+    // }
 
     public final static Function<User, User> add() {
         return (User user) -> {
-            Long userId = user.getId();
-            final String sql = "INSERT INTO user(name, id) VALUES(?, ?);";
-            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update((Connection conn) -> {
-                PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, user.getName());
-                statement.setLong(2, userId);
-                // statement.setInt(3, user.getAuth());
-                return statement;
-            }, keyHolder);
-            if(keyHolder.getKey() != null) {
-                user.setId(keyHolder.getKey().longValue());
-            } else {
-                user.setId(NO_ID);
-            }
+            // Long userId = user.getId();
+            // final String sql = "INSERT INTO user(name, id) VALUES(?, ?);";
+            // GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            // jdbcTemplate.update((Connection conn) -> {
+            //     PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //     statement.setString(1, user.getName());
+            //     statement.setLong(2, userId);
+            //     // statement.setInt(3, user.getAuth());
+            //     return statement;
+            // }, keyHolder);
+            // if(keyHolder.getKey() != null) {
+            //     user.setId(keyHolder.getKey().longValue());
+            // } else {
+            //     user.setId(NO_ID);
+            // }
             return user;
         };
     }
 
-    @Override
-    public User get(String name) {
-        final String sql = "SELECT * FROM user WHERE name = ?;";
-        return jdbcTemplate.queryForObject(sql, mapper, name);
-    }
+    // @Override
+    // public User get(String name) {
+    //     final String sql = "SELECT * FROM user WHERE name = ?;";
+    //     return jdbcTemplate.queryForObject(sql, mapper, name);
+    // }
 
-    private final static Mapper<User> mapper() {
+    public final static Mapper<User> mapper() {
         Mapper<User> mapper = new Mapper<>();
         mapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();

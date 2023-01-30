@@ -11,8 +11,8 @@ public class UserService extends RumpusService<User> implements IUserService {
         super(NAME, userDao);
     }
 
-    @Override
-    public User get(String name) {
-        return IUserDao.class.cast(super.dao).get(name);
-    }
+    // @Override
+    // public User get(String name) {
+    //     return IUserDao.class.cast(super.dao).get(name);
+    // }
 }

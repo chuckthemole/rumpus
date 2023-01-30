@@ -1,7 +1,5 @@
 package com.rumpus.rumpus.config;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.sql.DataSource;    
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +12,17 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.rumpus.rumpus.controller.RumpusRestController;
+import com.rumpus.common.ApiDB.IApi;
+import com.rumpus.common.ApiDB.IApiDB;
+import com.rumpus.common.ApiDB.Jdbc;
 import com.rumpus.rumpus.data.AuthDao;
 import com.rumpus.rumpus.data.IAuthDao;
 import com.rumpus.rumpus.data.IUserDao;
 import com.rumpus.rumpus.data.RumpusDaoManager;
 import com.rumpus.rumpus.data.UserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
+import com.rumpus.rumpus.models.Auth;
+import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
 import com.rumpus.rumpus.ui.IRumpusIO;
@@ -73,12 +75,27 @@ public class RumpusConfig {
     }
 
     @Bean
+    public IApi<User> rumpusUserApiDB() {
+        IApi<User> userApiDB = new Jdbc<>(dataSource(), UserDao.TABLE, UserDao.mapper());
+        return userApiDB;
+    }
+
+    @Bean
+    public IApi<Auth> rumpusAuthApiDB() {
+        IApi<Auth> authApiDB = new Jdbc<>(dataSource(), AuthDao.TABLE, AuthDao.mapper());
+        return authApiDB;
+    }
+
+    @Bean
+    @DependsOn({"rumpusUserApiDB"})
     public IUserDao rumpusUserDao() {
-        IUserDao userDao = new UserDao();
+        IUserDao userDao = new UserDao(rumpusUserApiDB());
         // userDao.setJdbcTemplate(jdbcTemplate());
         return userDao;
     }
+
     @Bean
+    @DependsOn({"rumpusAuthApiDB"})
     public IAuthDao rumpusAuthDao() {
         IAuthDao authDao = new AuthDao();
         // authDao.setJdbcTemplate(jdbcTemplate());

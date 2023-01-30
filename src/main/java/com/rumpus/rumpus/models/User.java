@@ -1,5 +1,7 @@
 package com.rumpus.rumpus.models;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,40 +19,41 @@ public class User extends RumpusModel<User> {
         super(MODEL_NAME);
         init();
     }
-    public User(Map<String, String> initMap) {
-        super(MODEL_NAME, initMap);
+    public User(Map<String, String> attributeMap) {
+        super(MODEL_NAME, attributeMap);
         init();
     }
 
     @Override
     public int init() {
-        if(initMap == null || initMap.isEmpty()) {
-            LOG.info("initMap is empty.");
+        if(attributeMap == null || attributeMap.isEmpty()) {
+            LOG.info("attributeMap is empty.");
             this.userName = NO_NAME;
             this.id = NO_ID;
             this.authId = EMPTY;
             return EMPTY;
         }
-        if(initMap.containsKey("name")) {
-            this.setName(initMap.get("name"));
+        if(attributeMap.containsKey("name")) {
+            this.setName(attributeMap.get("name"));
         } else {
             this.setName(NO_NAME);
         }
-        if(initMap.containsKey("id")) {
-            this.setId(Long.parseLong(initMap.get("id")));
+        if(attributeMap.containsKey("id")) {
+            this.setId(Long.parseLong(attributeMap.get("id")));
         } else {
             this.setId(NO_ID);
         }
-        if(initMap.containsKey("auth_id")) {
-            this.setAuth(Integer.parseInt(initMap.get("auth_id")));
+        if(attributeMap.containsKey("auth_id")) {
+            this.setAuth(Integer.parseInt(attributeMap.get("auth_id")));
         } else {
             this.setAuth(EMPTY);
         }
+        statement();
         return SUCCESS;
     }
 
     // static factory methods
-    public static User create(Map<String, String> initMap) {return new User(initMap);}
+    public static User create(Map<String, String> attributeMap) {return new User(attributeMap);}
     public static User createWithName(String name) {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", name);
@@ -62,17 +65,34 @@ public class User extends RumpusModel<User> {
         return this.userName;
     }
     public void setName(String n) {
+        attributeMap.put("name", n);
         this.userName = n;
     }
     public int getAuth() {
         return this.authId;
     }
     public void setAuth(int a) {
+        attributeMap.put("auth_id", Integer.toString(a));
         this.authId = a;
     }
 
     @Override 
     public String toString() {
         return "Name: " + this.userName + " AuthId: " + this.authId + "\n";
+    }
+
+    private int statement() {
+        setStatement(
+            (PreparedStatement statement) -> {
+                try {
+                    statement.setString(1, userName);
+                    statement.setLong(2, id);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return  statement;
+            }
+        );
+        return SUCCESS;
     }
 }

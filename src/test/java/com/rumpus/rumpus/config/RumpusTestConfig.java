@@ -15,6 +15,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.rumpus.common.ApiDB.IApi;
+import com.rumpus.common.ApiDB.Jdbc;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.data.AuthDao;
 import com.rumpus.rumpus.data.IAuthDao;
@@ -23,6 +25,8 @@ import com.rumpus.rumpus.data.IUserDao;
 import com.rumpus.rumpus.data.RumpusDaoManager;
 import com.rumpus.rumpus.data.UserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
+import com.rumpus.rumpus.models.Auth;
+import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
 import com.rumpus.rumpus.ui.IRumpusIO;
@@ -61,7 +65,7 @@ public class RumpusTestConfig {
     }
 
     @Bean
-	DataSource dataSource() {
+	public DataSource dataSource() {
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 		driverManagerDataSource.setUrl(environment.getProperty(URL));
 		driverManagerDataSource.setUsername(environment.getProperty(USER));
@@ -76,13 +80,27 @@ public class RumpusTestConfig {
     }
 
     @Bean
+    public IApi<User> rumpusUserApiDB() {
+        IApi<User> userApiDB = new Jdbc<>(dataSource(), UserDao.TABLE, UserDao.mapper());
+        return userApiDB;
+    }
+
+    @Bean
+    public IApi<Auth> rumpusAuthApiDB() {
+        IApi<Auth> authApiDB = new Jdbc<>(dataSource(), AuthDao.TABLE, AuthDao.mapper());
+        return authApiDB;
+    }
+
+    @Bean
+    @DependsOn({"rumpusUserApiDB"})
     public IUserDao rumpusUserDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        IUserDao userDao = new UserDao();
+        IUserDao userDao = new UserDao(rumpusUserApiDB());
         // userDao.setJdbcTemplate(jdbcTemplate());
         return userDao;
     }
 
     @Bean
+    @DependsOn({"rumpusAuthApiDB"})
     public IAuthDao rumpusAuthDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         IAuthDao authDao = new AuthDao();
         // authDao.setJdbcTemplate(jdbcTemplate());

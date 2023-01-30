@@ -60,6 +60,7 @@ public class RumpusRestController {
     
     @GetMapping("/username/{name}")
     public User getUserByName(@PathVariable String name) {
-        return rumpusUserService.get(name);
+        // return rumpusUserService.get(name);
+        return null;
     }
 }

@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Profile("database")
 public interface IUserDao extends IRumpusDao<User> {
-    User get(String name);
+    // User get(String name);
 }

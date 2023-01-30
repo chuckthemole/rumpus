@@ -21,17 +21,17 @@ public class Auth extends RumpusModel<Auth> {
 
     // Ctors
     public Auth() {super(MODEL_NAME);init();}
-    public Auth(Map<String, String> initMap) {super(MODEL_NAME, initMap);init();}
+    public Auth(Map<String, String> attributeMap) {super(MODEL_NAME, attributeMap);init();}
 
     @Override
     public int init() {
-        if(initMap == null || initMap.isEmpty()) {
-            LOG.info("initMap is empty.");
+        if(attributeMap == null || attributeMap.isEmpty()) {
+            LOG.info("attributeMap is empty.");
             this.setLevel(Level.NONE);
             return EMPTY;
         }
-        if(initMap.containsKey("level")) {
-            String level = initMap.get("level");
+        if(attributeMap.containsKey("level")) {
+            String level = attributeMap.get("level");
             if(level.equals("admin")) {
                 this.setLevel(Level.ADMIN);
             } else if(level.equals("mod")) {
@@ -46,7 +46,7 @@ public class Auth extends RumpusModel<Auth> {
     }
 
     // static factory methods
-    public static Auth create(Map<String, String> initMap) {return new Auth(initMap);}
+    public static Auth create(Map<String, String> attributeMap) {return new Auth(attributeMap);}
     public static Auth createAdminAuth() {
         Auth a = new Auth();
         a.level = Level.ADMIN;

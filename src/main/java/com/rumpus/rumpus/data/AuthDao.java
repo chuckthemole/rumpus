@@ -16,16 +16,23 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import com.rumpus.common.Mapper;
+import com.rumpus.common.ApiDB.IApi;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.Auth;
 
 public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
     private static final String NAME = "authDao";
-    private static final String TABLE = "auth";
+    public static final String TABLE = "auth";
+    // private static RumpusApiDB<Auth> apiDB;
+    private static IApi<Auth> api;
+
+    // static {
+    //     apiDB = new RumpusApiDB<>(TABLE, mapper());
+    // }
 
     // @Autowired
     public AuthDao() {
-        super(TABLE, NAME, mapper(), addFunction());
+        super(api, TABLE, NAME);
     }
     
     public static AuthDao create() {
@@ -34,20 +41,20 @@ public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
 
     private final static Function<Auth, Auth> addFunction() {
         return (Auth auth) -> {
-            final String sql = "INSERT INTO auth(id, authLevel) VALUES(?, ?);";
-            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update((Connection conn) -> {
-                PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                statement.setLong(1, auth.getId());
-                statement.setString(2, auth.getLevel().toString());
-                return statement;
-            }, keyHolder);
-            auth.setId(keyHolder.getKey().longValue());
+            // final String sql = "INSERT INTO auth(id, authLevel) VALUES(?, ?);";
+            // GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            // jdbcTemplate.update((Connection conn) -> {
+            //     PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //     statement.setLong(1, auth.getId());
+            //     statement.setString(2, auth.getLevel().toString());
+            //     return statement;
+            // }, keyHolder);
+            // auth.setId(keyHolder.getKey().longValue());
             return auth;
         };
     }
 
-    private final static Mapper<Auth> mapper() {
+    public final static Mapper<Auth> mapper() {
         Mapper<Auth> m = new Mapper<>();
         m.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();

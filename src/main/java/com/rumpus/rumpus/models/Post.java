@@ -8,22 +8,22 @@ public class Post extends RumpusModel<Post> {
     private StringBuilder commentBuilder;
     private static final String MODEL_NAME = "postModel";
     
-    Post(Map<String, String> initMap) {
+    Post(Map<String, String> attributeMap) {
         super(MODEL_NAME);
-        if(initMap.containsKey("user_id")) {
-            this.userId = Long.valueOf(initMap.get("user_id"));
+        if(attributeMap.containsKey("user_id")) {
+            this.userId = Long.valueOf(attributeMap.get("user_id"));
         } else {
             this.userId = NO_ID;
         }
     }
 
-    public static Post create(Map<String, String> initMap) {
-        return new Post(initMap);
+    public static Post create(Map<String, String> attributeMap) {
+        return new Post(attributeMap);
     }
 
-    public static Supplier<Post> createFunction(Map<String, String> initMap) {
+    public static Supplier<Post> createFunction(Map<String, String> attributeMap) {
         return () -> {
-            Post post = create(initMap);
+            Post post = create(attributeMap);
             return post;
         };
     }

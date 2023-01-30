@@ -1,23 +1,24 @@
 plugins {
-	id 'java'
-    id 'visual-studio'
+	// id 'java'
+    // id 'visual-studio'
     id 'application'
+    id 'rumpus.java-conventions'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
-    id 'org.siouan.frontend-jdk11' version '6.0.0'
+    // id 'org.siouan.frontend-jdk11' version '6.0.0'
 }
 
 application {
     mainClass = 'com.rumpus.rumpus.App'
 }
 
-frontend {
-    nodeVersion = '14.17.3'
-    assembleScript = 'run build'
-    cleanScript = 'run clean'
-    checkScript = 'run check'
-    // packageJsonDirectory.set(project.layout.projectDirectory)
-}
+// frontend {
+//     nodeVersion = '14.17.3'
+//     assembleScript = 'run build'
+//     cleanScript = 'run clean'
+//     checkScript = 'run check'
+//     // packageJsonDirectory.set(project.layout.projectDirectory)
+// }
 
 group = 'com.rumpus'
 version = '0.0.1-SNAPSHOT'
@@ -28,19 +29,28 @@ repositories {
     gradlePluginPortal()
 }
 
-import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
-tasks.register('npxVersion', RunNpx) {
-    // dependsOn tasks.named('installNode')
-    // dependsOn tasks.named('installFrontend')
-    script = '--version'
-}
-tasks.register('webpack', RunNpx) {
-    // dependsOn tasks.named('installNode')
-    // dependsOn tasks.named('installFrontend')
-    script = 'webpack'
-}
+// import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
+// tasks.register('npxVersion', RunNpx) {
+//     // dependsOn tasks.named('installNode')
+//     // dependsOn tasks.named('installFrontend')
+//     script = '--version'
+// }
+// tasks.register('webpack', RunNpx) {
+//     // dependsOn tasks.named('installNode')
+//     // dependsOn tasks.named('installFrontend')
+//     script = 'webpack'
+// }
 
 dependencies {
+    // implementation(project(':rumpus-common:lib'))
+    // implementation(':rumpus-common:lib')
+    // implementation(': rumpus-common:lib')
+    implementation(project(':common'))
+    // implementation(':common')
+    // implementation(project(': common'))
+    // implementation(': common')
+    // implementation(projects.rumpusCommon.lib)
+
     implementation('org.springframework.boot:spring-boot-starter:3.0.1')
     implementation('org.springframework.boot:spring-boot-starter-web:3.0.1') // Enables and configures Spring MVC
     
@@ -75,9 +85,9 @@ tasks.named('test') {
 }
 
 tasks.withType(Test) { 
-  testLogging {
-    exceptionFormat "full"
-    events "started", "skipped", "passed", "failed"
-    showStandardStreams true
-  }
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
 }
