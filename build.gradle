@@ -1,8 +1,9 @@
 plugins {
-	// id 'java'
-    // id 'visual-studio'
+    // id 'rumpus'
     id 'application'
     id 'rumpus.java-conventions'
+    id 'rumpus.dependencies'
+    id 'rumpus.test-conventions'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
     // id 'org.siouan.frontend-jdk11' version '6.0.0'
@@ -12,82 +13,4 @@ application {
     mainClass = 'com.rumpus.rumpus.App'
 }
 
-// frontend {
-//     nodeVersion = '14.17.3'
-//     assembleScript = 'run build'
-//     cleanScript = 'run clean'
-//     checkScript = 'run check'
-//     // packageJsonDirectory.set(project.layout.projectDirectory)
-// }
-
-group = 'com.rumpus'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
-
-repositories {
-	mavenCentral()
-    gradlePluginPortal()
-}
-
-// import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
-// tasks.register('npxVersion', RunNpx) {
-//     // dependsOn tasks.named('installNode')
-//     // dependsOn tasks.named('installFrontend')
-//     script = '--version'
-// }
-// tasks.register('webpack', RunNpx) {
-//     // dependsOn tasks.named('installNode')
-//     // dependsOn tasks.named('installFrontend')
-//     script = 'webpack'
-// }
-
-dependencies {
-    // implementation(project(':rumpus-common:lib'))
-    // implementation(':rumpus-common:lib')
-    // implementation(': rumpus-common:lib')
-    implementation(project(':common'))
-    // implementation(':common')
-    // implementation(project(': common'))
-    // implementation(': common')
-    // implementation(projects.rumpusCommon.lib)
-
-    implementation('org.springframework.boot:spring-boot-starter:3.0.1')
-    implementation('org.springframework.boot:spring-boot-starter-web:3.0.1') // Enables and configures Spring MVC
-    
-    // DB dependencies
-    // implementation('org.springframework.data:spring-data-bom:2022.0.0')
-    implementation('org.springframework.boot:spring-boot-starter-jdbc:3.0.1')
-    implementation('mysql:mysql-connector-java:8.0.31')
-
-    // Spring Boot dev tools
-    implementation('org.springframework.boot:spring-boot-devtools:3.0.1')
-
-    implementation('org.springframework.boot:spring-boot-starter-thymeleaf:3.0.1')
-    implementation('org.webjars:bootstrap:5.2.3')
-
-    // Testing
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
-
-    // kong
-    implementation('com.konghq:unirest-java:3.11.13')
-
-    // ? 
-    implementation('org.springframework.boot:spring-boot-starter-actuator')
-
-    // JS
-    // implementation('com.github.eirslett:frontend-maven-plugin:1.12.1')
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
-tasks.withType(Test) { 
-    testLogging {
-        exceptionFormat "full"
-        events "started", "skipped", "passed", "failed"
-        showStandardStreams true
-    }
-}
