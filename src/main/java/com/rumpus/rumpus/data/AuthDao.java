@@ -1,42 +1,31 @@
 package com.rumpus.rumpus.data;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.List;
 import java.util.function.Function;
 
-import javax.print.attribute.standard.MediaSize.NA;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-
 import com.rumpus.common.Mapper;
-import com.rumpus.common.ApiDB.IApi;
+import com.rumpus.common.IApiDB;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.Auth;
 
 public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
     private static final String NAME = "authDao";
-    public static final String TABLE = "auth";
-    // private static RumpusApiDB<Auth> apiDB;
-    private static IApi<Auth> api;
+    private static final String TABLE = "auth";
 
-    // static {
-    //     apiDB = new RumpusApiDB<>(TABLE, mapper());
-    // }
-
-    // @Autowired
     public AuthDao() {
+        super(TABLE, NAME);
+    }
+    public AuthDao(IApiDB<Auth> api) {
         super(api, TABLE, NAME);
     }
     
     public static AuthDao create() {
         return new AuthDao();
+    }
+    public static AuthDao create(IApiDB<Auth> api) {
+        return new AuthDao(api);
     }
 
     private final static Function<Auth, Auth> addFunction() {
@@ -52,6 +41,12 @@ public class AuthDao extends RumpusDao<Auth> implements IAuthDao {
             // auth.setId(keyHolder.getKey().longValue());
             return auth;
         };
+    }
+
+    @Override
+    public Mapper<Auth> getMapper() {
+        LOG.info("AuthDao::getMapper()");
+        return mapper();
     }
 
     public final static Mapper<Auth> mapper() {

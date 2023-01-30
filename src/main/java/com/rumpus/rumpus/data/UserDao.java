@@ -1,23 +1,18 @@
 package com.rumpus.rumpus.data;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import com.rumpus.rumpus.models.User;
 import com.rumpus.common.Mapper;
-import com.rumpus.common.ApiDB.IApi;
-import com.rumpus.common.ApiDB.IApiDB;
+import com.rumpus.common.IApiDB;
 import com.rumpus.common.util.Pair;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,7 +20,7 @@ import org.springframework.stereotype.Repository;
 public class UserDao extends RumpusDao<User> implements IUserDao {
     
     private static final String NAME = "userDao";
-    public static final String TABLE = "user";
+    private static final String TABLE = "user";
     // private static RumpusApiDB<User> apiDB;
     // private static IApi<User> api;
 
@@ -33,14 +28,19 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
     //     apiDB = new RumpusApiDB<>(TABLE, mapper());
     // }
 
-    // @Autowired
-    public UserDao(IApi<User> api) {
+    public UserDao() {
+        super(TABLE, NAME);
+    }
+    public UserDao(IApiDB<User> api) {
         super(api, TABLE, NAME);
     }
 
-    // public static UserDao create() {
-    //     return new UserDao();
-    // }
+    public static UserDao create() {
+        return new UserDao();
+    }
+    public static UserDao create(IApiDB<User> api) {
+        return new UserDao(api);
+    }
 
     public final static Function<User, User> add() {
         return (User user) -> {
@@ -63,13 +63,22 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
         };
     }
 
-    // @Override
-    // public User get(String name) {
-    //     final String sql = "SELECT * FROM user WHERE name = ?;";
-    //     return jdbcTemplate.queryForObject(sql, mapper, name);
-    // }
+    @Override
+    public User get(String name) {
+        Map<String, String> constraint = new HashMap<>();
+        constraint.put("name", name);
+        return super.get(constraint).get(0);
+        // final String sql = "SELECT * FROM user WHERE name = ?;";
+        // return jdbcTemplate.queryForObject(sql, mapper(), name);
+    }
 
-    public final static Mapper<User> mapper() {
+    @Override
+    public Mapper<User> getMapper() {
+        LOG.info("UserDao::getMapper()");
+        return mapper();
+    }
+
+    private final static Mapper<User> mapper() {
         Mapper<User> mapper = new Mapper<>();
         mapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();

@@ -12,9 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.rumpus.common.ApiDB.IApi;
-import com.rumpus.common.ApiDB.IApiDB;
-import com.rumpus.common.ApiDB.Jdbc;
+import com.rumpus.common.IApiDB;
+import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.rumpus.data.AuthDao;
 import com.rumpus.rumpus.data.IAuthDao;
 import com.rumpus.rumpus.data.IUserDao;
@@ -36,12 +35,6 @@ public class RumpusConfig {
 
     @Autowired
 	Environment environment;
-
-    // List of DAO's
-    // @Autowired
-    // IUserDao userDao;
-    // @Autowired
-    // IAuthDao authDao;
 
     // DB look in database.properties
     private final String URL = "url";
@@ -70,35 +63,18 @@ public class RumpusConfig {
 	}
 
     @Bean
-    JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
-    }
-
-    @Bean
-    public IApi<User> rumpusUserApiDB() {
-        IApi<User> userApiDB = new Jdbc<>(dataSource(), UserDao.TABLE, UserDao.mapper());
-        return userApiDB;
-    }
-
-    @Bean
-    public IApi<Auth> rumpusAuthApiDB() {
-        IApi<Auth> authApiDB = new Jdbc<>(dataSource(), AuthDao.TABLE, AuthDao.mapper());
-        return authApiDB;
-    }
-
-    @Bean
-    @DependsOn({"rumpusUserApiDB"})
     public IUserDao rumpusUserDao() {
-        IUserDao userDao = new UserDao(rumpusUserApiDB());
-        // userDao.setJdbcTemplate(jdbcTemplate());
+        IUserDao userDao = new UserDao();
+        IApiDB<User> userApiDB = new ApiDBJdbc<>(dataSource(), userDao.getTable(), userDao.getMapper());
+        userDao.setApiDB(userApiDB);
         return userDao;
     }
 
     @Bean
-    @DependsOn({"rumpusAuthApiDB"})
     public IAuthDao rumpusAuthDao() {
         IAuthDao authDao = new AuthDao();
-        // authDao.setJdbcTemplate(jdbcTemplate());
+        IApiDB<Auth> authApiDB = new ApiDBJdbc<>(dataSource(), authDao.getTable(), authDao.getMapper());
+        authDao.setApiDB(authApiDB);
         return authDao;
     }
 
@@ -122,9 +98,4 @@ public class RumpusConfig {
     public RumpusLoader rumpusLoader() {
         return new RumpusLoader(rumpusUserDao(), rumpusAuthDao());
     }
-
-    // @Bean
-    // public RumpusRestController controller() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-    //     return new RumpusRestController(rumpusUserService(), view());
-    // }
 }

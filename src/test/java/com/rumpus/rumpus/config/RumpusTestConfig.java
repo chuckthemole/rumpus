@@ -9,15 +9,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.rumpus.common.ApiDB.IApi;
-import com.rumpus.common.ApiDB.Jdbc;
-import com.rumpus.rumpus.controller.RumpusRestController;
+import com.rumpus.common.IApiDB;
+import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.rumpus.data.AuthDao;
 import com.rumpus.rumpus.data.IAuthDao;
 import com.rumpus.rumpus.data.IRumpusDaoManager;
@@ -34,19 +31,13 @@ import com.rumpus.rumpus.ui.RumpusIO;
 import com.rumpus.rumpus.ui.RumpusView;
 
 @TestConfiguration
-@ComponentScan("com.rumpus.rumpus")
+// @ComponentScan("com.rumpus.rumpus")
 @PropertySource("classpath:database.properties")
 @PropertySource("classpath:application.properties")
 public class RumpusTestConfig {
 
     @Autowired
 	Environment environment;
-
-    // List of DAO's
-    // @Autowired
-    // IUserDao userDao;
-    // @Autowired
-    // IAuthDao authDao;
 
     // DB look in database.properties
     private final String URL = "url";
@@ -75,35 +66,18 @@ public class RumpusTestConfig {
 	}
 
     @Bean
-    JdbcTemplate jdbcTemplate() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        return new JdbcTemplate(dataSource());
-    }
-
-    @Bean
-    public IApi<User> rumpusUserApiDB() {
-        IApi<User> userApiDB = new Jdbc<>(dataSource(), UserDao.TABLE, UserDao.mapper());
-        return userApiDB;
-    }
-
-    @Bean
-    public IApi<Auth> rumpusAuthApiDB() {
-        IApi<Auth> authApiDB = new Jdbc<>(dataSource(), AuthDao.TABLE, AuthDao.mapper());
-        return authApiDB;
-    }
-
-    @Bean
-    @DependsOn({"rumpusUserApiDB"})
-    public IUserDao rumpusUserDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        IUserDao userDao = new UserDao(rumpusUserApiDB());
-        // userDao.setJdbcTemplate(jdbcTemplate());
+    public IUserDao rumpusUserDao() {
+        IUserDao userDao = new UserDao();
+        IApiDB<User> userApiDB = new ApiDBJdbc<>(dataSource(), userDao.getTable(), userDao.getMapper());
+        userDao.setApiDB(userApiDB);
         return userDao;
     }
 
     @Bean
-    @DependsOn({"rumpusAuthApiDB"})
-    public IAuthDao rumpusAuthDao() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public IAuthDao rumpusAuthDao() {
         IAuthDao authDao = new AuthDao();
-        // authDao.setJdbcTemplate(jdbcTemplate());
+        IApiDB<Auth> authApiDB = new ApiDBJdbc<>(dataSource(), authDao.getTable(), authDao.getMapper());
+        authDao.setApiDB(authApiDB);
         return authDao;
     }
 
