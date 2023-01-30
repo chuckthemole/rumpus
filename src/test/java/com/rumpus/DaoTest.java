@@ -1,4 +1,4 @@
-package com.rumpus.common;
+package com.rumpus;
 
 import com.rumpus.rumpus.models.RumpusModel;
 

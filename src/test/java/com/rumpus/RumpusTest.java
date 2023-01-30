@@ -1,4 +1,4 @@
-package com.rumpus.common;
+package com.rumpus;
 
 public class RumpusTest extends Rumpus {
 }

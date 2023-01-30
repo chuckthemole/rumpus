@@ -3,8 +3,6 @@ package com.rumpus.rumpus.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -20,9 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.rumpus.common.DaoTest;
-import com.rumpus.common.IApiDB;
-import com.rumpus.common.ApiDBJdbc;
+import com.rumpus.DaoTest;
 import com.rumpus.rumpus.config.RumpusTestConfig;
 import com.rumpus.rumpus.models.User;
 
