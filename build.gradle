@@ -1,16 +1,11 @@
 plugins {
-    // id 'rumpus'
-    id 'application'
-    id 'rumpus.java-conventions'
-    id 'rumpus.dependencies'
-    id 'rumpus.test-conventions'
+    id 'rumpus'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
-    // id 'org.siouan.frontend-jdk11' version '6.0.0'
-}
-
-application {
-    mainClass = 'com.rumpus.rumpus.App'
 }
 
 sourceCompatibility = '17'
+
+dependencies {
+    implementation(project(':common'))
+}
