@@ -14,6 +14,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import com.rumpus.common.IApiDB;
+import com.rumpus.common.IO.IRumpusIO;
+import com.rumpus.common.IO.RumpusIO;
 import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.rumpus.data.AuthDao;
 import com.rumpus.rumpus.data.IAuthDao;
@@ -26,8 +28,6 @@ import com.rumpus.rumpus.models.Auth;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
-import com.rumpus.rumpus.ui.IRumpusIO;
-import com.rumpus.rumpus.ui.RumpusIO;
 import com.rumpus.rumpus.ui.RumpusView;
 
 @TestConfiguration
@@ -46,13 +46,8 @@ public class RumpusTestConfig {
 	private final String PASSWORD = "password";
     
     @Bean
-    public IRumpusIO io() {
-        return new RumpusIO();
-    }
-
-    @Bean
     public RumpusView view() {
-        return new RumpusView(io());
+        return new RumpusView();
     }
 
     @Bean

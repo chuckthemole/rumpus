@@ -3,7 +3,11 @@ package com.rumpus.rumpus.ui;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.context.annotation.Configuration;
+
+import javax.print.attribute.standard.MediaSize.NA;
+
+import com.rumpus.common.RumpusObject;
+import com.rumpus.common.IO.IRumpusIO;
 import com.rumpus.rumpus.models.*;
 
 /**
@@ -11,11 +15,12 @@ import com.rumpus.rumpus.models.*;
  * @author Chuck
  */
 
-public class RumpusView {
-    private IRumpusIO io;
+public class RumpusView extends RumpusObject {
+
+    private static final String NAME = "RumpusView";
     
-    public RumpusView(IRumpusIO io) {
-        this.io = io;
+    public RumpusView() {
+        super(NAME);
     }
 
     public int printMenuAndGetSelection() {
