@@ -2,10 +2,40 @@ plugins {
     id 'rumpus'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.siouan.frontend-jdk11' version '6.0.0'
+}
+
+repositories {
+    gradlePluginPortal()
 }
 
 sourceCompatibility = '17'
 
 dependencies {
     implementation(project(':common'))
+}
+
+frontend {
+    nodeVersion = '14.17.3'
+    // installScript = 'run install'
+    assembleScript = 'run build'
+    cleanScript = 'run clean'
+    checkScript = 'run check'
+    nodeInstallDirectory = file("${projectDir}/node")
+    // packageJsonDirectory.set(file("${projectDir}/frontend"))
+}
+
+
+// * * * Tasks * * * 
+
+import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
+tasks.register('npxVersion', RunNpx) {
+    // dependsOn tasks.named('installNode')
+    // dependsOn tasks.named('installFrontend')
+    script = '--version'
+}
+tasks.register('webpack', RunNpx) {
+    // dependsOn tasks.named('installNode')
+    // dependsOn tasks.named('installFrontend')
+    script = 'webpack'
 }
