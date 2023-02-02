@@ -1,10 +1,5 @@
 @charset "utf-8";
-
-//Vars
-$node_modules : "../../../../../node_modules";
-$bulma : "../../../../../node_modules/bulma";
-
-@import "#{$bulma}/bulma.sass";
+@import "../../../../../node_modules/bulma/bulma.sass"; // can't use variable for path name, check here: https://stackoverflow.com/questions/37568179/import-path-using-variable-sass
 
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
@@ -32,12 +27,12 @@ $input-border-color: transparent;
 $input-shadow: none;
 
 // Import only what you need from Bulma
-@import "#{$bulma}/sass/utilities/_all.sass";
-@import "#{$bulma}/sass/base/_all.sass";
-@import "#{$bulma}/sass/elements/button.sass";
-@import "#{$bulma}/sass/elements/container.sass";
-@import "#{$bulma}/sass/elements/title.sass";
-@import "#{$bulma}/sass/form/_all.sass";
-@import "#{$bulma}/sass/components/navbar.sass";
-@import "#{$bulma}/sass/layout/hero.sass";
-@import "#{$bulma}/sass/layout/section.sass";
+@import "../../../../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../../../../node_modules/bulma/sass/base/_all.sass";
+@import "../../../../../node_modules/bulma/sass/elements/button.sass";
+@import "../../../../../node_modules/bulma/sass/elements/container.sass";
+@import "../../../../../node_modules/bulma/sass/elements/title.sass";
+@import "../../../../../node_modules/bulma/sass/form/_all.sass";
+@import "../../../../../node_modules/bulma/sass/components/navbar.sass";
+@import "../../../../../node_modules/bulma/sass/layout/hero.sass";
+@import "../../../../../node_modules/bulma/sass/layout/section.sass";
