@@ -31,11 +31,11 @@ class UserList extends React.Component{
 		return (
 			<table>
 				<tbody>
-					<tr>
-						<th>Name</th>
-						{/* <th>Last Name</th>
-						<th>Description</th> */}
-					</tr>
+					<div class="columns">
+						<div class="column">Name</div>
+						<div class="column">Name2</div>
+						<div class="column">Name3</div>
+					</div>
 					{users}
 				</tbody>
 			</table>
@@ -46,11 +46,11 @@ class UserList extends React.Component{
 class User extends React.Component{
 	render() {
 		return (
-			<tr>
-				<td>{this.props.user.name}</td>
-				{/* <td>{this.props.user.lastName}</td>
-				<td>{this.props.user.description}</td> */}
-			</tr>
+			<div class="columns">
+				<div class="column">{this.props.user.name}</div>
+				<div class="column">{this.props.user.name}</div>
+				<div class="column">{this.props.user.name}</div>
+			</div>
 		)
 	}
 }

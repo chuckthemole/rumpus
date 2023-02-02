@@ -39,3 +39,10 @@ tasks.register('webpack', RunNpx) {
     // dependsOn tasks.named('installFrontend')
     script = 'webpack'
 }
+
+import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpm
+tasks.register('bulma', RunNpm) {
+    // dependsOn tasks.named('installNode')
+    // dependsOn tasks.named('installFrontend')
+    script = 'install bulma'
+}

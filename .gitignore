@@ -41,6 +41,7 @@ out/
 application.properties
 database.properties
 tmp/
+target/
 
 ### logging
 src/main/java/com/rumpus/rumpus/log/
@@ -49,6 +50,7 @@ src/test/java/com/rumpus/rumpus/log/
 ### Node
 node/
 node_modules/
-src/main/resources/static/built
+src/main/resources/static/js/*
+src/main/resources/static/css/rumpus-styles.css
 
 ######################
