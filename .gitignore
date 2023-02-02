@@ -50,6 +50,7 @@ src/test/java/com/rumpus/rumpus/log/
 ### Node
 node/
 node_modules/
+package-lock.json
 src/main/resources/static/js/*
 src/main/resources/static/css/rumpus-styles.css
 
