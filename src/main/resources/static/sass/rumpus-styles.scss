@@ -1,3 +1,6 @@
+// We can set global variables for Bulma in this file
+// https://bulma.io/documentation/customize/variables/
+
 @charset "utf-8";
 @import "../../../../../node_modules/bulma/bulma.sass"; // can't use variable for path name, check here: https://stackoverflow.com/questions/37568179/import-path-using-variable-sass
 
@@ -17,6 +20,7 @@ $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
 $link: $pink;
+$background: $black;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
