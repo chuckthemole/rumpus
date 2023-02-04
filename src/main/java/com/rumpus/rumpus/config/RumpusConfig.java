@@ -26,6 +26,8 @@ import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
 import com.rumpus.rumpus.ui.RumpusView;
+import com.rumpus.rumpus.views.IViewLoader;
+import com.rumpus.rumpus.views.ViewLoader;
 
 @Configuration
 @ComponentScan("com.rumpus.rumpus")
@@ -44,6 +46,11 @@ public class RumpusConfig {
     @Bean
     public RumpusView view() {
         return new RumpusView();
+    }
+
+    @Bean
+    public IViewLoader viewLoader() {
+        return new ViewLoader();
     }
 
     @Bean

@@ -6,16 +6,19 @@
     <title>rumpus</title>
     <link rel="stylesheet" href="/css/rumpus-styles.css" />
 </head>
+
 <body>
 
     <div th:replace="~{fragments/header :: header}">Header</div>
 
-    <div id="react"></div>
+    <div id="users"></div>
 
-    <script src="js/bundle.js"></script>
-
+    <div id="footer"></div>
     <div th:insert="~{fragments/footer :: footer}">&copy; 2017 The Static Templates</div>
+
+    <script src="js/bundle.js"></script> <!-- keep this at bottom of body -->
 </body>
+
 </html>
 
 

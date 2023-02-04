@@ -5,6 +5,10 @@ import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.ui.RumpusView;
+import com.rumpus.rumpus.views.Footer;
+import com.rumpus.rumpus.views.IViewLoader;
+import com.rumpus.rumpus.views.ViewLoader;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,10 +38,12 @@ public class RumpusRestController {
     private RumpusView view;
     // @Autowired
     private IUserService rumpusUserService;
+    private IViewLoader viewLoader;
 
     @Autowired
-    public RumpusRestController(IUserService service, RumpusView view) {
+    public RumpusRestController(IUserService service, IViewLoader viewLoader, RumpusView view) {
         this.rumpusUserService = service;
+        this.viewLoader = viewLoader;
         this.view = view;
     }
     
@@ -56,6 +62,11 @@ public class RumpusRestController {
         Gson gson = new Gson();
         
         return new ResponseEntity<List<User>>(rumpusUserService.getAll(), HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping("/footer")
+    public ResponseEntity<Footer> getFooter() {
+        return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
     }
     
     @GetMapping("/username/{name}")
