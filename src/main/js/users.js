@@ -10,6 +10,7 @@ class Users extends React.Component {
 
 	componentDidMount() {
 		client({method: 'GET', path: '/api/users'}).done(response => {
+            console.log(response.entity);
 			this.setState({users: response.entity});
 		});
         console.log(this.state);
@@ -21,6 +22,24 @@ class Users extends React.Component {
 		)
 	}
 }
+
+// Look into changing to function instead of Component    https://beta.reactjs.org/reference/react/Component#alternatives
+// import { useState } from 'react';
+
+// export default function Users() {
+
+//     const [name, setName] = useState({users: []});
+
+//     function handleNameChange(e) {
+//         setName(e.target.value);
+//     }
+
+//     useEffect(() => {
+//         client({method: 'GET', path: '/api/users'}).done(response => {
+// 			this.setState({users: response.entity});
+// 		});
+//     })
+// }
 
 class UserList extends React.Component {
 	render() {

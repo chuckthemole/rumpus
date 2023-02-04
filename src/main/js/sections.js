@@ -5,59 +5,55 @@ class Footer extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {columns: []};
+		this.state = {cols: []};
 	}
 
 	componentDidMount() {
 		client({method: 'GET', path: '/api/footer'}).done(response => {
-            console.log(response.entity);
-			this.setState(response);
+			this.setState({cols: response.entity.columns});
 		});
-        console.log(this.state);
 	}
 
 	render() {
-        <div></div>
-		// return (<ColumnList columns={this.state.columns}/>)
+		return (<ColumnList columnList={this.state.cols}/>)
 	}
 }
 
 class ColumnList extends React.Component {
 	render() {
-		const columns = this.props.columns.map(column =>
+		const columns = this.props.columnList.map(column =>
 			<Column key={column.title} column={column}/>
 		);
 		return (
-            <div class="columns">
+            <div className="columns">
                 {columns}
             </div>
-			// <table>
-			// 	<tbody>
-			// 		<div class="columns">
-			// 			<div class="column">Name</div>
-			// 			<div class="column">Name2</div>
-			// 			<div class="column">Name3</div>
-			// 		</div>
-			// 		{columns}
-			// 	</tbody>
-			// </table>
 		)
 	}
 }
 
 class Column extends React.Component {
 	render() {
-        // const items = this.props.column.map(item =>
-        //     <Item item=/>
-        // );
+        const items = this.props.column.items.map(item =>
+            <Item key={item} item={item}/>
+        );
 		return (
-			<div class="column">
-				<div class="column">{this.props.column.title}</div>
-				<div class="column">{this.props.column.title}</div>
-				<div class="column">{this.props.column.title}</div>
+			<div className="column">
+				<div>{this.props.column.title}</div>
+				{items}
 			</div>
 		)
 	}
+}
+
+class Item extends React.Component {
+    render() {
+        return (
+            <div>
+                <span>{this.props.item}</span>
+            </div>
+        )
+    }
 }
 
 export default Footer;
