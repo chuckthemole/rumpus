@@ -37,7 +37,7 @@ tasks.register('npxVersion', RunNpx) {
 tasks.register('webpack', RunNpx) {
     // dependsOn tasks.named('installNode')
     // dependsOn tasks.named('installFrontend')
-    script = 'webpack'
+    script = 'webpack --config config/dev/webpack.config.js'
 }
 
 import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpm
