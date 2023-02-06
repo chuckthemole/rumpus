@@ -12,7 +12,8 @@
         <div class="columns">
             <div class="column"></div>
             <div class="column is-one-fifths">
-                <div class="columns">
+                <div id="footer"></div>
+                <!-- <div class="columns">
                     <div class="column">
                         Useful
                     </div>
@@ -22,7 +23,7 @@
                     <div class="column">
                         Extras
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="column"></div>
         </div>
@@ -35,6 +36,8 @@
         <span>Rumpus </span><span th:text="${@environment.getProperty('app.version')}"></span>
     </div>
 
+    <script src="js/app.bundle.js"></script> <!-- keep this at bottom of body -->
+    
 </body>
 </html>
 
