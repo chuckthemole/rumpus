@@ -15,14 +15,14 @@ class Footer extends React.Component {
 	}
 
 	render() {
-		return (<ColumnList columnList={this.state.cols}/>)
+		return (<FooterColumnList columnList={this.state.cols}/>)
 	}
 }
 
-class ColumnList extends React.Component {
+class FooterColumnList extends React.Component {
 	render() {
 		const columns = this.props.columnList.map(column =>
-			<Column key={column.title} column={column}/>
+			<FooterColumn key={column.title} column={column}/>
 		);
 		return (
             <div className="columns">
@@ -32,10 +32,10 @@ class ColumnList extends React.Component {
 	}
 }
 
-class Column extends React.Component {
+class FooterColumn extends React.Component {
 	render() {
         const items = this.props.column.items.map(item =>
-            <Item key={item} item={item}/>
+            <FooterItem key={item} item={item}/>
         );
 		return (
 			<div className="column">
@@ -46,7 +46,7 @@ class Column extends React.Component {
 	}
 }
 
-class Item extends React.Component {
+class FooterItem extends React.Component {
     render() {
         return (
             <div>

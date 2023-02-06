@@ -3,7 +3,7 @@ const ReactDOM = require('react-dom/client');
 const client = require('./client');
 
 import Users from './users';
-import Footer from './sections';
+import Footer from './footer';
 
 const users = ReactDOM.createRoot(document.getElementById('users'));
 users.render(<Users />);
