@@ -4,7 +4,18 @@
 Trying to hide nav bar on scroll
 https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
 */
+
 .navbar {
     position: fixed; /* Make it stick/fixed */
     transition: top 0.3s; /* Transition effect when sliding down (and up) */
 }
+
+/* .quill-container {
+    width: 80%;
+    height: 100px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: blue;
+    margin-left: 20px;
+    padding-bottom: 40px; //fix bug here
+} */

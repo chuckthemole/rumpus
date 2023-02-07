@@ -39,6 +39,11 @@ tasks.register('webpack', RunNpx) {
     // dependsOn tasks.named('installFrontend')
     script = 'webpack --config config/dev/webpack.config.js'
 }
+tasks.register('quill', RunNpx) {
+    // dependsOn tasks.named('installNode')
+    // dependsOn tasks.named('installFrontend')
+    script = 'webpack --config config/dev/quill.config.js'
+}
 
 import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpm
 tasks.register('bulma', RunNpm) {

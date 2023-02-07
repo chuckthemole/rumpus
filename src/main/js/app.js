@@ -5,8 +5,13 @@ const client = require('./client');
 import Users from './users';
 import Footer from './footer';
 
-const users = ReactDOM.createRoot(document.getElementById('users'));
-users.render(<Users />);
+export default function App() {
+    const users = ReactDOM.createRoot(document.getElementById('users'));
+    users.render(<Users />);
 
-const footer = ReactDOM.createRoot(document.getElementById('footer'));
-footer.render(<Footer />);
+    const footer = ReactDOM.createRoot(document.getElementById('footer'));
+    footer.render(<Footer />);
+}
+
+// * * * Main * * *
+App();
