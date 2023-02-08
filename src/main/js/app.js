@@ -7,15 +7,15 @@ import Footer from './footer';
 
 function InitModals() {
     const modals = new Map();
-    // modals.set("login", [
-    //     document.getElementsByClassName("login")[0], 
-    //     document.getElementsByClassName("loginBtn")[0]]
-    // );
+    modals.set("login", [
+        document.getElementsByClassName("login")[0], 
+        document.getElementsByClassName("loginBtn")[0]]
+    );
     modals.set("signup", [
         document.getElementsByClassName("signup")[0],
         document.getElementsByClassName("signupBtn")[0]]
     );
-    
+
     for (let value of modals.values()) {
         var modal = value[0];
         var button = value[1];
