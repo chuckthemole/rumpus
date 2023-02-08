@@ -7,21 +7,31 @@ import Footer from './footer';
 
 function Login() {
     var modal = document.getElementsByClassName("login")[0];
-    var btn = document.getElementsByClassName("loginBtn")[0];
-    var span = document.getElementsByClassName("close")[0]; // closes modal
+    var button = document.getElementsByClassName("loginBtn")[0];
+    var close = document.getElementsByClassName("loginClose")[0];
+    ModalCommon(button, modal, close);
+}
 
+function Signup() {
+    var modal = document.getElementsByClassName("signup")[0];
+    var button = document.getElementsByClassName("signupBtn")[0];
+    var close = document.getElementsByClassName("signupClose")[0];
+    ModalCommon(button, modal, close);
+}
+
+function ModalCommon(button, modal, close) {
     // user clicks the button, open modal login
-    btn.onclick = function() {
+    button.onclick = function() {
         modal.classList.remove("is-hidden");
     }
 
     // user clicks on x, close the modal 
-    span.onclick = function() {
+    close.onclick = function() {
         modal.classList.add("is-hidden");
     }
 
     // user clicks anywhere outside, close it 
-    window.onclick = function(event) {   
+    window.onclick = function(event) {
         if (event.target == modal) {
             modal.classList.add("is-hidden");
         }
@@ -36,6 +46,7 @@ export default function App() {
     footer.render(<Footer />);
 
     Login();
+    Signup();
 }
 
 // * * * Main * * *

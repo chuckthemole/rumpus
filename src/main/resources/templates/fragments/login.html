@@ -1,70 +1,70 @@
-<!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>rumpus</title>
-    <link rel="stylesheet" href="/css/rumpus-styles.css" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
+    <!DOCTYPE html>
+    <html xmlns:th="https://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>rumpus</title>
+        <link rel="stylesheet" href="/css/rumpus-styles.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
 
-</head>
+    </head>
 
-<body>
-    
-    <div th:fragment="login">
+    <body>
+        
+        <div th:fragment="login">
 
-        <div class="columns">
-            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                <div class="login columns is-hidden is-overlay is-centered">
-                    <section class="hero is-transparent is-fullheight">
-                        <div class="hero-body">
-                            <div class="container">
-                                <div class="columns is-centered">
-                                    <div class="column">
-                                        <form action="" class="box">
-                                            <div class="field">
-                                                <label for="" class="label">Email</label>
-                                                <div class="control has-icons-left">
-                                                    <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+            <div class="columns">
+                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                    <div class="login columns is-hidden is-overlay">
+                        <section class="hero is-transparent is-fullheight">
+                            <div class="hero-body">
+                                <div class="container">
+                                    <div class="columns is-centered">
+                                        <div class="column">
+                                            <form action="" class="box">
+                                                <div class="field">
+                                                    <label for="" class="label">Email</label>
+                                                    <div class="control has-icons-left">
+                                                        <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                                                            <span class="icon is-small is-left">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <label for="" class="label">Password</label>
+                                                    <div class="control has-icons-left">
+                                                        <input type="password" placeholder="*******" class="input" required>
                                                         <span class="icon is-small is-left">
-                                                            <i class="fa fa-envelope"></i>
+                                                            <i class="fa fa-lock"></i>
                                                         </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="field">
-                                                <label for="" class="label">Password</label>
-                                                <div class="control has-icons-left">
-                                                    <input type="password" placeholder="*******" class="input" required>
-                                                    <span class="icon is-small is-left">
-                                                        <i class="fa fa-lock"></i>
-                                                    </span>
+                                                <div class="field">
+                                                    <label for="" class="checkbox">
+                                                        <input type="checkbox">
+                                                            Remember me
+                                                    </label>
                                                 </div>
-                                            </div>
-                                            <div class="field">
-                                                <label for="" class="checkbox">
-                                                    <input type="checkbox">
-                                                        Remember me
-                                                </label>
-                                            </div>
-                                            <div class="field">
-                                                <button class="button is-success">
-                                                    Login
-                                                </button>
-                                                <span class="close">&times;</span>
-                                            </div>
-                                        </form>
+                                                <div class="field">
+                                                    <button class="button is-success">
+                                                        Login
+                                                    </button>
+                                                    <span class="close loginClose">&times;</span>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
                 </div>
             </div>
+            
         </div>
-        
-    </div>
 
-</body> 
+    </body> 
 
-</html>
+    </html>
