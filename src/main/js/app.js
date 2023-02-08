@@ -5,6 +5,10 @@ const client = require('./client');
 import Users from './users';
 import Footer from './footer';
 
+const modals = new Map();
+modals.set("login", document.getElementsByClassName("login")[0]);
+modals.set("signup", document.getElementsByClassName("signup")[0]);
+
 function Login() {
     var modal = document.getElementsByClassName("login")[0];
     var button = document.getElementsByClassName("loginBtn")[0];
@@ -15,8 +19,36 @@ function Login() {
 function Signup() {
     var modal = document.getElementsByClassName("signup")[0];
     var button = document.getElementsByClassName("signupBtn")[0];
-    var close = document.getElementsByClassName("signupClose")[0];
-    ModalCommon(button, modal, close);
+
+    button.onclick = function() {
+        modal.classList.add("is-active");
+        modal.classList.add("is-clipped");
+    }
+}
+
+function ModalBackgroundOnClick() {
+    var backgrounds = document.getElementsByClassName("modal-background");
+    Array.prototype.forEach.call(backgrounds, function(background) {
+        window.onclick = function(event) {
+            if (event.target == background) {
+                for (let modal of modals.values()) {
+                    modal.classList.remove("is-active");
+                    modal.classList.remove("is-clipped");
+                }
+            }
+        }
+    });
+}
+function ModalCloseOnClick() {
+    var closers = document.getElementsByClassName("modal-close");
+    Array.prototype.forEach.call(closers, function(close) {
+        close.onclick = function() {
+            for (let modal of modals.values()) {
+                modal.classList.remove("is-active");
+                modal.classList.remove("is-clipped");
+            }
+        }
+    });
 }
 
 function ModalCommon(button, modal, close) {
@@ -47,6 +79,8 @@ export default function App() {
 
     Login();
     Signup();
+    ModalBackgroundOnClick();
+    ModalCloseOnClick();
 }
 
 // * * * Main * * *

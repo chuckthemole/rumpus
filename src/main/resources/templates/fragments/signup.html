@@ -14,7 +14,45 @@
     
     <div th:fragment="signup">
 
-        <div class="columns">
+        <div class="signup modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <form action="" class="box">
+                    <div class="field">
+                        <label for="" class="label">Email</label>
+                        <div class="control has-icons-left">
+                            <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="" class="label">Password</label>
+                        <div class="control has-icons-left">
+                            <input type="password" placeholder="*******" class="input" required>
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="" class="checkbox">
+                            <input type="checkbox">
+                                Remember me
+                        </label>
+                    </div>
+                    <div class="field">
+                        <button class="button is-success">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+
+        <!-- <div class="columns">
             <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                 
                 <div class="signup columns is-hidden is-overlay is-centered">
@@ -60,6 +98,27 @@
                             </div>
                         </div>
                     </section>
+
+                </div>
+
+            </div>
+        </div> -->
+        
+    </div>
+
+</body> 
+
+</html>
+
+
+
+
+
+
+
+
+
+
                     <!-- <section class="section has-background-light is-clipped">
                         <div class="container is-relative">
                             <div class="has-mw-4xl mx-auto is-relative">
@@ -94,13 +153,3 @@
                             </div>
                         </div>
                     </section> -->
-                </div>
-
-            </div>
-        </div>
-        
-    </div>
-
-</body> 
-
-</html>
