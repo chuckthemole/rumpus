@@ -13,6 +13,7 @@
 <body>
 
     <div th:replace="~{fragments/header :: header}">Header</div>
+    <div th:replace="~{fragments/login :: login}">Login</div>
 
     <div id="users"></div>
 
@@ -24,7 +25,7 @@
         <div class="column is-one-third quill-editor"></div>
         <div class="column"></div>
     </div>
-    
+
     <div th:insert="~{fragments/footer :: footer}">&copy; 2017 The Static Templates</div>
 
     <script src="js/quill.bundle.js"></script> <!-- keep this at bottom of body -->

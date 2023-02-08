@@ -19,3 +19,17 @@ https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
     padding-bottom: 40px;
     background-color: white;
 }
+
+/* The Close Button */ 
+.close {   
+    color: #aaaaaa;   
+    float: right;   
+    font-size: 28px;   
+    font-weight: bold; 
+}
+
+.close:hover, .close:focus {   
+    color: #000;   
+    text-decoration: none;   
+    cursor: pointer; 
+} 
