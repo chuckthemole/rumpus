@@ -11,11 +11,13 @@ import java.util.Map;
  */
 public class User extends RumpusModel<User> {
     private String userName;
+    private String email;
+    private String password;
     private int authId;
     private static final String MODEL_NAME = "userModel";
     
     // Ctors
-    public User(){
+    public User() {
         super(MODEL_NAME);
         init();
     }
@@ -34,9 +36,9 @@ public class User extends RumpusModel<User> {
             return EMPTY;
         }
         if(attributeMap.containsKey("name")) {
-            this.setName(attributeMap.get("name"));
+            this.setUserName(attributeMap.get("name"));
         } else {
-            this.setName(NO_NAME);
+            this.setUserName(NO_NAME);
         }
         if(attributeMap.containsKey("id")) {
             this.setId(Long.parseLong(attributeMap.get("id")));
@@ -47,6 +49,16 @@ public class User extends RumpusModel<User> {
             this.setAuth(Integer.parseInt(attributeMap.get("auth_id")));
         } else {
             this.setAuth(EMPTY);
+        }
+        if(attributeMap.containsKey("email")) {
+            this.setEmail(attributeMap.get("email"));
+        } else {
+            this.setEmail(NO_NAME);
+        }
+        if(attributeMap.containsKey("pass")) {
+            this.setPassword(attributeMap.get("pass"));
+        } else {
+            this.setPassword(NO_NAME);
         }
         statement();
         return SUCCESS;
@@ -61,12 +73,26 @@ public class User extends RumpusModel<User> {
     }
     
     // Getters Setters
-    public String getName() {
+    public String getUserName() {
         return this.userName;
     }
-    public void setName(String n) {
-        attributeMap.put("name", n);
-        this.userName = n;
+    public void setUserName(String name) {
+        attributeMap.put("name", name);
+        this.userName = name;
+    }
+    public String getEmail() {
+        return this.email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+        attributeMap.put("email", email);
+    }
+    public String getPassword() {
+        return this.password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+        attributeMap.put("pass", password);
     }
     public int getAuth() {
         return this.authId;
@@ -78,7 +104,12 @@ public class User extends RumpusModel<User> {
 
     @Override 
     public String toString() {
-        return "Name: " + this.userName + " AuthId: " + this.authId + "\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(this.name).append("\n")
+            .append("Email: ").append(this.email).append("\n")
+            .append("UserName: ").append(this.userName).append("\n")
+            .append("AuthId: ").append(this.authId).append("\n");
+        return sb.toString();
     }
 
     private int statement() {

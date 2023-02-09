@@ -15,7 +15,11 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +36,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class RumpusController {
 
     @GetMapping(value = "/")
-	public String index() {
+	public String index(Model model) {
+        model.addAttribute("user", new User());
 		return "index";
 	}
+
+    @PostMapping("/user")
+    public String userSubmit(@ModelAttribute User user, BindingResult bindingResult, Model model) {
+        // if (bindingResult.hasErrors()) {
+        //     System.out.println("ERROR in user Form");
+        //     for(ObjectError error : bindingResult.getAllErrors()) {
+        //         System.out.println(error.toString());
+        //     }
+        //     return "redirect:/";
+        // } else {
+            model.addAttribute("user", user);
+            System.out.println("  User name: " + user.getUserName());
+            System.out.println("  User email: " + user.getEmail());
+            System.out.println("  User password: " + user.getPassword());
+            return "redirect:/";
+        // }
+    }
 
     // private RumpusView view;
     // private IUserService userService;

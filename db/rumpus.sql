@@ -20,6 +20,8 @@ CREATE TABLE user (
     id INT, -- Maybe change to not null later
     name VARCHAR(45),
     CONSTRAINT rumpus_user UNIQUE (name),
+    email VARCHAR(45),
+    pass VARCHAR(45),
     
     auth_id INT,
     CONSTRAINT fk_auth

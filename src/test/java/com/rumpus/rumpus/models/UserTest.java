@@ -32,6 +32,6 @@ public class UserTest {
 
     @Test
 	void testId() {
-        assertEquals(name, user.getName());
+        assertEquals(name, user.getUserName());
 	}
 }

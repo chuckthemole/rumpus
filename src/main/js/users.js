@@ -13,7 +13,6 @@ class Users extends React.Component {
             console.log(response.entity);
 			this.setState({users: response.entity});
 		});
-        console.log(this.state);
 	}
 
 	render() {
@@ -44,8 +43,9 @@ class Users extends React.Component {
 class UserList extends React.Component {
 	render() {
 		const users = this.props.users.map(user =>
-			<User key={user.name} user={user}/>
+			<User key={user.userName} user={user}/>
 		);
+        console.log(this.props.users);
 		return (
             <div>
                 <div className="columns">
@@ -63,9 +63,9 @@ class User extends React.Component {
 	render() {
 		return (
 			<div className="columns">
-				<div className="column">{this.props.user.name}</div>
-				<div className="column">{this.props.user.name}</div>
-				<div className="column">{this.props.user.name}</div>
+				<div className="column">{this.props.user.userName}</div>
+				<div className="column">{this.props.user.userName}</div>
+				<div className="column">{this.props.user.userName}</div>
 			</div>
 		)
 	}

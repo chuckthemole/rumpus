@@ -52,7 +52,7 @@ public class RumpusView extends RumpusObject {
     }
     public void displayUsers(List<User> users) {
         users.forEach(user -> {
-            io.print(user.getName());
+            io.print(user.getUserName());
         });
     }
     
