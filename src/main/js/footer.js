@@ -1,45 +1,37 @@
 const React = require('react');
 const client = require('./client');
+import useSWR from 'swr';
 
-class Footer extends React.Component {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-	constructor(props) {
-		super(props);
-		this.state = {cols: []};
-	}
+function Footer() {
+    const { data, error } = useSWR(
+        "http://localhost:8081/api/footer",
+        fetcher
+    );
 
-	componentDidMount() {
-		client({method: 'GET', path: '/api/footer'}).done(response => {
-			this.setState({cols: response.entity.columns});
-		});
-	}
-
-	render() {
-		return (<FooterColumnList columnList={this.state.cols}/>)
-	}
+    if (error) return <p>An error occurred</p>;
+    if (!data) return <p>Loading</p>;
+   
+    return (
+        <div className="columns">
+            {data.columns.map(({items, title}) => (
+                <FooterColumn key={title} title={title} column={items}/>
+            ))}
+        </div>
+    )
 }
 
-class FooterColumnList extends React.Component {
-	render() {
-		const columns = this.props.columnList.map(column =>
-			<FooterColumn key={column.title} column={column}/>
-		);
-		return (
-            <div className="columns">
-                {columns}
-            </div>
-		)
-	}
-}
+export default Footer;
 
 class FooterColumn extends React.Component {
 	render() {
-        const items = this.props.column.items.map(item =>
+        const items = this.props.column.map(item =>
             <FooterItem key={item} item={item}/>
         );
 		return (
 			<div className="column">
-				<div>{this.props.column.title}</div>
+				<div>{this.props.title}</div>
 				{items}
 			</div>
 		)
@@ -56,4 +48,4 @@ class FooterItem extends React.Component {
     }
 }
 
-export default Footer;
+// export default Footer;
