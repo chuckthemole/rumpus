@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  *
@@ -19,6 +20,7 @@ public class User extends RumpusModel<User> {
     // Ctors
     public User() {
         super(MODEL_NAME);
+        super.statement = statement();
         init();
     }
     public User(Map<String, String> attributeMap) {
@@ -60,7 +62,7 @@ public class User extends RumpusModel<User> {
         } else {
             this.setPassword(NO_NAME);
         }
-        statement();
+        this.setStatement(statement());
         return SUCCESS;
     }
 
@@ -112,18 +114,33 @@ public class User extends RumpusModel<User> {
         return sb.toString();
     }
 
-    private int statement() {
-        setStatement(
+    private Function<PreparedStatement, PreparedStatement> statement() {
+        return(
             (PreparedStatement statement) -> {
                 try {
-                    statement.setString(1, userName);
-                    statement.setLong(2, id);
+                    // debugUser();
+                    statement.setString(1, password);
+                    statement.setString(2, userName);
+                    statement.setString(3, email);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 return  statement;
             }
         );
+    }
+
+    private int debugUser() {
+        LOG.info("User statement()");
+        StringBuilder sb = new StringBuilder();
+        sb.append("  User name: ").append(this.userName);
+        LOG.info(sb.toString());
+        sb.setLength(0); // clear sb
+        sb.append("  User email: ").append(this.email);
+        LOG.info(sb.toString());
+        sb.setLength(0);
+        sb.append("  User password: ").append(this.password);
+        LOG.info(sb.toString());
         return SUCCESS;
     }
 }

@@ -2,6 +2,10 @@ const React = require('react');
 const ReactDOM = require('react-dom/client');
 const client = require('./client');
 
+// const follow = require('./follow');
+
+const root = '/api';
+
 class Signup extends React.Component {
     constructor(props) {
         super(props);
@@ -12,6 +16,7 @@ class Signup extends React.Component {
         this.handlePassword = this.handlePassword.bind(this);
         // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onCreate = this.onCreate.bind(this);
     }
   
     // handleChange(event) {
@@ -29,9 +34,53 @@ class Signup extends React.Component {
     }
   
     handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.username + ' ' + this.state.email + ' ' + this.state.password);
-      event.preventDefault();
+        alert('A name was submitted: ' + this.state.username + ' ' + this.state.email + ' ' + this.state.password);
+        event.preventDefault();
+
+        const newUser = {};
+        newUser["userName"] = this.state.username;
+        newUser["email"] = this.state.email;
+        newUser["password"] = this.state.password;
+        this.onCreate(newUser);
+
+        // clear out the dialog's inputs
+        // this.props.attributes.forEach(attribute => {
+        //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
+        // });
+
+        // Navigate away from the dialog to hide it.
+        window.location = "#";
     }
+
+    onCreate(newUser) {
+		// const self = this;
+		// follow(client, root, ['user']).then(response => {
+		// 	return client({
+		// 		method: 'POST',
+		// 		path: response.entity._links.self.href,
+		// 		entity: newUser,
+		// 		headers: {'Content-Type': 'application/json'}
+		// 	})
+		// }).then(response => {
+		// 	return follow(client, root, [{rel: 'user', params: {'size': self.state.pageSize}}]);
+		// }).done(response => {
+		// 	if (typeof response.entity._links.last !== "undefined") {
+		// 		this.onNavigate(response.entity._links.last.href);
+		// 	} else {
+		// 		this.onNavigate(response.entity._links.self.href);
+		// 	}
+		// });
+
+        const requestOptions = {
+            method: 'POST',
+            entity: newUser,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newUser)
+        };
+        fetch('/api/user', requestOptions)
+            .then(response => response.json());
+            // .then(data => this.setState({ postId: data.id }));
+	}
   
     render() {
         return (

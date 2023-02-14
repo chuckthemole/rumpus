@@ -59,6 +59,11 @@ public class RumpusRestController extends CommonController {
     // public String index() {
     //     return "index";
     // }
+
+    @GetMapping("/")
+    public String getIndex() {
+        return "hello";
+    }
     
     @GetMapping("/userid/{id}")
     public User getUserById(@PathVariable int id) {
@@ -166,10 +171,24 @@ public class RumpusRestController extends CommonController {
     //     return "user";
     // }
 
-    // @PostMapping("/user")
-    // public String userSubmit(@ModelAttribute User user, Model model) {
-    //     // model.addAttribute("greeting", greeting);
-    //     model.addAttribute("user", model);
-    //     return "result";
-    // }
+    @PostMapping("/user")
+    public ResponseEntity<User> userSubmit(@RequestBody User newUser) {
+        LOG.info("RumpusRestController POST: /user");
+        StringBuilder sb = new StringBuilder();
+        sb.append("  User name: ").append(newUser.getUserName());
+        LOG.info(sb.toString());
+        sb.setLength(0); // clear sb
+        sb.append("  User email: ").append(newUser.getEmail());
+        LOG.info(sb.toString());
+        sb.setLength(0);
+        sb.append("  User password: ").append(newUser.getPassword());
+        LOG.info(sb.toString());
+        User user = rumpusUserService.add(newUser);
+        if (user == null) {
+            LOG.info("User is null!");
+            return null;
+        } else {
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        }
+    }
 }

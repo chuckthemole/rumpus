@@ -63,7 +63,7 @@ public class RumpusControllerTests {
         mockMvc.perform(get("/api/users"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", Matchers.hasSize(1)))
-            .andExpect(jsonPath("$[0].name", Matchers.is("Frodo")));
+            .andExpect(jsonPath("$[0].userName", Matchers.is("Frodo")));
     }
 
     @Test
