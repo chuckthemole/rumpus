@@ -1,8 +1,4 @@
 const React = require('react');
-const ReactDOM = require('react-dom/client');
-const client = require('./client');
-
-// const follow = require('./follow');
 
 const root = '/api';
 
@@ -14,14 +10,10 @@ class Signup extends React.Component {
         this.handleUsername = this.handleUsername.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onCreate = this.onCreate.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
-  
-    // handleChange(event) {
-    //   this.setState({value: event.target.value});
-    // }
 
     handleUsername(event) {
         this.setState({username: event.target.value});
@@ -34,7 +26,7 @@ class Signup extends React.Component {
     }
   
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.username + ' ' + this.state.email + ' ' + this.state.password);
+        // alert('A name was submitted: ' + this.state.username + ' ' + this.state.email + ' ' + this.state.password);
         event.preventDefault();
 
         const newUser = {};
@@ -43,34 +35,13 @@ class Signup extends React.Component {
         newUser["password"] = this.state.password;
         this.onCreate(newUser);
 
-        // clear out the dialog's inputs
-        // this.props.attributes.forEach(attribute => {
-        //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-        // });
-
-        // Navigate away from the dialog to hide it.
-        window.location = "#";
+        const signupModal = document.getElementsByClassName("signup")[0];
+        signupModal.classList.remove("is-active");
+        signupModal.classList.remove("is-clipped");
+        this.clearInput();
     }
 
     onCreate(newUser) {
-		// const self = this;
-		// follow(client, root, ['user']).then(response => {
-		// 	return client({
-		// 		method: 'POST',
-		// 		path: response.entity._links.self.href,
-		// 		entity: newUser,
-		// 		headers: {'Content-Type': 'application/json'}
-		// 	})
-		// }).then(response => {
-		// 	return follow(client, root, [{rel: 'user', params: {'size': self.state.pageSize}}]);
-		// }).done(response => {
-		// 	if (typeof response.entity._links.last !== "undefined") {
-		// 		this.onNavigate(response.entity._links.last.href);
-		// 	} else {
-		// 		this.onNavigate(response.entity._links.self.href);
-		// 	}
-		// });
-
         const requestOptions = {
             method: 'POST',
             entity: newUser,
@@ -81,6 +52,12 @@ class Signup extends React.Component {
             .then(response => response.json());
             // .then(data => this.setState({ postId: data.id }));
 	}
+
+    clearInput() {
+        this.setState({username: ''});
+        this.setState({email: ''});
+        this.setState({password: ''});
+    }
   
     render() {
         return (
@@ -123,7 +100,7 @@ class Signup extends React.Component {
                     </div>
                 </div> --> */}
                 <div className="field">
-                    <button type="submit" value="Signup" className="button is-success">
+                    <button id="signupSubmit" type="submit" value="Signup" className="button is-success">
                         Submit
                     </button>
                 </div>

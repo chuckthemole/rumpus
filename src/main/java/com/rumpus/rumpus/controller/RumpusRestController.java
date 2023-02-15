@@ -74,9 +74,9 @@ public class RumpusRestController extends CommonController {
     public ResponseEntity<List<User>> getAllUsers() {
         // Gson gson = new Gson();
         List<User> users = rumpusUserService.getAll();
-        for(User user : users) {
-            debugUser(user);
-        }
+        // for(User user : users) {
+        //     debugUser(user);
+        // }
         
         return new ResponseEntity<List<User>>(users, HttpStatusCode.valueOf(200));
     }
@@ -178,7 +178,7 @@ public class RumpusRestController extends CommonController {
     @PostMapping("/user")
     public ResponseEntity<User> userSubmit(@RequestBody User newUser) {
         LOG.info("RumpusRestController POST: /user");
-        debugUser(newUser);
+        // debugUser(newUser);
         User user = rumpusUserService.add(newUser);
         if (user == null) {
             LOG.info("User is null!");
@@ -188,18 +188,21 @@ public class RumpusRestController extends CommonController {
         }
     }
 
+    // can prolly do GET not POST
+    @PostMapping("/login")
+    public ResponseEntity<User> userLogin(@RequestBody User user) {
+        LOG.info("RumpusRestController POST: /login");
+        // debugUser(user);
+        rumpusUserService.login(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
     private int debugUser(User user) {
         StringBuilder sb = new StringBuilder();
-        sb.append("* * User * * ");
-        LOG.info(sb.toString());
-        sb.setLength(0); // clear sb
-        sb.append("  User name: ").append(user.getUserName());
-        LOG.info(sb.toString());
-        sb.setLength(0); // clear sb
-        sb.append("  User email: ").append(user.getEmail());
-        LOG.info(sb.toString());
-        sb.setLength(0);
-        sb.append("  User password: ").append(user.getPassword());
+        sb.append("\n* * User * * \n");
+        sb.append("  User name: ").append(user.getUserName()).append("\n");
+        sb.append("  User email: ").append(user.getEmail()).append("\n");
+        sb.append("  User password: ").append(user.getPassword()).append("\n");
         LOG.info(sb.toString());
         return SUCCESS;
     }

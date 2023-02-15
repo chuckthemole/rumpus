@@ -31,7 +31,7 @@ public class User extends RumpusModel<User> {
     @Override
     public int init() {
         if(attributeMap == null || attributeMap.isEmpty()) {
-            LOG.info("attributeMap is empty.");
+            LOG.info("WARNING: AttributeMap is empty.");
             this.userName = NO_NAME;
             this.id = NO_ID;
             this.authId = EMPTY;
@@ -107,11 +107,42 @@ public class User extends RumpusModel<User> {
     @Override 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(this.name).append("\n")
-            .append("Email: ").append(this.email).append("\n")
-            .append("UserName: ").append(this.userName).append("\n")
-            .append("AuthId: ").append(this.authId).append("\n");
+        sb.append("\n Name: ").append(this.name).append("\n")
+            .append(" Email: ").append(this.email).append("\n")
+            .append(" UserName: ").append(this.userName).append("\n")
+            .append(" Password: ").append(this.password).append("\n")
+            .append(" AuthId: ").append(this.authId).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        } else if (!(o instanceof User)) {
+            return false;
+        }
+
+        User user = (User) o;
+        LOG.info("User Name: " + user.userName);
+        LOG.info("This User Name: " + user.userName);
+        if(user.userName.equals(this.userName)) {
+            LOG.info("User pass: " + user.userName);
+            LOG.info("This User pass: " + user.userName);
+            if(user.password.equals(this.password)) {
+                return true;
+            }
+        }
+        LOG.info("User email: " + user.userName);
+        LOG.info("This User email: " + user.userName);
+        if(user.email.equals(this.email)) {
+            LOG.info("User pass: " + user.userName);
+            LOG.info("This User pass: " + user.userName);
+            if(user.password.equals(this.password)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Function<PreparedStatement, PreparedStatement> statement() {
