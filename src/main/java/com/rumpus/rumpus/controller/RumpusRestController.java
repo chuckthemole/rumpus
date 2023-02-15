@@ -72,9 +72,13 @@ public class RumpusRestController extends CommonController {
     
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
-        Gson gson = new Gson();
+        // Gson gson = new Gson();
+        List<User> users = rumpusUserService.getAll();
+        for(User user : users) {
+            debugUser(user);
+        }
         
-        return new ResponseEntity<List<User>>(rumpusUserService.getAll(), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<List<User>>(users, HttpStatusCode.valueOf(200));
     }
 
     @GetMapping("/footer")
@@ -174,15 +178,7 @@ public class RumpusRestController extends CommonController {
     @PostMapping("/user")
     public ResponseEntity<User> userSubmit(@RequestBody User newUser) {
         LOG.info("RumpusRestController POST: /user");
-        StringBuilder sb = new StringBuilder();
-        sb.append("  User name: ").append(newUser.getUserName());
-        LOG.info(sb.toString());
-        sb.setLength(0); // clear sb
-        sb.append("  User email: ").append(newUser.getEmail());
-        LOG.info(sb.toString());
-        sb.setLength(0);
-        sb.append("  User password: ").append(newUser.getPassword());
-        LOG.info(sb.toString());
+        debugUser(newUser);
         User user = rumpusUserService.add(newUser);
         if (user == null) {
             LOG.info("User is null!");
@@ -190,5 +186,21 @@ public class RumpusRestController extends CommonController {
         } else {
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
+    }
+
+    private int debugUser(User user) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("* * User * * ");
+        LOG.info(sb.toString());
+        sb.setLength(0); // clear sb
+        sb.append("  User name: ").append(user.getUserName());
+        LOG.info(sb.toString());
+        sb.setLength(0); // clear sb
+        sb.append("  User email: ").append(user.getEmail());
+        LOG.info(sb.toString());
+        sb.setLength(0);
+        sb.append("  User password: ").append(user.getPassword());
+        LOG.info(sb.toString());
+        return SUCCESS;
     }
 }

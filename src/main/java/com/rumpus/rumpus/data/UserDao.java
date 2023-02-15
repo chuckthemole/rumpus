@@ -88,6 +88,8 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
                 map.put("auth_id", Integer.toString(rs.getInt("auth_id")));
                 map.put("user_id", Integer.toString(rs.getInt("user_id")));
                 map.put("name", rs.getString("name"));
+                map.put("pass", rs.getString("pass"));
+                map.put("email", rs.getString("email"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
