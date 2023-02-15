@@ -1,74 +1,55 @@
 const React = require('react');
-const client = require('./client');
+import useSWR from 'swr';
 
-class Users extends React.Component {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-	constructor(props) {
-		super(props);
-		this.state = {users: []};
-	}
+function Users() {
+    const { data, error } = useSWR(
+        "/api/users",
+        fetcher
+    );
 
-	componentDidMount() {
-		client({method: 'GET', path: '/api/users'}).done(response => {
-            console.log(response.entity);
-			this.setState({users: response.entity});
-		});
-	}
+    if (error) return <p>An error occurred</p>;
+    if (!data) return <p>Loading</p>;
 
-	render() {
-		return (
-			<UserList users={this.state.users}/>
-		)
-	}
-}
-
-// Look into changing to function instead of Component    https://beta.reactjs.org/reference/react/Component#alternatives
-// import { useState } from 'react';
-
-// export default function Users() {
-
-//     const [name, setName] = useState({users: []});
-
-//     function handleNameChange(e) {
-//         setName(e.target.value);
-//     }
-
-//     useEffect(() => {
-//         client({method: 'GET', path: '/api/users'}).done(response => {
-// 			this.setState({users: response.entity});
-// 		});
-//     })
-// }
-
-class UserList extends React.Component {
-	render() {
-		const users = this.props.users.map(user =>
-			<User key={user.userName} user={user}/>
-		);
-        console.log(this.props.users);
-		return (
-            <div>
-                <div className="columns">
-                    <div className="column">Name</div>
-                    <div className="column">Name2</div>
-                    <div className="column">Name3</div>
-                </div>
-                {users}
-            </div>
-		)
-	}
-}
-
-class User extends React.Component {
-	render() {
-		return (
-			<div className="columns">
-				<div className="column">{this.props.user.userName}</div>
-				<div className="column">{this.props.user.userName}</div>
-				<div className="column">{this.props.user.userName}</div>
-			</div>
-		)
-	}
+    console.log(data);
+   
+    return (
+        <table className="table is-hoverable is-fullwidth m-6">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><abbr title="User Name">User</abbr></th>
+                    <th>Email</th>
+                    <th><abbr title="Password">Pass</abbr></th>
+                    <th><abbr title="User Authorizations">Auth</abbr></th>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th><abbr title="User Name">User</abbr></th>
+                    <th>Email</th>
+                    <th><abbr title="Password">Pass</abbr></th>
+                    <th><abbr title="User Authorizations">Auth</abbr></th>
+                    <th>ID</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                {data.map(({userName, email, password, auth, id, index}) => (
+                    <tr key={userName}>
+                        <th>{index}</th>
+                        <td>{userName}</td>
+                        <td>{email}</td>
+                        <td>{password}</td>
+                        <td>{auth}</td>
+                        <td>{id}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    )
 }
 
 export default Users;
