@@ -2,6 +2,7 @@ package com.rumpus.rumpus.controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.CommonController;
+import com.rumpus.common.CommonSession;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
@@ -9,6 +10,10 @@ import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.Footer;
 import com.rumpus.rumpus.views.IViewLoader;
 import com.rumpus.rumpus.views.ViewLoader;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +25,7 @@ import org.springframework.boot.actuate.autoconfigure.observation.ObservationPro
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.session.SessionRepository;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.WebSession;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.session.WebSessionManager;
 
 /**
  *
@@ -55,9 +64,12 @@ public class RumpusRestController extends CommonController {
         this.view = view;
     }
     
-    // @GetMapping("/")
-    // public String index() {
-    //     return "index";
+    // @GetMapping("/websessions")
+    // public Mono<String> getSession(SessionRepository<CommonSession> sessions) {
+    //     sessions.
+
+    //     session.getAttributes().putIfAbsent("note", "Howdy Cosmic Spheroid!");
+    //     return Mono.just((String) session.getAttributes().get("note"));
     // }
 
     @GetMapping("/")
@@ -71,7 +83,7 @@ public class RumpusRestController extends CommonController {
     }
     
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsers(HttpSession session) {
         // Gson gson = new Gson();
         List<User> users = rumpusUserService.getAll();
         // for(User user : users) {
@@ -176,16 +188,25 @@ public class RumpusRestController extends CommonController {
     // }
 
     @PostMapping("/user")
-    public ResponseEntity<User> userSubmit(@RequestBody User newUser) {
+    public ResponseEntity<User> userSubmit(@RequestBody User newUser, HttpServletRequest request) {
         LOG.info("RumpusRestController POST: /user");
         // debugUser(newUser);
         User user = rumpusUserService.add(newUser);
         if (user == null) {
             LOG.info("User is null!");
             return null;
-        } else {
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
+
+        // @SuppressWarnings("unchecked")
+		List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
+		if (messages == null) {
+			messages = new ArrayList<>();
+			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		}
+		messages.add(user.toString());
+		request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     // can prolly do GET not POST
@@ -193,9 +214,16 @@ public class RumpusRestController extends CommonController {
     public ResponseEntity<User> userLogin(@RequestBody User user) {
         LOG.info("RumpusRestController POST: /login");
         // debugUser(user);
-        rumpusUserService.login(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        if(rumpusUserService.login(user) == SUCCESS) {
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        }
+        return null;
     }
+
+    @PostMapping("/destroy")
+	public void destroySession(HttpServletRequest request) {
+		request.getSession().invalidate();
+	}
 
     private int debugUser(User user) {
         StringBuilder sb = new StringBuilder();

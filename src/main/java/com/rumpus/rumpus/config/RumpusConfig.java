@@ -1,7 +1,19 @@
 package com.rumpus.rumpus.config;
 
-import javax.sql.DataSource;    
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.session.ReactiveMapSessionRepository;
+import org.springframework.session.ReactiveSessionRepository;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
+import org.springframework.session.config.annotation.web.server.EnableSpringWebSession;
+import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +24,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import com.rumpus.common.IApiDB;
+import com.rumpus.common.JdbcSessionRepo;
 import com.rumpus.common.IO.IRumpusIO;
 import com.rumpus.common.IO.RumpusIO;
 import com.rumpus.common.ApiDBJdbc;
@@ -30,6 +43,7 @@ import com.rumpus.rumpus.views.IViewLoader;
 import com.rumpus.rumpus.views.ViewLoader;
 
 @Configuration
+@EnableSpringWebSession
 @ComponentScan("com.rumpus.rumpus")
 @PropertySource("classpath:database.properties")
 public class RumpusConfig {
@@ -52,6 +66,17 @@ public class RumpusConfig {
     public IViewLoader viewLoader() {
         return new ViewLoader();
     }
+
+    // * * Working in here
+    @Bean
+    public ReactiveSessionRepository<?> reactiveSessionRepository() {
+        return new ReactiveMapSessionRepository(new ConcurrentHashMap<>());
+    }
+    // @Bean
+    // public SessionRepository<? extends Session> sessionRepo() {
+    //     return new JdbcIndexedSessionRepository(new JdbcTemplate(), new TransactionTemplate());
+    // }
+    // * * In here
 
     @Bean
 	DataSource dataSource() {
