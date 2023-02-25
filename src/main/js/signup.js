@@ -30,9 +30,9 @@ class Signup extends React.Component {
         event.preventDefault();
 
         const newUser = {};
-        newUser["userName"] = this.state.username;
-        newUser["email"] = this.state.email;
+        newUser["username"] = this.state.username;
         newUser["password"] = this.state.password;
+        newUser["email"] = this.state.email;
         const fetched = this.onCreate(newUser);
         console.log(fetched);
 

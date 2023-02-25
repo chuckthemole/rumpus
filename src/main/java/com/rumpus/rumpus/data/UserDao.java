@@ -21,6 +21,7 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
     
     private static final String NAME = "userDao";
     private static final String TABLE = "user";
+    private static final String META_TABLE = "user_meta_info";
     // private static RumpusApiDB<User> apiDB;
     // private static IApi<User> api;
 

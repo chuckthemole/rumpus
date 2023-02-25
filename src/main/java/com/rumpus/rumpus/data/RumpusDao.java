@@ -7,9 +7,9 @@ import com.rumpus.rumpus.models.RumpusModel;
 public class RumpusDao<T extends RumpusModel<T>> extends Dao<T> implements IRumpusDao<T> {
 
     public RumpusDao(String table, String name) {
-        super(table, name);
+        super(table, NO_META_TABLE, name);
     }
     public RumpusDao(IApiDB<T> api, String table, String name) {
-        super(api, table, name);
+        super(api, table, NO_META_TABLE, name);
     }
 }
