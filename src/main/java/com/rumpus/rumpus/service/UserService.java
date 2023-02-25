@@ -18,7 +18,7 @@ public class UserService extends RumpusService<User> implements IUserService {
         users = new HashMap<>();
         dao.getAll().stream().forEach(u -> {
             users.put(u.getEmail(), u);
-            users.put(u.getUserName(), u);
+            users.put(u.getUsername(), u);
         });
     }
 
@@ -28,9 +28,9 @@ public class UserService extends RumpusService<User> implements IUserService {
 
         // check for username or user email
         User foundUser = null;
-        if(users.containsKey(user.getUserName())) {
+        if(users.containsKey(user.getUsername())) {
             LOG.info("Found user name...");
-            foundUser = users.get(user.getUserName());
+            foundUser = users.get(user.getUsername());
         } else if(users.containsKey(user.getEmail())) {
             LOG.info("Found user email...");
             foundUser = users.get(user.getEmail());

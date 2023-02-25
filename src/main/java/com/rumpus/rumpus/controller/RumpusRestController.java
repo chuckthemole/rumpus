@@ -49,7 +49,7 @@ import org.springframework.web.server.session.WebSessionManager;
  */
 
 @RestController
-@RequestMapping(RumpusController.API)
+@RequestMapping(RumpusController.PATH_API)
 public class RumpusRestController extends RumpusController {
 
     private static final String NAME = "RumpusRestController";
@@ -237,7 +237,7 @@ public class RumpusRestController extends RumpusController {
     private int debugUser(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n* * User * * \n");
-        sb.append("  User name: ").append(user.getUserName()).append("\n");
+        sb.append("  User name: ").append(user.getUsername()).append("\n");
         sb.append("  User email: ").append(user.getEmail()).append("\n");
         sb.append("  User password: ").append(user.getPassword()).append("\n");
         LOG.info(sb.toString());

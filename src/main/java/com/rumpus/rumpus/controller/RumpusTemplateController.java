@@ -34,19 +34,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @Controller
-@RequestMapping("/")
-public class RumpusTemplateController {
+@RequestMapping(RumpusController.PATH_INDEX)
+public class RumpusTemplateController extends RumpusController {
 
-    private JdbcUserDetailsManager userManager;
-    private ActiveUserStore activeUserStore;
-
-    @GetMapping(value = "/")
+    @GetMapping(value = PATH_INDEX)
 	public String index(Model model) {
-        model.addAttribute("user", new User());
-		return "index";
+        model.addAttribute(MODEL_USER, new User());
+		return TEMPLATE_INDEX;
 	}
 
-    @PostMapping("/user")
+    @PostMapping(PATH_USER)
     public String userSubmit(@ModelAttribute User user, BindingResult bindingResult, Model model) {
         // if (bindingResult.hasErrors()) {
         //     System.out.println("ERROR in user Form");
@@ -55,11 +52,11 @@ public class RumpusTemplateController {
         //     }
         //     return "redirect:/";
         // } else {
-            model.addAttribute("user", user);
-            System.out.println("  User name: " + user.getUserName());
+            model.addAttribute(MODEL_USER, user);
+            System.out.println("  User name: " + user.getUsername());
             System.out.println("  User email: " + user.getEmail());
             System.out.println("  User password: " + user.getPassword());
-            return "redirect:/";
+            return PATH_REDIRECT;
         // }
     }
 

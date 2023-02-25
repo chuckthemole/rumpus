@@ -11,6 +11,8 @@ function Users() {
 
     if (error) return <p>An error occurred</p>;
     if (!data) return <p>Loading</p>;
+
+    // console.log(data);
    
     return (
         <div className='m-6'>
@@ -36,12 +38,12 @@ function Users() {
                     </tr>
                 </tfoot>
                 <tbody>
-                    {data.map(({userName, email, password, auth, id, index}) => (
-                        <tr key={userName}>
+                    {data.map(({userDetails, email, auth, id, index}) => (
+                        <tr key={userDetails.username}>
                             <th>{index}</th>
-                            <td>{userName}</td>
+                            <td>{userDetails.username}</td>
                             <td>{email}</td>
-                            <td>{password}</td>
+                            <td>{userDetails.password}</td>
                             <td>{auth}</td>
                             <td>{id}</td>
                         </tr>

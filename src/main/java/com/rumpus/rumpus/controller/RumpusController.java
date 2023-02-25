@@ -14,7 +14,18 @@ import com.rumpus.rumpus.views.IViewLoader;
 abstract class RumpusController extends CommonController {
 
     private static final String NAME = "RumpusController";
-    protected static final String API = "/api";
+
+    // Paths
+    protected static final String PATH_INDEX = "/";
+    protected static final String PATH_API = "/api";
+    protected static final String PATH_USER = "/user";
+    protected static final String PATH_REDIRECT = "redirect:/";
+
+    // Models
+    protected static final String MODEL_USER = "user";
+
+    // Templates
+    protected static final String TEMPLATE_INDEX = "index";
 
     @Autowired
     protected RumpusView view;

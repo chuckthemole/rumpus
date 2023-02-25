@@ -2,9 +2,15 @@ package com.rumpus.rumpus.models;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.lang.reflect.Type;
 
@@ -12,6 +18,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.annotations.Expose;
+import com.rumpus.common.Auth;
+import com.rumpus.common.Authority;
 import com.rumpus.common.GsonSerializer;
 
 /**
@@ -20,9 +28,104 @@ import com.rumpus.common.GsonSerializer;
  */
 public class User extends RumpusModel<User> {
 
-    @Expose private String userName;
+    // TODO  make use of some of the bool member variables, just setting to arbitrary values for now.
+    private class Details implements UserDetails {
+
+        private Auth authority;
+        private String password;
+        @Expose private String username;
+        private boolean isAccountNonExpired;
+        private boolean isAccountNonLocked;
+        private boolean isCredentialsNonExpired;
+        private boolean isEnabled;
+
+        Details() {
+            Authority auth = new Authority("USER");
+            this.authority = new Auth("", Set.of(auth), "", "", new HashMap<>(), true);
+            this.isAccountNonExpired = false;
+            this.isAccountNonLocked = false;
+            this.isCredentialsNonExpired = false;
+            this.isEnabled = true;
+        }
+        Details(Auth authority, String password, String username, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+            this.authority = authority;
+            this.password = password;
+            this.username = username;
+            this.isAccountNonExpired = isAccountNonExpired;
+            this.isAccountNonLocked = isAccountNonLocked;
+            this.isCredentialsNonExpired = isCredentialsNonExpired;
+            this.isEnabled = isEnabled;
+        }
+
+        @Override
+        public Set<Authority> getAuthorities() {
+            return authority.getAuthorities();
+        }
+
+        @Override
+        public String getPassword() {
+            return this.password;
+        }
+
+        @Override
+        public String getUsername() {
+            return this.username;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return this.isAccountNonExpired;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return this.isAccountNonLocked;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return this.isCredentialsNonExpired;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return this.isEnabled;
+        }
+
+        public void setAuthorities(Auth authority) {
+            this.authority = authority;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public void setUserName(String username) {
+            this.username = username;
+        }
+
+        public void setIsAccountNonExpired(boolean isAccountNonExpired) {
+            this.isAccountNonExpired = isAccountNonExpired;
+        }
+
+        public void setIsAccountNonLocked(boolean isAccountNonLocked) {
+            this.isAccountNonLocked = isAccountNonLocked;
+        }
+
+        public void setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
+            this.isCredentialsNonExpired = isCredentialsNonExpired;
+        }
+
+        public void setIsEnabled(boolean isEnabled) {
+            this.isEnabled = isEnabled;
+        }
+
+    }
+
+    Details userDetails;
+    // @Expose private String userName;
     @Expose private String email;
-    private String password;
+    // private String password;
     private int authId;
     private static final String MODEL_NAME = "userModel";
     
@@ -39,17 +142,18 @@ public class User extends RumpusModel<User> {
 
     @Override
     public int init() {
+        this.userDetails = new Details();
         if(this.attributes == null || this.attributes.isEmpty()) {
             LOG.info("WARNING: AttributeMap is empty.");
-            this.userName = NO_NAME;
+            this.userDetails.setUserName(NO_NAME);
             this.id = NO_ID;
             this.authId = EMPTY;
             return EMPTY;
         }
         if(this.attributes.containsKey("name")) {
-            this.setUserName(this.attributes.get("name"));
+            this.userDetails.setUserName(this.attributes.get("name"));
         } else {
-            this.setUserName(NO_NAME);
+            this.userDetails.setUserName(NO_NAME);
         }
         if(this.attributes.containsKey("id")) {
             this.setId(this.attributes.get("id"));
@@ -84,12 +188,18 @@ public class User extends RumpusModel<User> {
     }
     
     // Getters Setters
-    public String getUserName() {
-        return this.userName;
+    public Details getUserDetails() {
+        return this.userDetails;
     }
-    public void setUserName(String name) {
+    public void setUserDetails(Details userDetails) {
+        this.userDetails = userDetails;
+    }
+    public String getUsername() {
+        return this.userDetails.getUsername();
+    }
+    public void setUsername(String name) {
         this.attributes.put("name", name);
-        this.userName = name;
+        this.userDetails.setUserName(name);
     }
     public String getEmail() {
         return this.email;
@@ -99,11 +209,11 @@ public class User extends RumpusModel<User> {
         this.attributes.put("email", email);
     }
     public String getPassword() {
-        return this.password;
+        return this.userDetails.getPassword();
     }
     public void setPassword(String password) {
-        this.password = password;
         this.attributes.put("pass", password);
+        this.userDetails.setPassword(password);
     }
     public int getAuth() {
         return this.authId;
@@ -118,8 +228,8 @@ public class User extends RumpusModel<User> {
         StringBuilder sb = new StringBuilder();
         sb.append("\n Name: ").append(this.name).append("\n")
             .append(" Email: ").append(this.email).append("\n")
-            .append(" UserName: ").append(this.userName).append("\n")
-            .append(" Password: ").append(this.password).append("\n")
+            .append(" UserName: ").append(this.userDetails.getUsername()).append("\n")
+            .append(" Password: ").append(this.userDetails.getPassword()).append("\n")
             .append(" AuthId: ").append(this.authId).append("\n");
         return sb.toString();
     }
@@ -133,21 +243,19 @@ public class User extends RumpusModel<User> {
         }
 
         User user = (User) o;
-        LOG.info("User Name: " + user.userName);
-        LOG.info("This User Name: " + user.userName);
-        if(user.userName.equals(this.userName)) {
-            LOG.info("User pass: " + user.userName);
-            LOG.info("This User pass: " + user.userName);
-            if(user.password.equals(this.password)) {
+        LOG.info("User Name: " + user.getUsername());
+        LOG.info("This User Name: " + this.getUsername());
+        if(user.getUsername().equals(this.getUsername())) {
+            LOG.info("User pass: " + user.getUserDetails().getPassword());
+            LOG.info("This User pass: " + this.getUserDetails().getPassword());
+            if(user.getUserDetails().getPassword().equals(this.getUserDetails().getPassword())) {
                 return true;
             }
         }
-        LOG.info("User email: " + user.userName);
-        LOG.info("This User email: " + user.userName);
+        LOG.info("User email: " + user.getEmail());
+        LOG.info("This User email: " + this.getEmail());
         if(user.email.equals(this.email)) {
-            LOG.info("User pass: " + user.userName);
-            LOG.info("This User pass: " + user.userName);
-            if(user.password.equals(this.password)) {
+            if(user.getUserDetails().getPassword().equals(this.getUserDetails().getPassword())) {
                 return true;
             }
         }
@@ -159,9 +267,9 @@ public class User extends RumpusModel<User> {
             (PreparedStatement statement) -> {
                 try {
                     // debugUser();
-                    statement.setString(1, password);
-                    statement.setString(2, userName);
-                    statement.setString(3, email);
+                    statement.setString(1, this.getUserDetails().getPassword());
+                    statement.setString(2, this.getUserDetails().getUsername());
+                    statement.setString(3, this.email);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -173,13 +281,13 @@ public class User extends RumpusModel<User> {
     private int debugUser() {
         LOG.info("User statement()");
         StringBuilder sb = new StringBuilder();
-        sb.append("  User name: ").append(this.userName);
+        sb.append("  User name: ").append(this.getUsername());
         LOG.info(sb.toString());
         sb.setLength(0); // clear sb
         sb.append("  User email: ").append(this.email);
         LOG.info(sb.toString());
         sb.setLength(0);
-        sb.append("  User password: ").append(this.password);
+        sb.append("  User password: ").append(this.getUserDetails().getPassword());
         LOG.info(sb.toString());
         return SUCCESS;
     }
@@ -189,9 +297,9 @@ public class User extends RumpusModel<User> {
         @Override
         public JsonElement serialize(User user, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObj = new JsonObject();
-            jsonObj.addProperty("username", user.userName);
+            jsonObj.addProperty("username", user.getUsername());
             jsonObj.addProperty("email", user.email);
-            jsonObj.addProperty("password", user.password);
+            jsonObj.addProperty("password", user.getUserDetails().getPassword());
             return jsonObj;
         }
     }
