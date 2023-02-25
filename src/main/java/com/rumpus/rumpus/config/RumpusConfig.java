@@ -5,7 +5,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.ReactiveMapSessionRepository;
 import org.springframework.session.ReactiveSessionRepository;
 import org.springframework.session.Session;
@@ -13,8 +15,13 @@ import org.springframework.session.SessionRepository;
 import org.springframework.session.config.annotation.web.server.EnableSpringWebSession;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
+import org.springframework.session.jdbc.config.annotation.web.http.JdbcHttpSessionConfiguration;
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Jdbc;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,9 +31,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import com.rumpus.common.IApiDB;
-import com.rumpus.common.JdbcSessionRepo;
 import com.rumpus.common.IO.IRumpusIO;
 import com.rumpus.common.IO.RumpusIO;
+import com.rumpus.common.Session.CommonSession;
+import com.rumpus.common.Session.CommonSessionRepository;
 import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.rumpus.data.AuthDao;
 import com.rumpus.rumpus.data.IAuthDao;
@@ -43,10 +51,11 @@ import com.rumpus.rumpus.views.IViewLoader;
 import com.rumpus.rumpus.views.ViewLoader;
 
 @Configuration
-@EnableSpringWebSession
+// @EnableSpringWebSession
+// @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
 @PropertySource("classpath:database.properties")
-public class RumpusConfig {
+public class RumpusConfig { // AbstractHttpSessionApplicationInitializer
 
     @Autowired
 	Environment environment;
@@ -56,6 +65,7 @@ public class RumpusConfig {
 	private final String USER = "username";
 	private final String DRIVER = "driver";
 	private final String PASSWORD = "password";
+    
 
     @Bean
     public RumpusView view() {
@@ -67,11 +77,38 @@ public class RumpusConfig {
         return new ViewLoader();
     }
 
+    // * * * Not using right now
+    // @Bean
+    // public PlatformTransactionManager transactionManager() {
+    //     return new DataSourceTransactionManager(dataSource());
+    // }
+
+    // @Bean
+    // public TransactionTemplate transactionTemplate() {
+    //     return new TransactionTemplate(transactionManager());
+    // }
+    // * * * Not using right now
+
+
+    // @Bean
+    // public Session session() {
+    //     return new CommonSession();
+    // }
+
+    // @Bean
+    // public FindByIndexNameSessionRepository<Session> sessionRepository() {
+    //     JdbcIndexedSessionRepository session = new JdbcIndexedSessionRepository(null, null);
+    // }
+
+    // @Bean CommonSessionRepository<?> sessionRepository() {
+    //     return new JdbcIndexedSessionRepository(null, null);
+    // }
+
     // * * Working in here
-    @Bean
-    public ReactiveSessionRepository<?> reactiveSessionRepository() {
-        return new ReactiveMapSessionRepository(new ConcurrentHashMap<>());
-    }
+    // @Bean
+    // public ReactiveSessionRepository<?> reactiveSessionRepository() {
+    //     return new ReactiveMapSessionRepository(new ConcurrentHashMap<>());
+    // }
     // @Bean
     // public SessionRepository<? extends Session> sessionRepo() {
     //     return new JdbcIndexedSessionRepository(new JdbcTemplate(), new TransactionTemplate());

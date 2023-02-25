@@ -5,7 +5,7 @@ const root = '/api';
 class Signup extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', email: '', password: ''};
+        this.state = {username: '', email: '', password: '', id: ''};
 
         this.handleUsername = this.handleUsername.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
@@ -33,7 +33,8 @@ class Signup extends React.Component {
         newUser["userName"] = this.state.username;
         newUser["email"] = this.state.email;
         newUser["password"] = this.state.password;
-        this.onCreate(newUser);
+        const fetched = this.onCreate(newUser);
+        console.log(fetched);
 
         const signupModal = document.getElementsByClassName("signup")[0];
         signupModal.classList.remove("is-active");
@@ -48,9 +49,16 @@ class Signup extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         };
-        fetch('/api/user', requestOptions)
-            .then(response => response.json());
-            // .then(data => this.setState({ postId: data.id }));
+        return fetch('/api/user', requestOptions)
+            .then(response => {
+                // response.json()
+                console.log(response);
+                console.log(response.json());
+            })
+            .then(data => {
+                // this.setState({ postId: data.id })
+                console.log(data);
+            });
 	}
 
     clearInput() {

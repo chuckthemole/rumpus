@@ -1,8 +1,10 @@
 package com.rumpus.rumpus.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
-import com.rumpus.common.CommonSession;
+import com.rumpus.common.Session.CommonSession;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
@@ -25,6 +27,7 @@ import org.springframework.boot.actuate.autoconfigure.observation.ObservationPro
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.session.SessionRepository;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -46,23 +49,17 @@ import org.springframework.web.server.session.WebSessionManager;
  */
 
 @RestController
-@RequestMapping("/api")
-public class RumpusRestController extends CommonController {
+@RequestMapping(RumpusController.API)
+public class RumpusRestController extends RumpusController {
 
     private static final String NAME = "RumpusRestController";
-    // @Autowired
-    private RumpusView view;
-    // @Autowired
-    private IUserService rumpusUserService;
-    private IViewLoader viewLoader;
 
-    @Autowired
-    public RumpusRestController(IUserService service, IViewLoader viewLoader, RumpusView view) {
-        super(NAME);
-        this.rumpusUserService = service;
-        this.viewLoader = viewLoader;
-        this.view = view;
-    }
+    public RumpusRestController() {super(NAME);}
+
+    // @Autowired
+    // public RumpusRestController(IUserService service, IViewLoader viewLoader, RumpusView view, JdbcUserDetailsManager userManager, ActiveUserStore activeUserStore) {
+    //     super(NAME, service, viewLoader, view, userManager, activeUserStore);
+    // }
     
     // @GetMapping("/websessions")
     // public Mono<String> getSession(SessionRepository<CommonSession> sessions) {
@@ -188,25 +185,37 @@ public class RumpusRestController extends CommonController {
     // }
 
     @PostMapping("/user")
-    public ResponseEntity<User> userSubmit(@RequestBody User newUser, HttpServletRequest request) {
+    public ResponseEntity<CommonSession> userSubmit(@RequestBody User newUser, HttpServletRequest request) {
         LOG.info("RumpusRestController POST: /user");
         // debugUser(newUser);
+        HttpSession session = request.getSession();
         User user = rumpusUserService.add(newUser);
         if (user == null) {
-            LOG.info("User is null!");
-            return null;
+            LOG.info("ERROR: User is null.");
+            session.setAttribute("status", "error creating user");
+            return ResponseEntity.badRequest().body(new CommonSession(session));
         }
+        session.setAttribute("loggedIn", true);
+
+        Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            // .excludeFieldsWithoutExposeAnnotation()
+            .serializeNulls()
+            .disableHtmlEscaping()
+            .registerTypeAdapter(User.class, User.getSerializer())
+            .create();
+        session.setAttribute("user", gson.toJson(user));
 
         // @SuppressWarnings("unchecked")
-		List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
-		if (messages == null) {
-			messages = new ArrayList<>();
-			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-		}
-		messages.add(user.toString());
-		request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		// List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
+		// if (messages == null) {
+		// 	messages = new ArrayList<>();
+		// 	request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		// }
+		// messages.add(user.toString());
+		// request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
 
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
     }
 
     // can prolly do GET not POST

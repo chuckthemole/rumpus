@@ -6,13 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.annotations.Expose;
+import com.rumpus.common.GsonSerializer;
+
 /**
  *
  * @author Chuck
  */
 public class User extends RumpusModel<User> {
-    private String userName;
-    private String email;
+
+    @Expose private String userName;
+    @Expose private String email;
     private String password;
     private int authId;
     private static final String MODEL_NAME = "userModel";
@@ -23,42 +32,42 @@ public class User extends RumpusModel<User> {
         super.statement = statement();
         init();
     }
-    public User(Map<String, String> attributeMap) {
-        super(MODEL_NAME, attributeMap);
+    public User(Map<String, String> attributes) {
+        super(MODEL_NAME, attributes);
         init();
     }
 
     @Override
     public int init() {
-        if(attributeMap == null || attributeMap.isEmpty()) {
+        if(this.attributes == null || this.attributes.isEmpty()) {
             LOG.info("WARNING: AttributeMap is empty.");
             this.userName = NO_NAME;
             this.id = NO_ID;
             this.authId = EMPTY;
             return EMPTY;
         }
-        if(attributeMap.containsKey("name")) {
-            this.setUserName(attributeMap.get("name"));
+        if(this.attributes.containsKey("name")) {
+            this.setUserName(this.attributes.get("name"));
         } else {
             this.setUserName(NO_NAME);
         }
-        if(attributeMap.containsKey("id")) {
-            this.setId(Long.parseLong(attributeMap.get("id")));
+        if(this.attributes.containsKey("id")) {
+            this.setId(this.attributes.get("id"));
         } else {
             this.setId(NO_ID);
         }
-        if(attributeMap.containsKey("auth_id")) {
-            this.setAuth(Integer.parseInt(attributeMap.get("auth_id")));
+        if(this.attributes.containsKey("auth_id")) {
+            this.setAuth(Integer.parseInt(this.attributes.get("auth_id")));
         } else {
             this.setAuth(EMPTY);
         }
-        if(attributeMap.containsKey("email")) {
-            this.setEmail(attributeMap.get("email"));
+        if(this.attributes.containsKey("email")) {
+            this.setEmail(this.attributes.get("email"));
         } else {
             this.setEmail(NO_NAME);
         }
-        if(attributeMap.containsKey("pass")) {
-            this.setPassword(attributeMap.get("pass"));
+        if(this.attributes.containsKey("pass")) {
+            this.setPassword(this.attributes.get("pass"));
         } else {
             this.setPassword(NO_NAME);
         }
@@ -67,7 +76,7 @@ public class User extends RumpusModel<User> {
     }
 
     // static factory methods
-    public static User create(Map<String, String> attributeMap) {return new User(attributeMap);}
+    public static User create(Map<String, String> attributes) {return new User(attributes);}
     public static User createWithName(String name) {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", name);
@@ -79,7 +88,7 @@ public class User extends RumpusModel<User> {
         return this.userName;
     }
     public void setUserName(String name) {
-        attributeMap.put("name", name);
+        this.attributes.put("name", name);
         this.userName = name;
     }
     public String getEmail() {
@@ -87,20 +96,20 @@ public class User extends RumpusModel<User> {
     }
     public void setEmail(String email) {
         this.email = email;
-        attributeMap.put("email", email);
+        this.attributes.put("email", email);
     }
     public String getPassword() {
         return this.password;
     }
     public void setPassword(String password) {
         this.password = password;
-        attributeMap.put("pass", password);
+        this.attributes.put("pass", password);
     }
     public int getAuth() {
         return this.authId;
     }
     public void setAuth(int a) {
-        attributeMap.put("auth_id", Integer.toString(a));
+        this.attributes.put("auth_id", Integer.toString(a));
         this.authId = a;
     }
 
@@ -173,5 +182,20 @@ public class User extends RumpusModel<User> {
         sb.append("  User password: ").append(this.password);
         LOG.info(sb.toString());
         return SUCCESS;
+    }
+
+    static private class UserGsonSerializer extends GsonSerializer<User> {
+
+        @Override
+        public JsonElement serialize(User user, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObj = new JsonObject();
+            jsonObj.addProperty("username", user.userName);
+            jsonObj.addProperty("email", user.email);
+            jsonObj.addProperty("password", user.password);
+            return jsonObj;
+        }
+    }
+    static public UserGsonSerializer getSerializer() {
+        return new UserGsonSerializer();
     }
 }
