@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.session.SessionRepository;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
@@ -21,8 +22,10 @@ import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.common.IApiDB;
 import com.rumpus.common.Session.CommonSession;
 
-@Configuration(proxyBeanMethods = false)
+// @Configuration(proxyBeanMethods = false)
+@Configuration
 @EnableJdbcHttpSession
+@PropertySource("classpath:application.properties")
 public class JdbcHttpSessionConfig extends AbstractHttpSessionApplicationInitializer {
 
     private static final String TABLE_NAME = "session";

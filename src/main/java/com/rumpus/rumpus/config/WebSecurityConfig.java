@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 
 
@@ -20,14 +22,20 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.rumpus.common.ActiveUserStore;
+import com.rumpus.common.ApiDBJdbcUsers;
 import com.rumpus.common.Session.SecurityManager;
 
 @Configuration
 @EnableWebSecurity //WebSecurityConfiguration
+// @PropertySource("classpath:database.properties")
 public class WebSecurityConfig {
+
+    private static final String SET_USERS_QUERY = "SELECT users.username, users.password, user.email, user.auth_id from users INNER JOIN user ON user.username=users.username WHERE user.username = ?";
+    // private static final String SET_USERS_QUERY = "SELECT username, password, enabled from user WHERE username = ?";
 
     @Autowired
 	public DataSource dataSource;
@@ -84,20 +92,30 @@ public class WebSecurityConfig {
     //     return http.build();
     // }
 	
-	@Bean
-	public JdbcUserDetailsManager jdbcUserDetailsManager()
-	{
-		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+	// @Bean
+	// public JdbcUserDetailsManager jdbcUserDetailsManager() {
+	// 	JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
 
-		jdbcUserDetailsManager.setDataSource(dataSource);
-		
-		return jdbcUserDetailsManager;
-	}
+	// 	jdbcUserDetailsManager.setDataSource(dataSource);
+    //     return jdbcUserDetailsManager;
 
-    @Bean 
-    public PasswordEncoder passwordEncoder() { 
-        return new BCryptPasswordEncoder(); 
-    }
+    //     // CommonJdbcUserManager manager = new CommonJdbcUserManager(dataSource);
+    //     // manager.manager().setUsersByUsernameQuery(SET_USERS_QUERY);
+	// 	// return manager.manager();
+	// }
+
+    // @Bean
+    // public DaoAuthenticationProvider authenticationProvider() {
+    //     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    //     authenticationProvider.setUserDetailsService(userDetailsService);
+    //     authenticationProvider.setPasswordEncoder(passwordEncoder());
+    //     return authenticationProvider;
+    // }
+
+    // @Bean
+    // public PasswordEncoder passwordEncoder() { 
+    //     return new BCryptPasswordEncoder(); 
+    // }
     
     @Bean
     public ActiveUserStore activeUserStore(){

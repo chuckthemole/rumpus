@@ -18,8 +18,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.annotations.Expose;
-import com.rumpus.common.Auth;
-import com.rumpus.common.Authority;
+import com.rumpus.common.CommonAuthentication;
+import com.rumpus.common.CommonAuthority;
+import com.rumpus.common.CommonUserDetails;
 import com.rumpus.common.GsonSerializer;
 
 /**
@@ -28,104 +29,8 @@ import com.rumpus.common.GsonSerializer;
  */
 public class User extends RumpusModel<User> {
 
-    // TODO  make use of some of the bool member variables, just setting to arbitrary values for now.
-    private class Details implements UserDetails {
-
-        private Auth authority;
-        private String password;
-        @Expose private String username;
-        private boolean isAccountNonExpired;
-        private boolean isAccountNonLocked;
-        private boolean isCredentialsNonExpired;
-        private boolean isEnabled;
-
-        Details() {
-            Authority auth = new Authority("USER");
-            this.authority = new Auth("", Set.of(auth), "", "", new HashMap<>(), true);
-            this.isAccountNonExpired = false;
-            this.isAccountNonLocked = false;
-            this.isCredentialsNonExpired = false;
-            this.isEnabled = true;
-        }
-        Details(Auth authority, String password, String username, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
-            this.authority = authority;
-            this.password = password;
-            this.username = username;
-            this.isAccountNonExpired = isAccountNonExpired;
-            this.isAccountNonLocked = isAccountNonLocked;
-            this.isCredentialsNonExpired = isCredentialsNonExpired;
-            this.isEnabled = isEnabled;
-        }
-
-        @Override
-        public Set<Authority> getAuthorities() {
-            return authority.getAuthorities();
-        }
-
-        @Override
-        public String getPassword() {
-            return this.password;
-        }
-
-        @Override
-        public String getUsername() {
-            return this.username;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return this.isAccountNonExpired;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return this.isAccountNonLocked;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return this.isCredentialsNonExpired;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return this.isEnabled;
-        }
-
-        public void setAuthorities(Auth authority) {
-            this.authority = authority;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public void setUserName(String username) {
-            this.username = username;
-        }
-
-        public void setIsAccountNonExpired(boolean isAccountNonExpired) {
-            this.isAccountNonExpired = isAccountNonExpired;
-        }
-
-        public void setIsAccountNonLocked(boolean isAccountNonLocked) {
-            this.isAccountNonLocked = isAccountNonLocked;
-        }
-
-        public void setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
-            this.isCredentialsNonExpired = isCredentialsNonExpired;
-        }
-
-        public void setIsEnabled(boolean isEnabled) {
-            this.isEnabled = isEnabled;
-        }
-
-    }
-
     Details userDetails;
-    // @Expose private String userName;
     @Expose private String email;
-    // private String password;
     private int authId;
     private static final String MODEL_NAME = "userModel";
     
@@ -150,8 +55,8 @@ public class User extends RumpusModel<User> {
             this.authId = EMPTY;
             return EMPTY;
         }
-        if(this.attributes.containsKey("name")) {
-            this.userDetails.setUserName(this.attributes.get("name"));
+        if(this.attributes.containsKey("username")) {
+            this.userDetails.setUserName(this.attributes.get("username"));
         } else {
             this.userDetails.setUserName(NO_NAME);
         }
@@ -170,8 +75,8 @@ public class User extends RumpusModel<User> {
         } else {
             this.setEmail(NO_NAME);
         }
-        if(this.attributes.containsKey("pass")) {
-            this.setPassword(this.attributes.get("pass"));
+        if(this.attributes.containsKey("password")) {
+            this.setPassword(this.attributes.get("password"));
         } else {
             this.setPassword(NO_NAME);
         }
@@ -183,7 +88,7 @@ public class User extends RumpusModel<User> {
     public static User create(Map<String, String> attributes) {return new User(attributes);}
     public static User createWithName(String name) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("name", name);
+        map.put("username", name);
         return User.create(map);
     }
     
@@ -198,7 +103,7 @@ public class User extends RumpusModel<User> {
         return this.userDetails.getUsername();
     }
     public void setUsername(String name) {
-        this.attributes.put("name", name);
+        this.attributes.put("username", name);
         this.userDetails.setUserName(name);
     }
     public String getEmail() {
@@ -212,7 +117,7 @@ public class User extends RumpusModel<User> {
         return this.userDetails.getPassword();
     }
     public void setPassword(String password) {
-        this.attributes.put("pass", password);
+        this.attributes.put("password", password);
         this.userDetails.setPassword(password);
     }
     public int getAuth() {
@@ -305,5 +210,9 @@ public class User extends RumpusModel<User> {
     }
     static public UserGsonSerializer getSerializer() {
         return new UserGsonSerializer();
+    }
+
+    private class Details extends CommonUserDetails {
+        Details() {super();}
     }
 }

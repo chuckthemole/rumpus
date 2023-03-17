@@ -1,11 +1,16 @@
 package com.rumpus.rumpus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 
+import com.google.gson.Gson;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
+import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.IViewLoader;
@@ -27,16 +32,13 @@ abstract class RumpusController extends CommonController {
     // Templates
     protected static final String TEMPLATE_INDEX = "index";
 
-    @Autowired
-    protected RumpusView view;
-    @Autowired
-    protected IUserService rumpusUserService;
-    @Autowired
-    protected IViewLoader viewLoader;
-    @Autowired
-    protected JdbcUserDetailsManager userManager;
-    @Autowired
-    protected ActiveUserStore activeUserStore;
+    @Autowired protected RumpusView view;
+    // @Autowired protected IUserService rumpusUserService;
+    @Autowired protected IRumpusUserService rumpusUserService;
+    @Autowired protected IViewLoader viewLoader;
+    // @Autowired protected JdbcUserDetailsManager userManager;
+    @Autowired protected ActiveUserStore activeUserStore;
+    @Autowired protected Gson gson;
 
     public RumpusController() {super(NAME);}
     public RumpusController(String name) {

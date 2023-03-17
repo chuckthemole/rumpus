@@ -75,19 +75,19 @@ public class RumpusRestController extends RumpusController {
     }
     
     @GetMapping("/userid/{id}")
-    public User getUserById(@PathVariable int id) {
+    public RumpusUser getUserById(@PathVariable int id) {
         return rumpusUserService.get(id);
     }
     
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers(HttpSession session) {
+    public ResponseEntity<List<RumpusUser>> getAllUsers(HttpSession session) {
         // Gson gson = new Gson();
-        List<User> users = rumpusUserService.getAll();
+        List<RumpusUser> users = rumpusUserService.getAll();
         // for(User user : users) {
         //     debugUser(user);
         // }
         
-        return new ResponseEntity<List<User>>(users, HttpStatusCode.valueOf(200));
+        return new ResponseEntity<List<RumpusUser>>(users, HttpStatusCode.valueOf(200));
     }
 
     @GetMapping("/footer")
@@ -143,40 +143,40 @@ public class RumpusRestController extends RumpusController {
 
     // }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> userSignupViaAjax(@ModelAttribute User user, Errors errors) {
-        String userString = user.toString();
-        if(userString.isEmpty()) {
-            System.out.println("Error: User is empty!");
-        } else {
-            System.out.println("Printing user:");
-            System.out.println(user.toString());
-        }
+    // @PostMapping("/signup")
+    // public ResponseEntity<?> userSignupViaAjax(@ModelAttribute RumpusUser user, Errors errors) {
+    //     String userString = user.toString();
+    //     if(userString.isEmpty()) {
+    //         System.out.println("Error: User is empty!");
+    //     } else {
+    //         System.out.println("Printing user:");
+    //         System.out.println(user.toString());
+    //     }
 
-        AjaxResponseBody<User> result = new AjaxResponseBody<>();
+    //     AjaxResponseBody<User> result = new AjaxResponseBody<>();
 
-        //If error, just return a 400 bad request, along with the error message
-        if (errors.hasErrors()) {
+    //     //If error, just return a 400 bad request, along with the error message
+    //     if (errors.hasErrors()) {
 
-            result.setMsg(errors.getAllErrors()
-                    .stream().map(x -> x.getDefaultMessage())
-                    .collect(Collectors.joining(",")));
-            return ResponseEntity.badRequest().body(result);
+    //         result.setMsg(errors.getAllErrors()
+    //                 .stream().map(x -> x.getDefaultMessage())
+    //                 .collect(Collectors.joining(",")));
+    //         return ResponseEntity.badRequest().body(result);
 
-        }
-        User newUser = rumpusUserService.add(user);
-        if(newUser != null) {
-            result.setMsg("Error creating user!");
-        } else {
-            result.setMsg("Success");
-        }
-        List<User> users = new ArrayList<>();
-        users.add(newUser);
-        result.setResult(users);
+    //     }
+    //     User newUser = rumpusUserService.add(user);
+    //     if(newUser != null) {
+    //         result.setMsg("Error creating user!");
+    //     } else {
+    //         result.setMsg("Success");
+    //     }
+    //     List<User> users = new ArrayList<>();
+    //     users.add(newUser);
+    //     result.setResult(users);
 
-        return ResponseEntity.ok(result);
+    //     return ResponseEntity.ok(result);
 
-    }
+    // }
 
     // @GetMapping("/user")
     // public String userForm(Model model) {
@@ -185,11 +185,13 @@ public class RumpusRestController extends RumpusController {
     // }
 
     @PostMapping("/user")
-    public ResponseEntity<CommonSession> userSubmit(@RequestBody User newUser, HttpServletRequest request) {
+    public ResponseEntity<CommonSession> userSubmit(@RequestBody RumpusUser newUser, HttpServletRequest request) {
         LOG.info("RumpusRestController POST: /user");
         // debugUser(newUser);
         HttpSession session = request.getSession();
-        User user = rumpusUserService.add(newUser);
+        RumpusUser user = rumpusUserService.add(newUser);
+        // userManager.addUserToGroup(newUser.getUsername(), "USER");
+        // userManager.createUser(newUser.getUserDetails());
         if (user == null) {
             LOG.info("ERROR: User is null.");
             session.setAttribute("status", "error creating user");
@@ -202,7 +204,7 @@ public class RumpusRestController extends RumpusController {
             // .excludeFieldsWithoutExposeAnnotation()
             .serializeNulls()
             .disableHtmlEscaping()
-            .registerTypeAdapter(User.class, User.getSerializer())
+            .registerTypeAdapter(RumpusUser.class, RumpusUser.getSerializer())
             .create();
         session.setAttribute("user", gson.toJson(user));
 
@@ -220,12 +222,12 @@ public class RumpusRestController extends RumpusController {
 
     // can prolly do GET not POST
     @PostMapping("/login")
-    public ResponseEntity<User> userLogin(@RequestBody User user) {
+    public ResponseEntity<RumpusUser> userLogin(@RequestBody RumpusUser user) {
         LOG.info("RumpusRestController POST: /login");
         // debugUser(user);
-        if(rumpusUserService.login(user) == SUCCESS) {
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        }
+        // if(rumpusUserService.login(user) == SUCCESS) {
+        //     return new ResponseEntity<>(user, HttpStatus.CREATED);
+        // }
         return null;
     }
 

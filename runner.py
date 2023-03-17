@@ -13,6 +13,7 @@ buildTestInfo = ".././gradlew clean build --info --refresh-dependencies > src/ma
 buildTestDebug = ".././gradlew clean build --debug --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
 test = ".././gradlew test > src/test/java/com/rumpus/rumpus/log/test.log"
 run = "./gradlew bootRun > src/main/java/com/rumpus/rumpus/log/spring.log"
+runDebug = "./gradlew bootRun --debug > src/main/java/com/rumpus/rumpus/log/spring.log"
 moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
 
@@ -39,6 +40,8 @@ if __name__ == '__main__':
             os.system(test)
         elif arg == "run":
             os.system(run)
+        elif arg == "runDebug":
+            os.system(runDebug)
         else:
             print("Error: bad argument")
         

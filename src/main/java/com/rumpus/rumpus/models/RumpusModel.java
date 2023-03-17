@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.rumpus.common.Model;
 
-public class RumpusModel<T extends Model<T>> extends Model<T> {
+public abstract class RumpusModel<T extends Model<T>> extends Model<T> {
 
     public RumpusModel(String name) {
         super(name);

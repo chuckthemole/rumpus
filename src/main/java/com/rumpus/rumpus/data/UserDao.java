@@ -86,11 +86,11 @@ public class UserDao extends RumpusDao<User> implements IUserDao {
             // int row = resultSetAndRow.getSecond();
             HashMap<String, String> map = new HashMap<>();
             try {
-                map.put("auth_id", Integer.toString(rs.getInt("auth_id")));
-                map.put("user_id", Integer.toString(rs.getInt("user_id")));
-                map.put("name", rs.getString("name"));
-                map.put("pass", rs.getString("pass"));
-                map.put("email", rs.getString("email"));
+                map.put(AUTH_ID, Integer.toString(rs.getInt(AUTH_ID)));
+                map.put(USER_ID, Integer.toString(rs.getInt(USER_ID)));
+                map.put(USERNAME, rs.getString(USERNAME));
+                map.put(PASSWORD, rs.getString(PASSWORD));
+                map.put(EMAIL, rs.getString(EMAIL));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
