@@ -1,7 +1,5 @@
 package com.rumpus.rumpus.config;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.session.SessionRepository;
-import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.session.jdbc.config.annotation.web.http.JdbcHttpSessionConfiguration;
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration;
 
-import com.rumpus.common.ApiDBJdbc;
-import com.rumpus.common.IApiDB;
-import com.rumpus.common.Session.CommonSession;
+// TODO: Need to look at Sessions more closely and plan how to implement.
 
 // @Configuration(proxyBeanMethods = false)
 @Configuration
