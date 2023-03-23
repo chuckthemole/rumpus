@@ -5,13 +5,12 @@ import com.google.gson.GsonBuilder;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
 import com.rumpus.common.Session.CommonSession;
+import com.rumpus.common.views.Footer;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.ui.RumpusView;
-import com.rumpus.rumpus.views.Footer;
-import com.rumpus.rumpus.views.IViewLoader;
-import com.rumpus.rumpus.views.ViewLoader;
+import com.rumpus.rumpus.views.RumpusViewLoader;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

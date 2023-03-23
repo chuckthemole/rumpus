@@ -13,14 +13,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.config.RumpusTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
-import com.rumpus.rumpus.views.Footer;
-import com.rumpus.rumpus.views.IViewLoader;
-import com.rumpus.rumpus.views.ViewLoader;
+import com.rumpus.rumpus.views.RumpusViewLoader;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -68,8 +67,8 @@ public class RumpusControllerTests {
 
     @Test
     public void testFooter() throws Exception {
-        ViewLoader vl = new ViewLoader();
-        Footer footer = vl.getFooter();
+        RumpusViewLoader vl = new RumpusViewLoader();
+        com.rumpus.common.views.Footer footer = vl.getFooter();
 
         Mockito.when(viewLoader.getFooter()).thenReturn(footer);
 

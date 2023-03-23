@@ -41,6 +41,7 @@ import com.rumpus.common.IO.IRumpusIO;
 import com.rumpus.common.IO.RumpusIO;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.Session.CommonSessionRepository;
+import com.rumpus.common.views.IViewLoader;
 import com.google.gson.Gson;
 import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.common.ApiDBJdbcUsers;
@@ -63,8 +64,7 @@ import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.service.UserService;
 import com.rumpus.rumpus.ui.RumpusView;
-import com.rumpus.rumpus.views.IViewLoader;
-import com.rumpus.rumpus.views.ViewLoader;
+import com.rumpus.rumpus.views.RumpusViewLoader;
 
 @Configuration
 // @EnableSpringWebSession
@@ -90,7 +90,7 @@ public class RumpusConfig extends Config { // AbstractHttpSessionApplicationInit
 
     @Bean
     public IViewLoader viewLoader() {
-        return new ViewLoader();
+        return new RumpusViewLoader();
     }
 
     // * * * Not using right now
@@ -219,7 +219,7 @@ public class RumpusConfig extends Config { // AbstractHttpSessionApplicationInit
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() { 
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

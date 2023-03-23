@@ -1,19 +1,14 @@
 package com.rumpus.rumpus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
+import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.ui.RumpusView;
-import com.rumpus.rumpus.views.IViewLoader;
 
 @Controller
 abstract class RumpusController extends CommonController {
