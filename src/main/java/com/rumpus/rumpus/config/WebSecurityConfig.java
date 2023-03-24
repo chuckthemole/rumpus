@@ -20,10 +20,10 @@ import com.rumpus.common.CommonConfig;
 public class WebSecurityConfig extends CommonConfig {
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception { // allowing 'manager' access to /users
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception { // allowing 'ADMIN' access to /api/users
         http.cors().and()
             .csrf().disable().authorizeHttpRequests()
-            .requestMatchers("/users").hasRole("manager")
+            .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)
             .anyRequest().authenticated()
             .and()
             .formLogin();
