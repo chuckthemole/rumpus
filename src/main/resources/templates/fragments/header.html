@@ -59,13 +59,13 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="adminBtn button is-info">
+                        <a sec:authorize="hasRole('ADMIN')" class="adminBtn button is-info">
                             <strong>Admin</strong>
                         </a>
-                        <a class="signupBtn button is-primary">
+                        <a sec:authorize="!isAuthenticated()" class="signupBtn button is-primary">
                             <strong>Sign up</strong>
                         </a>
-                        <a class="loginBtn button is-light">
+                        <a sec:authorize="!isAuthenticated()" class="loginBtn button is-light">
                             Log in
                         </a>
                         <a class="loginoutBtn button is-danger">

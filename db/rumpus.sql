@@ -34,9 +34,9 @@ CREATE TABLE user (
     
     username VARCHAR(50) NOT NULL,
 	CONSTRAINT fk_username_user
-		FOREIGN KEY (username) REFERENCES users(username)
+		FOREIGN KEY (username) REFERENCES users(username),
         -- ON DELETE CASCADE,
-    -- auth_id INT
+    auth_id INT
     -- CONSTRAINT fk_auth
 --     	FOREIGN KEY (auth_id)
 --     	REFERENCES auth(auth_id)
@@ -57,6 +57,7 @@ INSERT INTO user (username, email, auth_id) values('chuck', 'chuck@gmail.com', -
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_EMPLOYEE');
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_USER');
 INSERT INTO AUTHORITIES VALUES('chuckthemole','ROLE_MANAGER');
+INSERT INTO AUTHORITIES VALUES('chuckthemole','ROLE_ADMIN');
 INSERT INTO AUTHORITIES VALUES('chuckthemole','ROLE_USER');
 
 -- CREATE TABLE session (

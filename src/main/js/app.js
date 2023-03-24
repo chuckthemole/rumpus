@@ -23,13 +23,17 @@ function InitModals() {
     // For each modal, add click event
     // on button click add is-active, on x click remove is-active
     for(let value of modals.values()) {
-        value[1].onclick = function() {
-            value[0].classList.add("is-active");
-            value[0].classList.add("is-clipped");
+        if(value[1] !== undefined) {
+            value[1].onclick = function() {
+                value[0].classList.add("is-active");
+                value[0].classList.add("is-clipped");
+            }
         }
-        value[0].getElementsByClassName("modal-close")[0].onclick = function() {
-            value[0].classList.remove("is-active");
-            value[0].classList.remove("is-clipped");
+        if(value[0].getElementsByClassName("modal-close")[0] !== undefined) {
+            value[0].getElementsByClassName("modal-close")[0].onclick = function() {
+                value[0].classList.remove("is-active");
+                value[0].classList.remove("is-clipped");
+            }
         }
     }
     // If click outside the modal, close modal
@@ -49,14 +53,16 @@ function InitModals() {
 
 function Logout() {
     var logoutBtn = document.getElementsByClassName("loginoutBtn")[0];
-    logoutBtn.onclick = function() {
-        const requestOptions = {
-            method: 'GET',
-        };
-        return fetch('/logout', requestOptions)
-        .then(() => {
-            window.location.reload();
-        })
+    if(logoutBtn !== undefined) {
+        logoutBtn.onclick = function() {
+            const requestOptions = {
+                method: 'GET',
+            };
+            return fetch('/logout', requestOptions)
+            .then(() => {
+                window.location.reload();
+            })
+        }
     }
 }
 
