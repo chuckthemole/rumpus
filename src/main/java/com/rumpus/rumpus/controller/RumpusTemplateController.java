@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
+ * 
  * @author Chuck
  */
 
@@ -43,8 +43,14 @@ public class RumpusTemplateController extends RumpusController {
 		return TEMPLATE_INDEX;
 	}
 
+    /**
+     * 
+     * 
+     * @return redirect after user submit
+     */
     @PostMapping(PATH_USER)
     public String userSubmit(@ModelAttribute User user, BindingResult bindingResult, Model model) {
+        LOG.info("RumpusTemplateController::userSubmit()");
         // if (bindingResult.hasErrors()) {
         //     System.out.println("ERROR in user Form");
         //     for(ObjectError error : bindingResult.getAllErrors()) {
@@ -53,11 +59,14 @@ public class RumpusTemplateController extends RumpusController {
         //     return "redirect:/";
         // } else {
             model.addAttribute(MODEL_USER, user);
-            System.out.println("  User name: " + user.getUsername());
-            System.out.println("  User email: " + user.getEmail());
-            System.out.println("  User password: " + user.getPassword());
             return PATH_REDIRECT;
         // }
+    }
+
+    private void debugUser(User user) {
+        System.out.println("  User name: " + user.getUsername());
+        System.out.println("  User email: " + user.getEmail());
+        System.out.println("  User password: " + user.getPassword());
     }
 
     // private RumpusView view;

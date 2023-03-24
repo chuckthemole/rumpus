@@ -20,6 +20,7 @@ abstract class RumpusController extends CommonController {
     protected static final String PATH_API = "/api";
     protected static final String PATH_USER = "/user";
     protected static final String PATH_REDIRECT = "redirect:/";
+    protected static final String PATH_LOGOUT = "/logout";
 
     // Models
     protected static final String MODEL_USER = "user";

@@ -47,6 +47,19 @@ function InitModals() {
     }
 }
 
+function Logout() {
+    var logoutBtn = document.getElementsByClassName("loginoutBtn")[0];
+    logoutBtn.onclick = function() {
+        const requestOptions = {
+            method: 'GET',
+        };
+        return fetch('/logout', requestOptions)
+        .then(() => {
+            window.location.reload();
+        })
+    }
+}
+
 export default function App() {
     const users = ReactDOM.createRoot(document.getElementById('users'));
     users.render(<Users />);
@@ -61,6 +74,7 @@ export default function App() {
     login.render(<Login />);
 
     InitModals();
+    Logout();
 }
 
 // * * * Main * * *
