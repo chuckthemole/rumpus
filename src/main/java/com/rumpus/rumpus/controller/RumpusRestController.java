@@ -220,14 +220,20 @@ public class RumpusRestController extends RumpusController {
     }
 
     // can prolly do GET not POST
-    @PostMapping("/login")
-    public ResponseEntity<RumpusUser> userLogin(@RequestBody RumpusUser user) {
-        LOG.info("RumpusRestController POST: /login");
-        // debugUser(user);
-        // if(rumpusUserService.login(user) == SUCCESS) {
-        //     return new ResponseEntity<>(user, HttpStatus.CREATED);
-        // }
-        return null;
+    // @PostMapping("/login")
+    // public ResponseEntity<RumpusUser> userLogin(@RequestBody RumpusUser user) {
+    //     LOG.info("RumpusRestController POST: /login");
+    //     // debugUser(user);
+    //     // if(rumpusUserService.login(user) == SUCCESS) {
+    //     //     return new ResponseEntity<>(user, HttpStatus.CREATED);
+    //     // }
+    //     return null;
+    // }
+
+    @GetMapping("/login_failure")
+    public String loginFailure() {
+        LOG.info("Error logining in!!");
+        return "Failure to login";
     }
 
     @PostMapping("/destroy")

@@ -26,7 +26,7 @@ class Login extends React.Component {
         event.preventDefault();
 
         const user = {};
-        user['userName'] = this.state.username;
+        user['username'] = this.state.username;
         user['password'] = this.state.password;
         this.onLogin(user);
 
@@ -39,12 +39,13 @@ class Login extends React.Component {
     onLogin(user) {
         const requestOptions = {
             method: 'POST',
-            entity: user,
-            headers: { 'Content-Type': 'application/json' },
+            redirect: "follow",
+            // entity: user,
+            // headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        fetch('/api/login', requestOptions)
-            .then(response => response.json());
+        fetch('/login', requestOptions)
+            // .then(response => response.json());
             // .then(data => this.setState({ postId: data.id }));
 	}
 
@@ -60,7 +61,7 @@ class Login extends React.Component {
                 <div className='field'>
                     <label htmlFor='' className='label'>Username</label>
                     <div className='control has-icons-left'>
-                        <input type='username' placeholder='e.g. coolguy' className='input' value={this.state.username} onChange={this.handleUsername} required />
+                        <input name='username' type='username' placeholder='e.g. coolguy' className='input' value={this.state.username} onChange={this.handleUsername} required />
                             <span className='icon is-small is-left'>
                                 <i className='fa fa-envelope'></i>
                             </span>
@@ -69,7 +70,7 @@ class Login extends React.Component {
                 <div className='field'>
                     <label htmlFor='' className='label'>Password</label>
                     <div className='control has-icons-left'>
-                        <input type='password' placeholder='*******' className='input' value={this.state.password} onChange={this.handlePassword} required />
+                        <input name='password' type='password' placeholder='*******' className='input' value={this.state.password} onChange={this.handlePassword} required />
                         <span className='icon is-small is-left'>
                             <i className='fa fa-lock'></i>
                         </span>

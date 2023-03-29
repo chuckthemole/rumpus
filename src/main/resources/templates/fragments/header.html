@@ -58,6 +58,10 @@
       
             <div class="navbar-end">
                 <div class="navbar-item">
+                    <div sec:authorize="isAuthenticated()">
+                        <span>Username: <span sec:authentication="name"></span></span>
+                        <span>Roles: <span sec:authentication="principal.authorities"></span></span>
+                    </div>
                     <div class="buttons">
                         <a sec:authorize="hasRole('ADMIN')" class="adminBtn button is-info">
                             <strong>Admin</strong>
@@ -68,7 +72,7 @@
                         <a sec:authorize="!isAuthenticated()" class="loginBtn button is-light">
                             Log in
                         </a>
-                        <a class="loginoutBtn button is-danger">
+                        <a sec:authorize="isAuthenticated()" class="logoutBtn button is-danger">
                             Log out
                         </a>
                     </div>

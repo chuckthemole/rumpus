@@ -15,23 +15,32 @@ import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonConfig;
 
 @Configuration
-@EnableWebSecurity //WebSecurityConfiguration
+@EnableWebSecurity // WebSecurityConfiguration
 // @PropertySource("classpath:database.properties")
 public class WebSecurityConfig extends CommonConfig {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception { // allowing 'ADMIN' access to /api/users
-        http.cors().and()
-            .csrf().disable().authorizeHttpRequests()
-            .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)
-            .anyRequest().authenticated()
+        http
+            .cors()
             .and()
-            .formLogin();
-         return http.build();
+            // .csrf().disable()
+            .formLogin().loginPage(PATH_INDEX).loginProcessingUrl(PATH_LOGIN).successForwardUrl(PATH_INDEX).permitAll()
+            // .and()
+            // .logout().clearAuthentication(true).deleteCookies("remove").invalidateHttpSession(false).logoutUrl(PATH_LOGOUT).logoutSuccessUrl("/logout.done")
+            .and()
+            .authorizeHttpRequests()
+            .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated()
+            .requestMatchers("/**").permitAll();
+            // .failureForwardUrl(PATH_LOGIN_FAILURE)
+            // .permitAll();
+            // .and()
+            // .formLogin();
+        return http.build();
     }
-    
+
     @Bean
-    public ActiveUserStore activeUserStore(){
+    public ActiveUserStore activeUserStore() {
         return new ActiveUserStore();
     }
 }
