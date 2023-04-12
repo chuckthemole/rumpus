@@ -58,11 +58,13 @@ function InitModals() {
 //     }
 // }
 
+// Not using now, may user later. Instead the logout is done by a form in header.html
 function Logout() {
     var logoutBtn = document.getElementsByClassName("logoutBtn")[0];
     if (logoutBtn !== undefined) {
         console.log("Logging out...");
         logoutBtn.onclick = function () {
+            console.log("Really logging out...");
             const requestOptions = {
                 method: 'POST',
             };
@@ -94,7 +96,7 @@ export default function App() {
     // login.render(<Login />);
 
     InitModals();
-    Logout();
+    // Logout(); not using right now, see above Logout().
 }
 
 // * * * Main * * *

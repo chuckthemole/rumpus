@@ -72,9 +72,9 @@
                         <a sec:authorize="!isAuthenticated()" class="loginBtn button is-light">
                             Log in
                         </a>
-                        <a sec:authorize="isAuthenticated()" class="logoutBtn button is-danger">
-                            Log out
-                        </a>
+                        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                            <button class="logoutBtn button is-danger" type="submit" value="Sign Out">Sign Out</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,10 @@ const React = require('react');
 
 const root = '/api';
 
+/*
+This class is not being used currently (2023/04/12)
+Instead look at login.html in templates/fragments
+*/
 class Login extends React.Component {
     constructor(props) {
         super(props);
