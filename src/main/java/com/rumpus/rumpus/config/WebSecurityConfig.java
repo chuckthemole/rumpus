@@ -55,7 +55,7 @@ public class WebSecurityConfig extends CommonConfig {
             .formLogin(form -> form
                 .loginPage(PATH_INDEX)
                 .loginProcessingUrl(PATH_LOGIN)
-                .defaultSuccessUrl(PATH_INDEX)
+                .defaultSuccessUrl(PATH_INDEX, true)
                 .failureForwardUrl(PATH_INDEX).permitAll()
             )
             // .formLogin().failureHandler(failureHandler).loginPage(PATH_INDEX).loginProcessingUrl(PATH_LOGIN).defaultSuccessUrl(PATH_INDEX, true).successForwardUrl(PATH_INDEX).failureForwardUrl(PATH_INDEX).permitAll()
