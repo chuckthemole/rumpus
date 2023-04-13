@@ -79,18 +79,27 @@ function Logout() {
 }
 
 export default function App() {
-    const users = ReactDOM.createRoot(document.getElementById('users'));
-    users.render(
-        <ErrorBoundary fallback={<p>Something went wrong</p>}>
-            <Users />
-        </ErrorBoundary>
-    );
+    const users = document.getElementById('users');
+    if (typeof(users) != 'undefined' && users != null) { // veriry users id exists in DOM
+        const reactDOMUsers = ReactDOM.createRoot(users);
+        reactDOMUsers.render(
+            <ErrorBoundary fallback={<p>Something went wrong</p>}>
+                <Users />
+            </ErrorBoundary>
+        );
+    }
 
-    const footer = ReactDOM.createRoot(document.getElementById('footer'));
-    footer.render(<Footer />);
+    const footer = document.getElementById('footer');
+    if (typeof(footer) != 'undefined' && footer != null) { // veriry users id exists in DOM
+        const reactDOMFooter = ReactDOM.createRoot(footer);
+        reactDOMFooter.render(<Footer />);
+    }
 
-    const signup = ReactDOM.createRoot(document.getElementById('signup-form'));
-    signup.render(<Signup />);
+    const signup = document.getElementById('signup-form');
+    if (typeof(signup) != 'undefined' && signup != null) { // veriry users id exists in DOM
+        const reactDOMSignup = ReactDOM.createRoot(signup);
+        reactDOMSignup.render(<Signup />);
+    }
 
     // const login = ReactDOM.createRoot(document.getElementById('login-form'));
     // login.render(<Login />);
