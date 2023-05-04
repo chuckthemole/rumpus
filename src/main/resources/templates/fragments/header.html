@@ -63,10 +63,10 @@
                         <span>Roles: <span sec:authentication="principal.authorities"></span></span>
                     </div>
                     <div class="buttons">
-                        <a sec:authorize="hasRole('ADMIN')" class="adminBtn button is-info">
+                        <a sec:authorize="hasRole('ADMIN')" class="adminBtn button is-info" href="#" th:href="@{/admin}">
                             <strong>Admin</strong>
                         </a>
-                        <a sec:authorize="!isAuthenticated()" class="signupBtn button is-primary">
+                        <a sec:authorize="!isAuthenticated()" class="  button is-primary">
                             <strong>Sign up</strong>
                         </a>
                         <a sec:authorize="!isAuthenticated()" class="loginBtn button is-light">

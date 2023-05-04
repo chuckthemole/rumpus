@@ -49,6 +49,11 @@ public class RumpusTemplateController extends RumpusController {
 		return TEMPLATE_INDEX;
 	}
 
+    @GetMapping(value = PATH_ADMIN)
+    public String admin() {
+        return TEMPLATE_ADMIN;
+    }
+
     // @RequestMapping("/error")
     // @ResponseBody
     // String error(HttpServletRequest request) {

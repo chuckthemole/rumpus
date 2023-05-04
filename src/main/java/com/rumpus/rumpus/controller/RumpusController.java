@@ -21,12 +21,14 @@ abstract class RumpusController extends CommonController {
     protected static final String PATH_USER = "/user";
     protected static final String PATH_REDIRECT = "redirect:/";
     protected static final String PATH_LOGOUT = "/logout";
+    protected static final String PATH_ADMIN = "/admin";
 
     // Models
     protected static final String MODEL_USER = "user";
 
     // Templates
     protected static final String TEMPLATE_INDEX = "index";
+    protected static final String TEMPLATE_ADMIN = "admin";
 
     @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
