@@ -1,5 +1,7 @@
 const React = require('react');
 import useSWR from 'swr';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -25,16 +27,31 @@ function Users() {
         fetcher
     );
 
-    console.log(data);
-    console.log(error);
+    // console.log(data);
+    // console.log(error);
 
     if (error) return <div className='container m-6'><div className='notification is-primary'><p>An error occurred</p></div></div>;
     if (!data) return <div className='container m-6'><div className='notification is-primary'><p>Loading...</p></div></div>;
     if (data.error == 'Forbidden') return <div className='container m-6'><div className='notification is-primary'><p>User is not authorized to view users</p></div></div>;
 
+    const handleDeleteUserSubmit = (e) => {
+        e.preventDefault();
+        console.log('Delete Form submitted');
+    }
+
+    const handleUpdateUserSubmit = (e) => {
+        e.preventDefault();
+        console.log('Update Form submitted');
+    }
+
+    const handleAddUser = (e) => {
+        e.preventDefault();
+        console.log('Add Form submitted');
+    }
+
     return (
         <div className='container m-6'>
-            <div className='notification is-primary'>
+            <div className='notification'>
                 <table className="table is-hoverable is-fullwidth">
                     <thead>
                         <tr>
@@ -44,6 +61,8 @@ function Users() {
                             <th><abbr title="Password">Pass</abbr></th>
                             <th><abbr title="User Authorizations">Auth</abbr></th>
                             <th>ID</th>
+                            <th>Delete</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -54,6 +73,8 @@ function Users() {
                             <th><abbr title="Password">Pass</abbr></th>
                             <th><abbr title="User Authorizations">Auth</abbr></th>
                             <th>ID</th>
+                            <th>Delete</th>
+                            <th>Update</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -65,10 +86,25 @@ function Users() {
                                 <td>{userDetails.password}</td>
                                 <td>{auth}</td>
                                 <td>{id}</td>
+                                <td>
+                                    <form onSubmit={handleDeleteUserSubmit}>
+                                        <button className="deleteUser button is-danger" type="submit" value="Delete"><FontAwesomeIcon icon={faTrashCan} /></button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form onSubmit={handleUpdateUserSubmit}>
+                                        <button className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></button>
+                                    </form>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <div className='container m-4'>
+                    <form onSubmit={handleAddUser}>
+                        <button className="m-4 addUser button is-primary" type="submit" value="Add"><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</button>
+                    </form>
+                </div>
             </div>
         </div>
     )
