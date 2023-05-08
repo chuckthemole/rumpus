@@ -27,6 +27,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.SessionRepository;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -206,6 +208,8 @@ public class RumpusRestController extends RumpusController {
             .registerTypeAdapter(RumpusUser.class, RumpusUser.getSerializer())
             .create();
         session.setAttribute("user", gson.toJson(user));
+
+        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 
         // @SuppressWarnings("unchecked")
 		// List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");

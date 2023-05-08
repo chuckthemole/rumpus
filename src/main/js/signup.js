@@ -12,6 +12,7 @@ class Signup extends React.Component {
         this.handlePassword = this.handlePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onCreate = this.onCreate.bind(this);
+        this.onLogin = this.onLogin.bind(this);
         this.clearInput = this.clearInput.bind(this);
     }
 
@@ -35,6 +36,7 @@ class Signup extends React.Component {
         newUser["email"] = this.state.email;
         const fetched = this.onCreate(newUser);
         console.log(fetched);
+        // const loginFetched = this.onLogin();
 
         const signupModal = document.getElementsByClassName("signup")[0];
         signupModal.classList.remove("is-active");
@@ -58,7 +60,21 @@ class Signup extends React.Component {
             .then(data => {
                 // this.setState({ postId: data.id })
                 console.log(data);
+                // const loginFetched = this.onLogin(newUser);
             });
+	}
+
+    onLogin(user) {
+        const requestOptions = {
+            method: 'POST',
+            redirect: "follow",
+            // entity: user,
+            // headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        };
+        fetch('/login', requestOptions)
+            // .then(response => response.json());
+            // .then(data => this.setState({ postId: data.id }));
 	}
 
     clearInput() {

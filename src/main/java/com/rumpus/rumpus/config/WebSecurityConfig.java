@@ -51,7 +51,7 @@ public class WebSecurityConfig extends CommonConfig {
             .cors()
             .and()
             // .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).invalidateHttpSession(true).and() TODO: maybe customize later
-            // .csrf().disable()
+            .csrf().disable() // need this disabled for signing up 5/5/2023 Chuck
             .formLogin(form -> form
                 .loginPage(PATH_INDEX)
                 .loginProcessingUrl(PATH_LOGIN)
@@ -63,7 +63,7 @@ public class WebSecurityConfig extends CommonConfig {
             // .logout().clearAuthentication(true).deleteCookies("remove").invalidateHttpSession(false).logoutUrl(PATH_LOGOUT).logoutSuccessUrl("/logout.done")
             // .and()
             .authorizeHttpRequests()
-            .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated()
+            // .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated()
             .requestMatchers("/**").permitAll();
             // .failureForwardUrl(PATH_LOGIN_FAILURE)
             // .permitAll();
