@@ -1,18 +1,18 @@
 const React = require('react');
 
-const root = '/api';
+import { Common, CREATE_USER_PATH } from "./rumpus";
 
 class Signup extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', email: '', password: '', id: ''};
+        this.state = {username: Common.EMPTY, email: Common.EMPTY, password: Common.EMPTY, id: Common.EMPTY};
 
         this.handleUsername = this.handleUsername.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onCreate = this.onCreate.bind(this);
-        this.onLogin = this.onLogin.bind(this);
+        // this.onLogin = this.onLogin.bind(this);
         this.clearInput = this.clearInput.bind(this);
     }
 
@@ -31,9 +31,9 @@ class Signup extends React.Component {
         event.preventDefault();
 
         const newUser = {};
-        newUser["username"] = this.state.username;
-        newUser["password"] = this.state.password;
-        newUser["email"] = this.state.email;
+        newUser[Common.USERNAME] = this.state.username;
+        newUser[Common.PASSWORD] = this.state.password;
+        newUser[Common.EMAIL] = this.state.email;
         const fetched = await this.onCreate(newUser);
         // const fetchedLogin = await this.onLogin(newUser);
         console.log(fetched);
@@ -46,14 +46,14 @@ class Signup extends React.Component {
 
     async onCreate(newUser) {
         const requestOptions = {
-            method: 'POST',
+            method: Common.POST,
             redirect: "follow",
             entity: newUser,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         };
         // return fetch('/api/user', requestOptions)
-        return fetch('/api/user', requestOptions)
+        return fetch(CREATE_USER_PATH, requestOptions)
             .then(response => {
                 // response.json()
                 console.log(response);
@@ -70,26 +70,26 @@ class Signup extends React.Component {
             });
 	}
 
-    async onLogin(user) {
-        const requestOptions = {
-            method: 'POST',
-            redirect: "follow",
-            entity: user,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        };
-        return fetch('/user_login', requestOptions)
-            .then(() => {
-                window.location.reload();
-            });
-            // .then(response => response.json());
-            // .then(data => this.setState({ postId: data.id }));
-	}
+    // async onLogin(user) {
+    //     const requestOptions = {
+    //         method: 'POST',
+    //         redirect: "follow",
+    //         entity: user,
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(user)
+    //     };
+    //     return fetch('/user_login', requestOptions)
+    //         .then(() => {
+    //             window.location.reload();
+    //         });
+    //         // .then(response => response.json());
+    //         // .then(data => this.setState({ postId: data.id }));
+	// }
 
     clearInput() {
-        this.setState({username: ''});
-        this.setState({email: ''});
-        this.setState({password: ''});
+        this.setState({username: Common.EMPTY});
+        this.setState({email: Common.EMPTY});
+        this.setState({password: Common.EMPTY});
     }
   
     render() {

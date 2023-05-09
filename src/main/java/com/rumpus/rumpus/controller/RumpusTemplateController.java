@@ -70,27 +70,27 @@ public class RumpusTemplateController extends RumpusController {
         return "forward:/login";
     }
 
-    @PostMapping(value = "user_login")
-    public String userLogin(@RequestBody RumpusUser user, HttpServletRequest request) {
-        String password = user.getUserPassword();
-        String username = user.getUsername();
-        try {
-            StringBuilder sbLogInfo = new StringBuilder();
-            sbLogInfo.append("\nUser log in info:\n")
-                .append("  User Name: ")
-                .append(username).append("\n")
-                .append("  User Password: ")
-                .append(password)
-                .append("\n");
-            LOG.info(sbLogInfo.toString());
-            request.login(username, password);
-        } catch (ServletException exception) {
-            StringBuilder sbLogInfo = new StringBuilder();
-            sbLogInfo.append("\nError with log in request:\n").append("  ").append(exception.toString()).append("\n");
-            LOG.info(sbLogInfo.toString());
-        }
-        return TEMPLATE_INDEX;
-    }
+    // @PostMapping(value = "user_login")
+    // public String userLogin(@RequestBody RumpusUser user, HttpServletRequest request) {
+    //     String password = user.getUserPassword();
+    //     String username = user.getUsername();
+    //     try {
+    //         StringBuilder sbLogInfo = new StringBuilder();
+    //         sbLogInfo.append("\nUser log in info:\n")
+    //             .append("  User Name: ")
+    //             .append(username).append("\n")
+    //             .append("  User Password: ")
+    //             .append(password)
+    //             .append("\n");
+    //         LOG.info(sbLogInfo.toString());
+    //         request.login(username, password);
+    //     } catch (ServletException exception) {
+    //         StringBuilder sbLogInfo = new StringBuilder();
+    //         sbLogInfo.append("\nError with log in request:\n").append("  ").append(exception.toString()).append("\n");
+    //         LOG.info(sbLogInfo.toString());
+    //     }
+    //     return TEMPLATE_INDEX;
+    // }
 
     // @RequestMapping("/error")
     // @ResponseBody

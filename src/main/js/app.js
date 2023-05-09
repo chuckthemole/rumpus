@@ -8,6 +8,8 @@ import Signup from './signup';
 import Login from './login';
 import ErrorBoundary from './error';
 
+import { Common } from "./rumpus";
+
 function InitModals() {
     // Add modal here Map[name, modal]
     // modal array: index 0 is modal, index 1 is button
