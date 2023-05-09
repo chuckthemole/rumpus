@@ -2,6 +2,7 @@ package com.rumpus.rumpus.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mysql.cj.log.Log;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
 import com.rumpus.common.Session.CommonSession;
@@ -12,6 +13,7 @@ import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import reactor.core.publisher.Mono;
@@ -191,8 +193,11 @@ public class RumpusRestController extends RumpusController {
         // debugUser(newUser);
         HttpSession session = request.getSession();
         RumpusUser user = rumpusUserService.add(newUser);
+
         // userManager.addUserToGroup(newUser.getUsername(), "USER");
         // userManager.createUser(newUser.getUserDetails());
+
+        currentUserLogin(user, request);
         if (user == null) {
             LOG.info("ERROR: User is null.");
             session.setAttribute("status", "error creating user");
@@ -209,7 +214,7 @@ public class RumpusRestController extends RumpusController {
             .create();
         session.setAttribute("user", gson.toJson(user));
 
-        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 
         // @SuppressWarnings("unchecked")
 		// List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
@@ -220,7 +225,8 @@ public class RumpusRestController extends RumpusController {
 		// messages.add(user.toString());
 		// request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
 
-        return new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
+        ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
+        return re;
     }
 
     // can prolly do GET not POST

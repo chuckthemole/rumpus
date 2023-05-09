@@ -5,13 +5,17 @@
  */
 package com.rumpus.rumpus.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.ui.RumpusView;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +32,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -52,6 +57,39 @@ public class RumpusTemplateController extends RumpusController {
     @GetMapping(value = PATH_ADMIN)
     public String admin() {
         return TEMPLATE_ADMIN;
+    }
+
+    @PostMapping("/user_create")
+    public String userSubmit(@RequestBody RumpusUser newUser) {
+        LOG.info("RumpusTemplateController POST: /user_create");
+        RumpusUser user = rumpusUserService.add(newUser);
+        if (user == null) {
+            LOG.info("ERROR: User is null.");
+            return TEMPLATE_INDEX;
+        }
+        return "forward:/login";
+    }
+
+    @PostMapping(value = "user_login")
+    public String userLogin(@RequestBody RumpusUser user, HttpServletRequest request) {
+        String password = user.getUserPassword();
+        String username = user.getUsername();
+        try {
+            StringBuilder sbLogInfo = new StringBuilder();
+            sbLogInfo.append("\nUser log in info:\n")
+                .append("  User Name: ")
+                .append(username).append("\n")
+                .append("  User Password: ")
+                .append(password)
+                .append("\n");
+            LOG.info(sbLogInfo.toString());
+            request.login(username, password);
+        } catch (ServletException exception) {
+            StringBuilder sbLogInfo = new StringBuilder();
+            sbLogInfo.append("\nError with log in request:\n").append("  ").append(exception.toString()).append("\n");
+            LOG.info(sbLogInfo.toString());
+        }
+        return TEMPLATE_INDEX;
     }
 
     // @RequestMapping("/error")

@@ -26,7 +26,7 @@ class Signup extends React.Component {
         this.setState({password: event.target.value});
     }
   
-    handleSubmit(event) {
+    async handleSubmit(event) {
         // alert('A name was submitted: ' + this.state.username + ' ' + this.state.email + ' ' + this.state.password);
         event.preventDefault();
 
@@ -34,9 +34,9 @@ class Signup extends React.Component {
         newUser["username"] = this.state.username;
         newUser["password"] = this.state.password;
         newUser["email"] = this.state.email;
-        const fetched = this.onCreate(newUser);
+        const fetched = await this.onCreate(newUser);
+        // const fetchedLogin = await this.onLogin(newUser);
         console.log(fetched);
-        // const loginFetched = this.onLogin();
 
         const signupModal = document.getElementsByClassName("signup")[0];
         signupModal.classList.remove("is-active");
@@ -44,13 +44,15 @@ class Signup extends React.Component {
         this.clearInput();
     }
 
-    onCreate(newUser) {
+    async onCreate(newUser) {
         const requestOptions = {
             method: 'POST',
+            redirect: "follow",
             entity: newUser,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         };
+        // return fetch('/api/user', requestOptions)
         return fetch('/api/user', requestOptions)
             .then(response => {
                 // response.json()
@@ -61,18 +63,25 @@ class Signup extends React.Component {
                 // this.setState({ postId: data.id })
                 console.log(data);
                 // const loginFetched = this.onLogin(newUser);
+                // console.log(loginFetched);
+            })
+            .then(() => { // reload window
+                window.location.reload();
             });
 	}
 
-    onLogin(user) {
+    async onLogin(user) {
         const requestOptions = {
             method: 'POST',
             redirect: "follow",
-            // entity: user,
-            // headers: { 'Content-Type': 'application/json' },
+            entity: user,
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        fetch('/login', requestOptions)
+        return fetch('/user_login', requestOptions)
+            .then(() => {
+                window.location.reload();
+            });
             // .then(response => response.json());
             // .then(data => this.setState({ postId: data.id }));
 	}

@@ -7,8 +7,12 @@ import com.google.gson.Gson;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
 import com.rumpus.common.views.IViewLoader;
+import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.ui.RumpusView;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 abstract class RumpusController extends CommonController {
@@ -21,6 +25,7 @@ abstract class RumpusController extends CommonController {
     protected static final String PATH_USER = "/user";
     protected static final String PATH_REDIRECT = "redirect:/";
     protected static final String PATH_LOGOUT = "/logout";
+    protected static final String PATH_LOGIN = "/login";
     protected static final String PATH_ADMIN = "/admin";
 
     // Models
@@ -41,5 +46,25 @@ abstract class RumpusController extends CommonController {
     public RumpusController() {super(NAME);}
     public RumpusController(String name) {
         super(name);
+    }
+
+    protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {
+        String password = user.getUserPassword();
+        String username = user.getUsername();
+        try {
+            StringBuilder sbLogInfo = new StringBuilder();
+            sbLogInfo.append("\nUser log in info:\n")
+                .append("  User Name: ")
+                .append(username).append("\n")
+                .append("  User Password: ")
+                .append(password)
+                .append("\n");
+            LOG.info(sbLogInfo.toString());
+            request.login(username, password);
+        } catch (ServletException exception) {
+            StringBuilder sbLogInfo = new StringBuilder();
+            sbLogInfo.append("\nError with log in request:\n").append("  ").append(exception.toString()).append("\n");
+            LOG.info(sbLogInfo.toString());
+        }
     }
 }

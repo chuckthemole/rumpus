@@ -55,16 +55,23 @@ public class WebSecurityConfig extends CommonConfig {
             .formLogin(form -> form
                 .loginPage(PATH_INDEX)
                 .loginProcessingUrl(PATH_LOGIN)
-                .defaultSuccessUrl(PATH_INDEX, true)
-                .failureForwardUrl(PATH_INDEX).permitAll()
+                // .defaultSuccessUrl(PATH_INDEX, true)
+                // .failureForwardUrl(PATH_INDEX).permitAll()
             )
             // .formLogin().failureHandler(failureHandler).loginPage(PATH_INDEX).loginProcessingUrl(PATH_LOGIN).defaultSuccessUrl(PATH_INDEX, true).successForwardUrl(PATH_INDEX).failureForwardUrl(PATH_INDEX).permitAll()
             // .and()
             // .logout().clearAuthentication(true).deleteCookies("remove").invalidateHttpSession(false).logoutUrl(PATH_LOGOUT).logoutSuccessUrl("/logout.done")
             // .and()
-            .authorizeHttpRequests()
-            // .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated()
-            .requestMatchers("/**").permitAll();
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(PATH_API_USERS).hasRole(ADMIN) //only admin should view user list
+
+                // this should prolly be changed when deployed, permitting all for ease of use/testing rn 5/8/2023 chuck
+                .requestMatchers("/**").permitAll()
+                .anyRequest().permitAll()
+                // .anyRequest().authenticated() 
+            );
+            // .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated() only admin should view user list
+            // .requestMatchers("/**").permitAll();
             // .failureForwardUrl(PATH_LOGIN_FAILURE)
             // .permitAll();
             // .and()
