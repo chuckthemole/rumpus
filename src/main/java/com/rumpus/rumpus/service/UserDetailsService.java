@@ -55,4 +55,10 @@ public class UserDetailsService implements IUserService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
+
+    @Override
+    public boolean remove(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    }
 }

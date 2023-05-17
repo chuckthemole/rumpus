@@ -10,6 +10,7 @@ import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.ui.RumpusView;
+import com.rumpus.rumpus.views.IRumpusViewLoader;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ abstract class RumpusController extends CommonController {
     protected static final String PATH_INDEX = "/";
     protected static final String PATH_API = "/api";
     protected static final String PATH_USER = "/user";
+    protected static final String PATH_VIEW = "/view";
     protected static final String PATH_REDIRECT = "redirect:/";
     protected static final String PATH_LOGOUT = "/logout";
     protected static final String PATH_LOGIN = "/login";
@@ -38,7 +40,7 @@ abstract class RumpusController extends CommonController {
     @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
     @Autowired protected IRumpusUserService rumpusUserService;
-    @Autowired protected IViewLoader viewLoader;
+    @Autowired protected IRumpusViewLoader viewLoader;
     // @Autowired protected JdbcUserDetailsManager userManager;
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;

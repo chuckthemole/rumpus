@@ -1,7 +1,9 @@
 const React = require('react');
+
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-  import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { Common, CREATE_USER_PATH } from "./rumpus";
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -34,9 +36,33 @@ function Users() {
     if (!data) return <div className='container m-6'><div className='notification is-primary'><p>Loading...</p></div></div>;
     if (data.error == 'Forbidden') return <div className='container m-6'><div className='notification is-primary'><p>User is not authorized to view users</p></div></div>;
 
-    const handleDeleteUserSubmit = (e) => {
+    const handleDeleteUserSubmit = (username) => (e) => {
         e.preventDefault();
         console.log('Delete Form submitted');
+
+        const requestOptions = {
+            method: Common.POST,
+            redirect: "follow",
+            entity: username,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(username)
+        };
+        // return fetch('/api/user', requestOptions)
+        return fetch("/api/delete_user", requestOptions);
+            // .then(response => {
+            //     // response.json()
+            //     console.log(response);
+            //     console.log(response.json());
+            // })
+            // .then(data => {
+            //     // this.setState({ postId: data.id })
+            //     console.log(data);
+            //     // const loginFetched = this.onLogin(userName);
+            //     // console.log(loginFetched);
+            // })
+            // .then(() => { // reload window
+            //     window.location.reload();
+            // });
     }
 
     const handleUpdateUserSubmit = (e) => {
@@ -87,7 +113,7 @@ function Users() {
                                 <td>{auth}</td>
                                 <td>{id}</td>
                                 <td>
-                                    <form onSubmit={handleDeleteUserSubmit}>
+                                    <form onSubmit={handleDeleteUserSubmit(userDetails.username)}>
                                         <button className="deleteUser button is-danger" type="submit" value="Delete"><FontAwesomeIcon icon={faTrashCan} /></button>
                                     </form>
                                 </td>

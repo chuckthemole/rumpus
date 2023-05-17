@@ -4,6 +4,7 @@ const client = require('./client');
 
 import Users from './users';
 import Footer from './footer';
+import UserTable from './user_table';
 import Signup from './signup';
 import Login from './login';
 import ErrorBoundary from './error';
@@ -101,6 +102,12 @@ export default function App() {
     if (typeof(signup) != 'undefined' && signup != null) { // veriry users id exists in DOM
         const reactDOMSignup = ReactDOM.createRoot(signup);
         reactDOMSignup.render(<Signup />);
+    }
+
+    const user_table = document.getElementById('user_table');
+    if (typeof(user_table) != 'undefined' && user_table != null) { // veriry users id exists in DOM
+        const reactDOMUserTable = ReactDOM.createRoot(user_table);
+        reactDOMUserTable.render(<UserTable />)
     }
 
     // const login = ReactDOM.createRoot(document.getElementById('login-form'));

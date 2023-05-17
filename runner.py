@@ -7,6 +7,7 @@ import sys
 
 # Commands
 build = ".././gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/log/build.log"
+buildXlint = ".././gradlew clean build --refresh-dependencies -x test -Xlint:unchecked > src/main/java/com/rumpus/rumpus/log/build.log"
 buildDebug = ".././gradlew clean build --refresh-dependencies --debug -x test > src/main/java/com/rumpus/rumpus/log/build.log"
 buildTest = ".././gradlew clean build --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
 buildTestInfo = ".././gradlew clean build --info --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
@@ -28,6 +29,8 @@ if __name__ == '__main__':
         print(f"{i:>6}: {arg}")
         if arg == "build":
             os.system(build)
+        elif arg == "buildXlint":
+            os.system(buildXlint)
         elif arg == "buildTest":
             os.system(buildTest)
         elif arg == "buildDebug":

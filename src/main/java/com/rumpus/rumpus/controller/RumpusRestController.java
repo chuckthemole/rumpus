@@ -93,10 +93,10 @@ public class RumpusRestController extends RumpusController {
         return new ResponseEntity<List<RumpusUser>>(users, HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping("/footer")
-    public ResponseEntity<Footer> getFooter() {
-        return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
-    }
+    // @GetMapping("/footer")
+    // public ResponseEntity<Footer> getFooter() {
+    //     return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
+    // }
     
     @GetMapping("/username/{name}")
     public User getUserByName(@PathVariable String name) {
@@ -192,7 +192,7 @@ public class RumpusRestController extends RumpusController {
         LOG.info("RumpusRestController POST: /user");
         // debugUser(newUser);
         HttpSession session = request.getSession();
-        RumpusUser user = rumpusUserService.add(newUser);
+        RumpusUser user = this.rumpusUserService.add(newUser);
 
         // userManager.addUserToGroup(newUser.getUsername(), "USER");
         // userManager.createUser(newUser.getUserDetails());
@@ -227,6 +227,13 @@ public class RumpusRestController extends RumpusController {
 
         ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
         return re;
+    }
+
+    @PostMapping(value = "/delete_user")
+    public ResponseEntity<CommonSession> deleteUser(@RequestBody RumpusUser user, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        this.rumpusUserService.remove(user.getUsername());
+        return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 
     // can prolly do GET not POST

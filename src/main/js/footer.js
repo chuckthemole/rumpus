@@ -5,7 +5,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function Footer() {
     const { data, error } = useSWR(
-        "/api/footer",
+        "/view/footer",
         fetcher
     );
 

@@ -19,6 +19,7 @@ import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.ui.RumpusView;
+import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
 @Configuration
@@ -34,7 +35,7 @@ public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicati
     }
 
     @Bean
-    public IViewLoader viewLoader() {
+    public IRumpusViewLoader viewLoader() {
         return new RumpusViewLoader();
     }
 
