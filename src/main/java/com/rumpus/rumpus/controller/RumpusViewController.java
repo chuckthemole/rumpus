@@ -27,6 +27,6 @@ public class RumpusViewController extends RumpusController {
 
     @GetMapping("/user_table")
     public ResponseEntity<String> getUserTable() {
-        return new ResponseEntity<String>(viewLoader.getUserTable(), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
     }
 }

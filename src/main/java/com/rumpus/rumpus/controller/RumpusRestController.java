@@ -6,6 +6,7 @@ import com.mysql.cj.log.Log;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
 import com.rumpus.common.Session.CommonSession;
+import com.rumpus.common.util.StringUtil;
 import com.rumpus.common.views.Footer;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.models.User;
@@ -230,9 +231,9 @@ public class RumpusRestController extends RumpusController {
     }
 
     @PostMapping(value = "/delete_user")
-    public ResponseEntity<CommonSession> deleteUser(@RequestBody RumpusUser user, HttpServletRequest request) {
+    public ResponseEntity<CommonSession> deleteUser(@RequestBody String user, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        this.rumpusUserService.remove(user.getUsername());
+        this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 

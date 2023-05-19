@@ -25,7 +25,6 @@ public class RumpusViewLoader extends ViewLoader implements IRumpusViewLoader {
 
     // Tables
     private static final String CSS_FRAMEWORK = "bulma";
-    private static final ITableBuilder userTable;
 
     // Add more views here...
 
@@ -33,8 +32,6 @@ public class RumpusViewLoader extends ViewLoader implements IRumpusViewLoader {
         FOOTER_COLUMN_1 = new Pair<>("Useful", new ArrayList<>(List.of("Shop", "Rules", "News")));
         FOOTER_COLUMN_2 = new Pair<>("Support", new ArrayList<>(List.of("Shop", "Rules", "News")));
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
-
-        userTable = new ComponentUserTable(CSS_FRAMEWORK);
     }
 
     public RumpusViewLoader() {
@@ -66,11 +63,7 @@ public class RumpusViewLoader extends ViewLoader implements IRumpusViewLoader {
     }
 
     private int initUserTable() {
+        super.userTable = new ComponentUserTable(CSS_FRAMEWORK);
         return SUCCESS;
-    }
-
-    @Override
-    public String getUserTable() {
-        return RumpusViewLoader.userTable.getTable();
     }
 }

@@ -33,7 +33,17 @@ function Users() {
     // console.log(error);
 
     if (error) return <div className='container m-6'><div className='notification is-primary'><p>An error occurred</p></div></div>;
-    if (!data) return <div className='container m-6'><div className='notification is-primary'><p>Loading...</p></div></div>;
+
+    if (!data) return(
+        <div className='container m-6'>
+            <progress class="progress is-small is-primary" max="100">15%</progress>
+            <progress class="progress is-danger" max="100">30%</progress>
+            <progress class="progress is-medium is-dark" max="100">45%</progress>
+            <progress class="progress is-large is-info" max="100">60%</progress>
+        </div>
+    )
+    // <div className='container m-6'><div className='notification is-primary'><p>Loading...</p></div></div>;
+
     if (data.error == 'Forbidden') return <div className='container m-6'><div className='notification is-primary'><p>User is not authorized to view users</p></div></div>;
 
     const handleDeleteUserSubmit = (username) => (e) => {
@@ -76,9 +86,9 @@ function Users() {
     }
 
     return (
-        <div className='container m-6'>
-            <div className='notification'>
-                <table className="table is-hoverable is-fullwidth">
+        <div className='content m-6'>
+
+                <table className="table is-hoverable is-fullwidth is-bordered m-6">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -131,7 +141,7 @@ function Users() {
                         <button className="m-4 addUser button is-primary" type="submit" value="Add"><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</button>
                     </form>
                 </div>
-            </div>
+
         </div>
     )
 }

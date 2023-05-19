@@ -9,6 +9,8 @@ function Footer() {
         fetcher
     );
 
+    console.log(data);
+
     if (error) return <p>An error occurred</p>;
     if (!data) return <p>Loading</p>;
    

@@ -9,14 +9,15 @@ function UserTable() {
         fetcher
     );
 
+    console.log(data);
     if (error) return <p>An error occurred</p>;
     if (!data) return <p>Loading</p>;
    
-    return (
-        <div className="columns">
-            {data}
-        </div>
-    )
+    // return (
+    //     <div className="columns">
+    //         {data}
+    //     </div>
+    // )
 }
 
 export default UserTable;
