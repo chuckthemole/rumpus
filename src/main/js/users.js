@@ -36,10 +36,10 @@ function Users() {
 
     if (!data) return(
         <div className='container m-6'>
-            <progress class="progress is-small is-primary" max="100">15%</progress>
-            <progress class="progress is-danger" max="100">30%</progress>
-            <progress class="progress is-medium is-dark" max="100">45%</progress>
-            <progress class="progress is-large is-info" max="100">60%</progress>
+            <progress className="progress is-small is-primary" max="100">15%</progress>
+            <progress className="progress is-danger" max="100">30%</progress>
+            <progress className="progress is-medium is-dark" max="100">45%</progress>
+            <progress className="progress is-large is-info" max="100">60%</progress>
         </div>
     )
     // <div className='container m-6'><div className='notification is-primary'><p>Loading...</p></div></div>;
