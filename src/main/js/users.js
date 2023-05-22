@@ -3,7 +3,7 @@ const React = require('react');
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { Common, CREATE_USER_PATH } from "./rumpus";
+import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH } from "./rumpus";
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -24,8 +24,9 @@ const fetcher = async url => {
 }
 
 function Users() {
+    
     const { data, error } = useSWR(
-        "/api/users",
+        GET_USERS_PATH,
         fetcher
     );
 
@@ -57,8 +58,7 @@ function Users() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(username)
         };
-        // return fetch('/api/user', requestOptions)
-        return fetch("/api/delete_user", requestOptions);
+        return fetch(DELETE_USER_PATH, requestOptions).then(window.location.reload());
             // .then(response => {
             //     // response.json()
             //     console.log(response);
@@ -82,7 +82,16 @@ function Users() {
 
     const handleAddUser = (e) => {
         e.preventDefault();
-        console.log('Add Form submitted');
+        // console.log('Add Form submitted');
+        const signup = document.getElementsByClassName("signup")[0];
+        signup.classList.add("is-active");
+        signup.classList.add("is-clipped");
+        if (signup.getElementsByClassName("modal-close")[0] !== undefined) {
+            signup.getElementsByClassName("modal-close")[0].onclick = function () {
+                signup.classList.remove("is-active");
+                signup.classList.remove("is-clipped");
+            }
+        }
     }
 
     return (

@@ -99,7 +99,7 @@ export default function App() {
     }
 
     const signup = document.getElementById('signup-form');
-    if (typeof(signup) != 'undefined' && signup != null) { // veriry users id exists in DOM
+    if (typeof(signup) != 'undefined' && signup != null) { // verify users id exists in DOM
         const reactDOMSignup = ReactDOM.createRoot(signup);
         reactDOMSignup.render(<Signup />);
     }
