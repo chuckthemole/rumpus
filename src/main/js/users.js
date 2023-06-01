@@ -82,16 +82,8 @@ function Users() {
 
     const handleAddUser = (e) => {
         e.preventDefault();
-        // console.log('Add Form submitted');
         const signup = document.getElementsByClassName("signup")[0];
-        signup.classList.add("is-active");
-        signup.classList.add("is-clipped");
-        if (signup.getElementsByClassName("modal-close")[0] !== undefined) {
-            signup.getElementsByClassName("modal-close")[0].onclick = function () {
-                signup.classList.remove("is-active");
-                signup.classList.remove("is-clipped");
-            }
-        }
+        Common.ActivateModalNoButton(signup);
     }
 
     return (
