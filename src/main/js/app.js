@@ -2,11 +2,12 @@ const React = require('react');
 const ReactDOM = require('react-dom/client');
 const client = require('./client');
 
-import Users from './users';
+import Users from './user/users';
 import Footer from './footer';
-import UserTable from './user_table';
-import Signup from './signup';
-import Login from './login';
+import UserTable from './user/user_table';
+import Signup from './user/signup';
+import UpdateUser from './user/update';
+import Login from './user/login';
 import ErrorBoundary from './error';
 
 import { Common, modals } from "./rumpus";
@@ -59,6 +60,14 @@ export default function App() {
         const reactDOMSignup = ReactDOM.createRoot(signup);
         reactDOMSignup.render(<Signup />);
     }
+
+    // const update_user = document.getElementById('update_user-form');
+    // if (typeof(update_user) != 'undefined' && update_user != null) {
+    //     const reactDOMUpdateUser = ReactDOM.createRoot(update_user);
+    //     reactDOMUpdateUser.render(<UpdateUser />);
+    // } else {
+    //     console.log("Error with update_user");
+    // }
 
     const user_table = document.getElementById('user_table');
     if (typeof(user_table) != 'undefined' && user_table != null) { // veriry users id exists in DOM

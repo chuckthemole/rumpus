@@ -1,6 +1,6 @@
 const React = require('react');
 
-import { Common, CREATE_USER_PATH } from "./rumpus";
+import { Common, CREATE_USER_PATH } from "../rumpus";
 
 class Signup extends React.Component {
     constructor(props) {

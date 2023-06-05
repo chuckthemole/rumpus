@@ -123,12 +123,6 @@ public class RumpusTemplateController extends RumpusController {
         // }
     }
 
-    private void debugUser(User user) {
-        System.out.println("  User name: " + user.getUsername());
-        System.out.println("  User email: " + user.getEmail());
-        System.out.println("  User password: " + user.getPassword());
-    }
-
     // private RumpusView view;
     // private IUserService userService;
 

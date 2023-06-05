@@ -11,8 +11,9 @@
 
 <body>
     <div th:replace="~{fragments/header :: header}">Header</div>
-    <div th:replace="~{fragments/login :: login}">Login</div>
-    <div th:replace="~{fragments/signup :: signup}">Signup</div>
+    <div th:replace="~{fragments/user/login :: login}">Login</div>
+    <div th:replace="~{fragments/user/signup :: signup}">Signup</div>
+    <div th:replace="~{fragments/user/update :: update_user}">Update</div>
     <div>
         <span>ADMIN PAGE</span>
     </div>

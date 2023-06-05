@@ -1,9 +1,11 @@
 const React = require('react');
+const ReactDOM = require('react-dom/client');
 
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH } from "./rumpus";
+import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH } from "../rumpus";
+import UpdateUser from './update';
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -47,6 +49,16 @@ function Users() {
 
     if (data.error == 'Forbidden') return <div className='container m-6'><div className='notification is-primary'><p>User is not authorized to view users</p></div></div>;
 
+    // data is good, store into variable
+    const users = data;
+
+
+    // const { currentUser, currentUserError } = useSWR(
+    //     '/api/current_username',
+    //     fetcher
+    // );
+    // console.log(currentUser);
+
     const handleDeleteUserSubmit = (username) => (e) => {
         e.preventDefault();
         console.log('Delete Form submitted');
@@ -75,15 +87,44 @@ function Users() {
             // });
     }
 
-    const handleUpdateUserSubmit = (e) => {
+    const handleUpdateUserSubmit = (username) => (e) => {
         e.preventDefault();
-        console.log('Update Form submitted');
+
+        const requestOptions = {
+            method: Common.GET,
+            headers: {
+                'Accept': 'application/json',
+            },
+        };
+        const user = fetch("/api/get_user/" + username, requestOptions)
+            .then(response => response.json())
+            // .then(response => console.log(JSON.stringify(response)));
+            .then(response => {
+                const update_user = document.getElementById('update_user-form');
+                if (typeof(update_user) != 'undefined' && update_user != null) {
+                    const reactDOMUpdateUser = ReactDOM.createRoot(update_user); // getting warnings. change to root.render()
+                    reactDOMUpdateUser.render(<UpdateUser user={response}/>);
+                } else {
+                    console.log("Error with update_user");
+                }
+
+                const update = document.getElementsByClassName('update_user')[0];
+                update !== undefined ? Common.ActivateModalNoButton(update) : console.log("Error: could not find element with class 'update'");
+            });
+            
+        // console.log(user);
+        // console.log(user.email);
+        // console.log(user.username);
+        // console.log(user.password);
+
+        // const update = document.getElementsByClassName('update_user')[0];
+        // update !== undefined ? Common.ActivateModalNoButton(update) : console.log("Error: could not find element with class 'update'");
     }
 
     const handleAddUser = (e) => {
         e.preventDefault();
         const signup = document.getElementsByClassName("signup")[0];
-        Common.ActivateModalNoButton(signup);
+        signup !== undefined ? Common.ActivateModalNoButton(signup) : console.log("Error: could not find element with class 'signup'");
     }
 
     return (
@@ -115,7 +156,7 @@ function Users() {
                         </tr>
                     </tfoot>
                     <tbody>
-                        {data.map(({ userDetails, email, auth, id, index }) => (
+                        {users.map(({ userDetails, email, auth, id, index }) => (
                             <tr key={userDetails.username}>
                                 <th>{index}</th>
                                 <td>{userDetails.username}</td>
@@ -129,7 +170,7 @@ function Users() {
                                     </form>
                                 </td>
                                 <td>
-                                    <form onSubmit={handleUpdateUserSubmit}>
+                                    <form onSubmit={handleUpdateUserSubmit(userDetails.username)}>
                                         <button className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></button>
                                     </form>
                                 </td>

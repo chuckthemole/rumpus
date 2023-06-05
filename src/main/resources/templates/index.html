@@ -12,8 +12,9 @@
 <body class="m-5">
 
     <div th:replace="~{fragments/header :: header}">Header</div>
-    <div th:replace="~{fragments/login :: login}">Login</div>
-    <div th:replace="~{fragments/signup :: signup}">Signup</div>
+    <div th:replace="~{fragments/user/login :: login}">Login</div>
+    <div th:replace="~{fragments/user/signup :: signup}">Signup</div>
+    <div th:replace="~{fragments/user/update :: update_user}">Update</div>
 
     <!-- <div id="users"></div> -->
 
@@ -28,7 +29,7 @@
 
     <div th:insert="~{fragments/footer :: footer}">&copy; 2017 The Static Templates</div>
 
-    <div th:insert="~{fragments/user_table :: user_table}"></div>
+    <div th:insert="~{fragments/user/user_table :: user_table}"></div>
 
     <script src="js/quill.bundle.js"></script> <!-- keep this at bottom of body -->
     <script src="js/app.bundle.js"></script> <!-- keep this at bottom of body -->

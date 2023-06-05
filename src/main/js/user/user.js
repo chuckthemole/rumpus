@@ -1,5 +1,5 @@
 const React = require('react');
-const client = require('./client');
+const client = require('../client');
 
 class User extends React.Component {
 	render() {

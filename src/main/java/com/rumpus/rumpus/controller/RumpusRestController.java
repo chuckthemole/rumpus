@@ -31,6 +31,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.SessionRepository;
 import org.springframework.ui.Model;
@@ -60,139 +61,23 @@ public class RumpusRestController extends RumpusController {
 
     public RumpusRestController() {super(NAME);}
 
-    // @Autowired
-    // public RumpusRestController(IUserService service, IViewLoader viewLoader, RumpusView view, JdbcUserDetailsManager userManager, ActiveUserStore activeUserStore) {
-    //     super(NAME, service, viewLoader, view, userManager, activeUserStore);
-    // }
-    
-    // @GetMapping("/websessions")
-    // public Mono<String> getSession(SessionRepository<CommonSession> sessions) {
-    //     sessions.
-
-    //     session.getAttributes().putIfAbsent("note", "Howdy Cosmic Spheroid!");
-    //     return Mono.just((String) session.getAttributes().get("note"));
-    // }
-
-    @GetMapping("/")
+    @GetMapping(value = PATH_INDEX)
     public String getIndex() {
-        return "hello";
+        return NAME;
     }
     
-    @GetMapping("/userid/{id}")
-    public RumpusUser getUserById(@PathVariable int id) {
-        return rumpusUserService.get(id);
-    }
-    
-    @GetMapping("/users")
+    @GetMapping(value = PATH_GET_USERS)
     public ResponseEntity<List<RumpusUser>> getAllUsers(HttpSession session) {
-        // Gson gson = new Gson();
         List<RumpusUser> users = rumpusUserService.getAll();
-        // for(User user : users) {
-        //     debugUser(user);
-        // }
-        
         return new ResponseEntity<List<RumpusUser>>(users, HttpStatusCode.valueOf(200));
     }
 
-    // @GetMapping("/footer")
-    // public ResponseEntity<Footer> getFooter() {
-    //     return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
-    // }
-    
-    @GetMapping("/username/{name}")
-    public User getUserByName(@PathVariable String name) {
-        // return rumpusUserService.get(name);
-        return null;
-    }
-
-    // @PostMapping("/signup")
-    // public int userSignup() {
-    //     User user = new User(null);
-    //     rumpusUserService.add(null);
-    //     return SUCCESS;
-    // }
-
-    // @PostMapping("/signup")
-    // public ResponseEntity<?> userSignupViaAjax(@RequestBody User user, Errors errors) {
-    //     String userString = user.toString();
-    //     if(userString.isEmpty()) {
-    //         System.out.println("Error: User is empty!");
-    //     } else {
-    //         System.out.println("Printing user:");
-    //         System.out.println(user.toString());
-    //     }
-
-    //     AjaxResponseBody<User> result = new AjaxResponseBody<>();
-
-    //     //If error, just return a 400 bad request, along with the error message
-    //     if (errors.hasErrors()) {
-
-    //         result.setMsg(errors.getAllErrors()
-    //                 .stream().map(x -> x.getDefaultMessage())
-    //                 .collect(Collectors.joining(",")));
-    //         return ResponseEntity.badRequest().body(result);
-
-    //     }
-    //     User newUser = rumpusUserService.add(user);
-    //     if(newUser != null) {
-    //         result.setMsg("Error creating user!");
-    //     } else {
-    //         result.setMsg("Success");
-    //     }
-    //     List<User> users = new ArrayList<>();
-    //     users.add(newUser);
-    //     result.setResult(users);
-
-    //     return ResponseEntity.ok(result);
-
-    // }
-
-    // @PostMapping("/signup")
-    // public ResponseEntity<?> userSignupViaAjax(@ModelAttribute RumpusUser user, Errors errors) {
-    //     String userString = user.toString();
-    //     if(userString.isEmpty()) {
-    //         System.out.println("Error: User is empty!");
-    //     } else {
-    //         System.out.println("Printing user:");
-    //         System.out.println(user.toString());
-    //     }
-
-    //     AjaxResponseBody<User> result = new AjaxResponseBody<>();
-
-    //     //If error, just return a 400 bad request, along with the error message
-    //     if (errors.hasErrors()) {
-
-    //         result.setMsg(errors.getAllErrors()
-    //                 .stream().map(x -> x.getDefaultMessage())
-    //                 .collect(Collectors.joining(",")));
-    //         return ResponseEntity.badRequest().body(result);
-
-    //     }
-    //     User newUser = rumpusUserService.add(user);
-    //     if(newUser != null) {
-    //         result.setMsg("Error creating user!");
-    //     } else {
-    //         result.setMsg("Success");
-    //     }
-    //     List<User> users = new ArrayList<>();
-    //     users.add(newUser);
-    //     result.setResult(users);
-
-    //     return ResponseEntity.ok(result);
-
-    // }
-
-    // @GetMapping("/user")
-    // public String userForm(Model model) {
-    //     model.addAttribute("user", new User());
-    //     return "user";
-    // }
-
-    @PostMapping("/user")
+    @PostMapping(value = PATH_USER)
     public ResponseEntity<CommonSession> userSubmit(@RequestBody RumpusUser newUser, HttpServletRequest request) {
         LOG.info("RumpusRestController POST: /user");
         // debugUser(newUser);
         HttpSession session = request.getSession();
+        LOG.info("Creating user: " + newUser.toString());
         RumpusUser user = this.rumpusUserService.add(newUser);
 
         // userManager.addUserToGroup(newUser.getUsername(), "USER");
@@ -230,24 +115,32 @@ public class RumpusRestController extends RumpusController {
         return re;
     }
 
-    @PostMapping(value = "/delete_user")
+    @PostMapping(value = PATH_DELETE_USER)
     public ResponseEntity<CommonSession> deleteUser(@RequestBody String user, HttpServletRequest request) {
         HttpSession session = request.getSession();
         this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 
-    // can prolly do GET not POST
-    // @PostMapping("/login")
-    // public ResponseEntity<RumpusUser> userLogin(@RequestBody RumpusUser user) {
-    //     LOG.info("RumpusRestController POST: /login");
-    //     // debugUser(user);
-    //     // if(rumpusUserService.login(user) == SUCCESS) {
-    //     //     return new ResponseEntity<>(user, HttpStatus.CREATED);
-    //     // }
-    //     return null;
-    // }
+    // TODO implement. Is just printing rn
+    @PostMapping(value = PATH_UPDATE_USER)
+    public ResponseEntity<CommonSession> updateUser(@RequestBody RumpusUser user, HttpServletRequest request) {
+        LOG.info("RumpusRestController POST: /api/update_user");
+        HttpSession session = request.getSession();
+        // this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
+        LOG.info("Update this user: " + user.toString());
+        return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
+    }
 
+    // TODO this should be secured so user info is not visible
+    @GetMapping(value = PATH_VALUE_GET_BY_USER_NAME)
+    public ResponseEntity<RumpusUser> getUser(@PathVariable(PATH_VARIABLE_GET_BY_USER_NAME) String username, HttpServletRequest request) {
+        return new ResponseEntity<RumpusUser>(this.rumpusUserService.get(username), HttpStatus.ACCEPTED);
+    }
+
+
+    // ********************************************************************************
+    // TODO check if I'm using these functions below here. Idk if I am - chuck 6/5/2023
     @GetMapping("/login_failure")
     public String loginFailure() {
         LOG.info("Error logining in!!");
@@ -259,13 +152,12 @@ public class RumpusRestController extends RumpusController {
 		request.getSession().invalidate();
 	}
 
-    private int debugUser(User user) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n* * User * * \n");
-        sb.append("  User name: ").append(user.getUsername()).append("\n");
-        sb.append("  User email: ").append(user.getEmail()).append("\n");
-        sb.append("  User password: ").append(user.getPassword()).append("\n");
-        LOG.info(sb.toString());
-        return SUCCESS;
+    // get the current user's username
+    @GetMapping("/username")
+    public ResponseEntity<String> getUsername(HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();   // gets detailed user info -> .getPrincipal().toString();
+        ResponseEntity<String> re = new ResponseEntity<>(username, HttpStatus.CREATED);
+        return re;
     }
 }
