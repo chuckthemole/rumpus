@@ -12,6 +12,7 @@ import com.rumpus.rumpus.models.User;
 public class RumpusUserService extends Service<RumpusUser> implements IRumpusUserService {
 
     protected static final String NAME = "userService";
+    private static final String USERNAME_CONDITION = "username = ?";
     private Map<String, RumpusUser> users;
 
     public RumpusUserService(IRumpusUserDao userDao) {
@@ -23,6 +24,11 @@ public class RumpusUserService extends Service<RumpusUser> implements IRumpusUse
             this.users.put(user.getEmail(), user);
             this.users.put(user.getUsername(), user);
         });
+    }
+
+    @Override
+    public RumpusUser updateUser(String userToUpdate, RumpusUser updatedUser) {
+        return super.update(userToUpdate, updatedUser, USERNAME_CONDITION);
     }
 
     // @Override

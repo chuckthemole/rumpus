@@ -19,11 +19,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.rumpus.DaoTest;
-import com.rumpus.rumpus.config.RumpusTestConfig;
+import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.User;
 
-@ContextConfiguration(classes = RumpusTestConfig.class)
-// @Import(RumpusTestConfig.class)
+@ContextConfiguration(classes = RumpusConfig.class)
+// @Import(RumpusConfig.class)
 // @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)

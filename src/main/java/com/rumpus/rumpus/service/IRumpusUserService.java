@@ -4,5 +4,5 @@ import com.rumpus.common.IService;
 import com.rumpus.rumpus.models.RumpusUser;
 
 public interface IRumpusUserService extends IService<RumpusUser> {
-    
+    public RumpusUser updateUser(String userToUpdate, RumpusUser updatedUser);
 }

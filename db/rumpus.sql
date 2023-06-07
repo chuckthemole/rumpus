@@ -21,6 +21,7 @@ CREATE TABLE users (
 
 CREATE TABLE user (
 	-- user_id INT AUTO_INCREMENT,
+    id VARCHAR(10) NOT NULL UNIQUE,
     -- CONSTRAINT pk_user
 -- 		PRIMARY KEY (user_id),
 	
@@ -51,8 +52,8 @@ CREATE TABLE authorities (
 
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuckthemole','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuck','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);
-INSERT INTO user (username, email, auth_id) values('chuckthemole', 'chuckthemole@gmail.com', -1);
-INSERT INTO user (username, email, auth_id) values('chuck', 'chuck@gmail.com', -1);
+INSERT INTO user (username, email, id, auth_id) values('chuckthemole', 'chuckthemole@gmail.com', '1111111111', -1);
+INSERT INTO user (username, email, id, auth_id) values('chuck', 'chuck@gmail.com', '2222222222', -1);
 
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_EMPLOYEE');
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_USER');

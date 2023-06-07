@@ -72,7 +72,7 @@ public class RumpusRestController extends RumpusController {
         return new ResponseEntity<List<RumpusUser>>(users, HttpStatusCode.valueOf(200));
     }
 
-    @PostMapping(value = PATH_USER)
+    @PostMapping(value = RumpusController.PATH_USER)
     public ResponseEntity<CommonSession> userSubmit(@RequestBody RumpusUser newUser, HttpServletRequest request) {
         LOG.info("RumpusRestController POST: /user");
         // debugUser(newUser);
@@ -115,25 +115,25 @@ public class RumpusRestController extends RumpusController {
         return re;
     }
 
-    @PostMapping(value = PATH_DELETE_USER)
+    @PostMapping(value = RumpusController.PATH_DELETE_USER)
     public ResponseEntity<CommonSession> deleteUser(@RequestBody String user, HttpServletRequest request) {
         HttpSession session = request.getSession();
         this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 
-    // TODO implement. Is just printing rn
-    @PostMapping(value = PATH_UPDATE_USER)
-    public ResponseEntity<CommonSession> updateUser(@RequestBody RumpusUser user, HttpServletRequest request) {
+    @PostMapping(value = RumpusController.PATH_UPDATE_USER)
+    public ResponseEntity<CommonSession> updateUser(@RequestBody RumpusUser user, HttpServletRequest request) { // need to get old user name in request body
         LOG.info("RumpusRestController POST: /api/update_user");
         HttpSession session = request.getSession();
         // this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
         LOG.info("Update this user: " + user.toString());
+        rumpusUserService.updateUser(user.getUsername(), user);
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 
     // TODO this should be secured so user info is not visible
-    @GetMapping(value = PATH_VALUE_GET_BY_USER_NAME)
+    @GetMapping(value = RumpusController.PATH_VALUE_GET_BY_USER_NAME)
     public ResponseEntity<RumpusUser> getUser(@PathVariable(PATH_VARIABLE_GET_BY_USER_NAME) String username, HttpServletRequest request) {
         return new ResponseEntity<RumpusUser>(this.rumpusUserService.get(username), HttpStatus.ACCEPTED);
     }

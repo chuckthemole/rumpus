@@ -61,4 +61,16 @@ public class UserDetailsService implements IUserService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
+
+    @Override
+    public User update(String oldModelKey, User updatedModel) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public User update(String oldModelKey, User updatedModel, String condition) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
 }

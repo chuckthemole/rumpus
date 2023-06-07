@@ -20,12 +20,12 @@ public class RumpusViewController extends RumpusController {
 
     public RumpusViewController() {super(NAME);}
 
-    @GetMapping("/footer")
+    @GetMapping(PATH_FOOTER)
     public ResponseEntity<Footer> getFooter() {
         return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping("/user_table")
+    @GetMapping(PATH_USER_TABLE)
     public ResponseEntity<String> getUserTable() {
         return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
     }

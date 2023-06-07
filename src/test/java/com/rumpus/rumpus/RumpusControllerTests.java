@@ -14,11 +14,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.rumpus.common.views.IViewLoader;
-import com.rumpus.rumpus.config.RumpusTestConfig;
+import com.rumpus.rumpus.config.RumpusConfig;
+import com.rumpus.rumpus.config.WebSecurityConfig;
+import com.rumpus.rumpus.controller.RumpusController;
 import com.rumpus.rumpus.controller.RumpusRestController;
+import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.User;
+import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.IUserService;
 import com.rumpus.rumpus.service.UserService;
+import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  
 import java.util.Arrays;
 import java.util.List;
- 
+import java.util.Map;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,32 +43,34 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 
-@ContextConfiguration(classes = RumpusTestConfig.class)
+@ContextConfiguration(classes = {RumpusConfig.class, WebSecurityConfig.class})
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RumpusRestController.class)
-public class RumpusControllerTests {
+public class RumpusControllerTests extends RumpusTest {
 
     @MockBean
-    IUserService userService;
+    IRumpusUserService userService;
     @MockBean
-    IViewLoader viewLoader;
+    IRumpusViewLoader viewLoader;
  
     @Autowired
     MockMvc mockMvc;
  
     @Test
     public void testfindAll() throws Exception {
-        User user = User.createWithName("Frodo");
-        List<User> users = Arrays.asList(user);
+        // RumpusUser user = RumpusUser.create(Map.of("username", "Frodo"));
+        RumpusUser user = new RumpusUser();
+        user.setUsername("Frodo");
+        user.setPassword("coolpasswordbro");
+        List<RumpusUser> users = Arrays.asList(user);
 
         Mockito.when(userService.getAll()).thenReturn(users);
 
-        mockMvc.perform(get("/api/users"))
+        mockMvc.perform(get(PATH_API_USERS))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", Matchers.hasSize(1)))
-            .andExpect(jsonPath("$[0].userName", Matchers.is("Frodo")));
+            .andExpect(jsonPath("$[0].username", Matchers.is("Frodo")));
     }
 
     @Test
@@ -72,7 +80,7 @@ public class RumpusControllerTests {
 
         Mockito.when(viewLoader.getFooter()).thenReturn(footer);
 
-        mockMvc.perform(get("/api/footer"))
+        mockMvc.perform(get(PATH_VIEW_FOOTER))
             .andExpect(status().isOk());
 
             // .andExpect(jsonPath("$", Matchers.hasSize(1)))

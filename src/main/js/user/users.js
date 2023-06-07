@@ -87,7 +87,7 @@ function Users() {
             // });
     }
 
-    const handleUpdateUserSubmit = (username) => (e) => {
+    const handleUpdateUser = (username) => (e) => {
         e.preventDefault();
 
         const requestOptions = {
@@ -170,7 +170,7 @@ function Users() {
                                     </form>
                                 </td>
                                 <td>
-                                    <form onSubmit={handleUpdateUserSubmit(userDetails.username)}>
+                                    <form onSubmit={handleUpdateUser(userDetails.username)}>
                                         <button className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></button>
                                     </form>
                                 </td>

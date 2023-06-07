@@ -21,7 +21,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-abstract class RumpusController extends CommonController {
+public abstract class RumpusController extends CommonController {
 
     private static final String NAME = "RumpusController";
 
@@ -41,6 +41,10 @@ abstract class RumpusController extends CommonController {
     protected static final String PATH_UPDATE_USER = "/update_user";
     protected static final String PATH_VALUE_GET_BY_USER_NAME = "/get_user/{username}";
     protected static final String PATH_VARIABLE_GET_BY_USER_NAME = "username";
+
+    // Paths for views
+    protected static final String PATH_FOOTER = "/footer";
+    protected static final String PATH_USER_TABLE = "/user_table";
 
     // Models
     protected static final String MODEL_USER = "user";

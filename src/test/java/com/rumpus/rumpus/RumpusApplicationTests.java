@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.rumpus.rumpus.config.RumpusTestConfig;
+import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 
-@ContextConfiguration(classes = RumpusTestConfig.class)
+@ContextConfiguration(classes = RumpusConfig.class)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class RumpusApplicationTests {
