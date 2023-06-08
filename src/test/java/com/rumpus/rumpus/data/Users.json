@@ -1,0 +1,62 @@
+[
+        {
+            "username": "chuckthemole",
+            "email": "chuckthemole@gmail.com",
+            "password": "coolpassbro",
+            "id": "1111111111"
+        },
+        {
+            "username": "chuck",
+            "email": "chuck@gmail.com",
+            "password": "supersecretsecret",
+            "id": "2222222222"
+        },
+        {
+            "username": "bill",
+            "email": "bill@hotmail.com",
+            "password": "supersecretsecret",
+            "id": "3333333333"
+        },
+        {
+            "username": "jacob",
+            "email": "jacob@gmail.com",
+            "password": "supersecretsecret",
+            "id": "4444444444"
+        },
+        {
+            "username": "cooluser123",
+            "email": "cooluser123@gmail.com",
+            "password": "supersecretsecret",
+            "id": "5555555555"
+        },
+        {
+            "username": "goduser1",
+            "email": "goduser1@yahoo.com",
+            "password": "supersecretsecret",
+            "id": "6666666666"
+        },
+        {
+            "username": "76whatuser",
+            "email": "76whatuser@gmail.com",
+            "password": "supersecretsecret",
+            "id": "7777777777"
+        },
+        {
+            "username": "bobuser",
+            "email": "bobuser@hotmail.com",
+            "password": "supersecretsecret",
+            "id": "8888888888"
+        },
+        {
+            "username": "jackuser",
+            "email": "jackuser@yahoo.com",
+            "password": "supersecretsecret",
+            "id": "9999999999"
+        },
+        {
+            "username": "killuser",
+            "email": "killuser@gmail.com",
+            "password": "supersecretsecret",
+            "id": "0000000000"
+        }
+]
