@@ -1,6 +1,6 @@
 package com.rumpus;
 
-import com.rumpus.rumpus.models.RumpusModel;
+import com.rumpus.common.Model;
 
-public class DaoTest<T extends RumpusModel<T>> extends RumpusTest {
+public class DaoTest<MODEL extends Model<MODEL>> extends RumpusTest {
 }

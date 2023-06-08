@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.rumpus.RumpusTest;
 import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.config.WebSecurityConfig;
