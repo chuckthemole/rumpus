@@ -1,52 +1,52 @@
-package com.rumpus.rumpus.service;
+// package com.rumpus.rumpus.service;
 
-import java.util.HashMap;
-import java.util.Map;
+// import java.util.HashMap;
+// import java.util.Map;
 
-import com.rumpus.rumpus.data.IUserDao;
-import com.rumpus.rumpus.models.User;
+// import com.rumpus.rumpus.data.IUserDao;
+// import com.rumpus.rumpus.models.User;
 
-public class UserService extends RumpusService<User> implements IUserService {
+// public class UserService extends RumpusService<User> implements IUserService {
 
-    protected static final String NAME = "userService";
-    private Map<String, User> users;
+//     protected static final String NAME = "userService";
+//     private Map<String, User> users;
 
-    public UserService(IUserDao userDao) {
-        super(NAME, userDao);
+//     public UserService(IUserDao userDao) {
+//         super(NAME, userDao);
 
-        // keeping for faster lookup. May need to update if this.users are updated.
-        this.users = new HashMap<>();
-        dao.getAll().stream().forEach(u -> {
-            this.users.put(u.getEmail(), u);
-            this.users.put(u.getUsername(), u);
-        });
-    }
+//         // keeping for faster lookup. May need to update if this.users are updated.
+//         this.users = new HashMap<>();
+//         dao.getAll().stream().forEach(u -> {
+//             this.users.put(u.getEmail(), u);
+//             this.users.put(u.getUsername(), u);
+//         });
+//     }
 
-    @Override
-    public int login(User user) {
-        LOG.info("UserService::login()");
+//     @Override
+//     public int login(User user) {
+//         LOG.info("UserService::login()");
 
-        // check for username or user email
-        User foundUser = null;
-        if(this.users.containsKey(user.getUsername())) {
-            LOG.info("Found user name...");
-            foundUser = this.users.get(user.getUsername());
-        } else if(this.users.containsKey(user.getEmail())) {
-            LOG.info("Found user email...");
-            foundUser = this.users.get(user.getEmail());
-        } else {
-            LOG.info("User credentials are not correct.");
-            return ERROR;
-        }
-        if(foundUser != null && foundUser.getPassword().equals(user.getPassword())) { // check password
-            LOG.info("User credentials are correct. Logging in....");
-            // TODO login
-        }
-        return SUCCESS;
-    }
+//         // check for username or user email
+//         User foundUser = null;
+//         if(this.users.containsKey(user.getUsername())) {
+//             LOG.info("Found user name...");
+//             foundUser = this.users.get(user.getUsername());
+//         } else if(this.users.containsKey(user.getEmail())) {
+//             LOG.info("Found user email...");
+//             foundUser = this.users.get(user.getEmail());
+//         } else {
+//             LOG.info("User credentials are not correct.");
+//             return ERROR;
+//         }
+//         if(foundUser != null && foundUser.getPassword().equals(user.getPassword())) { // check password
+//             LOG.info("User credentials are correct. Logging in....");
+//             // TODO login
+//         }
+//         return SUCCESS;
+//     }
 
-    // @Override
-    // public User get(String name) {
-    //     return IUserDao.class.cast(super.dao).get(name);
-    // }
-}
+//     // @Override
+//     // public User get(String name) {
+//     //     return IUserDao.class.cast(super.dao).get(name);
+//     // }
+// }

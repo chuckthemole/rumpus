@@ -32,8 +32,8 @@ function Users() {
         fetcher
     );
 
-    // console.log(data);
-    // console.log(error);
+    console.log(data);
+    console.log(error);
 
     if (error) return <div className='container m-6'><div className='notification is-primary'><p>An error occurred</p></div></div>;
 

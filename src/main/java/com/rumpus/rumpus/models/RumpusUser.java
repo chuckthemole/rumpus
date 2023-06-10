@@ -17,9 +17,9 @@ public class RumpusUser extends CommonUser<RumpusUser> {
     }
 
     public static RumpusUser create(Map<String, String> attributes) {return new RumpusUser(attributes);}
-    public static User createWithName(String name) {
+    public static RumpusUser createWithName(String name) {
         Map<String, String> map = new HashMap<>();
         map.put(USERNAME, name);
-        return User.create(map);
+        return RumpusUser.create(map);
     }
 }

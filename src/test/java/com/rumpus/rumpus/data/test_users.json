@@ -1,0 +1,74 @@
+[
+        {
+            "userDetails": {
+                "username": "chuckthemole",
+                "password": "coolpassbro"
+            },
+            "email": "chuckthemole@gmail.com",
+            "id": "1111111111"
+        }, {
+            "userDetails": {
+                "username": "chuck",
+                "password": "coolpassbro"
+            },
+            "email": "chuck@gmail.com",
+            "id": "2222222222"
+        }, {
+            "userDetails": {
+                "username": "bill",
+                "password": "coolpassbro"
+            },
+            "email": "bill@hotmail.com",
+            "id": "3333333333"
+        }, {
+            "userDetails": {
+                "username": "jacob",
+                "password": "coolpassbro"
+            },
+            "email": "jacob@gmail.com",
+            "id": "4444444444"
+        }, {
+            "userDetails": {
+                "username": "cooluser123",
+                "password": "coolpassbro"
+            },
+            "email": "cooluser123@gmail.com",
+            "id": "5555555555"
+        }, {
+            "userDetails": {
+                "username": "goduser1",
+                "password": "coolpassbro"
+            },
+            "username": "goduser1",
+            "email": "goduser1@yahoo.com",
+            "id": "6666666666"
+        }, {
+            "userDetails": {
+                "username": "76whatuser",
+                "password": "coolpassbro"
+            },
+            "email": "76whatuser@gmail.com",
+            "id": "7777777777"
+        }, {
+            "userDetails": {
+                "username": "bobuser",
+                "password": "coolpassbro"
+            },
+            "email": "bobuser@hotmail.com",
+            "id": "8888888888"
+        }, {
+            "userDetails": {
+                "username": "jackuser",
+                "password": "coolpassbro"
+            },
+            "email": "jackuser@yahoo.com",
+            "id": "9999999999"
+        }, {
+            "userDetails": {
+                "username": "killuser",
+                "password": "coolpassbro"
+            },
+            "email": "killuser@gmail.com",
+            "id": "0000000000"
+        }
+]

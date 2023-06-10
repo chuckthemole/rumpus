@@ -9,9 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.rumpus.models.*;
-import com.rumpus.rumpus.models.User;
-import com.rumpus.rumpus.service.IUserService;
-import com.rumpus.rumpus.ui.RumpusView;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,7 +47,7 @@ public class RumpusTemplateController extends RumpusController {
 
     @GetMapping(value = PATH_INDEX)
 	public String index(Model model) {
-        model.addAttribute(MODEL_USER, new User());
+        model.addAttribute(MODEL_USER, new RumpusUser());
 		return TEMPLATE_INDEX;
 	}
 
@@ -109,7 +106,7 @@ public class RumpusTemplateController extends RumpusController {
      * @return redirect after user submit
      */
     @PostMapping(PATH_USER)
-    public String userSubmit(@ModelAttribute User user, BindingResult bindingResult, Model model) {
+    public String userSubmit(@ModelAttribute RumpusUser user, BindingResult bindingResult, Model model) {
         LOG.info("RumpusTemplateController::userSubmit()");
         // if (bindingResult.hasErrors()) {
         //     System.out.println("ERROR in user Form");

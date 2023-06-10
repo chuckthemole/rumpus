@@ -41,7 +41,7 @@ public class RumpusUserAdapter extends Rumpus {
                 if (USERNAME.equals(fieldname)) {
                     //move to next token
                     token = in.peek();
-                    user.setUsername(in.nextString());
+                    user.getUserDetails().setUsername(in.nextString());
                 }
                 
                 if(EMAIL.equals(fieldname)) {

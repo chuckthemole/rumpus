@@ -33,6 +33,7 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
     }
 
     private final static Mapper<RumpusUser> mapper() {
+        LOG.info("RumpusUserDao::mapper()");
         Mapper<RumpusUser> mapper = new Mapper<>();
         mapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
@@ -45,7 +46,7 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
                 // map.put(PASSWORD, rs.getString(PASSWORD));
                 map.put(EMAIL, rs.getString(EMAIL));
             } catch (SQLException e) {
-                LOG.info("RumpusUserDao()::mapper()");
+                LOG.info("Error: mapping RumpusUser");
                 e.printStackTrace();
             }
             return RumpusUser.create(map);

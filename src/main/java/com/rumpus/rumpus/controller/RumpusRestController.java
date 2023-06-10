@@ -9,9 +9,6 @@ import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.util.StringUtil;
 import com.rumpus.common.views.Footer;
 import com.rumpus.rumpus.models.*;
-import com.rumpus.rumpus.models.User;
-import com.rumpus.rumpus.service.IUserService;
-import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
 import jakarta.servlet.ServletException;
@@ -69,6 +66,14 @@ public class RumpusRestController extends RumpusController {
     @GetMapping(value = PATH_GET_USERS)
     public ResponseEntity<List<RumpusUser>> getAllUsers(HttpSession session) {
         List<RumpusUser> users = rumpusUserService.getAll();
+        if(users == null || users.isEmpty()) {
+            LOG.info("Error: Rumpus user service returned no users.");
+        } else {
+            LOG.info("Rumpus user list size: " + users.size());
+            for(RumpusUser user : users) {
+                LOG.info(user.toString());
+            }
+        }
         return new ResponseEntity<List<RumpusUser>>(users, HttpStatusCode.valueOf(200));
     }
 

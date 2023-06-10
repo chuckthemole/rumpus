@@ -20,10 +20,7 @@ import com.rumpus.rumpus.config.WebSecurityConfig;
 import com.rumpus.rumpus.controller.RumpusController;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.service.IUserService;
-import com.rumpus.rumpus.service.UserService;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 

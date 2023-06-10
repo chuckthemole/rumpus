@@ -9,10 +9,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserTest {
+public class RumpusUserTest {
     Long id = Long.valueOf(1);
     String name = "Pipin";
-    User user = User.createWithName("Pipin");
+    RumpusUser user = RumpusUser.createWithName("Pipin");
 
     @BeforeAll
     public static void setUpClass() {

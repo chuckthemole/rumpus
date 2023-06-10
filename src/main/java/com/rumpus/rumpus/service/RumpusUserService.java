@@ -5,9 +5,7 @@ import java.util.Map;
 
 import com.rumpus.common.Service;
 import com.rumpus.rumpus.data.IRumpusUserDao;
-import com.rumpus.rumpus.data.IUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.User;
 
 public class RumpusUserService extends Service<RumpusUser> implements IRumpusUserService {
 

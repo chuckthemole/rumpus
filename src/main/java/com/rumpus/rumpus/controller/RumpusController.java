@@ -12,9 +12,7 @@ import com.rumpus.common.CommonController;
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.User;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
 
 import jakarta.servlet.ServletException;
@@ -53,7 +51,7 @@ public abstract class RumpusController extends CommonController {
     protected static final String TEMPLATE_INDEX = "index";
     protected static final String TEMPLATE_ADMIN = "admin";
 
-    @Autowired protected RumpusView view;
+    // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
     @Autowired protected IRumpusUserService rumpusUserService;
     @Autowired protected IRumpusViewLoader viewLoader;
@@ -67,6 +65,7 @@ public abstract class RumpusController extends CommonController {
     }
 
     protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {
+        LOG.info("RumpusController::currentUserLogin()");
         String password = user.getUserPassword();
         String username = user.getUsername();
         try {
@@ -86,7 +85,7 @@ public abstract class RumpusController extends CommonController {
         }
     }
 
-    protected int debugUser(User user) {
+    protected int debugUser(RumpusUser user) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n* * User * * \n");
         sb.append("  User name: ").append(user.getUsername()).append("\n");

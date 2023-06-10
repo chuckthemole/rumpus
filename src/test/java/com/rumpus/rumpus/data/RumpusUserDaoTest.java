@@ -1,6 +1,7 @@
 package com.rumpus.rumpus.data;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     private IRumpusUserDao dao;
 
     private static RumpusUser[] users;
-    private static final String JSON_USERS_FILE = "src/test/java/com/rumpus/rumpus/data/Users.json";
+    private static final String JSON_USERS_FILE = "src/test/java/com/rumpus/rumpus/data/test_users.json";
 
     // these are hardcoded in the db
     private static final String ROOT_USER = "chuckthemole";
@@ -70,6 +71,7 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     
     @AfterAll
     public static void tearDownClass() {
+
     }
     
     @BeforeEach
@@ -98,9 +100,21 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
             final String username = user.getUsername();
             if(!username.equals(ROOT_USER) && !username.equals(SECONDARY_USER)) {
                 this.dao.add(user);
-                assertEquals(user, this.dao.get(user.name()));
+                assertEquals(user, this.dao.get(user.getUsername()));
             }
         }
 
+    }
+
+    @Test
+    @Order(3)
+    void testRemoveUser() {
+        for(RumpusUser user : RumpusUserDaoTest.users) {
+            final String username = user.getUsername();
+            if(!username.equals(ROOT_USER) && !username.equals(SECONDARY_USER)) {
+                this.dao.remove(username);
+                assertNull(this.dao.get(username));
+            }
+        }
     }
 }

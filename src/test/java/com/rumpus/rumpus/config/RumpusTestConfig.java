@@ -124,7 +124,6 @@ import com.rumpus.rumpus.models.Auth;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserService;
-import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
@@ -134,11 +133,6 @@ import com.rumpus.rumpus.views.RumpusViewLoader;
 @ComponentScan("com.rumpus.rumpus")
 @PropertySource("classpath:database.properties")
 public class RumpusTestConfig extends CommonConfig { // AbstractHttpSessionApplicationInitializer
-
-    @Bean
-    public RumpusView view() {
-        return new RumpusView();
-    }
 
     @Bean
     public IRumpusViewLoader viewLoader() {

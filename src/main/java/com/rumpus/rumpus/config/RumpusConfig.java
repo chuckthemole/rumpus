@@ -18,7 +18,6 @@ import com.rumpus.rumpus.models.Auth;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserService;
-import com.rumpus.rumpus.ui.RumpusView;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
@@ -29,10 +28,10 @@ import com.rumpus.rumpus.views.RumpusViewLoader;
 @PropertySource("classpath:database.properties")
 public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicationInitializer
 
-    @Bean
-    public RumpusView view() {
-        return new RumpusView();
-    }
+    // @Bean
+    // public RumpusView view() {
+    //     return new RumpusView();
+    // }
 
     @Bean
     public IRumpusViewLoader viewLoader() {
@@ -45,7 +44,7 @@ public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicati
         // ApiDBJdbcUsers<RumpusUser> userApiDBJdbc = new ApiDBJdbcUsers<>(jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
         // Map<String, String> queries = Map.of(CREATE_USER, SET_USERS_QUERY);
         // userApiDBJdbc.setQueriesFromMap(queries);
-        IApiDB<RumpusUser> userApiDB = new ApiDBJdbcUsers<>(jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
+        IApiDB<RumpusUser> userApiDB = new ApiDBJdbcUsers<>(this.jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
         userDao.setApiDB(userApiDB);
         return userDao;
     }
@@ -53,14 +52,14 @@ public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicati
     @Bean
     public IAuthDao rumpusAuthDao() {
         IAuthDao authDao = new AuthDao();
-        IApiDB<Auth> authApiDB = new ApiDBJdbc<>(dataSource(), authDao.getTable(), authDao.getMapper());
+        IApiDB<Auth> authApiDB = new ApiDBJdbc<>(this.dataSource(), authDao.getTable(), authDao.getMapper());
         authDao.setApiDB(authApiDB);
         return authDao;
     }
 
     @Bean
     public IRumpusUserService rumpusUserService() {
-        return new RumpusUserService(rumpusUserDao());
+        return new RumpusUserService(this.rumpusUserDao());
     }
 
     // @Bean
