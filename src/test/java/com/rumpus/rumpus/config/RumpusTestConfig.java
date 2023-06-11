@@ -116,11 +116,8 @@ import com.rumpus.common.views.IViewLoader;
 import com.rumpus.common.ApiDBJdbc;
 import com.rumpus.common.ApiDBJdbcUsers;
 import com.rumpus.common.CommonConfig;
-import com.rumpus.rumpus.data.AuthDao;
-import com.rumpus.rumpus.data.IAuthDao;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
-import com.rumpus.rumpus.models.Auth;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserService;
@@ -151,26 +148,9 @@ public class RumpusTestConfig extends CommonConfig { // AbstractHttpSessionAppli
     }
 
     @Bean
-    public IAuthDao rumpusAuthDao() {
-        IAuthDao authDao = new AuthDao();
-        IApiDB<Auth> authApiDB = new ApiDBJdbc<>(dataSource(), authDao.getTable(), authDao.getMapper());
-        authDao.setApiDB(authApiDB);
-        return authDao;
-    }
-
-    @Bean
     public IRumpusUserService rumpusUserService() {
         return new RumpusUserService(rumpusUserDao());
     }
-
-    // @Bean
-    // @DependsOn({"rumpusUserDao", "rumpusAuthDao"})
-    // RumpusDaoManager rumpusDaoManager() {
-    //     // List<RumpusDao<?>> list = new ArrayList<>();
-    //     // list.add(rumpusUserDao());
-    //     // list.add(rumpusAuthDao());
-    //     return new RumpusDaoManager(userDao(), rumpusAuthDao());
-    // }
 
     // @Bean
     // @DependsOn({"rumpusDaoManager"})

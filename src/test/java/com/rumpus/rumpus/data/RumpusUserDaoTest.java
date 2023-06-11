@@ -5,13 +5,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,7 +23,6 @@ import org.springframework.test.context.ContextConfiguration;
 import com.google.gson.JsonSyntaxException;
 
 import com.rumpus.DaoTest;
-import com.rumpus.common.CommonUserCollection;
 import com.rumpus.common.util.ReadJson;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusTestConfig;
@@ -42,7 +39,7 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     private IRumpusUserDao dao;
 
     private static RumpusUser[] users;
-    private static final String JSON_USERS_FILE = "src/test/java/com/rumpus/rumpus/data/test_users.json";
+    private static final String JSON_USERS_FILE = "src/test/java/com/rumpus/rumpus/data/test_data/test_users.json";
 
     // these are hardcoded in the db
     private static final String ROOT_USER = "chuckthemole";
