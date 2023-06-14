@@ -4,7 +4,7 @@ const ReactDOM = require('react-dom/client');
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH } from "../rumpus";
+import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH } from "../rumpus";
 import UpdateUser from './update';
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -87,8 +87,7 @@ function Users() {
             // });
     }
 
-    // TODO: should be updating using id, not username.
-    const handleUpdateUser = (username) => (e) => {
+    const handleUpdateUser = (id) => (e) => {
         e.preventDefault();
 
         const requestOptions = {
@@ -97,10 +96,10 @@ function Users() {
                 'Accept': 'application/json',
             },
         };
-        const user = fetch("/api/get_user/" + username, requestOptions)
+        const user = fetch(GET_USER_PATH + id, requestOptions)
             .then(response => response.json())
-            // .then(response => console.log(JSON.stringify(response)));
             .then(response => {
+                console.log(response);
                 const update_user = document.getElementById('update_user-form');
                 if (typeof(update_user) != 'undefined' && update_user != null) {
                     const reactDOMUpdateUser = ReactDOM.createRoot(update_user); // getting warnings. change to root.render()
@@ -171,7 +170,7 @@ function Users() {
                                     </form>
                                 </td>
                                 <td>
-                                    <form onSubmit={handleUpdateUser(userDetails.username)}>
+                                    <form onSubmit={handleUpdateUser(id)}>
                                         <button className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></button>
                                     </form>
                                 </td>

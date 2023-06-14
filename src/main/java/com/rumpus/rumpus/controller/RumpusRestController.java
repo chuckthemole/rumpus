@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.mysql.cj.log.Log;
 import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
+import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.util.StringUtil;
 import com.rumpus.common.views.Footer;
@@ -128,20 +129,30 @@ public class RumpusRestController extends RumpusController {
     }
 
     @PostMapping(value = RumpusController.PATH_UPDATE_USER)
-    public ResponseEntity<CommonSession> updateUser(@RequestBody RumpusUser user, HttpServletRequest request) { // need to get old user name in request body
+    public ResponseEntity<CommonSession> updateUser(@RequestBody RumpusUser user, HttpServletRequest request) {
         LOG.info("RumpusRestController POST: /api/update_user");
         HttpSession session = request.getSession();
         // this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
-        LOG.info("Update this user: " + user.toString());
-        // rumpusUserService.updateUser(user.getUsername(), user);
+        LogBuilder log = new LogBuilder("Update this user: ", user.toString());
+        log.info();
         rumpusUserService.update(user.getId(), user);
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 
     // TODO this should be secured so user info is not visible
     @GetMapping(value = RumpusController.PATH_VALUE_GET_BY_USER_NAME)
-    public ResponseEntity<RumpusUser> getUser(@PathVariable(PATH_VARIABLE_GET_BY_USER_NAME) String username, HttpServletRequest request) {
+    public ResponseEntity<RumpusUser> getUserByUsername(@PathVariable(PATH_VARIABLE_GET_BY_USER_NAME) String username, HttpServletRequest request) {
         return new ResponseEntity<RumpusUser>(this.rumpusUserService.get(username), HttpStatus.ACCEPTED);
+    }
+
+    // TODO this should be secured so user info is not visible
+    @GetMapping(value = RumpusController.PATH_VALUE_GET_BY_USER_ID)
+    public ResponseEntity<RumpusUser> getUserById(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id, HttpServletRequest request) {
+        LOG.info("RumpusRestController::getUserById()");
+        RumpusUser user = this.rumpusUserService.getById(id);
+        LogBuilder log = new LogBuilder("Retrieved user: ", user.toString());
+        log.info();
+        return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
     }
 
 

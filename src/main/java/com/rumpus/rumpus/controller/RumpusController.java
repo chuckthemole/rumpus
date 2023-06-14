@@ -37,8 +37,10 @@ public abstract class RumpusController extends CommonController {
     protected static final String PATH_GET_USERS = "/users";
     protected static final String PATH_DELETE_USER = "/delete_user";
     protected static final String PATH_UPDATE_USER = "/update_user";
-    protected static final String PATH_VALUE_GET_BY_USER_NAME = "/get_user/{username}";
+    protected static final String PATH_VALUE_GET_BY_USER_NAME = "/get_user_by_name/{username}";
+    protected static final String PATH_VALUE_GET_BY_USER_ID = "/get_user_by_id/{id}";
     protected static final String PATH_VARIABLE_GET_BY_USER_NAME = "username";
+    protected static final String PATH_VARIABLE_GET_BY_USER_ID = "id";
 
     // Paths for views
     protected static final String PATH_FOOTER = "/footer";

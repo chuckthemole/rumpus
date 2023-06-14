@@ -7,6 +7,7 @@ export const GET_USERS_PATH = '/api/users';
 
 // CRUD
 export const CREATE_USER_PATH = '/api/user';
+export const GET_USER_PATH = '/api/get_user_by_id/';
 export const UPDATE_USER_PATH = '/api/update_user';
 export const DELETE_USER_PATH = '/api/delete_user';
 

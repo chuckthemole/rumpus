@@ -12,6 +12,7 @@ CREATE TABLE auth (
     authLevel VARCHAR(45)
 );
 
+-- TODO: look into making id primary key. get rid of username in 'user' table and use it as a meta table.
 CREATE TABLE users (
 	username VARCHAR(50) NOT NULL,
 		PRIMARY KEY(username),
@@ -35,8 +36,8 @@ CREATE TABLE user (
     
     username VARCHAR(50) NOT NULL,
 	CONSTRAINT fk_username_user
-		FOREIGN KEY (username) REFERENCES users(username),
-        -- ON DELETE CASCADE,
+		FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE ON UPDATE CASCADE,
     auth_id INT
     -- CONSTRAINT fk_auth
 --     	FOREIGN KEY (auth_id)
@@ -48,6 +49,7 @@ CREATE TABLE authorities (
     authority VARCHAR(68) NOT NULL,
     CONSTRAINT fk_username_authorities
 		FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuckthemole','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);

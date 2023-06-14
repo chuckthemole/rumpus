@@ -18,6 +18,7 @@ function UpdateUser({ user }) {
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
     const [password, setPassword] = useState(user.password);
+    const [id] = useState(user.id);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,6 +26,7 @@ function UpdateUser({ user }) {
         updatedUser[Common.USERNAME] = username;
         updatedUser[Common.PASSWORD] = password;
         updatedUser[Common.EMAIL] = email;
+        updatedUser[Common.ID] = id;
 
         const requestOptions = {
             method: Common.POST,
