@@ -133,7 +133,8 @@ public class RumpusRestController extends RumpusController {
         HttpSession session = request.getSession();
         // this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
         LOG.info("Update this user: " + user.toString());
-        rumpusUserService.updateUser(user.getUsername(), user);
+        // rumpusUserService.updateUser(user.getUsername(), user);
+        rumpusUserService.update(user.getId(), user);
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 

@@ -26,7 +26,7 @@ public class RumpusUserAdapter extends Rumpus {
 
         @Override
         public RumpusUser read(JsonReader in) throws IOException {
-            RumpusUser user = new RumpusUser();
+            RumpusUser user = RumpusUser.createEmptyUser();
             in.beginObject();
             String fieldname = null;
 

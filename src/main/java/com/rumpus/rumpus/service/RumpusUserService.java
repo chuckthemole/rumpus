@@ -24,10 +24,10 @@ public class RumpusUserService extends Service<RumpusUser> implements IRumpusUse
         });
     }
 
-    @Override
-    public RumpusUser updateUser(String userToUpdate, RumpusUser updatedUser) {
-        return super.update(userToUpdate, updatedUser, USERNAME_CONDITION);
-    }
+    // @Override
+    // public RumpusUser updateUser(String userToUpdate, RumpusUser updatedUser) {
+    //     return super.update(userToUpdate, updatedUser, USERNAME_CONDITION);
+    // }
 
     // @Override
     // public int login(RumpusUser user) {

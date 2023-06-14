@@ -1,9 +1,14 @@
 package com.rumpus.rumpus.data;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.rumpus.common.Dao;
 import com.rumpus.common.IApiDB;
@@ -16,6 +21,7 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
     private static final String NAME = "RumpusUserDao";
     private static final String TABLE = "user";
     private static final String META_TABLE = "user_meta_info";
+    private static final String sqlRumpusUserInsert = "INSERT INTO user VALUES(:id, :username, :email)";
 
     public RumpusUserDao() {
         super(TABLE, META_TABLE, NAME);
@@ -29,29 +35,40 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
     @Override
     public Mapper<RumpusUser> getMapper() {
         LOG.info("UserDao::getMapper()");
-        return mapper();
+        return rumpusUserMapper();
     }
 
-    private final static Mapper<RumpusUser> mapper() {
-        LOG.info("RumpusUserDao::mapper()");
-        Mapper<RumpusUser> mapper = new Mapper<>();
-        mapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
+    private final static Mapper<RumpusUser> rumpusUserMapper() {
+        LOG.info("RumpusUserDao::rumpusUserMapper()");
+        Mapper<RumpusUser> rumpusUserMapper = new Mapper<>();
+        rumpusUserMapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> rumpusUserMap = new HashMap<>();
             try {
-                map.put(AUTH_ID, Integer.toString(rs.getInt(AUTH_ID)));
-                map.put(ID, rs.getString(ID));
-                map.put(USERNAME, rs.getString(USERNAME));
-                // map.put(PASSWORD, rs.getString(PASSWORD));
-                map.put(EMAIL, rs.getString(EMAIL));
+                // rumpusUserMap.put(AUTH_ID, Integer.toString(rs.getInt(AUTH_ID)));
+                rumpusUserMap.put(ID, rs.getString(ID));
+                rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
+                // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
+                rumpusUserMap.put(EMAIL, rs.getString(EMAIL));
             } catch (SQLException e) {
-                LOG.info("Error: mapping RumpusUser");
+                LOG.info("Error: rumpusUserMapping RumpusUser");
                 e.printStackTrace();
             }
-            return RumpusUser.create(map);
+            return RumpusUser.createFromMap(rumpusUserMap);
         });
-        return mapper;
+        return rumpusUserMapper;
     }
+
+    // TODO look in ApiDBJdbc give models a member variable 'attributes' that can be used for insert(), see sqlRumpusUserInsert
+    // public void insert(RumpusUser user) {
+    //     final Map<String, Object> rumpusUserMap = Map.of(ID, user.getId(), USERNAME, user.getUsername(), EMAIL, user.getEmail());
+    //     namedParameterJdbcTemplate.execute(sqlRumpusUserInsert, rumpusUserMap, new PreparedStatementCallback() {
+    //         public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+    //             return ps.executeUpdate();
+    //         }
+    //     });
+         
+    // }
 
 }

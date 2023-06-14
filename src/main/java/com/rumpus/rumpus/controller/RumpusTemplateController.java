@@ -47,7 +47,7 @@ public class RumpusTemplateController extends RumpusController {
 
     @GetMapping(value = PATH_INDEX)
 	public String index(Model model) {
-        model.addAttribute(MODEL_USER, new RumpusUser());
+        model.addAttribute(MODEL_USER, RumpusUser.createEmptyUser()); // TODO: why is this here?
 		return TEMPLATE_INDEX;
 	}
 

@@ -57,12 +57,12 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     @BeforeAll
     public static void setUpClass() throws JsonSyntaxException, Exception {
         // TODO should clear db before, need to implement removeAll to do this.
-        expectedRootUser = new RumpusUser();
+        expectedRootUser = RumpusUser.createEmptyUser();
         expectedRootUser.setUsername(ROOT_USER);
         expectedRootUser.setEmail(ROOT_USER_EMAIL);
         expectedRootUser.setPassword(ROOT_USER_PASS);
         expectedRootUser.setId(ROOT_USER_ID);
-        expectedSecondaryUser = new RumpusUser();
+        expectedSecondaryUser = RumpusUser.createEmptyUser();
         expectedSecondaryUser.setUsername(SECONDARY_USER);
         expectedSecondaryUser.setEmail(SECONDARY_USER_EMAIL);
         expectedSecondaryUser.setPassword(SECONDARY_USER_PASS);
