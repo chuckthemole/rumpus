@@ -57,11 +57,9 @@ public class RumpusControllerTests extends RumpusTest {
  
     @Test
     public void testfindAll() throws Exception {
-        // RumpusUser user = RumpusUser.create(Map.of("username", "Frodo"));
         RumpusUser user = RumpusUser.createEmptyUser();
         user.setUsername("Frodo");
         user.setPassword("coolpasswordbro");
-        user.setId(NO_ID);
         List<RumpusUser> users = Arrays.asList(user);
 
         Mockito.when(userService.getAll()).thenReturn(users);

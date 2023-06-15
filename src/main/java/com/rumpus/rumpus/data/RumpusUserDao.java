@@ -1,14 +1,9 @@
 package com.rumpus.rumpus.data;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.rumpus.common.Dao;
 import com.rumpus.common.IApiDB;
@@ -21,15 +16,17 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
     private static final String NAME = "RumpusUserDao";
     private static final String TABLE = "user";
     private static final String META_TABLE = "user_meta_info";
-    private static final String sqlRumpusUserInsert = "INSERT INTO user VALUES(:id, :username, :email)";
+    // private static final String sqlRumpusUserInsert = "INSERT INTO user VALUES(:id, :username, :email)"; // ApiDBJdbc look at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
     public RumpusUserDao() {
         super(TABLE, META_TABLE, NAME);
         this.api = null;
+        IApiDB.registerIdSet("RumpusUser");
     }
     public RumpusUserDao(IApiDB<RumpusUser> api) {
         super(TABLE, META_TABLE, NAME);
         this.api = api;
+        IApiDB.registerIdSet("RumpusUser");
     }
 
     @Override
@@ -59,16 +56,4 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
         });
         return rumpusUserMapper;
     }
-
-    // TODO look in ApiDBJdbc give models a member variable 'attributes' that can be used for insert(), see sqlRumpusUserInsert
-    // public void insert(RumpusUser user) {
-    //     final Map<String, Object> rumpusUserMap = Map.of(ID, user.getId(), USERNAME, user.getUsername(), EMAIL, user.getEmail());
-    //     namedParameterJdbcTemplate.execute(sqlRumpusUserInsert, rumpusUserMap, new PreparedStatementCallback() {
-    //         public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-    //             return ps.executeUpdate();
-    //         }
-    //     });
-         
-    // }
-
 }

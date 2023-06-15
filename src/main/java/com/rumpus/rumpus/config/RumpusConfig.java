@@ -3,9 +3,12 @@ package com.rumpus.rumpus.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
 import com.rumpus.common.IApiDB;
+import com.rumpus.common.IUniqueIdManager;
+import com.rumpus.common.UniqueIdManager;
 import com.rumpus.common.ApiDBJdbcUsers;
 import com.rumpus.common.CommonConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
@@ -44,27 +47,11 @@ public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicati
         return userDao;
     }
 
-    // @Bean
-    // public IAuthDao rumpusAuthDao() {
-    //     IAuthDao authDao = new AuthDao();
-    //     IApiDB<Auth> authApiDB = new ApiDBJdbc<>(this.dataSource(), authDao.getTable(), authDao.getMapper());
-    //     authDao.setApiDB(authApiDB);
-    //     return authDao;
-    // }
-
     @Bean
+    @DependsOn({"rumpusUserDao"})
     public IRumpusUserService rumpusUserService() {
         return new RumpusUserService(this.rumpusUserDao());
     }
-
-    // @Bean
-    // @DependsOn({"rumpusUserDao", "rumpusAuthDao"})
-    // RumpusDaoManager rumpusDaoManager() {
-    //     // List<RumpusDao<?>> list = new ArrayList<>();
-    //     // list.add(rumpusUserDao());
-    //     // list.add(rumpusAuthDao());
-    //     return new RumpusDaoManager(userDao(), rumpusAuthDao());
-    // }
 
     // @Bean
     // @DependsOn({"rumpusDaoManager"})
