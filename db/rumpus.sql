@@ -3,15 +3,6 @@ CREATE DATABASE rumpus;
 
 USE rumpus;
 
-CREATE TABLE auth (
-	auth_id INT AUTO_INCREMENT,
-    CONSTRAINT pk_auth
-		PRIMARY KEY (auth_id),
-	
-    id INT,
-    authLevel VARCHAR(45)
-);
-
 -- TODO: look into making id primary key. get rid of username in 'user' table and use it as a meta table.
 CREATE TABLE users (
 	username VARCHAR(50) NOT NULL,
@@ -37,8 +28,8 @@ CREATE TABLE user (
     username VARCHAR(50) NOT NULL,
 	CONSTRAINT fk_username_user
 		FOREIGN KEY (username) REFERENCES users(username)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    auth_id INT
+        ON DELETE CASCADE ON UPDATE CASCADE
+    -- auth_id INT
     -- CONSTRAINT fk_auth
 --     	FOREIGN KEY (auth_id)
 --     	REFERENCES auth(auth_id)
@@ -54,8 +45,8 @@ CREATE TABLE authorities (
 
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuckthemole','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuck','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);
-INSERT INTO user (username, email, id, auth_id) values('chuckthemole', 'chuckthemole@gmail.com', '1111111111', -1);
-INSERT INTO user (username, email, id, auth_id) values('chuck', 'chuck@gmail.com', '2222222222', -1);
+INSERT INTO user (username, email, id) values('chuckthemole', 'chuckthemole@gmail.com', '1111111111');
+INSERT INTO user (username, email, id) values('chuck', 'chuck@gmail.com', '2222222222');
 
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_EMPLOYEE');
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_USER');

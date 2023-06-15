@@ -43,7 +43,6 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
             // int row = resultSetAndRow.getSecond();
             Map<String, String> rumpusUserMap = new HashMap<>();
             try {
-                // rumpusUserMap.put(AUTH_ID, Integer.toString(rs.getInt(AUTH_ID)));
                 rumpusUserMap.put(ID, rs.getString(ID));
                 rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
                 // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
