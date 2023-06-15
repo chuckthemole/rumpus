@@ -3,7 +3,7 @@ package com.rumpus.rumpus.data;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import com.rumpus.common.IDao;
+import com.rumpus.common.Dao.IDao;
 import com.rumpus.rumpus.models.RumpusUser;
 
 @Repository

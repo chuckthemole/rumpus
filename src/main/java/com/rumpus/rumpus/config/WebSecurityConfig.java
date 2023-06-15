@@ -22,8 +22,8 @@ import org.springframework.security.web.server.authentication.logout.SecurityCon
 import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonConfig;
+import com.rumpus.common.User.ActiveUserStore;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

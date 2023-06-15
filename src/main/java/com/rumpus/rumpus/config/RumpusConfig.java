@@ -6,10 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
-import com.rumpus.common.IApiDB;
-import com.rumpus.common.IUniqueIdManager;
-import com.rumpus.common.UniqueIdManager;
-import com.rumpus.common.ApiDBJdbcUsers;
+import com.rumpus.common.Dao.IApiDB;
+import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.rumpus.common.CommonConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;

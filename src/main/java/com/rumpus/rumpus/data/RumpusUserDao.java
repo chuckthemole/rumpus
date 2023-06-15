@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rumpus.common.Dao;
-import com.rumpus.common.IApiDB;
 import com.rumpus.common.Mapper;
+import com.rumpus.common.Dao.Dao;
+import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.RumpusUser;
 

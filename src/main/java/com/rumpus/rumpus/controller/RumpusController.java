@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
-import com.rumpus.common.ActiveUserStore;
 import com.rumpus.common.CommonController;
+import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.models.RumpusUser;

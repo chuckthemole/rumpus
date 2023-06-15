@@ -2,7 +2,7 @@ package com.rumpus.rumpus.models;
 
 import java.util.Map;
 
-import com.rumpus.common.CommonUser;
+import com.rumpus.common.User.CommonUser;
 
 public class RumpusUser extends CommonUser<RumpusUser> {
 

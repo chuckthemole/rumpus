@@ -7,7 +7,7 @@ package com.rumpus.rumpus.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rumpus.common.ActiveUserStore;
+import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.rumpus.models.*;
 
 import jakarta.servlet.ServletException;
