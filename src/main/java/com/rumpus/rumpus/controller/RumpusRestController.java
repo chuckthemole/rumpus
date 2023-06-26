@@ -69,13 +69,10 @@ public class RumpusRestController extends RumpusController {
         List<RumpusUser> users = rumpusUserService.getAll();
         if(users == null || users.isEmpty()) {
             LOG.info("Error: Rumpus user service returned no users.");
-        } else {
-            LOG.info("Rumpus user list size: " + users.size());
-            for(RumpusUser user : users) {
-                LOG.info(user.toString());
-            }
         }
-        return new ResponseEntity<List<RumpusUser>>(users, HttpStatusCode.valueOf(200));
+        ResponseEntity<List<RumpusUser>> responseEntity = new ResponseEntity<>(users, HttpStatusCode.valueOf(200));
+        LOG.info(responseEntity.getBody().toString());
+        return responseEntity;
     }
 
     @PostMapping(value = RumpusController.PATH_USER)

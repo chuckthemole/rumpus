@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.rumpus.common.Mapper;
+import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Dao.Dao;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.util.Pair;
@@ -41,15 +42,17 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
         rumpusUserMapper.setMapFunc((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
-            Map<String, String> rumpusUserMap = new HashMap<>();
+            Map<String, Object> rumpusUserMap = new HashMap<>();
             try {
                 rumpusUserMap.put(ID, rs.getString(ID));
                 rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
                 // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
                 rumpusUserMap.put(EMAIL, rs.getString(EMAIL));
+                rumpusUserMap.put(USER_META_DATA, rs.getBlob(USER_META_DATA));
             } catch (SQLException e) {
                 LOG.info("Error: rumpusUserMapping RumpusUser");
-                e.printStackTrace();
+                LogBuilder.logBuilderFromStringArgs(e.getMessage()).error();
+                LogBuilder.logBuilderFromStackTraceElementArray(e.getStackTrace()).error();
             }
             return RumpusUser.createFromMap(rumpusUserMap);
         });

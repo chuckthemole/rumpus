@@ -14,6 +14,7 @@ CREATE TABLE users (
 CREATE TABLE user (
 	-- user_id INT AUTO_INCREMENT,
     id VARCHAR(10) NOT NULL UNIQUE,
+    user_meta_data BLOB,
     -- CONSTRAINT pk_user
 -- 		PRIMARY KEY (user_id),
 	

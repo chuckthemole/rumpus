@@ -8,10 +8,12 @@ import org.springframework.context.annotation.PropertySource;
 
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
+import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.common.CommonConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.Adapters.RumpusUserTypeAdapter;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
@@ -49,6 +51,16 @@ public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicati
     @DependsOn({"rumpusUserDao"})
     public IRumpusUserService rumpusUserService() {
         return new RumpusUserService(this.rumpusUserDao());
+    }
+
+    @Bean
+    public RumpusUserTypeAdapter rumpusUserTypeAdapter() {
+        return new RumpusUserTypeAdapter();
+    }
+
+    public BeanSerializer beanSerializer() {
+        BeanSerializer serializer = new BeanSerializer(null, null, null, null);
+        return serializer;
     }
 
     // @Bean
