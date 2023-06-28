@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
-import com.rumpus.common.CommonConfig;
+import com.rumpus.common.AbstractCommonConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -21,7 +21,7 @@ import com.rumpus.rumpus.views.RumpusViewLoader;
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
 @PropertySource("classpath:database.properties")
-public class RumpusConfig extends CommonConfig { // AbstractHttpSessionApplicationInitializer
+public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
 
     @Bean
     public IRumpusViewLoader viewLoader() {

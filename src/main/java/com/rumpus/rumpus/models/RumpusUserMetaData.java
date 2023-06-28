@@ -12,9 +12,9 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.User.CommonUserMetaData;
+import com.rumpus.common.User.AbstractCommonUserMetaData;
 
-public class RumpusUserMetaData extends CommonUserMetaData<RumpusUserMetaData> {
+public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMetaData> {
 
     private static final long serialVersionUID = RUMPUS_USER_META_DATA_UID;
     private static final String NAME = "RumpusUserMetaData";

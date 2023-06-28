@@ -6,14 +6,14 @@ import java.util.List;
 import com.rumpus.common.ITableBuilder;
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
-import com.rumpus.common.views.ViewLoader;
+import com.rumpus.common.views.AbstractViewLoader;
 
 /**
  * @author Chuck Thomas
  * 
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
-public class RumpusViewLoader extends ViewLoader implements IRumpusViewLoader {
+public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewLoader {
     
     private static final String NAME = "RumpusViewLoader";
 

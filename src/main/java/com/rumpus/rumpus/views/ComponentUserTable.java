@@ -1,8 +1,8 @@
 package com.rumpus.rumpus.views;
 
-import com.rumpus.common.TableBuilder;
+import com.rumpus.common.AbstractTableBuilder;
 
-public class ComponentUserTable extends TableBuilder {
+public class ComponentUserTable extends AbstractTableBuilder {
 
     public static final String NAME = "RumpusUserTable";
 

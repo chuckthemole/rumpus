@@ -26,13 +26,13 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.rumpus.common.MetaData;
+import com.rumpus.common.AbstractMetaData;
 import com.rumpus.common.Rumpus;
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.User.CommonUser;
-import com.rumpus.common.User.CommonUserMetaData;
+import com.rumpus.common.User.AbstractCommonUser;
+import com.rumpus.common.User.AbstractCommonUserMetaData;
 
-public class RumpusUser extends CommonUser<RumpusUser, RumpusUserMetaData> {
+public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaData> {
 
     private static final String NAME = "RumpusUser";
     @JsonIgnore transient private Gson rumpusUserGson;
@@ -107,11 +107,11 @@ public class RumpusUser extends CommonUser<RumpusUser, RumpusUserMetaData> {
                 out.value(user.getPassword());
 
                 // meta data
-                out.name(MetaData.USER_CREATION_DATE_TIME);
+                out.name(AbstractMetaData.USER_CREATION_DATE_TIME);
                 out.value(user.getMetaData().getStandardFormattedCreationTime());
-                out.name(CommonUserMetaData.USER_PHOTO_LINK);
+                out.name(AbstractCommonUserMetaData.USER_PHOTO_LINK);
                 out.value(user.getMetaData().getPhotoLink());
-                out.name(CommonUserMetaData.USER_ABOUT_ME);
+                out.name(AbstractCommonUserMetaData.USER_ABOUT_ME);
                 out.value(user.getMetaData().getAboutMe());
                 out.endObject();
             }
@@ -142,16 +142,16 @@ public class RumpusUser extends CommonUser<RumpusUser, RumpusUserMetaData> {
                     }
 
                     // meta data
-                    if(MetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
+                    if(AbstractMetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
                         //move to next token
                         token = in.peek();
                         metaData.setCreationTime(in.nextString());
                     }
-                    if(CommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
+                    if(AbstractCommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
                         token = in.peek();
                         metaData.setPhotoLink(in.nextString());
                     }
-                    if(CommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
+                    if(AbstractCommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
                         token = in.peek();
                         metaData.setAboutMe(in.nextString());
                     }

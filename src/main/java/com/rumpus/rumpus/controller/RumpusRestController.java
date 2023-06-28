@@ -3,7 +3,7 @@ package com.rumpus.rumpus.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mysql.cj.log.Log;
-import com.rumpus.common.CommonController;
+import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;

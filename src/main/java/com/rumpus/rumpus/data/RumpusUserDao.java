@@ -11,12 +11,12 @@ import com.rumpus.common.Mapper;
 import com.rumpus.common.Blob.AbstractBlob;
 import com.rumpus.common.Blob.JdbcBlob;
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.Dao.Dao;
+import com.rumpus.common.Dao.AbstractDao;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.RumpusUser;
 
-public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
+public class RumpusUserDao extends AbstractDao<RumpusUser> implements IRumpusUserDao {
 
     private static final String NAME = "RumpusUserDao";
     private static final String TABLE = "user";

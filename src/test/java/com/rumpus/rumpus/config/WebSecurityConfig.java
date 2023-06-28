@@ -23,7 +23,7 @@ import org.springframework.security.web.server.authentication.logout.WebSessionS
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.rumpus.common.User.ActiveUserStore;
-import com.rumpus.common.CommonConfig;
+import com.rumpus.common.AbstractCommonConfig;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity // WebSecurityConfiguration
 // @PropertySource("classpath:database.properties")
-public class WebSecurityConfig extends CommonConfig {
+public class WebSecurityConfig extends AbstractCommonConfig {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception { // allowing 'ADMIN' access to /api/users

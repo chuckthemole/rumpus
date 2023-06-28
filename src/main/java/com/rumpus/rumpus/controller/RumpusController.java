@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
-import com.rumpus.common.CommonController;
+import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.IViewLoader;
@@ -19,7 +19,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public abstract class RumpusController extends CommonController {
+public abstract class RumpusController extends AbstractCommonController {
 
     private static final String NAME = "RumpusController";
 
