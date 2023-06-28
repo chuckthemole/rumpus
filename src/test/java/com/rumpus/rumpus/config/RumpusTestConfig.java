@@ -112,7 +112,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import com.rumpus.common.views.IViewLoader;
-import com.rumpus.common.AbstractCommonConfig;
+import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.AbstractApiDBJdbc;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;

@@ -3,7 +3,7 @@ package com.rumpus.rumpus.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rumpus.common.Service;
+import com.rumpus.common.Service.Service;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 

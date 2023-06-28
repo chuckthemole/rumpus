@@ -1,6 +1,6 @@
 package com.rumpus.rumpus.views;
 
-import com.rumpus.common.AbstractTableBuilder;
+import com.rumpus.common.Builder.AbstractTableBuilder;
 
 public class ComponentUserTable extends AbstractTableBuilder {
 

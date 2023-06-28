@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rumpus.common.CommonExceptionInterceptor;
-import com.rumpus.common.Mapper;
 import com.rumpus.common.Blob.AbstractBlob;
 import com.rumpus.common.Blob.JdbcBlob;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Dao.AbstractDao;
 import com.rumpus.common.Dao.IApiDB;
+import com.rumpus.common.Dao.jdbc.Mapper;
+import com.rumpus.common.Log.CommonExceptionInterceptor;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.RumpusUser;
 

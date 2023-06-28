@@ -1,6 +1,6 @@
 package com.rumpus.rumpus.service;
 
-import com.rumpus.common.Service;
+import com.rumpus.common.Service.Service;
 import com.rumpus.rumpus.data.IRumpusDao;
 import com.rumpus.rumpus.models.RumpusModel;
 

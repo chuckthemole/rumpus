@@ -1,6 +1,6 @@
 package com.rumpus;
 
-import com.rumpus.common.Rumpus;
+import com.rumpus.common.AbstractCommon;
 
-public class RumpusTest extends Rumpus {
+public class RumpusTest extends AbstractCommon {
 }

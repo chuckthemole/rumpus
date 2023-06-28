@@ -3,7 +3,7 @@ package com.rumpus.rumpus.views;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rumpus.common.ITableBuilder;
+import com.rumpus.common.Builder.ITableBuilder;
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.AbstractViewLoader;

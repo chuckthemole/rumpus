@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 
+import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
-import com.rumpus.common.AbstractCommonConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
