@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import com.rumpus.common.Dao.IApiDB;
-import com.rumpus.common.views.IViewLoader;
-import com.rumpus.common.Dao.jdbc.ApiDBJdbc;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.rumpus.common.CommonConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;

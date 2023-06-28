@@ -1,11 +1,15 @@
 package com.rumpus.rumpus.data;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.rumpus.common.CommonExceptionInterceptor;
 import com.rumpus.common.Mapper;
+import com.rumpus.common.Blob.AbstractBlob;
+import com.rumpus.common.Blob.JdbcBlob;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Dao.Dao;
 import com.rumpus.common.Dao.IApiDB;
@@ -48,11 +52,10 @@ public class RumpusUserDao extends Dao<RumpusUser> implements IRumpusUserDao {
                 rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
                 // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
                 rumpusUserMap.put(EMAIL, rs.getString(EMAIL));
-                rumpusUserMap.put(USER_META_DATA, rs.getBlob(USER_META_DATA));
+                rumpusUserMap.put(USER_META_DATA, AbstractBlob.getParams(rs.getBlob(USER_META_DATA)));
             } catch (SQLException e) {
                 LOG.info("Error: rumpusUserMapping RumpusUser");
-                LogBuilder.logBuilderFromStringArgs(e.getMessage()).error();
-                LogBuilder.logBuilderFromStackTraceElementArray(e.getStackTrace()).error();
+                LogBuilder.logBuilderFromStackTraceElementArray(e.getMessage(), e.getStackTrace()).error();
             }
             return RumpusUser.createFromMap(rumpusUserMap);
         });

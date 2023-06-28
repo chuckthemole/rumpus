@@ -99,7 +99,8 @@ public class RumpusRestController extends RumpusController {
             // .excludeFieldsWithoutExposeAnnotation()
             .serializeNulls()
             .disableHtmlEscaping()
-            .registerTypeAdapter(RumpusUser.class, RumpusUser.getSerializer())
+            // .registerTypeAdapter(RumpusUser.class, RumpusUser.getSerializer())
+            .registerTypeAdapter(RumpusUser.class, user.getTypeAdapter())
             .create();
         session.setAttribute("user", gson.toJson(user));
 

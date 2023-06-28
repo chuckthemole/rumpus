@@ -2,10 +2,13 @@ package com.rumpus.rumpus.models;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.sql.Blob;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.jdbc.core.support.SqlLobValue;
@@ -24,21 +27,22 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.rumpus.common.MetaData;
+import com.rumpus.common.Rumpus;
+import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.User.CommonUser;
 import com.rumpus.common.User.CommonUserMetaData;
-import com.rumpus.rumpus.models.Adapters.RumpusUserTypeAdapter;
 
-public class RumpusUser extends CommonUser<RumpusUser> {
+public class RumpusUser extends CommonUser<RumpusUser, RumpusUserMetaData> {
 
     private static final String NAME = "RumpusUser";
-    @JsonIgnore private Gson rumpusUserGson;
+    @JsonIgnore transient private Gson rumpusUserGson;
 
     private RumpusUser() {
         super(NAME);
         this.setMetaData(new RumpusUserMetaData());
-        this.setTypeAdapter(new RumpusUserTypeAdapter()); // TODO can I make this static?
+        this.setTypeAdapter(this.createTypeAdapter()); // TODO can I make this static?
         this.rumpusUserGson = new GsonBuilder()
-            .registerTypeAdapter(this.getClass(), new RumpusUserTypeAdapter()).create();
+            .registerTypeAdapter(this.getClass(), this.getTypeAdapter()).create();
     }
 
     public static RumpusUser createEmptyUser() {
@@ -51,25 +55,111 @@ public class RumpusUser extends CommonUser<RumpusUser> {
         user.setEmail(email);
         return user;
     }
+
+    @SuppressWarnings(UNCHECKED)
     public static RumpusUser createFromMap(Map<String, Object> userMap) {
+        LOG.info("RumpusUser::createFromMap()");
         RumpusUser user = new RumpusUser();
         user.setUsername(userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
         user.setUserPassword(userMap.containsKey(PASSWORD) ? (String) userMap.get(PASSWORD) : EMPTY_FIELD);
         user.setEmail(userMap.containsKey(EMAIL) ? (String) userMap.get(EMAIL) : EMPTY_FIELD);
         user.setId(userMap.containsKey(ID) ? (String) userMap.get(ID) : EMPTY_FIELD);
 
-        Blob blob = userMap.containsKey(USER_META_DATA) ? (Blob) userMap.get(USER_META_DATA) : null;
-        RumpusUserMetaData metaData = user.new RumpusUserMetaData();
+        // user meta data
+        RumpusUserMetaData meta = null;
+        if(userMap.containsKey(USER_META_DATA)) {
+            meta = new RumpusUserMetaData((List<Map<String, String>>) userMap.get(USER_META_DATA));
+        }
+        if(meta != null) {
+            LogBuilder.logBuilderFromStringArgs("Success building RumpusUserMetaData:\n", meta.toString()).info();
+            user.setMetaData(meta);
+        } else {
+            LOG.info("Error: no usermeta data.");
+        }
 
-        // ByteArrayInputStream inputStrm = new ByteArrayInputStream(data);
-        // LobHandler handler = new DefaultLobHandler();
-        // SqlLobValue sqlLobValue = new SqlLobValue(inputStrm, data.length, handler);
-        // sqlLobValue.
-        // metaData.set
         return user;
     }
 
-    public class RumpusUserMetaData extends CommonUserMetaData<RumpusUser> {
-        public RumpusUserMetaData() {super(NAME);}
+    @Override
+    public void serialize(RumpusUser object, OutputStream outputStream) throws IOException {
+        LOG.info("RumpusUser::serialize()");
+        this.getTypeAdapter().write(new JsonWriter(new OutputStreamWriter(outputStream)), object);
     }
+
+    @Override
+    public Map<String, Object> getModelAttributesMap() {
+        LOG.info("RumpusUser::getModelAttributesMap()");
+        Map<String, Object> modelAttributesMap = Map.of(ID, this.id, EMAIL, this.getEmail());
+        return modelAttributesMap;
+    }
+
+    @Override
+    public TypeAdapter<RumpusUser> createTypeAdapter() {
+        return new TypeAdapter<RumpusUser>() {
+            @Override
+            public void write(JsonWriter out, RumpusUser user) throws IOException {
+                out.beginObject(); 
+                out.name(Rumpus.USERNAME);
+                out.value(user.getUsername());
+                out.name(Rumpus.EMAIL);
+                out.value(user.getEmail());
+                out.name(Rumpus.PASSWORD);
+                out.value(user.getPassword());
+
+                // meta data
+                out.name(MetaData.USER_CREATION_DATE_TIME);
+                out.value(user.getMetaData().getStandardFormattedCreationTime());
+                out.name(CommonUserMetaData.USER_PHOTO_LINK);
+                out.value(user.getMetaData().getPhotoLink());
+                out.name(CommonUserMetaData.USER_ABOUT_ME);
+                out.value(user.getMetaData().getAboutMe());
+                out.endObject();
+            }
+
+            @Override
+            public RumpusUser read(JsonReader in) throws IOException {
+                RumpusUser user = RumpusUser.createEmptyUser();
+                RumpusUserMetaData metaData = new RumpusUserMetaData();
+                in.beginObject();
+                String fieldname = null;
+
+                while (in.hasNext()) {
+                    JsonToken token = in.peek();
+                    
+                    if (token.equals(JsonToken.NAME)) {
+                        //get the current token 
+                        fieldname = in.nextName(); 
+                    }
+                    if (Rumpus.USERNAME.equals(fieldname)) {
+                        //move to next token
+                        token = in.peek();
+                        user.setUsername(in.nextString());
+                    }
+                    if(Rumpus.EMAIL.equals(fieldname)) {
+                        //move to next token
+                        token = in.peek();
+                        user.setEmail(in.nextString());
+                    }
+
+                    // meta data
+                    if(MetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
+                        //move to next token
+                        token = in.peek();
+                        metaData.setCreationTime(in.nextString());
+                    }
+                    if(CommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
+                        token = in.peek();
+                        metaData.setPhotoLink(in.nextString());
+                    }
+                    if(CommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
+                        token = in.peek();
+                        metaData.setAboutMe(in.nextString());
+                    }
+                }
+                user.setMetaData(metaData);
+                in.endObject();
+                return user;
+            }
+        };
+    }   
 }

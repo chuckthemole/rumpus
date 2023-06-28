@@ -1,7 +1,11 @@
 package com.rumpus.rumpus.models;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import com.google.gson.TypeAdapter;
 
 public class Post extends RumpusModel<Post> {
     private final String userId;
@@ -39,5 +43,23 @@ public class Post extends RumpusModel<Post> {
 
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public void serialize(Post object, OutputStream outputStream) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'serialize'");
+    }
+
+    @Override
+    public Map<String, Object> getModelAttributesMap() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getModelAttributesMap'");
+    }
+
+    @Override
+    public TypeAdapter<Post> createTypeAdapter() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createTypeAdapter'");
     }
 }
