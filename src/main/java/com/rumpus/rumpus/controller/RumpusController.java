@@ -32,11 +32,13 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_GET_USERS = "/users";
     protected static final String PATH_DELETE_USER = "/delete_user";
     protected static final String PATH_UPDATE_USER = "/update_user";
+
     protected static final String PATH_VALUE_GET_BY_USER_NAME = "/get_user_by_name/{username}";
     protected static final String PATH_VALUE_GET_BY_USER_ID = "/get_user_by_id/{id}";
-    protected static final String PATH_POST_USER_TIME_ZONE = "/user_time_zone";
     protected static final String PATH_VARIABLE_GET_BY_USER_NAME = "username";
     protected static final String PATH_VARIABLE_GET_BY_USER_ID = "id";
+
+    protected static final String PATH_POST_USER_TIME_ZONE = "/user_time_zone";
 
     // Paths for views
     protected static final String PATH_FOOTER = "/footer";
@@ -48,6 +50,7 @@ public abstract class RumpusController extends AbstractCommonController {
     // Templates
     protected static final String TEMPLATE_INDEX = "index";
     protected static final String TEMPLATE_ADMIN = "admin";
+    protected static final String TEMPLATE_USER = "user/user";
 
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;

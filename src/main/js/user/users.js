@@ -3,8 +3,8 @@ const ReactDOM = require('react-dom/client');
 
 import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH } from "../rumpus";
+import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH, TEMPLATE_GET_USER_PATH } from "../rumpus";
 import UpdateUser from './update';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
 
@@ -60,6 +60,12 @@ function Users() {
     // );
     // console.log(currentUser);
 
+    const handleViewUserSubmit = (id) => (e) => {
+        e.preventDefault();
+        console.log('View Form submitted');
+        return fetch(TEMPLATE_GET_USER_PATH + id);
+    }
+    
     const handleDeleteUserSubmit = (username) => (e) => {
         e.preventDefault();
         console.log('Delete Form submitted');
@@ -140,6 +146,7 @@ function Users() {
                             <th><abbr title="Password">Pass</abbr></th>
                             <th><abbr title="User Authorizations">Birth</abbr></th>
                             <th>ID</th>
+                            <th>View</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
@@ -152,6 +159,7 @@ function Users() {
                             <th><abbr title="Password">Pass</abbr></th>
                             <th><abbr title="User Creation Date/Time">Birth</abbr></th>
                             <th>ID</th>
+                            <th>View</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
@@ -165,6 +173,11 @@ function Users() {
                                 <td>{userDetails.password}</td>
                                 <td title={ConvertEpochToDate(metaData.creationTime).toString()}>{ConvertEpochToDate(metaData.creationTime).toDateString()}</td>
                                 <td>{id}</td>
+                                <td>
+                                    <form onSubmit={handleViewUserSubmit(id)}>
+                                        <button className="viewUser button is-info is-light" type="submit" value="View"><FontAwesomeIcon icon={faEye} /></button>
+                                    </form>
+                                </td>
                                 <td>
                                     <form onSubmit={handleDeleteUserSubmit(userDetails.username)}>
                                         <button className="deleteUser button is-danger" type="submit" value="Delete"><FontAwesomeIcon icon={faTrashCan} /></button>

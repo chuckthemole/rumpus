@@ -56,6 +56,11 @@ public class RumpusTemplateController extends RumpusController {
         return TEMPLATE_ADMIN;
     }
 
+    @GetMapping(value = PATH_VALUE_GET_BY_USER_ID)
+    public String user(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id) {
+        return TEMPLATE_USER;
+    }
+
     @PostMapping("/user_create")
     public String userSubmit(@RequestBody RumpusUser newUser) {
         LOG.info("RumpusTemplateController POST: /user_create");
