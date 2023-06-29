@@ -137,7 +137,7 @@ function Users() {
                             <th><abbr title="User Name">User</abbr></th>
                             <th>Email</th>
                             <th><abbr title="Password">Pass</abbr></th>
-                            <th><abbr title="User Authorizations">Auth</abbr></th>
+                            <th><abbr title="User Authorizations">Birth</abbr></th>
                             <th>ID</th>
                             <th>Delete</th>
                             <th>Update</th>
@@ -149,20 +149,20 @@ function Users() {
                             <th><abbr title="User Name">User</abbr></th>
                             <th>Email</th>
                             <th><abbr title="Password">Pass</abbr></th>
-                            <th><abbr title="User Authorizations">Auth</abbr></th>
+                            <th><abbr title="User Creation Date/Time">Birth</abbr></th>
                             <th>ID</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        {users.map(({ userDetails, email, auth, id, index }) => (
+                        {users.map(({ userDetails, email, metaData, id, index }) => (
                             <tr key={userDetails.username}>
                                 <th>{index}</th>
                                 <td>{userDetails.username}</td>
                                 <td>{email}</td>
                                 <td>{userDetails.password}</td>
-                                <td>{auth}</td>
+                                <td>{new Date(parseInt(metaData.creationTime)).toString()}</td>
                                 <td>{id}</td>
                                 <td>
                                     <form onSubmit={handleDeleteUserSubmit(userDetails.username)}>
