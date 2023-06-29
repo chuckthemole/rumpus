@@ -39,7 +39,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
 
     private RumpusUser() {
         super(NAME);
-        this.setMetaData(new RumpusUserMetaData());
+        this.setMetaData(RumpusUserMetaData.createEmpty());
         this.setTypeAdapter(this.createTypeAdapter()); // TODO can I make this static?
         this.rumpusUserGson = new GsonBuilder()
             .registerTypeAdapter(this.getClass(), this.getTypeAdapter()).create();
@@ -66,9 +66,10 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
         user.setId(userMap.containsKey(ID) ? (String) userMap.get(ID) : EMPTY_FIELD);
 
         // user meta data
-        RumpusUserMetaData meta = null;
+        AbstractCommonUserMetaData<RumpusUserMetaData> meta = null;
         if(userMap.containsKey(USER_META_DATA)) {
-            meta = new RumpusUserMetaData((List<Map<String, String>>) userMap.get(USER_META_DATA));
+            // meta = RumpusUserMetaData.createFromListOfMaps((List<Map<String, String>>) userMap.get(USER_META_DATA));
+            meta = (AbstractCommonUserMetaData<RumpusUserMetaData>) userMap.get(USER_META_DATA);
         }
         if(meta != null) {
             LogBuilder.logBuilderFromStringArgs("Success building RumpusUserMetaData:\n", meta.toString()).info();
@@ -119,7 +120,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
             @Override
             public RumpusUser read(JsonReader in) throws IOException {
                 RumpusUser user = RumpusUser.createEmptyUser();
-                RumpusUserMetaData metaData = new RumpusUserMetaData();
+                RumpusUserMetaData metaData = RumpusUserMetaData.createEmpty();
                 in.beginObject();
                 String fieldname = null;
 

@@ -81,6 +81,7 @@ public class RumpusRestController extends RumpusController {
         // debugUser(newUser);
         HttpSession session = request.getSession();
         LOG.info("Creating user: " + newUser.toString());
+        newUser.setMetaData(RumpusUserMetaData.createEmpty()); // new MetaData adds creation time
         RumpusUser user = this.rumpusUserService.add(newUser);
 
         // userManager.addUserToGroup(newUser.getUsername(), "USER");
@@ -151,6 +152,15 @@ public class RumpusRestController extends RumpusController {
         LogBuilder log = new LogBuilder("Retrieved user: ", user.toString());
         log.info();
         return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
+    }
+
+    /** */
+    @PostMapping(value = RumpusController.PATH_POST_USER_TIME_ZONE)
+    public ResponseEntity<CommonSession> setMinuteDifferenceUTC(String minutesDifferenceUTC, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute(CommonSession.UTC_TIME_DIFFERENCE, minutesDifferenceUTC);
+        ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
+        return re;
     }
 
 

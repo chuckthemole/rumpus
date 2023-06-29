@@ -1,16 +1,11 @@
 package com.rumpus.rumpus.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.User.ActiveUserStore;
-import com.rumpus.common.util.Pair;
-import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
@@ -39,6 +34,7 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_UPDATE_USER = "/update_user";
     protected static final String PATH_VALUE_GET_BY_USER_NAME = "/get_user_by_name/{username}";
     protected static final String PATH_VALUE_GET_BY_USER_ID = "/get_user_by_id/{id}";
+    protected static final String PATH_POST_USER_TIME_ZONE = "/user_time_zone";
     protected static final String PATH_VARIABLE_GET_BY_USER_NAME = "username";
     protected static final String PATH_VARIABLE_GET_BY_USER_ID = "id";
 

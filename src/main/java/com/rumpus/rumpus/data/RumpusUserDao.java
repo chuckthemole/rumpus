@@ -1,20 +1,19 @@
 package com.rumpus.rumpus.data;
 
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.rumpus.common.Blob.AbstractBlob;
-import com.rumpus.common.Blob.JdbcBlob;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Dao.AbstractDao;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.Mapper;
-import com.rumpus.common.Log.CommonExceptionInterceptor;
+import com.rumpus.common.User.AbstractCommonUserMetaData;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUserMetaData;
 
 public class RumpusUserDao extends AbstractDao<RumpusUser> implements IRumpusUserDao {
 
@@ -40,6 +39,7 @@ public class RumpusUserDao extends AbstractDao<RumpusUser> implements IRumpusUse
         return rumpusUserMapper();
     }
 
+    @SuppressWarnings(UNCHECKED)
     private final static Mapper<RumpusUser> rumpusUserMapper() {
         LOG.info("RumpusUserDao::rumpusUserMapper()");
         Mapper<RumpusUser> rumpusUserMapper = new Mapper<>();
@@ -52,7 +52,7 @@ public class RumpusUserDao extends AbstractDao<RumpusUser> implements IRumpusUse
                 rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
                 // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
                 rumpusUserMap.put(EMAIL, rs.getString(EMAIL));
-                rumpusUserMap.put(USER_META_DATA, AbstractBlob.getParams(rs.getBlob(USER_META_DATA)));
+                rumpusUserMap.put(USER_META_DATA, (AbstractCommonUserMetaData<RumpusUserMetaData>) AbstractBlob.getObjectFromBlob(rs.getBlob(USER_META_DATA)));
             } catch (SQLException e) {
                 LOG.info("Error: rumpusUserMapping RumpusUser");
                 LogBuilder.logBuilderFromStackTraceElementArray(e.getMessage(), e.getStackTrace()).error();

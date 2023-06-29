@@ -11,6 +11,7 @@ import Login from './user/login';
 import ErrorBoundary from './error';
 
 import { Common, modals } from "./rumpus";
+import { GetClientTimeZoneOffset } from '../../../../common/src/main/js/common';
 
 function InitModals() {
     modals.forEach((modal) => {
@@ -39,6 +40,7 @@ function Logout() {
 }
 
 export default function App() {
+    GetClientTimeZoneOffset();
     const users = document.getElementById('users');
     if (typeof(users) != 'undefined' && users != null) { // veriry users id exists in DOM
         const reactDOMUsers = ReactDOM.createRoot(users);

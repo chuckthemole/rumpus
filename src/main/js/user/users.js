@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH } from "../rumpus";
 import UpdateUser from './update';
+import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -162,7 +163,7 @@ function Users() {
                                 <td>{userDetails.username}</td>
                                 <td>{email}</td>
                                 <td>{userDetails.password}</td>
-                                <td>{new Date(parseInt(metaData.creationTime)).toString()}</td>
+                                <td title={ConvertEpochToDate(metaData.creationTime).toString()}>{ConvertEpochToDate(metaData.creationTime).toDateString()}</td>
                                 <td>{id}</td>
                                 <td>
                                     <form onSubmit={handleDeleteUserSubmit(userDetails.username)}>

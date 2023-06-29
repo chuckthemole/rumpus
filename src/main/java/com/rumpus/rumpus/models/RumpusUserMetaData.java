@@ -20,32 +20,48 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
     // TODO: add more member variables for specific meta data here
 
-    public RumpusUserMetaData() {
+    // ctors
+    private RumpusUserMetaData() {
         super(NAME);
-        this.setTypeAdapter(createTypeAdapter());
+        this.init(List.of());
+        
     }
-    public RumpusUserMetaData(List<Map<String, String>> metaList) {
+    private RumpusUserMetaData(List<Map<String, String>> metaList) {
         super(NAME);
-        this.setTypeAdapter(createTypeAdapter());
         this.init(metaList);
     }
-    public RumpusUserMetaData(Map<String, String> metaList) {
+    private RumpusUserMetaData(Map<String, String> metaMap) {
         super(NAME);
-        this.setTypeAdapter(createTypeAdapter());
-        this.init(List.of(metaList));
+        this.init(List.of(metaMap));
+    }
+
+    // factory static ctors
+    public static RumpusUserMetaData createEmpty() {
+        return new RumpusUserMetaData();
+    }
+    public static RumpusUserMetaData createFromListOfMaps(List<Map<String, String>> metaList) {
+        return new RumpusUserMetaData(metaList);
+    }
+    public static RumpusUserMetaData createFromMap(Map<String, String> metaMap) {
+        return new RumpusUserMetaData(metaMap);
     }
 
     private void init(List<Map<String, String>> metaList) {
         LOG.info("RumpusUserMetaData::init()");
-        if(metaList == null || metaList.isEmpty()) {
-            LOG.info("Error: empty list given for init of RumpusUserMetaData.");
-        } else {
-            for(Map<String, String> map : metaList) {
-                LOG.info("New Map: \n");
-                map.forEach((key, value) -> {
-                    LogBuilder.logBuilderFromStringArgs("  ", key, value, "\n").info();;
-                });
+        this.setTypeAdapter(createTypeAdapter());
+        if(metaList != null && !metaList.isEmpty()) {
+            if(metaList == null || metaList.isEmpty()) {
+                LOG.info("Error: empty list given for init of RumpusUserMetaData.");
+            } else {
+                for(Map<String, String> map : metaList) {
+                    LOG.info("New Map: \n");
+                    map.forEach((key, value) -> {
+                        LogBuilder.logBuilderFromStringArgs("  ", key, value, "\n").info();;
+                    });
+                }
             }
+        } else {
+            LOG.info("Provided metaList is empty or null.");
         }
         
     }
