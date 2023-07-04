@@ -63,7 +63,11 @@ function Users() {
     const handleViewUserSubmit = (id) => (e) => {
         e.preventDefault();
         console.log('View Form submitted');
-        return fetch(TEMPLATE_GET_USER_PATH + id);
+        // return fetch(TEMPLATE_GET_USER_PATH + id);
+        // return(TEMPLATE_GET_USER_PATH + id);
+        return fetch('/user/' + id).then(response => {
+            window.location.href = '/user/' + id;
+        });
     }
     
     const handleDeleteUserSubmit = (username) => (e) => {

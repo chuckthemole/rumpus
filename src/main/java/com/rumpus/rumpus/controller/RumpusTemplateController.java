@@ -56,8 +56,21 @@ public class RumpusTemplateController extends RumpusController {
         return TEMPLATE_ADMIN;
     }
 
+    // @GetMapping(value = "/user/{id}")
+    // public String getUserById(@PathVariable("id") String id) {
+    //     return "user/user";
+    // }
+
+    /**
+     * TODO: can prolly make the id parameter take username too, to get by username.
+     * 
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping(value = PATH_VALUE_GET_BY_USER_ID)
-    public String user(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id) {
+    public String user(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id, Model model) {
+        model.addAttribute("user", this.rumpusUserService.getById(id));
         return TEMPLATE_USER;
     }
 
