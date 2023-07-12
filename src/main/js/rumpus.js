@@ -1,4 +1,6 @@
 import * as RumpusCommon from "../../../../common/src/main/js/common.js";
+import useSWR from 'swr';
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export const Common = RumpusCommon;
 
@@ -19,3 +21,58 @@ export const modals = [
     {name : "signupModal", container: document.getElementsByClassName("signup")[0], button: document.getElementsByClassName("signupBtn")[0]},
     {name : "loginModal", container: document.getElementsByClassName("login")[0], button: document.getElementsByClassName("loginBtn")[0]}
 ];
+
+export function getUserById (id) {
+    const { data, error, isLoading } = useSWR(
+        `/api/user/${id}`,
+        fetcher
+    );
+
+    return {
+        user: data,
+        isLoading,
+        isError: error
+    }
+}
+
+export function getCurrentUser() {
+    const { data, error, isLoading } = useSWR(
+        "/api/current_user",
+        fetcher
+    );
+
+    return {
+        user: data,
+        isLoading,
+        isError: error
+    }
+}
+
+export function getCurrentUserAuthorities() {
+    const { data, error, isLoading } = useSWR(
+        "/api/current_user",
+        fetcher
+    );
+
+    let authorities = [];
+    if(!error && data !== undefined) {
+        for(let i = 0; i < data.userDetails.authorities.length; i++) {
+            authorities.push(data.userDetails.authorities[i].authority);
+        }
+    }
+
+    return authorities;
+}
+
+export function isCurrentUserAuthenticated() {
+    const { data, error, isLoading } = useSWR(
+        "/api/is_authenticated",
+        fetcher
+    );
+
+    return {
+        isAuthenticated: data,
+        isLoading,
+        isError: error
+    }
+}

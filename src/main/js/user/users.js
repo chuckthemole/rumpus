@@ -1,44 +1,34 @@
 const React = require('react');
 const ReactDOM = require('react-dom/client');
 
-import useSWR from 'swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH, TEMPLATE_GET_USER_PATH } from "../rumpus";
 import UpdateUser from './update';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
+import { useLoaderData } from 'react-router-dom';
 
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-const fetcher = async url => {
-    const res = await fetch(url)
-
+export async function loader({ params }) {
+    const response = await fetch(GET_USERS_PATH);
     // If the status code is not in the range 200-299,
     // we still try to parse and throw it.
-    if (!res.ok) {
-        const error = new Error('An error occurred while fetching the data.')
+    
+    if (!response.ok) {
+        const error = new Error('An error occurred while fetching users')
         // Attach extra info to the error object.
-        error.info = await res.json()
-        error.status = res.status
-        throw error
+        error.info = await response.json()
+        error.status = response.status
+        throw error;
     }
 
-    return res.json()
+    return response.json();
 }
 
-function Users() {
-    
-    const { data, error } = useSWR(
-        GET_USERS_PATH,
-        fetcher
-    );
+export default function Users() {
 
-    console.log(data);
-    console.log(error);
+    const users = useLoaderData();
 
-    if (error) return <div className='container m-6'><div className='notification is-primary'><p>An error occurred</p></div></div>;
-
-    if (!data) return(
+    if (!users) return(
         <div className='container m-6'>
             <progress className="progress is-small is-primary" max="100">15%</progress>
             <progress className="progress is-danger" max="100">30%</progress>
@@ -46,19 +36,6 @@ function Users() {
             <progress className="progress is-large is-info" max="100">60%</progress>
         </div>
     )
-    // <div className='container m-6'><div className='notification is-primary'><p>Loading...</p></div></div>;
-
-    if (data.error == 'Forbidden') return <div className='container m-6'><div className='notification is-primary'><p>User is not authorized to view users</p></div></div>;
-
-    // data is good, store into variable
-    const users = data;
-
-
-    // const { currentUser, currentUserError } = useSWR(
-    //     '/api/current_username',
-    //     fetcher
-    // );
-    // console.log(currentUser);
 
     const handleViewUserSubmit = (id) => (e) => {
         e.preventDefault();
@@ -87,9 +64,9 @@ function Users() {
             //     console.log(response);
             //     console.log(response.json());
             // })
-            // .then(data => {
-            //     // this.setState({ postId: data.id })
-            //     console.log(data);
+            // .then(users => {
+            //     // this.setState({ postId: users.id })
+            //     console.log(users);
             //     // const loginFetched = this.onLogin(userName);
             //     // console.log(loginFetched);
             // })
@@ -205,5 +182,3 @@ function Users() {
         </div>
     )
 }
-
-export default Users;

@@ -5,7 +5,7 @@ module.exports = {
         mode: 'development',
         context: path.resolve(__dirname, '../../src/main/js'),
         entry: {
-            app: './app.js',
+            app: './index.js',
             quill: './rumpus-quill.js'
         },
         devtool: 'sourcemaps',
@@ -19,7 +19,7 @@ module.exports = {
                 'Parchment': path.resolve(__dirname, '../../node_modules/parchment/src/parchment.ts'),
                 'quill$': path.resolve(__dirname, '../../node_modules/quill/quill.js'),
             },
-            extensions: ['.js', '.ts', '.svg']
+            extensions: ['.mjs', '.js', '.ts', '.svg']
         },
         module: {
             rules: [
@@ -43,6 +43,10 @@ module.exports = {
                             minimize: true
                         }
                     }]
+                }, {
+                    test: path.join(path.resolve(__dirname, '../../'), '.') && /\.mjs$/,
+                    include: /(node_modules)/,
+                    type: 'javascript/auto'
                 }
             ]
         }

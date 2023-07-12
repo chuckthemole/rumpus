@@ -1,6 +1,8 @@
 package com.rumpus.rumpus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
@@ -54,6 +56,8 @@ public abstract class RumpusController extends AbstractCommonController {
 
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
+    // @Autowired protected ProviderManager authManager;
+    @Autowired protected AuthenticationManager authManager;
     @Autowired protected IRumpusUserService rumpusUserService;
     @Autowired protected IRumpusViewLoader viewLoader;
     // @Autowired protected JdbcUserDetailsManager userManager;

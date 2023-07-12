@@ -14,6 +14,8 @@ import java.util.Map;
 import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
@@ -162,5 +164,5 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
                 return user;
             }
         };
-    }   
+    }  
 }

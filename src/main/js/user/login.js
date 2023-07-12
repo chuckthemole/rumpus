@@ -1,46 +1,26 @@
 const React = require('react');
 
-const root = '/api';
+import { useState } from 'react';
+import { Common, UPDATE_USER_PATH } from "../rumpus";
 
-/*
-This class is not being used currently (2023/04/12)
-Instead look at login.html in templates/fragments
-*/
-class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {username: '', password: ''};
+export default function Login() {
 
-        this.handleUsername = this.handleUsername.bind(this);
-        this.handlePassword = this.handlePassword.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onLogin = this.onLogin.bind(this);
-        this.clearInput = this.clearInput.bind(this);
-    }
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    handleUsername(event) {
-        this.setState({username: event.target.value});
-    }
-    handlePassword(event) {
-        this.setState({password: event.target.value});
-    }
-  
-    handleSubmit(event) {
-        // alert('A name was submitted: ' + this.state.username + ' ' + this.state.password);
-        event.preventDefault();
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
         const user = {};
-        user['username'] = this.state.username;
-        user['password'] = this.state.password;
-        this.onLogin(user);
-
+        user[Common.USERNAME] = username;
+        user[Common.PASSWORD] = password;
+        onLogin(user);
         const loginModal = document.getElementsByClassName('login')[0];
         loginModal.classList.remove('is-active');
         loginModal.classList.remove('is-clipped');
-        this.clearInput();
+        clearInput();
     }
 
-    onLogin(user) {
+    function onLogin(user) {
         const requestOptions = {
             method: 'POST',
             redirect: "follow",
@@ -53,42 +33,36 @@ class Login extends React.Component {
             // .then(data => this.setState({ postId: data.id }));
 	}
 
-    clearInput() {
+    function clearInput() {
         this.setState({username: ''});
         this.setState({password: ''});
     }
-  
-    render() {
-        return (
 
-            <form onSubmit={this.handleSubmit} className='box'>
-                <div className='field'>
-                    <label htmlFor='' className='label'>Username</label>
-                    <div className='control has-icons-left'>
-                        <input name='username' type='username' placeholder='e.g. coolguy' className='input' value={this.state.username} onChange={this.handleUsername} required />
-                            <span className='icon is-small is-left'>
-                                <i className='fa fa-envelope'></i>
-                            </span>
-                    </div>
-                </div>
-                <div className='field'>
-                    <label htmlFor='' className='label'>Password</label>
-                    <div className='control has-icons-left'>
-                        <input name='password' type='password' placeholder='*******' className='input' value={this.state.password} onChange={this.handlePassword} required />
-                        <span className='icon is-small is-left'>
-                            <i className='fa fa-lock'></i>
+    return (
+        <form onSubmit={handleSubmit} className="box">
+            <div className="field">
+                <label htmlFor="" className="label">Username</label>
+                <div className="control has-icons-left">
+                    <input type="username" placeholder="e.g. coolguy" className="input" value={username} onChange={e => setUsername(e.target.value)} required />
+                        <span className="icon is-small is-left">
+                            <i className="fa fa-envelope"></i>
                         </span>
-                    </div>
                 </div>
-                <div className='field'>
-                    <button id='loginSubmit' type='submit' value='Login' className='button is-success'>
-                        Submit
-                    </button>
+            </div>
+            <div className="field">
+                <label htmlFor="" className="label">Password</label>
+                <div className="control has-icons-left">
+                    <input type="password" placeholder="*******" className="input" value={password} onChange={e => setPassword(e.target.value)} required />
+                    <span className="icon is-small is-left">
+                        <i className="fa fa-lock"></i>
+                    </span>
                 </div>
-            </form>
-
-        );
-    }
+            </div>
+            <div className="field">
+                <button id="loginSubmit" type="submit" value="Login" className="button is-success">
+                    Submit
+                </button>
+            </div>
+        </form>
+    );
 }
-  
-export default Login;

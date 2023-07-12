@@ -7,6 +7,7 @@ import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;
+import com.rumpus.common.User.CommonAuthentication;
 import com.rumpus.common.util.StringUtil;
 import com.rumpus.common.views.Footer;
 import com.rumpus.rumpus.models.*;
@@ -29,7 +30,12 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.SessionRepository;
 import org.springframework.ui.Model;
@@ -40,6 +46,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.WebSession;
@@ -154,6 +161,27 @@ public class RumpusRestController extends RumpusController {
         return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping(value = "current_user")
+    public ResponseEntity<RumpusUser> getCurrentUser(Authentication authentication) {
+        LOG.info("RumpusRestController::getCurrentUser()");
+        if(authentication != null) {
+            final String username = authentication.getName();
+            final RumpusUser user = this.rumpusUserService.get(username);
+            return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
+        }
+        return null;
+    }
+
+    @GetMapping(value = "is_authenticated")
+    public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
+        LOG.info("RumpusRestController::getAuthenticationOfUser()");
+        boolean isAuthenticated = false;
+        if(authentication != null) {
+            isAuthenticated = authentication.isAuthenticated();
+        }
+        return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
+    }
+
     /** */
     @PostMapping(value = RumpusController.PATH_POST_USER_TIME_ZONE)
     public ResponseEntity<CommonSession> setMinuteDifferenceUTC(String minutesDifferenceUTC, HttpServletRequest request) {
@@ -161,6 +189,32 @@ public class RumpusRestController extends RumpusController {
         session.setAttribute(CommonSession.UTC_TIME_DIFFERENCE, minutesDifferenceUTC);
         ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
         return re;
+    }
+
+    // public void login(HttpServletRequest req, String user, String pass) {
+    //     UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user, pass);
+    //     Authentication auth = this.authManager.authenticate(authReq);
+        
+    //     SecurityContext sc = SecurityContextHolder.getContext();
+    //     sc.setAuthentication(auth);
+    //     HttpSession session = req.getSession(true);
+    //     session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+    // }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Authentication login(@RequestBody RumpusUser userRequest) {
+        LOG.info("RumpusRestController::login()");
+        LOG.info(userRequest.toString());
+        Authentication authentication = this.authManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
+        boolean isAuthenticated = isAuthenticated(authentication);
+        if(isAuthenticated) {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        return authentication;
+    }
+
+    private boolean isAuthenticated(Authentication authentication) {
+        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
 

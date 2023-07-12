@@ -3,8 +3,14 @@ package com.rumpus.rumpus.config;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import java.io.IOException;
 
@@ -22,8 +28,10 @@ import org.springframework.security.web.server.authentication.logout.SecurityCon
 import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.User.ActiveUserStore;
+import com.rumpus.common.User.AuthenticationHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,17 +43,15 @@ import jakarta.servlet.http.HttpServletResponse;
 public class WebSecurityConfig extends AbstractCommonConfig {
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+        // Spring Security should completely ignore URLs starting with /resources/
+                .requestMatchers("/resources/**");
+    }
+
+    @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception { // allowing 'ADMIN' access to /api/users
-
-        AuthenticationFailureHandler failureHandler = new AuthenticationFailureHandler() {
-
-            @Override
-            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
-            }
-            
-        };
+        AuthenticationHandler authHandler = new AuthenticationHandler(null);
 
         http
             .cors()
@@ -54,7 +60,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
             .csrf().disable() // need this disabled for signing up 5/5/2023 Chuck
             .formLogin(form -> form
                 .loginPage(PATH_INDEX)
-                .loginProcessingUrl(PATH_LOGIN)
+                .loginProcessingUrl(PATH_LOGIN).failureHandler(authHandler)
                 // .defaultSuccessUrl(PATH_INDEX, true)
                 // .failureForwardUrl(PATH_INDEX).permitAll()
             )

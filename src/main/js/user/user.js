@@ -32,7 +32,11 @@ import {
 //     return res.json()
 // }
 
-function User() {
+export async function loader({ params }) {
+    return fetch(`/api/user/${params.userId}`);
+}
+
+export default function User() {
 
     const data = useLoaderData();
     console.log(data);
@@ -238,5 +242,3 @@ function User() {
         </div>
     )
 }
-
-export default User;

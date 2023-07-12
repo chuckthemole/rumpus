@@ -51,10 +51,10 @@ public class RumpusTemplateController extends RumpusController {
 		return TEMPLATE_INDEX;
 	}
 
-    @GetMapping(value = PATH_ADMIN)
-    public String admin() {
-        return TEMPLATE_ADMIN;
-    }
+    // @GetMapping(value = PATH_ADMIN)
+    // public String admin() {
+    //     return TEMPLATE_ADMIN;
+    // }
 
     // @GetMapping(value = "/user/{id}")
     // public String getUserById(@PathVariable("id") String id) {
@@ -68,22 +68,22 @@ public class RumpusTemplateController extends RumpusController {
      * @param model
      * @return
      */
-    @GetMapping(value = PATH_VALUE_GET_BY_USER_ID)
-    public String user(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id, Model model) {
-        model.addAttribute("user", this.rumpusUserService.getById(id));
-        return TEMPLATE_USER;
-    }
+    // @GetMapping(value = PATH_VALUE_GET_BY_USER_ID)
+    // public String user(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id, Model model) {
+    //     model.addAttribute("user", this.rumpusUserService.getById(id));
+    //     return TEMPLATE_USER;
+    // }
 
-    @PostMapping("/user_create")
-    public String userSubmit(@RequestBody RumpusUser newUser) {
-        LOG.info("RumpusTemplateController POST: /user_create");
-        RumpusUser user = rumpusUserService.add(newUser);
-        if (user == null) {
-            LOG.info("ERROR: User is null.");
-            return TEMPLATE_INDEX;
-        }
-        return "forward:/login";
-    }
+    // @PostMapping("/user_create")
+    // public String userSubmit(@RequestBody RumpusUser newUser) {
+    //     LOG.info("RumpusTemplateController POST: /user_create");
+    //     RumpusUser user = rumpusUserService.add(newUser);
+    //     if (user == null) {
+    //         LOG.info("ERROR: User is null.");
+    //         return TEMPLATE_INDEX;
+    //     }
+    //     return "forward:/login";
+    // }
 
     // @PostMapping(value = "user_login")
     // public String userLogin(@RequestBody RumpusUser user, HttpServletRequest request) {

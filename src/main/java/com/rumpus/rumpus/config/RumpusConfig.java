@@ -1,10 +1,16 @@
 package com.rumpus.rumpus.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Dao.IApiDB;
@@ -14,6 +20,7 @@ import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
+import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
@@ -51,6 +58,18 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     public IRumpusUserService rumpusUserService() {
         return new RumpusUserService(this.rumpusUserDao());
     }
+
+    @Bean
+    @DependsOn({"rumpusUserDao"})
+    public AuthenticationManager authenticationManager() {
+        return new RumpusUserAuthenticationManager(this.rumpusUserDao());
+    }
+
+    // @Bean
+    // public ProviderManager providerManager() {
+    //     List<AuthenticationProvider> providers = new ArrayList<>();
+    //     return new ProviderManager(providers);
+    // }
 
     // @Bean
     // public RumpusUserTypeAdapter rumpusUserTypeAdapter() {

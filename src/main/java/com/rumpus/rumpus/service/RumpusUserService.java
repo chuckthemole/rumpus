@@ -3,11 +3,15 @@ package com.rumpus.rumpus.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rumpus.common.Service.Service;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.rumpus.common.Builder.LogBuilder;
+import com.rumpus.common.Service.UserService;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 
-public class RumpusUserService extends Service<RumpusUser> implements IRumpusUserService {
+public class RumpusUserService extends UserService<RumpusUser> implements IRumpusUserService {
 
     protected static final String NAME = "userService";
     private static final String USERNAME_CONDITION = "username = ?";
@@ -22,6 +26,13 @@ public class RumpusUserService extends Service<RumpusUser> implements IRumpusUse
             this.users.put(user.getEmail(), user);
             this.users.put(user.getUsername(), user);
         });
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        LogBuilder log = new LogBuilder("RumpusUserService::loadUserByUsername\n", "Loading user '", username, "'...");
+        log.info();
+        return this.get(username).getUserDetails();
     }
 
     // @Override
