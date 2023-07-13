@@ -57,7 +57,7 @@ public abstract class RumpusController extends AbstractCommonController {
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
     // @Autowired protected ProviderManager authManager;
-    @Autowired protected AuthenticationManager authManager;
+    // @Autowired protected AuthenticationManager authManager;
     @Autowired protected IRumpusUserService rumpusUserService;
     @Autowired protected IRumpusViewLoader viewLoader;
     // @Autowired protected JdbcUserDetailsManager userManager;

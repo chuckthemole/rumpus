@@ -6,7 +6,7 @@ import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-i
 import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH, TEMPLATE_GET_USER_PATH } from "../rumpus";
 import UpdateUser from './update';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, Link, Form } from 'react-router-dom';
 
 export async function loader({ params }) {
     const response = await fetch(GET_USERS_PATH);
@@ -36,16 +36,6 @@ export default function Users() {
             <progress className="progress is-large is-info" max="100">60%</progress>
         </div>
     )
-
-    const handleViewUserSubmit = (id) => (e) => {
-        e.preventDefault();
-        console.log('View Form submitted');
-        // return fetch(TEMPLATE_GET_USER_PATH + id);
-        // return(TEMPLATE_GET_USER_PATH + id);
-        return fetch('/user/' + id).then(response => {
-            window.location.href = '/user/' + id;
-        });
-    }
     
     const handleDeleteUserSubmit = (username) => (e) => {
         e.preventDefault();
@@ -58,7 +48,8 @@ export default function Users() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(username)
         };
-        return fetch(DELETE_USER_PATH, requestOptions).then(window.location.reload());
+        return fetch(DELETE_USER_PATH, requestOptions)
+            // .then(window.location.reload());
             // .then(response => {
             //     // response.json()
             //     console.log(response);
@@ -155,9 +146,7 @@ export default function Users() {
                                 <td title={ConvertEpochToDate(metaData.creationTime).toString()}>{ConvertEpochToDate(metaData.creationTime).toDateString()}</td>
                                 <td>{id}</td>
                                 <td>
-                                    <form onSubmit={handleViewUserSubmit(id)}>
-                                        <button className="viewUser button is-info is-light" type="submit" value="View"><FontAwesomeIcon icon={faEye} /></button>
-                                    </form>
+                                    <Link to={`/user/` + id} className="viewUser button is-info is-light"><FontAwesomeIcon icon={faEye} /></Link>
                                 </td>
                                 <td>
                                     <form onSubmit={handleDeleteUserSubmit(userDetails.username)}>
@@ -165,9 +154,9 @@ export default function Users() {
                                     </form>
                                 </td>
                                 <td>
-                                    <form onSubmit={handleUpdateUser(id)}>
+                                    <Form reloadDocument onSubmit={handleUpdateUser(id)}>
                                         <button className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></button>
-                                    </form>
+                                    </Form>
                                 </td>
                             </tr>
                         ))}

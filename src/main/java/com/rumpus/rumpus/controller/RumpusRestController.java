@@ -156,9 +156,14 @@ public class RumpusRestController extends RumpusController {
     public ResponseEntity<RumpusUser> getUserById(@PathVariable(PATH_VARIABLE_GET_BY_USER_ID) String id, HttpServletRequest request) {
         LOG.info("RumpusRestController::getUserById()");
         RumpusUser user = this.rumpusUserService.getById(id);
-        LogBuilder log = new LogBuilder("Retrieved user: ", user.toString());
-        log.info();
-        return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
+        if(user != null) {
+            LogBuilder log = new LogBuilder("Retrieved user: ", user.toString());
+            log.info();
+            return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
+        }
+        LogBuilder log = new LogBuilder("User with id '",  id, "' was not found.");
+        log.error();
+        return null;
     }
 
     @GetMapping(value = "current_user")
@@ -201,17 +206,17 @@ public class RumpusRestController extends RumpusController {
     //     session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
     // }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Authentication login(@RequestBody RumpusUser userRequest) {
-        LOG.info("RumpusRestController::login()");
-        LOG.info(userRequest.toString());
-        Authentication authentication = this.authManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
-        boolean isAuthenticated = isAuthenticated(authentication);
-        if(isAuthenticated) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        return authentication;
-    }
+    // @RequestMapping(value = "/login", method = RequestMethod.POST)
+    // public Authentication login(@RequestBody RumpusUser userRequest) {
+    //     LOG.info("RumpusRestController::login()");
+    //     LOG.info(userRequest.toString());
+    //     Authentication authentication = this.authManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
+    //     boolean isAuthenticated = isAuthenticated(authentication);
+    //     if(isAuthenticated) {
+    //         SecurityContextHolder.getContext().setAuthentication(authentication);
+    //     }
+    //     return authentication;
+    // }
 
     private boolean isAuthenticated(Authentication authentication) {
         return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();

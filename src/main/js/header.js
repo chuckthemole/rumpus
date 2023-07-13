@@ -4,8 +4,9 @@ import { Form, Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import UserIcon from './user/user_icon';
 import { getCurrentUser, getCurrentUserAuthorities, getUserById, isCurrentUserAuthenticated } from './rumpus';
+import SignupModal from './signup_modal';
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 // bind modal to app element https://reactcommunity.org/react-modal/accessibility/
 Modal.setAppElement('#root');
@@ -35,7 +36,8 @@ export default function Header() {
 
     if(!is_user_authenticated.isAuthenticated && !is_user_authenticated.isLoading) {
         login = <a onClick={openLoginModal} className="loginBtn button is-success is-light">Log in</a>;
-        signup = <a onClick={openSignupModal} className="signupBtn button is-success is-light">Sign up</a>;
+        // signup = <a onClick={openSignupModal} className="signupBtn button is-success is-light">Sign up</a>;
+        signup = <SignupModal />;
     } else if(is_user_authenticated.isAuthenticated) {
         user_icon = <UserIcon />;
         if(authorities.includes('ROLE_ADMIN')) {
@@ -46,7 +48,7 @@ export default function Header() {
 
     let subtitle;
     const [loginModalIsOpen, setLoginModalIsOpen] = React.useState(false);
-    const [signupModalIsOpen, setSignupModalIsOpen] = React.useState(false);
+    // const [signupModalIsOpen, setSignupModalIsOpen] = React.useState(false);
 
     function openLoginModal() {
         setLoginModalIsOpen(true);
@@ -61,18 +63,18 @@ export default function Header() {
         setLoginModalIsOpen(false);
     }
 
-    function openSignupModal() {
-        setSignupModalIsOpen(true);
-    }
+    // function openSignupModal() {
+    //     setSignupModalIsOpen(true);
+    // }
 
-    function afterOpenSignupModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-    }
+    // function afterOpenSignupModal() {
+    //     // references are now sync'd and can be accessed.
+    //     subtitle.style.color = '#f00';
+    // }
 
-    function closeSignupModal() {
-        setSignupModalIsOpen(false);
-    }
+    // function closeSignupModal() {
+    //     setSignupModalIsOpen(false);
+    // }
    
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -150,9 +152,9 @@ export default function Header() {
                             <label htmlFor='' className='label'>Username</label>
                             <div className='control has-icons-left'>
                                 <input name='username' type='username' placeholder='e.g. coolguy' className='input' required />
-                                    <span className='icon is-small is-left'>
-                                        <i className='fa fa-envelope'></i>
-                                    </span>
+                                <span className='icon is-small is-left'>
+                                    <i className='fa fa-en  velope'></i>
+                                </span>
                             </div>
                         </div>
                         <div className='field'>
@@ -175,7 +177,7 @@ export default function Header() {
 
             </Modal>
 
-            <Modal
+            {/* <Modal
                 isOpen={signupModalIsOpen}
                 onAfterOpen={afterOpenSignupModal}
                 onRequestClose={closeSignupModal}
@@ -183,7 +185,7 @@ export default function Header() {
                 contentLabel="Example Modal">
                 
                 <div>todo</div>
-            </Modal>
+            </Modal> */}
         </nav>
     )
 }

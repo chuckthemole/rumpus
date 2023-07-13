@@ -1,36 +1,5 @@
 const React = require('react');
-const ReactDOM = require('react-dom/client');
-
-import useSWR from 'swr';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH, TEMPLATE_GET_USER_PATH } from "../rumpus";
-import UpdateUser from './update';
-import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
-
-import {
-    createBrowserRouter,
-    RouterProvider,
-    useLoaderData,
-  } from "react-router-dom";
-
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-// const fetcher = async url => {
-//     const res = await fetch(url)
-
-//     // If the status code is not in the range 200-299,
-//     // we still try to parse and throw it.
-//     if (!res.ok) {
-//         const error = new Error('An error occurred while fetching the data.')
-//         // Attach extra info to the error object.
-//         error.info = await res.json()
-//         error.status = res.status
-//         throw error
-//     }
-
-//     return res.json()
-// }
+import { useLoaderData } from "react-router-dom";
 
 export async function loader({ params }) {
     return fetch(`/api/user/${params.userId}`);
@@ -39,7 +8,6 @@ export async function loader({ params }) {
 export default function User() {
 
     const data = useLoaderData();
-    console.log(data);
 
     if (!data) return(
         <div className='container m-6'>
