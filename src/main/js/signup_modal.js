@@ -3,7 +3,14 @@ import Modal from 'react-modal';
 import { Form, useFetcher } from 'react-router-dom';
 import { CREATE_USER_PATH, Common } from './rumpus';
 
-export default function SignupModal() {
+export default function SignupModal({btn}) {
+
+    let button;
+    if(btn === undefined) { // default to signup for now
+        button = <span>Sign up</span>;
+    } else {
+        button = btn;
+    }
 
     const customStyles = {
         content: {
@@ -43,6 +50,7 @@ export default function SignupModal() {
         newUser[Common.PASSWORD] = password;
         newUser[Common.EMAIL] = email;
         const fetched = await onCreate(newUser);
+        closeModal();
         clearInput();
     }
 
@@ -54,19 +62,7 @@ export default function SignupModal() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         };
-        // return fetch('/api/user', requestOptions)
-        return fetch(CREATE_USER_PATH, requestOptions)
-            .then(response => {
-                // response.json()
-                console.log(response);
-                console.log(response.json());
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .then(() => { // reload window
-                window.location.reload();
-            });
+        return fetch(CREATE_USER_PATH, requestOptions);
 	}
 
     function clearInput() {
@@ -77,7 +73,8 @@ export default function SignupModal() {
 
     return (
         <>
-            <a onClick={openModal} className="signupBtn button is-light">Sign up</a>
+
+            <a onClick={openModal} className="signupBtn button is-light is-success">{button}</a>
 
             <Modal
                 isOpen={modalIsOpen}

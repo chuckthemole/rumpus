@@ -5,6 +5,7 @@ import UserIcon from './user/user_icon';
 import { getCurrentUserAuthorities, isCurrentUserAuthenticated } from './rumpus';
 import SignupModal from './signup_modal';
 import LoginModal from './login_modal';
+import Logout from './logout';
 
 // bind modal to app element https://reactcommunity.org/react-modal/accessibility/
 Modal.setAppElement('#root'); // TODO: can move this to app.js or index.js maybe, to be more central?
@@ -29,7 +30,7 @@ export default function Header() {
         if(authorities.includes('ROLE_ADMIN')) {
             admin = <Link to={`/admin`} className="adminBtn button is-info"><strong>Admin</strong></Link>;
         }
-        signout = <form method="post" action="/logout"><button className="logoutBtn button is-danger" type="submit" value="Sign Out">Sign Out</button></form>;
+        signout = <Logout />;
     }
    
     return (

@@ -2,23 +2,27 @@ const React = require('react');
 const ReactDOM = require('react-dom/client');
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH, TEMPLATE_GET_USER_PATH } from "../rumpus";
-import UpdateUser from './update';
+import { faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { Common, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH } from "../rumpus";
+import UpdateUser from './user_update_modal';
+import UserDelete from './user_delete_modal';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
-import { useHistory, useLoaderData, Link, Form, useFetcher, useNavigate, useLocation } from 'react-router-dom';
+import { useLoaderData, Link, useFetcher } from 'react-router-dom';
+import SignupModal from '../signup_modal';
 
 export async function loader() {
     const response = await fetch(GET_USERS_PATH);
     // If the status code is not in the range 200-299,
     // we still try to parse and throw it.
-    
     if (!response.ok) {
         const error = new Error('An error occurred while fetching users');
         // Attach extra info to the error object.
         error.info = await response.json();
         error.status = response.status;
         throw error;
+    }
+    if(response.redirected == true) { // catching this and returning null as to not get console error
+        return null;
     }
 
     return response.json();
@@ -41,9 +45,9 @@ export default function Users() {
     const [users, setUsers] = React.useState(useLoaderData());
     const fetcher = useFetcher();
     
-    React.useEffect(() => {
-        loader().then(function(result) {
-            setUsers(result);
+    React.useEffect(() => { // TODO: this calls the api a lot. figure out a resolution.
+        loader().then((response) => {
+            setUsers(response);
         });
     }, [users]);
 
@@ -171,23 +175,20 @@ export default function Users() {
                                     <Link to={`/user/` + id} className="viewUser button is-info is-light"><FontAwesomeIcon icon={faEye} /></Link>
                                 </td>
                                 <td>
-                                    <fetcher.Form method='post' action={'/deleteUser/' + userDetails.username}>
-                                        <button className="deleteUser button is-danger" type="submit" value="Delete"><FontAwesomeIcon icon={faTrashCan} /></button>
-                                    </fetcher.Form>
+                                    <UserDelete user_username={userDetails.username} user_id={id}/>
                                 </td>
                                 <td>
-                                    <Form reloadDocument onSubmit={handleUpdateUser(id)}>
-                                        <button className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></button>
-                                    </Form>
+                                    <UpdateUser user_id={id}/>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
                 <div className='container m-4'>
-                    <form onSubmit={handleAddUser}>
+                    {/* <form onSubmit={handleAddUser}>
                         <button className="m-4 addUser button is-primary" type="submit" value="Add"><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</button>
-                    </form>
+                    </form> */}
+                    <SignupModal btn={<span><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</span>}/>
                 </div>
 
         </div>
