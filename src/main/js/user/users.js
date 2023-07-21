@@ -1,32 +1,51 @@
 const React = require('react');
 const ReactDOM = require('react-dom/client');
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Common, CREATE_USER_PATH, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH, TEMPLATE_GET_USER_PATH } from "../rumpus";
 import UpdateUser from './update';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
-import { useLoaderData, Link, Form } from 'react-router-dom';
+import { useHistory, useLoaderData, Link, Form, useFetcher, useNavigate, useLocation } from 'react-router-dom';
 
-export async function loader({ params }) {
+export async function loader() {
     const response = await fetch(GET_USERS_PATH);
     // If the status code is not in the range 200-299,
     // we still try to parse and throw it.
     
     if (!response.ok) {
-        const error = new Error('An error occurred while fetching users')
+        const error = new Error('An error occurred while fetching users');
         // Attach extra info to the error object.
-        error.info = await response.json()
-        error.status = response.status
+        error.info = await response.json();
+        error.status = response.status;
         throw error;
     }
 
     return response.json();
 }
 
+export async function delete_user(username) {
+    const requestOptions = {
+        method: Common.POST,
+        // redirect: "follow",
+        entity: username,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(username)
+    };
+    
+    return await fetch(DELETE_USER_PATH, requestOptions);
+}
+
 export default function Users() {
 
-    const users = useLoaderData();
+    const [users, setUsers] = React.useState(useLoaderData());
+    const fetcher = useFetcher();
+    
+    React.useEffect(() => {
+        loader().then(function(result) {
+            setUsers(result);
+        });
+    }, [users]);
 
     if (!users) return(
         <div className='container m-6'>
@@ -43,12 +62,15 @@ export default function Users() {
 
         const requestOptions = {
             method: Common.POST,
-            redirect: "follow",
+            // redirect: "follow",
             entity: username,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(username)
         };
-        return fetch(DELETE_USER_PATH, requestOptions)
+        
+        return fetch(DELETE_USER_PATH, requestOptions);
+        // let history = useHistory();
+        // history.push("/admin");
             // .then(window.location.reload());
             // .then(response => {
             //     // response.json()
@@ -149,9 +171,9 @@ export default function Users() {
                                     <Link to={`/user/` + id} className="viewUser button is-info is-light"><FontAwesomeIcon icon={faEye} /></Link>
                                 </td>
                                 <td>
-                                    <form onSubmit={handleDeleteUserSubmit(userDetails.username)}>
+                                    <fetcher.Form method='post' action={'/deleteUser/' + userDetails.username}>
                                         <button className="deleteUser button is-danger" type="submit" value="Delete"><FontAwesomeIcon icon={faTrashCan} /></button>
-                                    </form>
+                                    </fetcher.Form>
                                 </td>
                                 <td>
                                     <Form reloadDocument onSubmit={handleUpdateUser(id)}>

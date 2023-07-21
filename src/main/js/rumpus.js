@@ -17,6 +17,7 @@ export const DELETE_USER_PATH = '/api/delete_user';
 export const TEMPLATE_GET_USER_PATH = '/get_user_by_id/';
 
 // Modals
+// Not using this anymore. Can prolly get rid of. using react-modal instead now. - chuck 2023/7/20
 export const modals = [
     {name : "signupModal", container: document.getElementsByClassName("signup")[0], button: document.getElementsByClassName("signupBtn")[0]},
     {name : "loginModal", container: document.getElementsByClassName("login")[0], button: document.getElementsByClassName("loginBtn")[0]}

@@ -32,17 +32,21 @@ function Footer() {
     if (!data) return <p>Loading</p>;
    
     return (
-        <div className="columns">
-            {data.columns.map(({items, title}) => (
-                <div className="column" key={title}>
-                    <div>{title}</div>
-                    {items.map(item => 
-                        <div key={item}>
-                            <span>{item}</span>
+        <div className='columns is-centered'>
+            <div className='column is-half'>
+                <div className="columns">
+                    {data.columns.map(({items, title}) => (
+                        <div className="column" key={title}>
+                            <div>{title}</div>
+                            {items.map(item => 
+                                <div key={item}>
+                                    <span>{item}</span>
+                                </div>
+                            )}
                         </div>
-                    )}
-			    </div>
-            ))}
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }

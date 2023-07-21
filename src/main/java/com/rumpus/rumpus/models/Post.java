@@ -53,6 +53,7 @@ public class Post extends RumpusModel<Post> {
 
     @Override
     public Map<String, Object> getModelAttributesMap() {
+        LOG.info("Post::getModelAtrributesMap()");
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getModelAttributesMap'");
     }

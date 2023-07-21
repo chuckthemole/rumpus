@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from './app';
 import ErrorBoundary from './error';
 import ErrorPage from './error_page';
-import Users, {loader as usersLoader} from './user/users';
+import Users, {delete_user, loader as usersLoader} from './user/users';
 import User, {loader as userLoader} from './user/user';
-import Logout from "./logout";
+import Logout, { loader } from "./logout";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +38,19 @@ const router = createBrowserRouter([
                 path: 'logout',
                 element: <Logout />,
             },
+            {
+                path: 'deleteUser/:username',
+                // element: <Users />,
+                action: async ({ request, params }) => {
+                    // console.log(params);
+                    // console.log(request.formData());
+                    // console.log(request.url);
+                    delete_user(params.username);
+                    return request;
+                },
+                // loader: usersLoader,
+                // errorElement: <ErrorPage />
+            }
         ],
     },
 ]);
