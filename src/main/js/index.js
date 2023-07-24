@@ -8,6 +8,7 @@ import ErrorPage from './error_page';
 import Users, {delete_user, loader as usersLoader} from './user/users';
 import User, {loader as userLoader} from './user/user';
 import Logout, { loader } from "./logout";
+import Admin from "./admin";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'admin',
-                element: <Users />,
+                element: <Admin />,
                 loader: usersLoader,
                 errorElement: <ErrorPage />
             },

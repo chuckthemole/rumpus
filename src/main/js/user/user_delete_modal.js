@@ -55,8 +55,23 @@ export default function UserDelete({ user_id, user_username }) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(username)
             };
+
+            const log_item = {};
+            log_item['logName'] = 'ADMIN_LOG';
+            log_item['time'] = new Date().toLocaleString();
+            log_item['username'] = 'TODO: figure this out...';
+            log_item['userId'] = 'TODO 12345';
+            log_item['action'] = 'DELETE user with username: ' + username;
+            const log_action_request_options = {
+                method: Common.POST,
+                // redirect: "follow",
+                entity: log_item,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(log_item)
+            };
             
-            return await fetch(DELETE_USER_PATH, requestOptions);
+            await fetch(DELETE_USER_PATH, requestOptions);
+            return await fetch('/api/log_action', log_action_request_options);
         }
         console.log('Canceling delete user `' + username + ' ` with id `' + id + '`');
         closeModal();

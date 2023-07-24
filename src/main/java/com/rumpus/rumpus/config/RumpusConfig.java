@@ -15,6 +15,9 @@ import org.springframework.security.authentication.ProviderManager;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
+import com.rumpus.common.Log.LogItem;
+import com.rumpus.common.Log.LogManager;
+import com.rumpus.common.Log.LogManagerLoader;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
@@ -64,6 +67,16 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     public AuthenticationManager authenticationManager() {
         return new RumpusUserAuthenticationManager(this.rumpusUserDao());
     }
+
+    @Bean
+    public LogManager logManager() {
+        return LogManagerLoader.getDefaultLogManager();
+    }
+
+    // @Bean
+    // public List<LogItem> logItems() {
+    //     return new ArrayList<>();
+    // }
 
     // @Bean
     // public ProviderManager providerManager() {

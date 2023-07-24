@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.mysql.cj.log.Log;
 import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.Builder.LogBuilder;
+import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.CommonAuthentication;
@@ -185,6 +186,17 @@ public class RumpusRestController extends RumpusController {
             isAuthenticated = authentication.isAuthenticated();
         }
         return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = RumpusController.PATH_LOG_ACTION)
+    public ResponseEntity<CommonSession> logAction(@RequestBody LogItem logItem, HttpServletRequest request) {
+        LOG.info("RumpusRestController POST: /log_action");
+        HttpSession session = request.getSession();
+        LOG.info(logItem.toString());
+        this.logManager.log(logItem);
+
+        ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
+        return re;
     }
 
     /** */

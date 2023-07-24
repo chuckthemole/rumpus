@@ -1,5 +1,7 @@
 package com.rumpus.rumpus.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.AbstractCommonController;
+import com.rumpus.common.Log.LogItem;
+import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
@@ -29,6 +33,7 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_LOGOUT = "/logout";
     protected static final String PATH_LOGIN = "/login";
     protected static final String PATH_ADMIN = "/admin";
+    protected static final String PATH_LOG_ACTION = "/log_action";
 
     // Paths for User
     protected static final String PATH_GET_USERS = "/users";
@@ -63,6 +68,8 @@ public abstract class RumpusController extends AbstractCommonController {
     // @Autowired protected JdbcUserDetailsManager userManager;
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;
+
+    @Autowired protected LogManager logManager;
 
     public RumpusController() {super(NAME);}
     public RumpusController(String name) {
