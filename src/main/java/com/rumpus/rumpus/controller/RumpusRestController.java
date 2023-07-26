@@ -11,6 +11,7 @@ import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.CommonAuthentication;
 import com.rumpus.common.util.StringUtil;
 import com.rumpus.common.views.Footer;
+import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
@@ -72,11 +73,32 @@ public class RumpusRestController extends RumpusController {
         return NAME;
     }
     
-    @GetMapping(value = PATH_GET_USERS)
-    public ResponseEntity<List<RumpusUser>> getAllUsers(HttpSession session) {
-        List<RumpusUser> users = rumpusUserService.getAll();
+    @GetMapping(value = PATH_GET_USERS + "/{sort}")
+    public ResponseEntity<List<RumpusUser>> getAllUsers(@PathVariable("sort") String sort, HttpSession session) {
+
+        // get users from service and store in collection for sorting
+        RumpusUserCollection userCollection = new RumpusUserCollection(rumpusUserService.getAll());
+        List<RumpusUser> users = null; // user list to return
+        if(userCollection != null && !userCollection.isEmpty()) {
+            // sort
+            if(sort != null && !sort.isBlank()) {
+                if(sort.equals("username")) {
+                    users = userCollection.sortByUsername();
+                } else if(sort.equals("email")) {
+                    users = userCollection.sortByEmail();
+                } else if(sort.equals("id")) {
+                    users = userCollection.sortById();
+                } else {
+                    users = userCollection.sortByUsername();
+                }
+            } else { // if no sort then use default sort. 
+                users = userCollection.sortByUsername();
+            }
+        } else {
+            LOG.info("Error: Rumpus user service returned no users 1.");
+        }
         if(users == null || users.isEmpty()) {
-            LOG.info("Error: Rumpus user service returned no users.");
+            LOG.info("Error: Rumpus user service returned no users 2.");
         }
         ResponseEntity<List<RumpusUser>> responseEntity = new ResponseEntity<>(users, HttpStatusCode.valueOf(200));
         LOG.info(responseEntity.getBody().toString());

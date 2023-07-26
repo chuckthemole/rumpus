@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Common } from './rumpus';
+import { isModalActive, is_modal_active, setModalActive, setModalInactive } from './app';
 
 export default function LoginModal() {
 
@@ -21,7 +22,10 @@ export default function LoginModal() {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
-        setIsOpen(true);
+        if(!isModalActive()) {
+            setIsOpen(true);
+            setModalActive();
+        }
     }
 
     function afterOpenModal() {
@@ -31,6 +35,7 @@ export default function LoginModal() {
 
     function closeModal() {
         setIsOpen(false);
+        setModalInactive();
     }
 
     function clearInput() {

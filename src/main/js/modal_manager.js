@@ -1,14 +1,7 @@
-const client = require('./client');
-
-import * as React from 'react';
-import { Outlet } from 'react-router-dom';
-
-import Footer from './footer';
-import Header from './header';
-
-// TODO: see if we can replace with modal_manager.js
 import Modal from 'react-modal';
 Modal.setAppElement('#root');
+
+// TODO: not using right now. see if we can insert in app.js
 
 export let is_modal_active; // keeps track if user has a modal open. only allow one at a time.
 
@@ -34,14 +27,4 @@ export function setModalActive() {
  */
 export function setModalInactive() {
     is_modal_active = false;
-}
-
-export default function App() {
-    return (
-        <>
-            <Header />
-            <Outlet />
-            <Footer />
-        </>
-    )
 }

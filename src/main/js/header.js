@@ -8,7 +8,7 @@ import LoginModal from './login_modal';
 import Logout from './logout';
 
 // bind modal to app element https://reactcommunity.org/react-modal/accessibility/
-Modal.setAppElement('#root'); // TODO: can move this to app.js or index.js maybe, to be more central?
+// Modal.setAppElement('#root'); // TODO: can move this to app.js or index.js maybe, to be more central?
 
 export default function Header() {
 

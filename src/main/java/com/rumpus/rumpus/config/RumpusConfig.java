@@ -21,6 +21,7 @@ import com.rumpus.common.Log.LogManagerLoader;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
+import com.rumpus.rumpus.database_loader.RumpusLoader;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
@@ -71,6 +72,12 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     @Bean
     public LogManager logManager() {
         return LogManagerLoader.getDefaultLogManager();
+    }
+
+    @Bean
+    @DependsOn({"rumpusUserDao"})
+    RumpusLoader rumpusLoader() {
+        return new RumpusLoader(rumpusUserDao());
     }
 
     // @Bean

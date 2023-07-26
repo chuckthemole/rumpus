@@ -9,9 +9,19 @@ import UserDelete from './user_delete_modal';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
 import { useLoaderData, Link, useFetcher } from 'react-router-dom';
 import SignupModal from '../signup_modal';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import Dropdown, { get_selected } from '../dropdown';
+
+// sort flags
+const sort_by_username = '/username';
+const sort_by_email = '/email';
+const sort_by_id = '/id';
+// keeps track of the current sort
+let current_sort;
 
 export async function loader() {
-    const response = await fetch(GET_USERS_PATH);
+    // default to sort by username if not defined
+    const response = current_sort !== undefined ? await fetch(GET_USERS_PATH + current_sort) : await fetch(GET_USERS_PATH + sort_by_username);
     // If the status code is not in the range 200-299,
     // we still try to parse and throw it.
     if (!response.ok) {
@@ -43,6 +53,7 @@ export async function delete_user(username) {
 export default function Users() {
 
     const [users, setUsers] = React.useState(useLoaderData());
+    const [user_index, setUserIndex] = React.useState(0);
     const fetcher = useFetcher();
     
     React.useEffect(() => { // TODO: this calls the api a lot. figure out a resolution.
@@ -59,137 +70,155 @@ export default function Users() {
             <progress className="progress is-large is-info" max="100">60%</progress>
         </div>
     )
-    
-    const handleDeleteUserSubmit = (username) => (e) => {
-        e.preventDefault();
-        console.log('Delete Form submitted');
 
-        const requestOptions = {
-            method: Common.POST,
-            // redirect: "follow",
-            entity: username,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(username)
-        };
-        
-        return fetch(DELETE_USER_PATH, requestOptions);
-        // let history = useHistory();
-        // history.push("/admin");
-            // .then(window.location.reload());
-            // .then(response => {
-            //     // response.json()
-            //     console.log(response);
-            //     console.log(response.json());
-            // })
-            // .then(users => {
-            //     // this.setState({ postId: users.id })
-            //     console.log(users);
-            //     // const loginFetched = this.onLogin(userName);
-            //     // console.log(loginFetched);
-            // })
-            // .then(() => { // reload window
-            //     window.location.reload();
-            // });
-    }
-
-    const handleUpdateUser = (id) => (e) => {
-        e.preventDefault();
-
-        const requestOptions = {
-            method: Common.GET,
-            headers: {
-                'Accept': 'application/json',
-            },
-        };
-        const user = fetch(GET_USER_PATH + id, requestOptions)
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
-                const update_user = document.getElementById('update_user-form');
-                if (typeof(update_user) != 'undefined' && update_user != null) {
-                    const reactDOMUpdateUser = ReactDOM.createRoot(update_user); // getting warnings. change to root.render()
-                    reactDOMUpdateUser.render(<UpdateUser user={response}/>);
-                } else {
-                    console.log("Error with update_user");
-                }
-
-                const update = document.getElementsByClassName('update_user')[0];
-                update !== undefined ? Common.ActivateModalNoButton(update) : console.log("Error: could not find element with class 'update'");
-            });
-            
-        // console.log(user);
-        // console.log(user.email);
-        // console.log(user.username);
-        // console.log(user.password);
-
-        // const update = document.getElementsByClassName('update_user')[0];
-        // update !== undefined ? Common.ActivateModalNoButton(update) : console.log("Error: could not find element with class 'update'");
-    }
-
-    const handleAddUser = (e) => {
-        e.preventDefault();
-        const signup = document.getElementsByClassName("signup")[0];
-        signup !== undefined ? Common.ActivateModalNoButton(signup) : console.log("Error: could not find element with class 'signup'");
-    }
+    const search_filter = [
+        {title: 'username', link: 'www.cool.com'},
+        {title: 'email', link: 'www.manohman.com'}, 
+        {title: 'id', link: 'www.link.com'},
+        {title: 'search all fields', link: 'www.all.com'}
+    ]
 
     return (
         <div className='content m-6'>
+            <Dropdown className='columns' title={'Search filter'} dropdown_items={search_filter} />
+            <div className='columns'><input className="column is-one-third input" type="text" placeholder={get_selected()}></input></div>
+            <table className="table is-hoverable is-fullwidth is-bordered m-6">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            <a
+                                onClick={() => {current_sort = sort_by_username;}}
+                                data-tooltip-id="sort-by-username"
+                                data-tooltip-html={
+                                    "Sort by username"
+                                }
+                                data-tooltip-place="bottom"
+                            >
+                                <abbr title="User Name">User</abbr>
+                            </a>
+                            <ReactTooltip id='sort-by-username' />
+                        </th>
+                        <th>
+                            <a
+                                onClick={() => {current_sort = sort_by_email;}}
+                                data-tooltip-id="sort-by-email"
+                                data-tooltip-html={
+                                    "Sort by email"
+                                }
+                                data-tooltip-place="bottom"
+                            >
+                                <abbr title="User Name">Email</abbr>
+                            </a>
+                            <ReactTooltip id='sort-by-email' />
+                        </th>
+                        <th><abbr title="Password">Pass</abbr></th>
+                        <th><abbr title="User Authorizations">Birth</abbr></th>
+                        <th>
+                            <a
+                                onClick={() => {current_sort = sort_by_id;}}
+                                data-tooltip-id="sort-by-id"
+                                data-tooltip-html={
+                                    "Sort by id"
+                                }
+                                data-tooltip-place="bottom"
+                            >
+                                <abbr title="User Name">ID</abbr>
+                            </a>
+                            <ReactTooltip id='sort-by-id' />
 
-                <table className="table is-hoverable is-fullwidth is-bordered m-6">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><abbr title="User Name">User</abbr></th>
-                            <th>Email</th>
-                            <th><abbr title="Password">Pass</abbr></th>
-                            <th><abbr title="User Authorizations">Birth</abbr></th>
-                            <th>ID</th>
-                            <th>View</th>
-                            <th>Delete</th>
-                            <th>Update</th>
+                        </th>
+                        <th>View</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            <a
+                                onClick={() => {current_sort = sort_by_username;}}
+                                data-tooltip-id="sort-by-username"
+                                data-tooltip-html={
+                                    "Sort by username"
+                                }
+                                data-tooltip-place="bottom"
+                            >
+                                <abbr title="User Name">User</abbr>
+                            </a>
+                            <ReactTooltip id='sort-by-username' />
+                        </th>
+                        <th>
+                            <a
+                                onClick={() => {current_sort = sort_by_email;}}
+                                data-tooltip-id="sort-by-email"
+                                data-tooltip-html={
+                                    "Sort by email"
+                                }
+                                data-tooltip-place="bottom"
+                            >
+                                <abbr title="User Name">Email</abbr>
+                            </a>
+                            <ReactTooltip id='sort-by-email' />
+                        </th>
+                        <th><abbr title="Password">Pass</abbr></th>
+                        <th><abbr title="User Creation Date/Time">Birth</abbr></th>
+                        <th>
+                            <a
+                                onClick={() => {current_sort = sort_by_id;}}
+                                data-tooltip-id="sort-by-id"
+                                data-tooltip-html={
+                                    "Sort by id"
+                                }
+                                data-tooltip-place="bottom"
+                            >
+                                <abbr title="User Name">ID</abbr>
+                            </a>
+                            <ReactTooltip id='sort-by-id' />
+
+                        </th>
+                        <th>View</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {users.map(( user, index ) => (
+                        <tr key={user.userDetails.username}>
+                            <th>{index + 1}</th>
+                            <td>{user.userDetails.username}</td>
+                            <td>{user.email}</td>
+                            <td>{user.userDetails.password}</td>
+                            <td title={ConvertEpochToDate(user.metaData.creationTime).toString()}>{ConvertEpochToDate(user.metaData.creationTime).toDateString()}</td>
+                            <td>{user.id}</td>
+                            <td>
+                                <Link
+                                    to={`/user/` + user.id}
+                                    className="viewUser button is-info is-light"
+                                    data-tooltip-id="user-view-button"
+                                    data-tooltip-html={
+                                        "View user: " + user.userDetails.username
+                                    }
+                                    data-tooltip-place="left"
+                                >
+                                    <FontAwesomeIcon icon={faEye} />
+                                </Link>
+                                <ReactTooltip id='user-view-button' />
+                            </td>
+                            <td>
+                                <UserDelete user_username={user.userDetails.username} user_id={user.id}/>
+                            </td>
+                            <td>
+                                <UpdateUser user_id={user.id} userDetails={user.userDetails} user_email={user.email} metaData={user.metaData}/>
+                            </td>
                         </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th><abbr title="User Name">User</abbr></th>
-                            <th>Email</th>
-                            <th><abbr title="Password">Pass</abbr></th>
-                            <th><abbr title="User Creation Date/Time">Birth</abbr></th>
-                            <th>ID</th>
-                            <th>View</th>
-                            <th>Delete</th>
-                            <th>Update</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        {users.map(({ userDetails, email, metaData, id, index }) => (
-                            <tr key={userDetails.username}>
-                                <th>{index}</th>
-                                <td>{userDetails.username}</td>
-                                <td>{email}</td>
-                                <td>{userDetails.password}</td>
-                                <td title={ConvertEpochToDate(metaData.creationTime).toString()}>{ConvertEpochToDate(metaData.creationTime).toDateString()}</td>
-                                <td>{id}</td>
-                                <td>
-                                    <Link to={`/user/` + id} className="viewUser button is-info is-light"><FontAwesomeIcon icon={faEye} /></Link>
-                                </td>
-                                <td>
-                                    <UserDelete user_username={userDetails.username} user_id={id}/>
-                                </td>
-                                <td>
-                                    <UpdateUser user_id={id}/>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <div className='container m-4'>
-                    {/* <form onSubmit={handleAddUser}>
-                        <button className="m-4 addUser button is-primary" type="submit" value="Add"><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</button>
-                    </form> */}
-                    <SignupModal btn={<span><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</span>}/>
-                </div>
+                    ))}
+                </tbody>
+            </table>
+            <div className='container m-4'>
+                <SignupModal btn={<span><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</span>}/>
+            </div>
 
         </div>
     )

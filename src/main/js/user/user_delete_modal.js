@@ -6,6 +6,7 @@ import { Common, DELETE_USER_PATH } from "../rumpus";
 import { useFetcher } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 export default function UserDelete({ user_id, user_username }) {
 
@@ -79,7 +80,17 @@ export default function UserDelete({ user_id, user_username }) {
 
     return (
         <>
-            <a onClick={onOpenModal} className="deleteUser button is-danger" type="submit" value="Delete"><FontAwesomeIcon icon={faTrashCan} /></a>
+            <a
+                onClick={onOpenModal} className="deleteUser button is-danger" type="submit" value="Delete"
+                data-tooltip-id="user-delete-button"
+                data-tooltip-html={
+                    "Delete user: " + username
+                }
+                data-tooltip-place="left"
+            >
+                <FontAwesomeIcon icon={faTrashCan} />
+            </a>
+            <ReactTooltip id='user-delete-button' />
 
             <Modal
                 isOpen={modalIsOpen}

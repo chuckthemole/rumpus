@@ -6,13 +6,13 @@ import { Common, UPDATE_USER_PATH } from "../rumpus";
 import { useFetcher } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { loader_by_id } from './user_loader';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 export async function loader({ params }) {
     return fetch(`/api/user/${params.userId}`);
 }
 
-function UpdateUser({ user_id }) {
+function UpdateUser({ userDetails, user_email, metaData, user_id }) {
 
     const customStyles = {
         content: {
@@ -25,21 +25,15 @@ function UpdateUser({ user_id }) {
         },
     };
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState(userDetails.username);
+    const [email, setEmail] = useState(user_email);
+    const [password, setPassword] = useState(userDetails.password);
     const [id] = useState(user_id);
 
     const fetcher = useFetcher();
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function onOpenModal() {
-        // load user and open modal
-        loader_by_id({id}).then((user) => {
-            setUsername(user.username);
-            setEmail(user.email);
-            setPassword(user.password);
-        });
         openModal();
     }
 
@@ -76,7 +70,17 @@ function UpdateUser({ user_id }) {
 
     return (
         <>
-            <a onClick={onOpenModal} className="updateUser button is-danger is-light" type="submit" value="Update"><FontAwesomeIcon icon={faEdit} /></a>
+            <a
+                onClick={onOpenModal} className="updateUser button is-danger is-light" type="submit" value="Update"
+                data-tooltip-id="user-update-button"
+                data-tooltip-html={
+                    "Edit user: " + username
+                }
+                data-tooltip-place="left"
+            >
+                <FontAwesomeIcon icon={faEdit} />
+            </a>
+            <ReactTooltip id='user-update-button' />
 
             <Modal
                 isOpen={modalIsOpen}
