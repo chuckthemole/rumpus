@@ -3,12 +3,11 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from './app';
-import ErrorBoundary from './error';
-import ErrorPage from './error_page';
+import ErrorPage from './common/error_page';
 import Users, {delete_user, loader as usersLoader} from './user/users';
 import User, {loader as userLoader} from './user/user';
-import Logout, { loader } from "./logout";
-import Admin from "./admin";
+import Logout, { loader } from "./common/logout";
+import Admin from "./admin/admin";
 
 const router = createBrowserRouter([
     {
@@ -28,10 +27,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'user/:userId',
-                element:
-                    <ErrorBoundary fallback={<ErrorPage />}>
-                        <User />
-                    </ErrorBoundary>,
+                element: <User />,
                 loader: userLoader,
                 errorElement: <ErrorPage />,
             },

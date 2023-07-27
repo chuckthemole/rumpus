@@ -21,15 +21,22 @@ import useSWR from 'swr';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-function Footer() {
+export default function Footer({footer_path}) {
     const { data, error } = useSWR(
-        "/view/footer",
+        footer_path,
         fetcher
     );
 
     if (error) return <div className='container m-6'><div className='notification is-primary'><p>An error occurred</p></div></div>;
-    // if (error) return <p>An error occurred</p>;
-    if (!data) return <p>Loading</p>;
+
+    if (!data) return(
+        <div className='container m-6'>
+            <progress className="progress is-small is-primary" max="100">15%</progress>
+            <progress className="progress is-danger" max="100">30%</progress>
+            <progress className="progress is-medium is-dark" max="100">45%</progress>
+            <progress className="progress is-large is-info" max="100">60%</progress>
+        </div>
+    )
    
     return (
         <div className='columns is-centered'>
@@ -50,5 +57,3 @@ function Footer() {
         </div>
     )
 }
-
-export default Footer;

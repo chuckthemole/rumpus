@@ -1,16 +1,11 @@
 const React = require('react');
 import { Link } from 'react-router-dom';
-import Modal from 'react-modal';
-import UserIcon from './user/user_icon';
-import { getCurrentUserAuthorities, isCurrentUserAuthenticated } from './rumpus';
+import UserIcon from './user_icon';
 import SignupModal from './signup_modal';
 import LoginModal from './login_modal';
 import Logout from './logout';
 
-// bind modal to app element https://reactcommunity.org/react-modal/accessibility/
-// Modal.setAppElement('#root'); // TODO: can move this to app.js or index.js maybe, to be more central?
-
-export default function Header() {
+export default function Header({user_path, current_user_authorities, is_current_user_authenticated, create_path}) {
 
     // buttons and icons, empty by default.
     let user_icon = '';
@@ -20,13 +15,13 @@ export default function Header() {
     let signup = '';
 
     // set button and icon visibility depending on user's authentication status and/or state (ie logged in or logged out)
-    let is_user_authenticated = isCurrentUserAuthenticated();
-    let authorities = getCurrentUserAuthorities();
+    let is_user_authenticated = is_current_user_authenticated;
+    let authorities = current_user_authorities;
     if(!is_user_authenticated.isAuthenticated && !is_user_authenticated.isLoading) {
         login = <LoginModal />;
-        signup = <SignupModal />;
+        signup = <SignupModal create_user_path={create_path}/>;
     } else if(is_user_authenticated.isAuthenticated) {
-        user_icon = <UserIcon />;
+        user_icon = <UserIcon current_user_path={user_path}/>;
         if(authorities.includes('ROLE_ADMIN')) {
             admin = <Link to={`/admin`} className="adminBtn button is-info"><strong>Admin</strong></Link>;
         }

@@ -8,9 +8,9 @@ import UpdateUser from './user_update_modal';
 import UserDelete from './user_delete_modal';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
 import { useLoaderData, Link, useFetcher } from 'react-router-dom';
-import SignupModal from '../signup_modal';
+import SignupModal from '../common/signup_modal';
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import Dropdown, { get_selected } from '../dropdown';
+import Dropdown, { get_selected } from '../common/dropdown';
 
 // sort flags
 const sort_by_username = '/username';

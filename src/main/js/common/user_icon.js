@@ -6,9 +6,9 @@ import { faExclamationTriangle, faUser } from '@fortawesome/free-solid-svg-icons
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function UserIcon() {
+export default function UserIcon({current_user_path}) {
     const { data, error } = useSWR(
-        "/api/current_user",
+        current_user_path,
         fetcher
     );
 

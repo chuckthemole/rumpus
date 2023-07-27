@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { Form, useFetcher } from 'react-router-dom';
-import { CREATE_USER_PATH, Common } from './rumpus';
-import { isModalActive, is_modal_active, setModalActive, setModalInactive } from './app';
+import { useFetcher } from 'react-router-dom';
+import { USERNAME, PASSWORD, EMAIL, EMPTY, POST } from './common';
+import { isModalActive, setModalActive, setModalInactive } from './modal_manager';
 
-export default function SignupModal({btn}) {
+export default function SignupModal({btn, create_user_path}) {
 
     let button;
     if(btn === undefined) { // default to signup for now
@@ -51,9 +51,9 @@ export default function SignupModal({btn}) {
     async function handleSubmit(e) {
         e.preventDefault();
         const newUser = {};
-        newUser[Common.USERNAME] = username;
-        newUser[Common.PASSWORD] = password;
-        newUser[Common.EMAIL] = email;
+        newUser[USERNAME] = username;
+        newUser[PASSWORD] = password;
+        newUser[EMAIL] = email;
         const fetched = await onCreate(newUser);
         closeModal();
         clearInput();
@@ -61,19 +61,19 @@ export default function SignupModal({btn}) {
 
     async function onCreate(newUser) {
         const requestOptions = {
-            method: Common.POST,
+            method: POST,
             redirect: "follow",
             entity: newUser,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         };
-        return fetch(CREATE_USER_PATH, requestOptions);
+        return fetch(create_user_path, requestOptions);
 	}
 
     function clearInput() {
-        setEmail(Common.EMPTY);
-        setUsername(Common.EMPTY);
-        setPassword(Common.EMPTY);
+        setEmail(EMPTY);
+        setUsername(EMPTY);
+        setPassword(EMPTY);
     }
 
     return (

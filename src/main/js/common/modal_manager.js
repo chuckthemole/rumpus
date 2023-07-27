@@ -1,7 +1,12 @@
+import React from 'react';
 import Modal from 'react-modal';
+
+// bind modal to app element https://reactcommunity.org/react-modal/accessibility/
 Modal.setAppElement('#root');
 
-// TODO: not using right now. see if we can insert in app.js
+/*
+This is keeping track of modal activity. TODO: see if react-modal has a built in solution for this.
+*/
 
 export let is_modal_active; // keeps track if user has a modal open. only allow one at a time.
 

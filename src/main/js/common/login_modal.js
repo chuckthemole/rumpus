@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { Common } from './rumpus';
-import { isModalActive, is_modal_active, setModalActive, setModalInactive } from './app';
+import { EMPTY } from './common';
+import { isModalActive, setModalActive, setModalInactive } from './modal_manager';
 
 export default function LoginModal() {
 
@@ -39,8 +39,8 @@ export default function LoginModal() {
     }
 
     function clearInput() {
-        setUsername(Common.EMPTY);
-        setPassword(Common.EMPTY);
+        setUsername(EMPTY);
+        setPassword(EMPTY);
     }
 
     return (

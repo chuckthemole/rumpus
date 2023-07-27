@@ -1,8 +1,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom/client');
 
-import AdminHome from './admin_home';
-import Users from './user/users';
+import AdminHome from './tab_home';
+import Users from '../user/users';
 
 export default function Admin() {
 
