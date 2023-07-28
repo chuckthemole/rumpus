@@ -3,7 +3,7 @@ const ReactDOM = require('react-dom/client');
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { Common, DELETE_USER_PATH, GET_USERS_PATH, GET_USER_PATH } from "../rumpus";
+import { Common, DELETE_USER_PATH, GET_USERS_PATH, CREATE_USER_PATH } from "../rumpus";
 import UpdateUser from './user_update_modal';
 import UserDelete from './user_delete_modal';
 import { ConvertEpochToDate } from '../../../../../common/src/main/js/common';
@@ -217,7 +217,7 @@ export default function Users() {
                 </tbody>
             </table>
             <div className='container m-4'>
-                <SignupModal btn={<span><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</span>}/>
+                <SignupModal btn={<span><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</span>} create_user_path={CREATE_USER_PATH}/>
             </div>
 
         </div>
