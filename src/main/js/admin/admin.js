@@ -24,7 +24,7 @@ export default function Admin() {
 
     return (
         <>
-            <div className='columns m-2 is-centered'>
+            <div className='columns'>
                 <div className='column is-four-fifths'>
                     <div className="tabs is-boxed">
                         <ul>
@@ -51,7 +51,7 @@ export default function Admin() {
                         </ul>
                     </div>
 
-                    <div className='columns is-centered has-background-light box'>{activeWindow}</div>
+                    <div className='is-centered has-background-light box'>{activeWindow}</div>
                 </div>
             </div>
         </>

@@ -79,147 +79,151 @@ export default function Users() {
     ]
 
     return (
-        <div className='content m-6'>
-            <Dropdown className='columns' title={'Search filter'} dropdown_items={search_filter} />
-            <div className='columns'><input className="column is-one-third input" type="text" placeholder={get_selected()}></input></div>
-            <table className="table is-hoverable is-fullwidth is-bordered m-6">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            <a
-                                onClick={() => {current_sort = sort_by_username;}}
-                                data-tooltip-id="sort-by-username"
-                                data-tooltip-html={
-                                    "Sort by username"
-                                }
-                                data-tooltip-place="bottom"
-                            >
-                                <abbr title="User Name">User</abbr>
-                            </a>
-                            <ReactTooltip id='sort-by-username' />
-                        </th>
-                        <th>
-                            <a
-                                onClick={() => {current_sort = sort_by_email;}}
-                                data-tooltip-id="sort-by-email"
-                                data-tooltip-html={
-                                    "Sort by email"
-                                }
-                                data-tooltip-place="bottom"
-                            >
-                                <abbr title="User Name">Email</abbr>
-                            </a>
-                            <ReactTooltip id='sort-by-email' />
-                        </th>
-                        <th><abbr title="Password">Pass</abbr></th>
-                        <th><abbr title="User Authorizations">Birth</abbr></th>
-                        <th>
-                            <a
-                                onClick={() => {current_sort = sort_by_id;}}
-                                data-tooltip-id="sort-by-id"
-                                data-tooltip-html={
-                                    "Sort by id"
-                                }
-                                data-tooltip-place="bottom"
-                            >
-                                <abbr title="User Name">ID</abbr>
-                            </a>
-                            <ReactTooltip id='sort-by-id' />
-
-                        </th>
-                        <th>View</th>
-                        <th>Delete</th>
-                        <th>Update</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            <a
-                                onClick={() => {current_sort = sort_by_username;}}
-                                data-tooltip-id="sort-by-username"
-                                data-tooltip-html={
-                                    "Sort by username"
-                                }
-                                data-tooltip-place="bottom"
-                            >
-                                <abbr title="User Name">User</abbr>
-                            </a>
-                            <ReactTooltip id='sort-by-username' />
-                        </th>
-                        <th>
-                            <a
-                                onClick={() => {current_sort = sort_by_email;}}
-                                data-tooltip-id="sort-by-email"
-                                data-tooltip-html={
-                                    "Sort by email"
-                                }
-                                data-tooltip-place="bottom"
-                            >
-                                <abbr title="User Name">Email</abbr>
-                            </a>
-                            <ReactTooltip id='sort-by-email' />
-                        </th>
-                        <th><abbr title="Password">Pass</abbr></th>
-                        <th><abbr title="User Creation Date/Time">Birth</abbr></th>
-                        <th>
-                            <a
-                                onClick={() => {current_sort = sort_by_id;}}
-                                data-tooltip-id="sort-by-id"
-                                data-tooltip-html={
-                                    "Sort by id"
-                                }
-                                data-tooltip-place="bottom"
-                            >
-                                <abbr title="User Name">ID</abbr>
-                            </a>
-                            <ReactTooltip id='sort-by-id' />
-
-                        </th>
-                        <th>View</th>
-                        <th>Delete</th>
-                        <th>Update</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    {users.map(( user, index ) => (
-                        <tr key={user.userDetails.username}>
-                            <th>{index + 1}</th>
-                            <td>{user.userDetails.username}</td>
-                            <td>{user.email}</td>
-                            <td>{user.userDetails.password}</td>
-                            <td title={ConvertEpochToDate(user.metaData.creationTime).toString()}>{ConvertEpochToDate(user.metaData.creationTime).toDateString()}</td>
-                            <td>{user.id}</td>
-                            <td>
-                                <Link
-                                    to={`/user/` + user.id}
-                                    className="viewUser button is-info is-light"
-                                    data-tooltip-id="user-view-button"
+        <>
+            <div className='m-6'>
+                <Dropdown className='columns' title={'Search filter'} dropdown_items={search_filter} />
+                <div className='columns'><input className="column is-one-third input" type="text" placeholder={get_selected()}></input></div>
+            </div>
+            <div className='table-container'>
+                <table className="table is-hoverable is-fullwidth is-bordered m-6">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                <a
+                                    onClick={() => {current_sort = sort_by_username;}}
+                                    data-tooltip-id="sort-by-username"
                                     data-tooltip-html={
-                                        "View user: " + user.userDetails.username
+                                        "Sort by username"
                                     }
-                                    data-tooltip-place="left"
+                                    data-tooltip-place="bottom"
                                 >
-                                    <FontAwesomeIcon icon={faEye} />
-                                </Link>
-                                <ReactTooltip id='user-view-button' />
-                            </td>
-                            <td>
-                                <UserDelete user_username={user.userDetails.username} user_id={user.id}/>
-                            </td>
-                            <td>
-                                <UpdateUser user_id={user.id} userDetails={user.userDetails} user_email={user.email} metaData={user.metaData}/>
-                            </td>
+                                    <abbr title="User Name">User</abbr>
+                                </a>
+                                <ReactTooltip id='sort-by-username' />
+                            </th>
+                            <th>
+                                <a
+                                    onClick={() => {current_sort = sort_by_email;}}
+                                    data-tooltip-id="sort-by-email"
+                                    data-tooltip-html={
+                                        "Sort by email"
+                                    }
+                                    data-tooltip-place="bottom"
+                                >
+                                    <abbr title="User Name">Email</abbr>
+                                </a>
+                                <ReactTooltip id='sort-by-email' />
+                            </th>
+                            <th><abbr title="Password">Pass</abbr></th>
+                            <th><abbr title="User Authorizations">Birth</abbr></th>
+                            <th>
+                                <a
+                                    onClick={() => {current_sort = sort_by_id;}}
+                                    data-tooltip-id="sort-by-id"
+                                    data-tooltip-html={
+                                        "Sort by id"
+                                    }
+                                    data-tooltip-place="bottom"
+                                >
+                                    <abbr title="User Name">ID</abbr>
+                                </a>
+                                <ReactTooltip id='sort-by-id' />
+
+                            </th>
+                            <th>View</th>
+                            <th>Delete</th>
+                            <th>Update</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                <a
+                                    onClick={() => {current_sort = sort_by_username;}}
+                                    data-tooltip-id="sort-by-username"
+                                    data-tooltip-html={
+                                        "Sort by username"
+                                    }
+                                    data-tooltip-place="bottom"
+                                >
+                                    <abbr title="User Name">User</abbr>
+                                </a>
+                                <ReactTooltip id='sort-by-username' />
+                            </th>
+                            <th>
+                                <a
+                                    onClick={() => {current_sort = sort_by_email;}}
+                                    data-tooltip-id="sort-by-email"
+                                    data-tooltip-html={
+                                        "Sort by email"
+                                    }
+                                    data-tooltip-place="bottom"
+                                >
+                                    <abbr title="User Name">Email</abbr>
+                                </a>
+                                <ReactTooltip id='sort-by-email' />
+                            </th>
+                            <th><abbr title="Password">Pass</abbr></th>
+                            <th><abbr title="User Creation Date/Time">Birth</abbr></th>
+                            <th>
+                                <a
+                                    onClick={() => {current_sort = sort_by_id;}}
+                                    data-tooltip-id="sort-by-id"
+                                    data-tooltip-html={
+                                        "Sort by id"
+                                    }
+                                    data-tooltip-place="bottom"
+                                >
+                                    <abbr title="User Name">ID</abbr>
+                                </a>
+                                <ReactTooltip id='sort-by-id' />
+
+                            </th>
+                            <th>View</th>
+                            <th>Delete</th>
+                            <th>Update</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {users.map(( user, index ) => (
+                            <tr key={user.userDetails.username}>
+                                <th>{index + 1}</th>
+                                <td>{user.userDetails.username}</td>
+                                <td>{user.email}</td>
+                                <td>{user.userDetails.password}</td>
+                                <td title={ConvertEpochToDate(user.metaData.creationTime).toString()}>{ConvertEpochToDate(user.metaData.creationTime).toDateString()}</td>
+                                <td>{user.id}</td>
+                                <td>
+                                    <Link
+                                        to={`/user/` + user.id}
+                                        className="viewUser button is-info is-light"
+                                        data-tooltip-id="user-view-button"
+                                        data-tooltip-html={
+                                            "View user: " + user.userDetails.username
+                                        }
+                                        data-tooltip-place="left"
+                                    >
+                                        <FontAwesomeIcon icon={faEye} />
+                                    </Link>
+                                    <ReactTooltip id='user-view-button' />
+                                </td>
+                                <td>
+                                    <UserDelete user_username={user.userDetails.username} user_id={user.id}/>
+                                </td>
+                                <td>
+                                    <UpdateUser user_id={user.id} userDetails={user.userDetails} user_email={user.email} metaData={user.metaData}/>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <div className='container m-4'>
                 <SignupModal btn={<span><FontAwesomeIcon icon={faPlus} />&nbsp;&nbsp;Add new user</span>} create_user_path={CREATE_USER_PATH}/>
             </div>
 
-        </div>
+        </>
     )
 }

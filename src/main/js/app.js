@@ -9,7 +9,13 @@ export default function App() {
     return (
         <>
             <Header user_path={'/api/current_user'} current_user_authorities={getCurrentUserAuthorities()} is_current_user_authenticated={isCurrentUserAuthenticated()} create_path={CREATE_USER_PATH}/>
-            <Outlet />
+            <div className='columns'>
+                <div className='column'></div>
+                <div className='column is-three-fifths'>
+                    <Outlet />
+                </div>
+                <div className='column'></div>
+            </div>
             <Footer footer_path={"/view/footer"}/>
         </>
     )
