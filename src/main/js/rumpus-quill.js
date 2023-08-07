@@ -1,4 +1,4 @@
-// const React = require('react');
+const React = require('react');
 // const ReactDOM = require('react-dom/client');
 // const client = require('./client');
 
@@ -300,8 +300,8 @@ function Register() {
     });
 }
 
-function Init(index) {
-    var quill = new Quill('#editor' + index, {
+function Init(editor_name) {
+    var quill = new Quill(editor_name + 'cool', {
         modules: {
             toolbar: [
                 [{ header: [1, 2, false] }],
@@ -313,21 +313,49 @@ function Init(index) {
     });
 }
 
-export default function RumpusQuill() {
+export default function RumpusQuill({editor_name}) {
+
+    // const [container_id] = React.useState(editor_name);
+
     Register();
-    Populate("quill-editor", Init);
-    // const quill_editors = document.getElementsByClassName('quill-editor');
-    // var editorCount = 0;
-    // Array.prototype.forEach.call(quill_editors, function(element) {
+    // Populate(editor_name, Init);
+
+    // const quill_editor = document.getElementById(editor_name);
+    // console.log(typeof(quill_editor));
+    // console.log(quill_editor);
+    // if(quill_editor !== undefined && quill_editor != null) {
     //     const fragment = document.createDocumentFragment();
     //     const div = document.createElement('div');
-    //     div.id = "editor" + editorCount;
+    //     div.id = editor_name;
     //     fragment.appendChild(div);
-    //     element.appendChild(fragment);
-    //     Init(editorCount);
-    //     editorCount++;
-    // });
+    //     quill_editor.appendChild(fragment);
+    //     Init(editor_name);
+    // } else {
+    //     console.log('Error: could not find element with id = ' + editor_name);
+    // }
+
+    const fragment = document.createDocumentFragment();
+    const div = document.createElement('div');
+    div.id = editor_name;
+    fragment.appendChild(div);
+
+
+    return (
+        <>
+            {fragment}
+            {new Quill(editor_name, {
+                modules: {
+                    toolbar: [
+                        [{ header: [1, 2, false] }],
+                        ['bold', 'italic']
+                    ]
+                },  
+                placeholder: 'Compose an epic...',
+                theme: 'snow'  // or 'bubble'
+            })}
+        </>
+    );
 }
 
 // Main
-RumpusQuill();
+// RumpusQuill();

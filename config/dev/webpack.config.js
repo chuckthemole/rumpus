@@ -8,7 +8,7 @@ module.exports = {
             app: './index.js',
             quill: './rumpus-quill.js'
         },
-        devtool: 'sourcemaps',
+        devtool: 'source-map',
         cache: true,
         output: {
             path: path.resolve(__dirname, '../../src/main/resources/static/js'),
@@ -47,7 +47,10 @@ module.exports = {
                     test: path.join(path.resolve(__dirname, '../../'), '.') && /\.mjs$/,
                     include: /(node_modules)/,
                     type: 'javascript/auto'
-                }
+                }, {
+                    test: path.join(path.resolve(__dirname, '../../'), '.') && /\.css$/i,
+                    use: ["style-loader", "css-loader"],
+                },
             ]
         }
     }
