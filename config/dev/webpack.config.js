@@ -6,7 +6,7 @@ module.exports = {
         context: path.resolve(__dirname, '../../src/main/js'),
         entry: {
             app: './index.js',
-            quill: './rumpus-quill.js'
+            quill: './common/rumpus-quill.js'
         },
         devtool: 'source-map',
         cache: true,

@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from './common/footer';
 import Header from './common/header';
 import { CREATE_USER_PATH, getCurrentUserAuthorities, isCurrentUserAuthenticated } from './rumpus';
-import RumpusQuill from './rumpus-quill';
+import RumpusQuill from './common/rumpus-quill';
 
 export default function App() {
 
@@ -14,7 +14,7 @@ export default function App() {
             <div className='columns is-centered'>
                 <div className='column'></div>
                 <div className='column is-three-fifths'>
-                    < RumpusQuill />
+                    <RumpusQuill />
                     <Outlet />
                 </div>
                 <div className='column'></div>
