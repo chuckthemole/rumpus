@@ -4,12 +4,9 @@ import { Outlet } from 'react-router-dom';
 import Footer from './common/footer';
 import Header from './common/header';
 import { CREATE_USER_PATH, getCurrentUserAuthorities, isCurrentUserAuthenticated } from './rumpus';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import RumpusQuill from './rumpus-quill';
 
 export default function App() {
-    const [value, setValue] = React.useState('');
-    let quill = React.createElement('div', { style: { background: "white" } }, <ReactQuill theme='snow' value={value} onChange={setValue} />);
 
     return (
         <>
@@ -17,7 +14,7 @@ export default function App() {
             <div className='columns is-centered'>
                 <div className='column'></div>
                 <div className='column is-three-fifths'>
-                    {quill}
+                    < RumpusQuill />
                     <Outlet />
                 </div>
                 <div className='column'></div>
