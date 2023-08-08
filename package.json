@@ -45,8 +45,8 @@
     "bulma-build": "node-sass --omit-source-map-url ./src/main/resources/static/sass/rumpus-styles.scss ./src/main/resources/static/css/rumpus-styles.css",
     "bulma-build-watch": "npm run css-build -- --watch",
     "bulma-watch": "npm run css-watch",
-    "preinstall": "rm -f ./src/main/js/common/*",
-    "postinstall": "mkdir -p ./src/main/js/common && ln ./../common/src/main/js/react/* ./src/main/js/common && ln ./../common/src/main/js/common.js ./src/main/js/common"
+    "preinstall": "./config/dev/scripts/preinstall.sh",
+    "postinstall": "./config/dev/scripts/postinstall.sh"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
