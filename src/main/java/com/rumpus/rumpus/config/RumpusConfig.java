@@ -15,6 +15,7 @@ import org.springframework.security.authentication.ProviderManager;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
+import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Log.LogManagerLoader;
@@ -76,8 +77,13 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
 
     @Bean
     @DependsOn({"rumpusUserDao"})
-    RumpusLoader rumpusLoader() {
+    public RumpusLoader rumpusLoader() {
         return new RumpusLoader(rumpusUserDao());
+    }
+
+    @Bean
+    public ForumThread forumThread() {
+        return ForumThread.createEmpty();
     }
 
     // @Bean

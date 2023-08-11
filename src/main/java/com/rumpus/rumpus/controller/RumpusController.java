@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.AbstractCommonController;
+import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.User.ActiveUserStore;
@@ -69,11 +70,15 @@ public abstract class RumpusController extends AbstractCommonController {
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;
 
+    @Autowired protected ForumThread adminForumThread;
+    protected static final String ADMIN_FORUM_THREAD_ID = "ADMINFORUMTHREADID";
+
     @Autowired protected LogManager logManager;
 
     public RumpusController() {super(NAME);}
     public RumpusController(String name) {
         super(name);
+        // this.adminForumThread.setPageID(ADMIN_FORUM_THREAD_ID);
     }
 
     protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {

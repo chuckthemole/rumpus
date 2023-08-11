@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.mysql.cj.log.Log;
 import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.Builder.LogBuilder;
+import com.rumpus.common.Forum.ForumPost;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;
@@ -219,6 +220,13 @@ public class RumpusRestController extends RumpusController {
 
         ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
         return re;
+    }
+
+    @PostMapping(value = "/admin/forum_post")
+    public ResponseEntity<CommonSession> adminForumPost(@RequestBody ForumPost forumPost, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        LOG.info(forumPost.toString());
+        return new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
     }
 
     /** */
