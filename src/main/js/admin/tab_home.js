@@ -2,6 +2,7 @@ const React = require('react');
 const ReactDOM = require('react-dom/client');
 
 import RumpusQuill, {getQuillContents} from '../common/rumpus-quill';
+import { load_current_user } from '../user/user_loader';
 
 export default function AdminHome() {
 
@@ -10,10 +11,10 @@ export default function AdminHome() {
     async function handleSubmit(e) {
         e.preventDefault();
         const forumPost = {};
-        let user = await fetch('/api/current_user');
+        const user = await load_current_user();
         forumPost['userId'] = user.username;
         forumPost['body'] = getQuillContents();
-        const fetched = await onCreate(forumPost);
+        await onCreate(forumPost);
     }
 
     async function onCreate(forumPost) {

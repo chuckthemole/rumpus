@@ -2,6 +2,14 @@ const React = require('react');
 import { GET_USER_PATH } from "../rumpus";
 import { Common } from "../rumpus";
 
+export async function load_current_user() {
+    return await fetch('/api/current_user')
+        .then((response) => response.json())
+        .then((user) => {
+            return user;
+        });
+}
+
 export async function loader_by_id({id}) {
     const requestOptions = {
         method: Common.GET,
