@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.rumpus.RumpusTest;
 import com.rumpus.common.views.IViewLoader;
 import com.rumpus.rumpus.config.RumpusConfig;
-import com.rumpus.rumpus.config.WebSecurityConfig;
+import com.rumpus.rumpus.config.WebSecurityTestConfig;
 import com.rumpus.rumpus.controller.RumpusController;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -42,18 +42,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {RumpusConfig.class, WebSecurityConfig.class})
+@ContextConfiguration(classes = {RumpusConfig.class, WebSecurityTestConfig.class})
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RumpusRestController.class)
 public class RumpusControllerTests extends RumpusTest {
 
-    @MockBean
-    IRumpusUserService userService;
-    @MockBean
-    IRumpusViewLoader viewLoader;
+    @MockBean IRumpusUserService userService;
+    @MockBean IRumpusViewLoader viewLoader;
  
-    @Autowired
-    MockMvc mockMvc;
+    @Autowired MockMvc mockMvc;
  
     @Test
     public void testfindAll() throws Exception {
@@ -64,7 +61,7 @@ public class RumpusControllerTests extends RumpusTest {
 
         Mockito.when(userService.getAll()).thenReturn(users);
 
-        mockMvc.perform(get(PATH_API_USERS))
+        mockMvc.perform(get(PATH_API_USERS + "/username")) // sorting by username
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", Matchers.hasSize(1)))
             .andExpect(jsonPath("$[0].username", Matchers.is("Frodo")));

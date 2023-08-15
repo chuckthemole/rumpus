@@ -13,6 +13,7 @@ import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.User.ActiveUserStore;
+import com.rumpus.rumpus.managers.ForumThreadManager;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
@@ -70,15 +71,20 @@ public abstract class RumpusController extends AbstractCommonController {
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;
 
-    @Autowired protected ForumThread adminForumThread;
-    protected static final String ADMIN_FORUM_THREAD_ID = "ADMINFORUMTHREADID";
+    protected ForumThreadManager forumThreadManager;
 
     @Autowired protected LogManager logManager;
 
-    public RumpusController() {super(NAME);}
+    public RumpusController() {
+        super(NAME);
+        this.init();
+    }
     public RumpusController(String name) {
         super(name);
-        // this.adminForumThread.setPageID(ADMIN_FORUM_THREAD_ID);
+        this.init();
+    }
+    private void init() {
+        this.forumThreadManager = ForumThreadManager.initManager();
     }
 
     protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {

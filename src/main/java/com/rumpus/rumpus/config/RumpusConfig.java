@@ -72,7 +72,8 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
 
     @Bean
     public LogManager logManager() {
-        return LogManagerLoader.getDefaultLogManager();
+        LogManager manager = LogManagerLoader.getDefaultLogManager();
+        return manager;
     }
 
     @Bean
@@ -81,10 +82,11 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
         return new RumpusLoader(rumpusUserDao());
     }
 
-    @Bean
-    public ForumThread forumThread() {
-        return ForumThread.createEmpty();
-    }
+    // @Bean
+    // public ForumThread forumThread() {
+    //     ForumThread thread = ForumThread.createEmpty();
+    //     return ForumThread.createEmpty();
+    // }
 
     // @Bean
     // public List<LogItem> logItems() {
