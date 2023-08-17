@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import com.google.gson.Gson;
 import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.Forum.ForumThread;
+import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.User.ActiveUserStore;
-import com.rumpus.rumpus.managers.ForumThreadManager;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.IRumpusViewLoader;
@@ -71,7 +71,7 @@ public abstract class RumpusController extends AbstractCommonController {
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;
 
-    protected ForumThreadManager forumThreadManager;
+    @Autowired protected ForumThreadManager forumThreadManager;
 
     @Autowired protected LogManager logManager;
 
@@ -84,7 +84,6 @@ public abstract class RumpusController extends AbstractCommonController {
         this.init();
     }
     private void init() {
-        this.forumThreadManager = ForumThreadManager.initManager();
     }
 
     protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {

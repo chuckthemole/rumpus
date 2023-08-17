@@ -16,10 +16,12 @@ import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Dao.IApiDB;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.rumpus.common.Forum.ForumThread;
+import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Log.LogManagerLoader;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
+import com.rumpus.rumpus.Rumpus;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
@@ -80,6 +82,15 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     @DependsOn({"rumpusUserDao"})
     public RumpusLoader rumpusLoader() {
         return new RumpusLoader(rumpusUserDao());
+    }
+
+    @Bean
+    public ForumThreadManager forumThreadManager() {
+        ForumThreadManager manager = ForumThreadManager.create();
+        for(ForumThread forumThread : Rumpus.rumpusForumThreads) {
+            manager.put(forumThread.getPageID(), forumThread);
+        }
+        return manager;
     }
 
     // @Bean
