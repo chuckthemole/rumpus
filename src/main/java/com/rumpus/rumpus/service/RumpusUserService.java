@@ -21,6 +21,7 @@ public class RumpusUserService extends UserService<RumpusUser> implements IRumpu
         super(NAME, userDao);
 
         // keeping for faster lookup. May need to update if this.users are updated.
+        // TODO: Looking at this again. Looks funky. I don't think I should be doing this.
         this.users = new HashMap<>();
         super.dao.getAll().stream().forEach(user -> {
             this.users.put(user.getEmail(), user);
