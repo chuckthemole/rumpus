@@ -5,31 +5,27 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
 import com.rumpus.common.Blob.AbstractBlob;
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.Dao.AbstractDao;
 import com.rumpus.common.Dao.IApiDB;
+import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.rumpus.common.Dao.jdbc.Mapper;
 import com.rumpus.common.User.AbstractCommonUserMetaData;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
 
-public class RumpusUserDao extends AbstractDao<RumpusUser> implements IRumpusUserDao {
+public class RumpusUserDao extends ApiDBJdbcUsers<RumpusUser, RumpusUserMetaData> implements IRumpusUserDao {
 
     private static final String NAME = "RumpusUserDao";
     private static final String TABLE = "user";
     private static final String META_TABLE = "user_meta_info";
     // private static final String sqlRumpusUserInsert = "INSERT INTO user VALUES(:id, :username, :email)"; // ApiDBJdbc look at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
-    public RumpusUserDao() {
-        super(TABLE, META_TABLE, NAME);
-        this.api = null;
-        IApiDB.registerIdSet("RumpusUser");
-    }
-    public RumpusUserDao(IApiDB<RumpusUser> api) {
-        super(TABLE, META_TABLE, NAME);
-        this.api = api;
+    public RumpusUserDao(JdbcUserDetailsManager manager) {
+        super(manager, TABLE, RumpusUserDao.rumpusUserMapper());
         IApiDB.registerIdSet("RumpusUser");
     }
 

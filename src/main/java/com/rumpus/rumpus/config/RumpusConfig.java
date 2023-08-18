@@ -51,12 +51,12 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
 
     @Bean
     public IRumpusUserDao rumpusUserDao() {
-        IRumpusUserDao userDao = new RumpusUserDao();
+        IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
         // ApiDBJdbcUsers<RumpusUser> userApiDBJdbc = new ApiDBJdbcUsers<>(jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
         // Map<String, String> queries = Map.of(CREATE_USER, SET_USERS_QUERY);
         // userApiDBJdbc.setQueriesFromMap(queries);
-        IApiDB<RumpusUser> userApiDB = new ApiDBJdbcUsers<>(this.jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
-        userDao.setApiDB(userApiDB);
+        // IApiDB<RumpusUser> userApiDB = new ApiDBJdbcUsers<>(this.jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
+        // userDao.setApiDB(userApiDB);
         return userDao;
     }
 

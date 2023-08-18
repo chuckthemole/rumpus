@@ -1,10 +1,8 @@
 package com.rumpus.rumpus.models;
 
-import java.util.Map;
-
 import com.rumpus.common.Model.AbstractModel;
 
-public abstract class RumpusModel<T extends AbstractModel<T>> extends AbstractModel<T> {
+public abstract class RumpusModel<MODEL extends AbstractModel<MODEL>> extends AbstractModel<MODEL> {
 
     public RumpusModel(String name) {
         super(name);
