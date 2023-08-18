@@ -1,4 +1,6 @@
 const React = require('react');
+import { faHeart, faReply, faRetweet } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // const ReactDOM = require('react-dom/client');
 
 import { useLoaderData, Link, useFetcher } from 'react-router-dom';
@@ -33,15 +35,56 @@ export default function AdminForumThread() {
         });
     }, [thread]); // TODO: can i use effect when button pressed?
 
+    // look here for bulma front end help https://bulma.io/documentation/layout/media-object/
     return (
         <>
             <div>
-                {thread.map(( post, index ) => (
+                {/* {thread.map(( post, index ) => (
                     <div key={index}>
                         <span>{index}</span>
                         <span>{post.userId}</span>
                         <span>{post.body}</span>
                     </div>
+                ))} */}
+
+                {thread.map(( post, index ) => (
+                    <article key={index} className="media">
+                        <figure className="media-left">
+                            <p className="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" />
+                            </p>
+                        </figure>
+                        <div className="media-content">
+                            <div className="content">
+                                <p>
+                                    <strong>#{index}</strong>
+                                    <br />
+                                    <strong>{post.userId}</strong> <small>@TODOusertag</small> <small>TODO: post time</small>
+                                    <br />
+                                    {post.body}
+                                </p>
+                            </div>
+                            <nav className="level is-mobile">
+                                <div className="level-left">
+                                    <a className="level-item">
+                                    {/* <span className="icon is-small"><i className="fas fa-reply"></i></span> */}
+                                    <span className="icon is-small"><FontAwesomeIcon icon={faReply} color='blue' /></span>
+                                    </a>
+                                    <a className="level-item">
+                                    {/* <span className="icon is-small"><i className="fas fa-retweet"></i></span> */}
+                                    <span className="icon is-small"><FontAwesomeIcon icon={faRetweet} color='blue' /></span>
+                                    </a>
+                                    <a className="level-item">
+                                    {/* <span className="icon is-small"><i className="fas fa-heart"></i></span> */}
+                                    <span className="icon is-small"><FontAwesomeIcon icon={faHeart} color='red' /></span>
+                                    </a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div className="media-right">
+                            <button className="delete"></button>
+                        </div>
+                    </article>
                 ))}
             </div>
         </>
