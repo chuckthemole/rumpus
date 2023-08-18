@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom/client');
 
 import RumpusQuill, {getQuillContents} from '../common/rumpus-quill';
 import { load_current_user } from '../user/user_loader';
+import AdminForumThread from './admin_forum_thread';
 
 export default function AdminHome() {
 
@@ -31,7 +32,7 @@ export default function AdminHome() {
     return (
         <>
             <div><span>Admin Page</span></div>
-
+            <AdminForumThread />
             <form method='post' onSubmit={handleSubmit} className="box">
                 <div className='field'>{quill}</div>
                 <div className="field">

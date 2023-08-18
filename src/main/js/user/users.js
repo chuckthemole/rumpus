@@ -60,7 +60,7 @@ export default function Users() {
         loader().then((response) => {
             setUsers(response);
         });
-    }, [users]);
+    }, [users]); // TODO: can i use effect when button pressed?
 
     if (!users) return(
         <div className='container m-6'>

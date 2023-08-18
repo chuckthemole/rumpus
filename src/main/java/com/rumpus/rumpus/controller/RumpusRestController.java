@@ -7,12 +7,14 @@ import com.rumpus.common.AbstractCommonController;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Forum.ForumPost;
 import com.rumpus.common.Forum.ForumPostNode;
+import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.CommonAuthentication;
 import com.rumpus.common.util.StringUtil;
 import com.rumpus.common.views.Footer;
+import com.rumpus.rumpus.Rumpus;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.models.*;
 import com.rumpus.rumpus.views.RumpusViewLoader;
@@ -226,9 +228,24 @@ public class RumpusRestController extends RumpusController {
     @PostMapping(value = "/admin/forum_post")
     public ResponseEntity<CommonSession> adminForumPost(@RequestBody ForumPost forumPost, HttpServletRequest request) {
         HttpSession session = request.getSession();
-
+        this.forumThreadManager.get(Rumpus.ADMIN_FORUM_THREAD_ID).addToSequence(ForumPostNode.createNodeFromForumPost(forumPost));
         LOG.info(forumPost.toString());
         return new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/admin/forum_posts")
+    public ResponseEntity<List<ForumPost>> getAdminForumThread(Authentication authentication) {
+        LOG.info("RumpusRestController GET: /admin/forum_posts");
+        if(authentication != null) {
+            if(this.forumThreadManager != null) {
+                final ForumThread forumThread = this.forumThreadManager.get(Rumpus.ADMIN_FORUM_THREAD_ID);
+                if(forumThread != null) {
+                    return new ResponseEntity<List<ForumPost>>(forumThread.toListOfTopLevel(), HttpStatus.ACCEPTED);
+                }
+            }
+        }
+        LOG.info("Error: unable to get admin forum posts");
+        return null;
     }
 
     /** */
