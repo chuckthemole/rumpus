@@ -48,7 +48,7 @@ export default function AdminForumThread() {
                 ))} */}
 
                 {thread.map(( post, index ) => (
-                    <article key={index} className="media">
+                    <article key={index} className="media m-4">
                         <figure className="media-left">
                             <p className="image is-64x64">
                             <img src="https://bulma.io/images/placeholders/128x128.png" />
