@@ -1,23 +1,15 @@
 package com.rumpus.rumpus.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
-import com.rumpus.common.Dao.IApiDB;
-import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
-import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Log.LogManagerLoader;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
@@ -25,7 +17,6 @@ import com.rumpus.rumpus.Rumpus;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
-import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
@@ -52,11 +43,6 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     @Bean
     public IRumpusUserDao rumpusUserDao() {
         IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
-        // ApiDBJdbcUsers<RumpusUser> userApiDBJdbc = new ApiDBJdbcUsers<>(jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
-        // Map<String, String> queries = Map.of(CREATE_USER, SET_USERS_QUERY);
-        // userApiDBJdbc.setQueriesFromMap(queries);
-        // IApiDB<RumpusUser> userApiDB = new ApiDBJdbcUsers<>(this.jdbcUserDetailsManager(), userDao.getTable(), userDao.getMapper());
-        // userDao.setApiDB(userApiDB);
         return userDao;
     }
 

@@ -39,7 +39,7 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     private IRumpusUserDao dao;
 
     private static RumpusUser[] users;
-    private static final String JSON_USERS_FILE = "src/test/java/com/rumpus/rumpus/data/test_data/test_users.json";
+    private static final String JSON_USERS_FILE = "src/test/java/com/rumpus/rumpus/test_data/users/test_users.json";
 
     // these are hardcoded in the db
     private static final String ROOT_USER = "chuckthemole";
