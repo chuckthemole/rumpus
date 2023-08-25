@@ -1,20 +1,23 @@
 const React = require('react');
 const ReactDOM = require('react-dom/client');
 
-import RumpusQuill, {getQuillContents} from '../common/rumpus-quill';
+import RumpusQuill from '../common/rumpus-quill';
 import { load_current_user } from '../user/user_loader';
 import AdminForumThread from './admin_forum_thread';
 
 export default function AdminHome() {
 
-    const [quill, setQuill] = React.useState(<RumpusQuill />);
+    const editor_ref = React.useRef(null);
+    const [value, setValue] = React.useState('');
+    const [quill, setQuill] = React.useState(<RumpusQuill value={value} setValue={setValue} editor_ref={editor_ref} />);
 
     async function handleSubmit(e) {
         e.preventDefault();
         const forumPost = {};
         const user = await load_current_user();
         forumPost['userId'] = user.username;
-        forumPost['body'] = getQuillContents();
+        forumPost['body'] = value;
+        editor_ref.current.getEditor().setContents(''); // clear the editor
         await onCreate(forumPost);
     }
 
