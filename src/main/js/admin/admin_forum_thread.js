@@ -61,7 +61,7 @@ export default function AdminForumThread() {
                                     <br />
                                     <strong>{post.userId}</strong> <small>@TODOusertag</small> <small>TODO: post time</small>
                                     <br />
-                                    {post.body}
+                                    <div dangerouslySetInnerHTML={{ __html: post.body }} />
                                 </p>
                             </div>
                             <nav className="level is-mobile">
