@@ -7,23 +7,13 @@ import { useFetcher } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
 
 export async function loader({ params }) {
     return fetch(`/api/user/${params.userId}`);
 }
 
 function UpdateUser({ userDetails, user_email, metaData, user_id }) {
-
-    const customStyles = {
-        content: {
-            // top: '50%',
-            // left: '50%',
-            // right: 'auto',
-            // bottom: 'auto',
-            // marginRight: '-50%',
-            transform: 'translate(0%, 70%)',
-        },
-    };
 
     const [username, setUsername] = useState(userDetails.username);
     const [email, setEmail] = useState(user_email);
@@ -33,12 +23,11 @@ function UpdateUser({ userDetails, user_email, metaData, user_id }) {
     const fetcher = useFetcher();
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
-    function onOpenModal() {
-        openModal();
-    }
-
     function openModal() {
-        setIsOpen(true);
+        if(!isModalActive()) {
+            setIsOpen(true);
+            setModalActive();
+        }
     }
 
     function afterOpenModal() {
@@ -48,6 +37,7 @@ function UpdateUser({ userDetails, user_email, metaData, user_id }) {
 
     function closeModal() {
         setIsOpen(false);
+        setModalInactive();
     }
 
     const handleSubmit = (e) => {
@@ -65,13 +55,14 @@ function UpdateUser({ userDetails, user_email, metaData, user_id }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedUser)
         };
+        closeModal();
         fetch(UPDATE_USER_PATH, requestOptions);
     }
 
     return (
         <>
             <a
-                onClick={onOpenModal} className="updateUser button is-danger is-light" type="submit" value="Update"
+                onClick={openModal} className="updateUser button is-danger is-light" type="submit" value="Update"
                 data-tooltip-id="user-update-button"
                 data-tooltip-html={
                     "Edit user: " + username
@@ -87,7 +78,7 @@ function UpdateUser({ userDetails, user_email, metaData, user_id }) {
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 className='modal-content'
-                style={customStyles}
+                style={modal_style}
                 contentLabel="Example Modal"
             >
 

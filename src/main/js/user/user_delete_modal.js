@@ -7,19 +7,9 @@ import { useFetcher } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
 
 export default function UserDelete({ user_id, user_username }) {
-
-    const customStyles = {
-        content: {
-            // top: '50%',
-            // left: '50%',
-            // right: 'auto',
-            // bottom: 'auto',
-            // marginRight: '-50%',
-            transform: 'translate(40%, 70%)',
-        },
-    };
 
     const [id] = useState(user_id);
     const [username] = useState(user_username);
@@ -28,13 +18,11 @@ export default function UserDelete({ user_id, user_username }) {
     const fetcher = useFetcher();
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
-    function onOpenModal() {
-        // TODO call user delete
-        openModal();
-    }
-
     function openModal() {
-        setIsOpen(true);
+        if(!isModalActive()) {
+            setIsOpen(true);
+            setModalActive();
+        }
     }
 
     function afterOpenModal() {
@@ -44,6 +32,7 @@ export default function UserDelete({ user_id, user_username }) {
 
     function closeModal() {
         setIsOpen(false);
+        setModalInactive();
     }
 
     async function handleSubmit(e) {
@@ -70,8 +59,15 @@ export default function UserDelete({ user_id, user_username }) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(log_item)
             };
-            
-            await fetch(DELETE_USER_PATH, requestOptions);
+            closeModal();
+            await fetch(DELETE_USER_PATH, requestOptions).then(response => response.json()).then(data => {
+                console.log('data: ', data);
+                if(data.attributes.status == 'user deleted') {
+                    alert('User \'' + username + '\' deleted!');
+                } else {
+                    alert('Error deleting user \'' + username + '\'!');
+                }
+            });
             return await fetch('/api/log_action', log_action_request_options);
         }
         console.log('Canceling delete user `' + username + ' ` with id `' + id + '`');
@@ -81,7 +77,7 @@ export default function UserDelete({ user_id, user_username }) {
     return (
         <>
             <a
-                onClick={onOpenModal} className="deleteUser button is-danger" type="submit" value="Delete"
+                onClick={openModal} className="deleteUser button is-danger" type="submit" value="Delete"
                 data-tooltip-id="user-delete-button"
                 data-tooltip-html={
                     "Delete user: " + username
@@ -97,15 +93,15 @@ export default function UserDelete({ user_id, user_username }) {
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 className='modal-content'
-                style={customStyles}
+                style={modal_style}
                 contentLabel="User Delete"
             >
 
             <div className='modal-content'>
                 <fetcher.Form reloadDocument onSubmit={handleSubmit} className="box">
                     <div className="field">
-                        <span>Confirm delete user '{username}' with id '{id}'</span>
-                        <div className='buttons'>
+                        <span className='columns is-centered'>Confirm delete user '{username}' with id '{id}'</span>
+                        <div className='buttons columns is-centered'>
                             <button onClick={e => setDeleteUser(true)} id="deleteUser" type="submit" value="DeleteUser" className="button is-danger">
                                 Delete
                             </button>

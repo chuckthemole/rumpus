@@ -157,8 +157,12 @@ public class RumpusRestController extends RumpusController {
     @PostMapping(value = RumpusController.PATH_DELETE_USER)
     public ResponseEntity<CommonSession> deleteUser(@RequestBody String user, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
-        return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
+        if(this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user)) { // if user was removed, return session with status delete
+            session.setAttribute("status", "user deleted");
+            return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
+        }
+        session.setAttribute("status", "error deleting user");
+        return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED); // else return session with status error
     }
 
     @PostMapping(value = RumpusController.PATH_UPDATE_USER)
