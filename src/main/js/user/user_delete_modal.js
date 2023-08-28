@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
+import { load_current_user } from './user_loader';
 
 export default function UserDelete({ user_id, user_username }) {
 
@@ -37,6 +38,7 @@ export default function UserDelete({ user_id, user_username }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        closeModal();
         if(deleteUser == true) {
             const requestOptions = {
                 method: Common.POST,
@@ -49,9 +51,11 @@ export default function UserDelete({ user_id, user_username }) {
             const log_item = {};
             log_item['logName'] = 'ADMIN_LOG';
             log_item['time'] = new Date().toLocaleString();
-            log_item['username'] = 'TODO: figure this out...';
-            log_item['userId'] = 'TODO 12345';
             log_item['action'] = 'DELETE user with username: ' + username;
+            await load_current_user().then(user => {
+                log_item['userId'] = user.id;
+                log_item['username'] = user.username;
+            });
             const log_action_request_options = {
                 method: Common.POST,
                 // redirect: "follow",
@@ -59,19 +63,17 @@ export default function UserDelete({ user_id, user_username }) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(log_item)
             };
-            closeModal();
+            
             await fetch(DELETE_USER_PATH, requestOptions).then(response => response.json()).then(data => {
                 console.log('data: ', data);
                 if(data.attributes.status == 'user deleted') {
                     alert('User \'' + username + '\' deleted!');
+                    fetch('/api/log_action', log_action_request_options);
                 } else {
                     alert('Error deleting user \'' + username + '\'!');
                 }
             });
-            return await fetch('/api/log_action', log_action_request_options);
         }
-        console.log('Canceling delete user `' + username + ' ` with id `' + id + '`');
-        closeModal();
     }
 
     return (

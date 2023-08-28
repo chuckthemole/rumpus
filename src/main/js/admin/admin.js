@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom/client');
 
 import AdminHome from './tab_home';
 import Users from '../user/users';
+import Log from '../common/log';
 
 export default function Admin() {
 
@@ -10,7 +11,7 @@ export default function Admin() {
 
     const [homeActive, setHome] = React.useState(true);
     const [usersActive, setUsers] = React.useState(false);
-    const [temp1Active, setTemp1] = React.useState(false);
+    const [logsActive, setLogs] = React.useState(false);
     const [temp2Active, setTemp2] = React.useState(false);
 
     const [activeWindow, setActiveWindow] = React.useState(<AdminHome />);
@@ -18,7 +19,7 @@ export default function Admin() {
     function clear() {
         setHome(false);
         setUsers(false);
-        setTemp1(false);
+        setLogs(false);
         setTemp2(false);
     }
 
@@ -36,9 +37,9 @@ export default function Admin() {
                             <span>Users</span>
                         </a>
                     </li>
-                    <li className={`temp1Tab ${temp1Active && is_active}`}>
-                        <a onClick={ ()=> { clear(); setTemp1(true); setActiveWindow(<div><span>Temp1</span></div>); } }>
-                            <span>I Need</span>
+                    <li className={`logsTab ${logsActive && is_active}`}>
+                        <a onClick={ ()=> { clear(); setLogs(true); setActiveWindow(<Log page={'ADMIN_LOG'}/>); } }>
+                            <span>Logs</span>
                         </a>
                     </li>
                     <li className={`temp2Tab ${temp2Active && is_active}`}>

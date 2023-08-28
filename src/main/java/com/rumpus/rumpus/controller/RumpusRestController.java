@@ -8,6 +8,7 @@ import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Forum.ForumPost;
 import com.rumpus.common.Forum.ForumPostNode;
 import com.rumpus.common.Forum.ForumThread;
+import com.rumpus.common.Log.LogCollection;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;
@@ -227,6 +228,17 @@ public class RumpusRestController extends RumpusController {
 
         ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
         return re;
+    }
+
+    @GetMapping(value = "/logs/{page}")
+    public ResponseEntity<LogCollection> getLogsForPage(@PathVariable("page") String page, HttpServletRequest request) {
+        LOG.info("RumpusRestController GET: /logs");
+        LogCollection logs = this.logManager.get(page);
+        if(logs == null || logs.isEmpty()) {
+            LOG.info("No logs found for page: " + page);
+        }
+        LOG.info("Successfully retrieved logs for page: " + page + "");
+        return new ResponseEntity<>(logs, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/admin/forum_post")
