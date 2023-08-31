@@ -157,6 +157,7 @@ public class RumpusRestController extends RumpusController {
 
     @PostMapping(value = RumpusController.PATH_DELETE_USER)
     public ResponseEntity<CommonSession> deleteUser(@RequestBody String user, HttpServletRequest request) {
+        LOG.info("RumpusRestController POST: /api/delete_user");
         HttpSession session = request.getSession();
         if(this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user)) { // if user was removed, return session with status delete
             session.setAttribute("status", "user deleted");
@@ -173,7 +174,12 @@ public class RumpusRestController extends RumpusController {
         // this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
         LogBuilder log = new LogBuilder("Update this user: ", user.toString());
         log.info();
-        rumpusUserService.update(user.getId(), user);
+        if(this.rumpusUserService.update(user.getId(), user) != null) { // if user was updated successfully, return session with status updateed
+            session.setAttribute("status", "user updated");
+            return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
+
+        }
+        session.setAttribute("status", "error updating user");
         return new ResponseEntity<CommonSession>(new CommonSession(session), HttpStatus.CREATED);
     }
 

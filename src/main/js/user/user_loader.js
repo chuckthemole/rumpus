@@ -2,6 +2,11 @@ const React = require('react');
 import { GET_USER_PATH } from "../rumpus";
 import { Common } from "../rumpus";
 
+/**
+ * Loads the current user from the database
+ * 
+ * @returns {User}
+ */
 export async function load_current_user() {
     return await fetch('/api/current_user')
         .then((response) => response.json())

@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
+import { CreateLogItemRequest } from '../common/common';
+import { load_current_user } from './user_loader';
 
 export async function loader({ params }) {
     return fetch(`/api/user/${params.userId}`);
@@ -40,7 +42,7 @@ function UpdateUser({ userDetails, user_email, metaData, user_id }) {
         setModalInactive();
     }
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault();
         const updatedUser = {};
         updatedUser[Common.USERNAME] = username;
@@ -56,7 +58,20 @@ function UpdateUser({ userDetails, user_email, metaData, user_id }) {
             body: JSON.stringify(updatedUser)
         };
         closeModal();
-        fetch(UPDATE_USER_PATH, requestOptions);
+
+        let currentUser = {};
+        await load_current_user().then(user => {
+            currentUser = user;
+        });
+
+        await fetch(UPDATE_USER_PATH, requestOptions).then(response => response.json()).then(data => {
+            if(data.attributes.status == 'user updated') {
+                alert('User \'' + username + '\' updated!');
+                fetch('/api/log_action', CreateLogItemRequest('ADMIN_LOG', 'UPDATE user with username: [old: \'' + userDetails.username + '\', new: \'' + username + '\']', currentUser.id, currentUser.username));
+            } else {
+                alert('Error updating user \'' + username + '\'!');
+            }
+        });
     }
 
     return (
