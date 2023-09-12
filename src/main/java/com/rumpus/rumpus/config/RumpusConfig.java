@@ -1,5 +1,6 @@
 package com.rumpus.rumpus.config;
 
+import org.python.util.PythonInterpreter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,11 +8,15 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import com.rumpus.common.AbstractServer;
+import com.rumpus.common.ServerManager;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Log.LogManagerLoader;
+import com.rumpus.common.Python.CommonPython;
+import com.rumpus.common.Python.PycommonServer;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.Rumpus;
 import com.rumpus.rumpus.data.IRumpusUserDao;
@@ -76,6 +81,24 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
         for(ForumThread forumThread : Rumpus.rumpusForumThreads) {
             manager.put(forumThread.getPageID(), forumThread);
         }
+        return manager;
+    }
+
+    @Bean
+    public PythonInterpreter pythonInterpreter() {
+        return CommonPython.getInterpreter();
+    }
+
+    @Bean
+    public AbstractServer pycommonServer() {
+        return PycommonServer.createAndDoNotStartServer();
+    }
+
+    @Bean
+    @DependsOn({"pycommonServer"})
+    public ServerManager serverManager() {
+        ServerManager manager = ServerManager.create();
+        manager.addServer("PycommonServer", pycommonServer());
         return manager;
     }
 

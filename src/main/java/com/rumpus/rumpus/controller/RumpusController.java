@@ -2,13 +2,17 @@ package com.rumpus.rumpus.controller;
 
 import java.util.List;
 
+import org.python.core.Py;
+import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Web.Server;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.AbstractCommonController;
+import com.rumpus.common.ServerManager;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem;
@@ -61,6 +65,12 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String TEMPLATE_ADMIN = "admin";
     protected static final String TEMPLATE_USER = "user/user";
 
+    // File paths
+    protected static final String PYTHON_DIR_PATH = "src/main/python/";
+
+    // Python files
+    protected static final String VOICE_ASSISTANT_FILE_PATH = PYTHON_DIR_PATH + "voice_assistant.py";
+
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
     // @Autowired protected ProviderManager authManager;
@@ -74,6 +84,10 @@ public abstract class RumpusController extends AbstractCommonController {
     @Autowired protected ForumThreadManager forumThreadManager;
 
     @Autowired protected LogManager logManager;
+
+    @Autowired protected PythonInterpreter pythonInterpreter;
+
+    @Autowired protected ServerManager serverManager;
 
     public RumpusController() {
         super(NAME);
