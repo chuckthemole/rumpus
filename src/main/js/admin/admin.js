@@ -4,6 +4,7 @@ const ReactDOM = require('react-dom/client');
 import AdminHome from './tab_home';
 import Users from '../user/users';
 import Log from '../common/log';
+import Servers from './servers';
 
 export default function Admin() {
 
@@ -12,7 +13,7 @@ export default function Admin() {
     const [homeActive, setHome] = React.useState(true);
     const [usersActive, setUsers] = React.useState(false);
     const [logsActive, setLogs] = React.useState(false);
-    const [temp2Active, setTemp2] = React.useState(false);
+    const [serversActive, setServers] = React.useState(false);
 
     const [activeWindow, setActiveWindow] = React.useState(<AdminHome />);
 
@@ -20,7 +21,7 @@ export default function Admin() {
         setHome(false);
         setUsers(false);
         setLogs(false);
-        setTemp2(false);
+        setServers(false);
     }
 
     return (
@@ -42,9 +43,9 @@ export default function Admin() {
                             <span>Logs</span>
                         </a>
                     </li>
-                    <li className={`temp2Tab ${temp2Active && is_active}`}>
-                        <a onClick={ ()=> { clear(); setTemp2(true); setActiveWindow(<div><span>Temp2</span></div>); } }>
-                            <span>More Tabs</span>
+                    <li className={`serversTab ${serversActive && is_active}`}>
+                        <a onClick={ ()=> { clear(); setServers(true); setActiveWindow(<Servers />); } }>
+                            <span>Servers</span>
                         </a>
                     </li>
                 </ul>

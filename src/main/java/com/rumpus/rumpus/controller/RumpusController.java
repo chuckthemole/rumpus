@@ -12,11 +12,11 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.AbstractCommonController;
-import com.rumpus.common.ServerManager;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
+import com.rumpus.common.Server.ServerManager;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
@@ -33,6 +33,7 @@ public abstract class RumpusController extends AbstractCommonController {
     // Paths
     protected static final String PATH_INDEX = "/";
     protected static final String PATH_API = "/api";
+    protected static final String PATH_SERVER_API = "/api/server";
     protected static final String PATH_USER = "/user";
     protected static final String PATH_VIEW = "/view";
     protected static final String PATH_REDIRECT = "redirect:/";

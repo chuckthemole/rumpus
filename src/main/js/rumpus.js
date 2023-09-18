@@ -6,6 +6,9 @@ export const Common = RumpusCommon;
 
 // GET
 export const GET_USERS_PATH = '/api/users';
+export const GET_SERVERS_PATH = '/api/server/get_servers';
+export const START_SERVER_PATH = '/api/server/start/';
+export const STOP_SERVER_PATH = '/api/server/stop/';
 
 // CRUD
 export const CREATE_USER_PATH = '/api/user';

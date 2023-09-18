@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mysql.cj.log.Log;
 import com.rumpus.common.AbstractCommonController;
-import com.rumpus.common.AbstractServer;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Forum.ForumPost;
 import com.rumpus.common.Forum.ForumPostNode;
@@ -12,6 +11,7 @@ import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Log.LogCollection;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Python.PycommonServer;
+import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.CommonAuthentication;
@@ -288,23 +288,23 @@ public class RumpusRestController extends RumpusController {
         return new ResponseEntity<String>("test", HttpStatus.ACCEPTED);
     }
 
-    @GetMapping(value = "/start_python")
-    public ResponseEntity<String> startPythonServer() {
-        LOG.info("RumpusRestController::startPythonServer()");
-        AbstractServer server = this.serverManager.get("PycommonServer");
-        server.start();
-        final String status = server.isRunning() ? "python server is running" : "python server is not running";
-        return new ResponseEntity<String>(status, HttpStatus.ACCEPTED);
-    }
+    // @GetMapping(value = "/start_python")
+    // public ResponseEntity<String> startPythonServer() {
+    //     LOG.info("RumpusRestController::startPythonServer()");
+    //     AbstractServer server = this.serverManager.get("PycommonServer");
+    //     server.start();
+    //     final String status = server.isRunning() ? "python server is running" : "python server is not running";
+    //     return new ResponseEntity<String>(status, HttpStatus.ACCEPTED);
+    // }
 
-    @GetMapping(value = "/stop_python")
-    public ResponseEntity<String> stopPythonServer() {
-        LOG.info("RumpusRestController::stopPythonServer()");
-        AbstractServer server = this.serverManager.get("PycommonServer");
-        server.stop();
-        final String status = server.isRunning() ? "python server is running" : "python server is not running";
-        return new ResponseEntity<String>(status, HttpStatus.ACCEPTED);
-    }
+    // @GetMapping(value = "/stop_python")
+    // public ResponseEntity<String> stopPythonServer() {
+    //     LOG.info("RumpusRestController::stopPythonServer()");
+    //     AbstractServer server = this.serverManager.get("PycommonServer");
+    //     server.stop();
+    //     final String status = server.isRunning() ? "python server is running" : "python server is not running";
+    //     return new ResponseEntity<String>(status, HttpStatus.ACCEPTED);
+    // }
 
     // public void login(HttpServletRequest req, String user, String pass) {
     //     UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user, pass);
