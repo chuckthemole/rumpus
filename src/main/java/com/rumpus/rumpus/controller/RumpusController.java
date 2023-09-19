@@ -11,7 +11,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
-import com.rumpus.common.AbstractCommonController;
+import com.rumpus.common.Controller.AbstractCommonController;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem;
@@ -34,6 +34,7 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_INDEX = "/";
     protected static final String PATH_API = "/api";
     protected static final String PATH_SERVER_API = "/api/server";
+    protected static final String PATH_PYCOMMON_API = "/api/pycommon";
     protected static final String PATH_USER = "/user";
     protected static final String PATH_VIEW = "/view";
     protected static final String PATH_REDIRECT = "redirect:/";
