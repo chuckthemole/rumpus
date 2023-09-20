@@ -35,6 +35,8 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_API = "/api";
     protected static final String PATH_SERVER_API = "/api/server";
     protected static final String PATH_PYCOMMON_API = "/api/pycommon";
+    protected static final String PATH_SCRAPER = "/scraper";
+    // protected static final String PATH_SCRAPER_START = "/scraper/start";
     protected static final String PATH_USER = "/user";
     protected static final String PATH_VIEW = "/view";
     protected static final String PATH_REDIRECT = "redirect:/";
