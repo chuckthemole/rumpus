@@ -1,4 +1,4 @@
-package com.rumpus.rumpus;
+package com.rumpus;
 
 // import kong.unirest.JsonNode;
 // import kong.unirest.Unirest;

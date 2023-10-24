@@ -65,10 +65,6 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_FOOTER = "/footer";
     protected static final String PATH_USER_TABLE = "/user_table";
 
-    // Paths for charles pikaart thomas
-    protected static final String PATH_CHARLES_PIKAART_THOMAS = "/charles_pikaart_thomas";
-    protected static final String PATH_CHARLES_PIKAART_THOMAS_VIEW = "/charles_pikaart_thomas/view";
-
     // Models
     protected static final String MODEL_USER = "user";
 
@@ -83,10 +79,6 @@ public abstract class RumpusController extends AbstractCommonController {
     // Python files
     protected static final String VOICE_ASSISTANT_FILE_PATH = PYTHON_DIR_PATH + "voice_assistant.py";
 
-    // URIs
-    protected static final String CHARLES_PIKAART_THOMAS_DEV_URI = "http://127.0.0.1:8000/";
-    protected static final String CHARLES_PIKAART_THOMAS_BETA_URI = "http://127.0.0.1:8000/beta/";
-    protected static final String CHARLES_PIKAART_THOMAS_LIVE_URI = "http:charles-pikaart-thomas.com/";
 
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
