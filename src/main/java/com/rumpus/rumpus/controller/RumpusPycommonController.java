@@ -32,4 +32,15 @@ public class RumpusPycommonController extends RumpusRestController {
         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping(value = "/scraper_test")
+    public ResponseEntity<CommonSession> scraperTest(HttpServletRequest request) {
+        LOG.info("RumpusPycommonController::scraperTest()");
+        HttpSession session = request.getSession();
+        final String uri = "http://localhost:8000/scraper/chatgpt/";
+        RestTemplate restTemplate = new RestTemplate();
+        final String result = restTemplate.getForObject(uri, String.class);
+        session.setAttribute("scraper test", result);
+        LogBuilder.logBuilderFromStringArgs("Pycommon scraper test: ", result).info();
+        return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
+    }
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import org.python.core.Py;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Web.Server;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public abstract class RumpusController extends AbstractCommonController {
 
     private static final String NAME = "RumpusController";
+
+    @Autowired protected static Environment environment;
 
     // Paths
     protected static final String PATH_INDEX = "/";
@@ -61,6 +65,10 @@ public abstract class RumpusController extends AbstractCommonController {
     protected static final String PATH_FOOTER = "/footer";
     protected static final String PATH_USER_TABLE = "/user_table";
 
+    // Paths for charles pikaart thomas
+    protected static final String PATH_CHARLES_PIKAART_THOMAS = "/charles_pikaart_thomas";
+    protected static final String PATH_CHARLES_PIKAART_THOMAS_VIEW = "/charles_pikaart_thomas/view";
+
     // Models
     protected static final String MODEL_USER = "user";
 
@@ -74,6 +82,11 @@ public abstract class RumpusController extends AbstractCommonController {
 
     // Python files
     protected static final String VOICE_ASSISTANT_FILE_PATH = PYTHON_DIR_PATH + "voice_assistant.py";
+
+    // URIs
+    protected static final String CHARLES_PIKAART_THOMAS_DEV_URI = "http://127.0.0.1:8000/";
+    protected static final String CHARLES_PIKAART_THOMAS_BETA_URI = "http://127.0.0.1:8000/beta/";
+    protected static final String CHARLES_PIKAART_THOMAS_LIVE_URI = "http:charles-pikaart-thomas.com/";
 
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;

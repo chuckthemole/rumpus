@@ -2,6 +2,7 @@ package com.rumpus.rumpus.controller;
 
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +15,13 @@ import com.rumpus.common.views.Footer;
  */
 
 @RestController
-@RequestMapping(RumpusController.PATH_VIEW)
-public class RumpusViewController extends RumpusController {
+@RequestMapping(RumpusController.PATH_CHARLES_PIKAART_THOMAS_VIEW)
+@CrossOrigin(origins = {RumpusController.CHARLES_PIKAART_THOMAS_DEV_URI, RumpusController.CHARLES_PIKAART_THOMAS_BETA_URI, RumpusController.CHARLES_PIKAART_THOMAS_LIVE_URI})
+public class CharlesPikaartThomasViewController extends RumpusController {
 
     private static final String NAME = "RumpusViewController";
 
-    public RumpusViewController() {super(NAME);}
+    public CharlesPikaartThomasViewController() {super(NAME);}
 
     @GetMapping(PATH_FOOTER)
     public ResponseEntity<Footer> getFooter() {

@@ -7,7 +7,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class ChatGPT extends AbstractRumpusScraper {
 
-    private static final String URI = "https://openai.com";
+    private static final String URI = "https://chat.openai.com/";
     private final static List<String> parameterList = List.of( // parameters in the relative path, using default values but they can be set below
             "cc1=us",
             "pagename=residence-inn-by-marriott-norwalk",
