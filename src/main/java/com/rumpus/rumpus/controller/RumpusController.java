@@ -63,6 +63,7 @@ public abstract class RumpusController extends AbstractCommonController {
 
     // Paths for views
     protected static final String PATH_FOOTER = "/footer";
+    protected static final String PATH_HEADER = "/header";
     protected static final String PATH_USER_TABLE = "/user_table";
 
     // Models

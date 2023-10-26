@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.common.views.Footer;
+import com.rumpus.common.views.Header;
 
 /**
  *
@@ -29,5 +30,10 @@ public class RumpusViewController extends RumpusController {
     @GetMapping(PATH_USER_TABLE)
     public ResponseEntity<String> getUserTable() {
         return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping(PATH_HEADER)
+    public ResponseEntity<Header> getHeader() {
+        return new ResponseEntity<Header>(viewLoader.getHeader(), HttpStatusCode.valueOf(200));
     }
 }
