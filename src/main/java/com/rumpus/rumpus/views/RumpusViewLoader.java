@@ -47,7 +47,7 @@ public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewL
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
 
         // Header
-        navbarBrand = NavbarItem.create(NAVBAR_BRAND_NAME, NAVBAR_BRAND_HREF, true, ItemType.BRAND);
+        navbarBrand = NavbarItem.createWithImage(NAVBAR_BRAND_NAME, "/", true, NAVBAR_BRAND_HREF);
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
             List.of(
                 NavbarItem.create("About", "/", false, ItemType.LINK),
