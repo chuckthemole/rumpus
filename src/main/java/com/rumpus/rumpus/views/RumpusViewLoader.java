@@ -50,10 +50,11 @@ public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewL
         navbarBrand = NavbarItem.createWithImage(NAVBAR_BRAND_NAME, "/", true, NAVBAR_BRAND_HREF);
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
             List.of(
-                NavbarItem.create("About", "/", false, ItemType.LINK),
-                NavbarItem.create("Jobs", "/", false, ItemType.LINK),
-                NavbarItem.create("Contact", "/", false, ItemType.LINK),
-                NavbarItem.create("Report an issue", "/", false, ItemType.LINK)
+                NavbarItem.create("About", "/", true, ItemType.LINK),
+                NavbarItem.create("Jobs", "/", true, ItemType.LINK),
+                NavbarItem.create("Contact", "/", true, ItemType.LINK),
+                NavbarItem.createDropdownDivider("DropdownDivider1", true),
+                NavbarItem.create("Report an issue", "/", true, ItemType.LINK)
             )
         );
         navbarItemsStart = new ArrayList<>(
