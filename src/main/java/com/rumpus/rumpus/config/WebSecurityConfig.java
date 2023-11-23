@@ -1,5 +1,8 @@
 package com.rumpus.rumpus.config;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,6 +12,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
@@ -19,6 +24,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -30,8 +36,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Config.AbstractCommonConfig;
+import com.rumpus.common.Dao.IDao;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.AuthenticationHandler;
+import com.rumpus.rumpus.data.IRumpusUserDao;
+import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
+import com.rumpus.rumpus.service.RumpusUserService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -85,6 +95,35 @@ public class WebSecurityConfig extends AbstractCommonConfig {
 
         return http.build();
     }
+
+    // @Bean
+    // @DependsOn({"rumpusUserDao"})
+    // public AuthenticationManager authenticationManager() {
+    //     LOG.info("WebSecurityConfig::authenticationManager()");
+    //     return new RumpusUserAuthenticationManager(this.applicationContext.getBean("rumpusUserDao", IRumpusUserDao.class));
+    // }
+
+    // TODO: Look back at this again later https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html
+    // @Bean
+    // public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    //     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+	// 	authenticationProvider.setUserDetailsService(userDetailsService);
+	// 	authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+	// 	ProviderManager providerManager = new ProviderManager(authenticationProvider);
+	// 	providerManager.setEraseCredentialsAfterAuthentication(false);
+
+	// 	return providerManager;
+    // }
+
+    // @Bean UserDetailsService userDetailsService() {
+    //     return new RumpusUserService(this.applicationContext.getBean("rumpusUserDao", IRumpusUserDao.class));
+    // }
+
+    // @Bean
+	// public PasswordEncoder passwordEncoder() {
+	// 	return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	// }
 
     @Bean
     public ActiveUserStore activeUserStore() {

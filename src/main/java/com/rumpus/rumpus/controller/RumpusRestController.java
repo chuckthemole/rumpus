@@ -223,6 +223,8 @@ public class RumpusRestController extends RumpusController {
         boolean isAuthenticated = false;
         if(authentication != null) {
             isAuthenticated = authentication.isAuthenticated();
+        } else {
+            LOG.info("Authentication is null");
         }
         return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
     }

@@ -67,7 +67,10 @@ public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewL
         navbarItemsEnd = new ArrayList<>(
             List.of(
                 NavbarItem.createAsReactComponent("Login", "LoginModal", true),
-                NavbarItem.createAsReactComponent("Signup", "SignupModal", true)
+                NavbarItem.createAsReactComponent("Signup", "SignupModal", true),
+                NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true),
+                NavbarItem.createAsReactComponent("Admin", "Admin", true),
+                NavbarItem.createAsReactComponent("Logout", "Logout", true)
             )
         );
     }

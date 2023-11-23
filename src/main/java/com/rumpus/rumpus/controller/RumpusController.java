@@ -1,6 +1,7 @@
 package com.rumpus.rumpus.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.python.core.Py;
 import org.python.util.PythonInterpreter;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.rumpus.common.Controller.AbstractCommonController;
+import com.rumpus.common.Controller.ICommonPaths;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem;
@@ -80,7 +82,6 @@ public abstract class RumpusController extends AbstractCommonController {
     // Python files
     protected static final String VOICE_ASSISTANT_FILE_PATH = PYTHON_DIR_PATH + "voice_assistant.py";
 
-
     // @Autowired protected RumpusView view;
     // @Autowired protected IUserService rumpusUserService;
     // @Autowired protected ProviderManager authManager;
@@ -108,6 +109,12 @@ public abstract class RumpusController extends AbstractCommonController {
         this.init();
     }
     private void init() {
+        //Common Paths
+        Map<String, String> paths = Map.of(
+            "CurrentUserInfo", "/current_user",
+            "CreateUser", "/create_user"
+        );
+        AbstractCommonController.commonPaths.addBasePath("/api", paths, true);
     }
 
     protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {
