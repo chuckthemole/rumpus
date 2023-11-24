@@ -9,7 +9,7 @@ export default function App() {
 
     return (
         <>
-            <Header user_path={'/api/current_user'} current_user_authorities={getCurrentUserAuthorities()} is_current_user_authenticated={isCurrentUserAuthenticated()} create_path={CREATE_USER_PATH}/>
+            <Header />
             <div className='columns is-centered'>
                 <div className='column'></div>
                 <div className='column is-three-fifths'>

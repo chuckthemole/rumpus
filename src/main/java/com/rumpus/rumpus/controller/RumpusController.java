@@ -100,6 +100,8 @@ public abstract class RumpusController extends AbstractCommonController {
 
     @Autowired protected ServerManager serverManager;
 
+    protected static String RUMPUS_DEFAULT_BASE_PATH = "/api";
+
     public RumpusController() {
         super(NAME);
         this.init();
@@ -114,7 +116,8 @@ public abstract class RumpusController extends AbstractCommonController {
             "CurrentUserInfo", "/current_user",
             "CreateUser", "/create_user"
         );
-        AbstractCommonController.commonPaths.addBasePath("/api", paths, true);
+        AbstractCommonController.commonPaths.addBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH, paths, true);
+        // this.setCurrentBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH);
     }
 
     protected void currentUserLogin(RumpusUser user, HttpServletRequest request) {

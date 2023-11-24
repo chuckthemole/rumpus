@@ -290,6 +290,12 @@ public class RumpusRestController extends RumpusController {
         return new ResponseEntity<String>("test", HttpStatus.ACCEPTED);
     }
 
+    @GetMapping(value = "/current_base_path")
+    public ResponseEntity<String> currentBasePath() {
+        LOG.info("RumpusRestController::getCurrentBasePath()");
+        return new ResponseEntity<String>(this.getCurrentBasePath(), HttpStatus.ACCEPTED);
+    }
+
     // @GetMapping(value = "/start_python")
     // public ResponseEntity<String> startPythonServer() {
     //     LOG.info("RumpusRestController::startPythonServer()");

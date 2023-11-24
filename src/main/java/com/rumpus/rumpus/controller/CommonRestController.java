@@ -21,16 +21,24 @@ import jakarta.servlet.http.HttpServletRequest;
 // TODO: is_authenticated is not working. it is loading and not returning anything. RupmpusRestController is working and has the same implementation. Try to figure out why this is not working.
 @RestController
 @RequestMapping(AbstractCommonRestController.COMMON_REST_API_PATH)
-public class CommonRestControler extends AbstractCommonRestController {
+public class CommonRestController extends AbstractCommonRestController {
 
     private static final String NAME = "Rumpus - CommonRestController";
 
-    @Autowired private AuthenticationManager authenticationManager;
+    // @Autowired private AuthenticationManager authenticationManager;
     
-    public CommonRestControler() {
+    public CommonRestController() {
         super(NAME);
+        this.setDefaultCurrentBasePath();
     }
 
+    @GetMapping(value = "/")
+    public ResponseEntity<String> getRoot(HttpServletRequest request) {
+        LOG.info("CommonRestControler::getRoot()");
+        return new ResponseEntity<String>("TODO - getRoot()", HttpStatus.ACCEPTED);
+    }
+
+    // TODO: look into this. user_icon.js is giving 404 at this request
     @GetMapping(value = "/paths")
     public ResponseEntity<Map<String, String>> getCommonPaths(HttpServletRequest request) {
         LOG.info("CommonRestControler::getCommonPaths()");
@@ -51,21 +59,45 @@ public class CommonRestControler extends AbstractCommonRestController {
         return new ResponseEntity<Map<String, String>>(paths, HttpStatus.ACCEPTED);
     }
 
-    @Override
-    @GetMapping(value = "/is_authenticated")
-    protected ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
-        LOG.info("CommonRestControler::getAuthenticationOfUser()");
-        if(authentication == null) {
-            LOG.info("CommonRestControler::getAuthenticationOfUser() - authentication is null");
-            return new ResponseEntity<Boolean>(false, HttpStatus.ACCEPTED);
-        }
-        Authentication auth = authenticationManager.authenticate(authentication);
+    // @Override
+    // @GetMapping(value = "/is_authenticated")
+    // protected ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
+    //     LOG.info("CommonRestControler::getAuthenticationOfUser()");
+    //     if(authentication == null) {
+    //         LOG.info("CommonRestControler::getAuthenticationOfUser() - authentication is null");
+    //         return new ResponseEntity<Boolean>(false, HttpStatus.ACCEPTED);
+    //     }
+    //     Authentication auth = authenticationManager.authenticate(authentication);
+    //     boolean isAuthenticated = false;
+    //     if(auth != null) {
+    //         isAuthenticated = auth.isAuthenticated();
+    //     } else {
+    //         LOG.info("CommonRestControler::getAuthenticationOfUser() - auth is null");
+    //     }
+    //     return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
+    // }
+
+    @GetMapping(value = "is_authenticated")
+    public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
+        LOG.info("CommonRestController::getAuthenticationOfUser()");
         boolean isAuthenticated = false;
-        if(auth != null) {
-            isAuthenticated = auth.isAuthenticated();
+        if(authentication != null) {
+            isAuthenticated = authentication.isAuthenticated();
         } else {
-            LOG.info("CommonRestControler::getAuthenticationOfUser() - auth is null");
+            LOG.info("Authentication is null");
         }
         return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    @GetMapping(value = "/current_base_path")
+    public ResponseEntity<Map<String, String>> currentBasePath() {
+        LOG.info("RumpusRestController::getCurrentBasePath()");
+        return new ResponseEntity<Map<String, String>>(Map.of("path", this.getCurrentBasePath()), HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public void setDefaultCurrentBasePath() {
+        this.setCurrentBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH);
     }
 }
