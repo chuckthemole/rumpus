@@ -15,7 +15,7 @@ import com.rumpus.common.views.AbstractViewLoader;
  * 
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
-public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewLoader {
+public class RumpusViewLoader extends AbstractViewLoader {
     
     private static final String NAME = "RumpusViewLoader";
 
@@ -77,17 +77,11 @@ public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewL
 
     public RumpusViewLoader() {
         super(NAME);
-        init();
+        super.init();
 	}
 
-    private int init() {
-        initFooter();
-        initHeader();
-        initUserTable();
-        return SUCCESS;
-    }
-
-    private int initFooter() {
+    @Override
+    protected int initFooter() {
         super.footer = new Footer();
         List<Pair<String, List<String>>> columns = new ArrayList<>(
             List.of(
@@ -104,13 +98,15 @@ public class RumpusViewLoader extends AbstractViewLoader implements IRumpusViewL
         return SUCCESS;
     }
 
-    private int initHeader() {
+    @Override
+    protected int initHeader() {
         super.header = Header.create(navbarBrand, navbarItemsStart, navbarItemsEnd);
 
         return SUCCESS;
     }
 
-    private int initUserTable() {
+    @Override
+    protected int initUserTable() {
         super.userTable = new ComponentUserTable(CSS_FRAMEWORK);
         return SUCCESS;
     }

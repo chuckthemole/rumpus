@@ -22,9 +22,9 @@ import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Server.ServerManager;
 import com.rumpus.common.User.ActiveUserStore;
+import com.rumpus.common.views.AbstractViewLoader;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.views.IRumpusViewLoader;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +36,7 @@ public abstract class RumpusController extends AbstractCommonController {
 
     @Autowired protected static Environment environment;
 
+    // TODO  - see what constants we can move to AbstractCommonController
     // Paths
     protected static final String PATH_INDEX = "/";
     protected static final String PATH_API = "/api";
@@ -63,11 +64,6 @@ public abstract class RumpusController extends AbstractCommonController {
 
     protected static final String PATH_POST_USER_TIME_ZONE = "/user_time_zone";
 
-    // Paths for views
-    protected static final String PATH_FOOTER = "/footer";
-    protected static final String PATH_HEADER = "/header";
-    protected static final String PATH_USER_TABLE = "/user_table";
-
     // Models
     protected static final String MODEL_USER = "user";
 
@@ -87,7 +83,7 @@ public abstract class RumpusController extends AbstractCommonController {
     // @Autowired protected ProviderManager authManager;
     // @Autowired protected AuthenticationManager authManager;
     @Autowired protected IRumpusUserService rumpusUserService;
-    @Autowired protected IRumpusViewLoader viewLoader;
+    @Autowired protected AbstractViewLoader viewLoader;
     // @Autowired protected JdbcUserDetailsManager userManager;
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;

@@ -9,7 +9,7 @@ export default function App() {
 
     return (
         <>
-            <Header />
+            <Header header_path={'/view/header'} />
             <div className='columns is-centered'>
                 <div className='column'></div>
                 <div className='column is-three-fifths'>
@@ -17,7 +17,7 @@ export default function App() {
                 </div>
                 <div className='column'></div>
             </div>
-            <Footer footer_path={"/view/footer"}/>
+            <Footer footer_path={"/view/footer"} />
         </>
     )
 }

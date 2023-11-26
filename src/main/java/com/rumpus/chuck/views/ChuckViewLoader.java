@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
+import com.rumpus.common.views.NavbarItem;
+import com.rumpus.common.views.NavbarItem.ItemType;
 import com.rumpus.common.views.AbstractViewLoader;
 
 /**
@@ -12,9 +14,11 @@ import com.rumpus.common.views.AbstractViewLoader;
  * 
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
-public class ChuckViewLoader extends AbstractViewLoader implements IChuckViewLoader {
+public class ChuckViewLoader extends AbstractViewLoader {
     
     private static final String NAME = "ChuckViewLoader";
+
+    private static final String NAVBAR_BRAND_HREF = "https://bulma.io/images/bulma-logo.png";
 
     // Footer Columns
     // Add footers columns here, Pair<title,items>
@@ -38,13 +42,8 @@ public class ChuckViewLoader extends AbstractViewLoader implements IChuckViewLoa
         init();
 	}
 
-    private int init() {
-        initFooter();
-        initUserTable();
-        return SUCCESS;
-    }
-
-    private int initFooter() {
+    @Override
+    protected int initFooter() {
         super.footer = new Footer();
         List<Pair<String, List<String>>> columns = new ArrayList<>(
             List.of(
@@ -61,8 +60,41 @@ public class ChuckViewLoader extends AbstractViewLoader implements IChuckViewLoa
         return SUCCESS;
     }
 
-    private int initUserTable() {
+    @Override
+    protected int initUserTable() {
         super.userTable = new ComponentUserTable(CSS_FRAMEWORK);
+        return SUCCESS;
+    }
+
+    @Override
+    protected int initHeader() {
+        // Header
+        NavbarItem navbarBrand = NavbarItem.createWithImage("ChuckBrand", "/", true, NAVBAR_BRAND_HREF);
+        List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
+            List.of(
+                NavbarItem.create("About", "/", true, ItemType.LINK),
+                NavbarItem.create("Jobs", "/", true, ItemType.LINK),
+                NavbarItem.create("Contact", "/", true, ItemType.LINK),
+                NavbarItem.createDropdownDivider("DropdownDivider1", true),
+                NavbarItem.create("Report an issue", "/", true, ItemType.LINK)
+            )
+        );
+        List<NavbarItem> navbarItemsStart = new ArrayList<>(
+            List.of(
+                NavbarItem.create("Home", "/", true, ItemType.LINK),
+                NavbarItem.create("Documentation", "/", false, ItemType.LINK),
+                NavbarItem.createAsDropdown("More", "/", true, navbarItemsStartDropdown)
+            )
+        );
+        List<NavbarItem> navbarItemsEnd = new ArrayList<>(
+            List.of(
+                NavbarItem.createAsReactComponent("Login", "LoginModal", true),
+                NavbarItem.createAsReactComponent("Signup", "SignupModal", true),
+                NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true),
+                NavbarItem.createAsReactComponent("Admin", "Admin", true),
+                NavbarItem.createAsReactComponent("Logout", "Logout", true)
+            )
+        );
         return SUCCESS;
     }
 }
