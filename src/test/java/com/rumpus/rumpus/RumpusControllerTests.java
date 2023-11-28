@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.rumpus.RumpusTest;
+import com.rumpus.common.views.AbstractViewLoader;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.config.WebSecurityTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.views.IRumpusViewLoader;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,7 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class RumpusControllerTests extends RumpusTest {
 
     @MockBean IRumpusUserService userService;
-    @MockBean IRumpusViewLoader viewLoader;
+    @MockBean AbstractViewLoader viewLoader;
  
     @Autowired MockMvc mockMvc;
  
@@ -57,7 +57,7 @@ public class RumpusControllerTests extends RumpusTest {
 
     @Test
     public void testFooter() throws Exception {
-        RumpusViewLoader vl = new RumpusViewLoader();
+        RumpusViewLoader vl = RumpusViewLoader.create();
         com.rumpus.common.views.Footer footer = vl.getFooter();
 
         Mockito.when(viewLoader.getFooter()).thenReturn(footer);

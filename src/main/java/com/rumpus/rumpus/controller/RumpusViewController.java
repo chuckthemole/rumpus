@@ -26,11 +26,6 @@ public class RumpusViewController extends AbstractViewController {
     }
 
     @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
     public ResponseEntity<Footer> getFooter() {
         return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
     }

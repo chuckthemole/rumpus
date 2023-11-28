@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;

@@ -89,7 +89,7 @@ public abstract class RumpusController extends AbstractCommonController {
     // protected AbstractViewLoader viewLoader;
     // @Autowired protected JdbcUserDetailsManager userManager;
     @Autowired protected ActiveUserStore activeUserStore;
-    @Autowired protected Gson gson;
+    // @Autowired protected Gson gson;
 
     @Autowired protected ForumThreadManager forumThreadManager;
 
