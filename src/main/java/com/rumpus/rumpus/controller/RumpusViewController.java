@@ -2,13 +2,10 @@ package com.rumpus.rumpus.controller;
 
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.common.Controller.AbstractViewController;
-import com.rumpus.common.Controller.IViewController;
 import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.Header;
 import com.rumpus.rumpus.views.RumpusViewLoader;
@@ -47,19 +44,4 @@ public class RumpusViewController extends AbstractViewController {
     public ResponseEntity<String> getUserTable() {
         return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
     }
-
-    // @GetMapping(PATH_FOOTER)
-    // public ResponseEntity<Footer> getFooter() {
-    //     return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
-    // }
-
-    // @GetMapping(PATH_USER_TABLE)
-    // public ResponseEntity<String> getUserTable() {
-    //     return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
-    // }
-
-    // @GetMapping(PATH_HEADER)
-    // public ResponseEntity<Header> getHeader() {
-    //     return new ResponseEntity<Header>(viewLoader.getHeader(), HttpStatusCode.valueOf(200));
-    // }
 }

@@ -3,14 +3,11 @@ package com.rumpus.chuck;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.chuck.views.ChuckViewLoader;
 import com.rumpus.common.Controller.AbstractViewController;
-import com.rumpus.common.Controller.IViewController;
-import com.rumpus.common.views.AbstractViewLoader;
 import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.Header;
 
