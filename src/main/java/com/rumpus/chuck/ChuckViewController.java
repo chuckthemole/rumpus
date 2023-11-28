@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rumpus.chuck.views.ChuckViewLoader;
+import com.rumpus.common.Controller.AbstractViewController;
+import com.rumpus.common.Controller.IViewController;
+import com.rumpus.common.views.AbstractViewLoader;
 import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.Header;
 
@@ -18,24 +22,31 @@ import com.rumpus.common.views.Header;
 @RestController
 @RequestMapping(ChuckController.PATH_CHARLES_PIKAART_THOMAS_VIEW)
 @CrossOrigin(origins = {ChuckController.CHARLES_PIKAART_THOMAS_DEV_URI, ChuckController.CHARLES_PIKAART_THOMAS_BETA_URI, ChuckController.CHARLES_PIKAART_THOMAS_LIVE_URI})
-public class ChuckViewController extends ChuckController { //TODO - can we have something like AbstractViewController? Maybe an annotation? Something like @ViewController? I'd like the view methods to be overridden in the subclass.
+public class ChuckViewController extends AbstractViewController {
 
     private static final String NAME = "RumpusViewController";
 
-    public ChuckViewController() {super(NAME);}
+    public ChuckViewController() {
+        super(NAME, ChuckViewLoader.create());
+    }
 
-    @GetMapping(PATH_FOOTER)
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
     public ResponseEntity<Footer> getFooter() {
         return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping(PATH_USER_TABLE)
-    public ResponseEntity<String> getUserTable() {
-        return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
-    }
-
-    @GetMapping(PATH_HEADER)
+    @Override
     public ResponseEntity<Header> getHeader() {
         return new ResponseEntity<Header>(viewLoader.getHeader(), HttpStatusCode.valueOf(200));
+    }
+
+    @Override
+    public ResponseEntity<String> getUserTable() {
+        return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
     }
 }

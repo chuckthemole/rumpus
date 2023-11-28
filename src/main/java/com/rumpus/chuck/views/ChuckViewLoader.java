@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
+import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.NavbarItem.ItemType;
 import com.rumpus.common.views.AbstractViewLoader;
@@ -37,10 +38,14 @@ public class ChuckViewLoader extends AbstractViewLoader {
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
     }
 
-    public ChuckViewLoader() {
+    private ChuckViewLoader() {
         super(NAME);
         init();
 	}
+
+    public static ChuckViewLoader create() {
+        return new ChuckViewLoader();
+    }
 
     @Override
     protected int initFooter() {
@@ -95,6 +100,7 @@ public class ChuckViewLoader extends AbstractViewLoader {
                 NavbarItem.createAsReactComponent("Logout", "Logout", true)
             )
         );
+        super.header = Header.create(navbarBrand, navbarItemsStart, navbarItemsEnd);
         return SUCCESS;
     }
 }

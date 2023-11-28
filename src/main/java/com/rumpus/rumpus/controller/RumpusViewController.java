@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rumpus.common.Controller.AbstractViewController;
+import com.rumpus.common.Controller.IViewController;
 import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.Header;
+import com.rumpus.rumpus.views.RumpusViewLoader;
 
 /**
  *
@@ -17,24 +20,46 @@ import com.rumpus.common.views.Header;
 
 @RestController
 @RequestMapping(RumpusController.PATH_VIEW)
-public class RumpusViewController extends RumpusController {
+public class RumpusViewController extends AbstractViewController {
 
     private static final String NAME = "RumpusViewController";
 
-    public RumpusViewController() {super(NAME);}
+    public RumpusViewController() {
+        super(NAME, RumpusViewLoader.create());
+    }
 
-    @GetMapping(PATH_FOOTER)
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
     public ResponseEntity<Footer> getFooter() {
         return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping(PATH_USER_TABLE)
+    @Override
+    public ResponseEntity<Header> getHeader() {
+        return new ResponseEntity<Header>(viewLoader.getHeader(), HttpStatusCode.valueOf(200));
+    }
+
+    @Override
     public ResponseEntity<String> getUserTable() {
         return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping(PATH_HEADER)
-    public ResponseEntity<Header> getHeader() {
-        return new ResponseEntity<Header>(viewLoader.getHeader(), HttpStatusCode.valueOf(200));
-    }
+    // @GetMapping(PATH_FOOTER)
+    // public ResponseEntity<Footer> getFooter() {
+    //     return new ResponseEntity<Footer>(viewLoader.getFooter(), HttpStatusCode.valueOf(200));
+    // }
+
+    // @GetMapping(PATH_USER_TABLE)
+    // public ResponseEntity<String> getUserTable() {
+    //     return new ResponseEntity<String>(viewLoader.getUserTable().getTable(), HttpStatusCode.valueOf(200));
+    // }
+
+    // @GetMapping(PATH_HEADER)
+    // public ResponseEntity<Header> getHeader() {
+    //     return new ResponseEntity<Header>(viewLoader.getHeader(), HttpStatusCode.valueOf(200));
+    // }
 }

@@ -41,11 +41,6 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     // }
 
     @Bean
-    public AbstractViewLoader viewLoader() {
-        return new RumpusViewLoader();
-    }
-
-    @Bean
     public IRumpusUserDao rumpusUserDao() {
         IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
         return userDao;

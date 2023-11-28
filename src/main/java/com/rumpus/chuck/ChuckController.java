@@ -1,6 +1,7 @@
 package com.rumpus.chuck;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
@@ -21,7 +22,9 @@ public class ChuckController extends AbstractCommonController {
     protected static final String CHARLES_PIKAART_THOMAS_BETA_URI = "http://127.0.0.1:8000/beta/";
     protected static final String CHARLES_PIKAART_THOMAS_LIVE_URI = "http://charles-pikaart-thomas.com/";
 
-    @Autowired protected AbstractViewLoader viewLoader;
+    // @Autowired
+    // @Qualifier("chuckViewLoader")
+    // protected AbstractViewLoader viewLoader;
 
     public ChuckController() {
         super(NAME);

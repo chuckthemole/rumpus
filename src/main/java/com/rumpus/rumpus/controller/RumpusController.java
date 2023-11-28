@@ -6,6 +6,7 @@ import java.util.Map;
 import org.python.core.Py;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Web.Server;
 import org.springframework.core.env.Environment;
@@ -83,7 +84,9 @@ public abstract class RumpusController extends AbstractCommonController {
     // @Autowired protected ProviderManager authManager;
     // @Autowired protected AuthenticationManager authManager;
     @Autowired protected IRumpusUserService rumpusUserService;
-    @Autowired protected AbstractViewLoader viewLoader;
+    // @Autowired
+    // @Qualifier("rumpusViewLoader")
+    // protected AbstractViewLoader viewLoader;
     // @Autowired protected JdbcUserDetailsManager userManager;
     @Autowired protected ActiveUserStore activeUserStore;
     @Autowired protected Gson gson;

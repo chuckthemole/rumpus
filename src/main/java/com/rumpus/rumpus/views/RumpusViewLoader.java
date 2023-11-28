@@ -75,10 +75,14 @@ public class RumpusViewLoader extends AbstractViewLoader {
         );
     }
 
-    public RumpusViewLoader() {
+    private RumpusViewLoader() {
         super(NAME);
         super.init();
 	}
+
+    public static RumpusViewLoader create() {
+        return new RumpusViewLoader();
+    }
 
     @Override
     protected int initFooter() {
