@@ -8,14 +8,15 @@ import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.NavbarItem.ItemType;
-import com.rumpus.common.views.AbstractViewLoader;
+import com.rumpus.common.views.ResourceManager;
+import com.rumpus.common.views.AbstractViews;
 
 /**
  * @author Chuck Thomas
  * 
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
-public class ChuckViewLoader extends AbstractViewLoader {
+public class ChuckViewLoader extends AbstractViews {
     
     private static final String NAME = "ChuckViewLoader";
 
@@ -101,6 +102,17 @@ public class ChuckViewLoader extends AbstractViewLoader {
             )
         );
         super.header = Header.create(navbarBrand, navbarItemsStart, navbarItemsEnd);
+        return SUCCESS;
+    }
+
+    @Override
+    protected int initResourceManager() {
+        this.resourceManager = ResourceManager.createEmptyManager();
+        this.resourceManager.addResource(
+            "NavbarBrandChuck",
+            com.rumpus.common.views.Resource.ResourceType.IMAGE,
+            com.rumpus.common.views.Resource.StorageType.LOCAL,
+            "https://bulma.io/images/bulma-logo.png");
         return SUCCESS;
     }
 }

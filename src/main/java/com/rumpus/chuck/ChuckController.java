@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
-import com.rumpus.common.views.AbstractViewLoader;
+import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.controller.RumpusController;
 
 @Controller
 public class ChuckController extends AbstractCommonController {
-
+    
     private static final String NAME = "ChuckController";
 
     // Paths for charles pikaart thomas

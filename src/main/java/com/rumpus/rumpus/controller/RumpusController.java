@@ -23,7 +23,7 @@ import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Server.ServerManager;
 import com.rumpus.common.User.ActiveUserStore;
-import com.rumpus.common.views.AbstractViewLoader;
+import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 

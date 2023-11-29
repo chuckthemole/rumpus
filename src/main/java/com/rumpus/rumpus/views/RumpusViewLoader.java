@@ -7,15 +7,16 @@ import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
 import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
+import com.rumpus.common.views.ResourceManager;
 import com.rumpus.common.views.NavbarItem.ItemType;
-import com.rumpus.common.views.AbstractViewLoader;
+import com.rumpus.common.views.AbstractViews;
 
 /**
  * @author Chuck Thomas
  * 
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
-public class RumpusViewLoader extends AbstractViewLoader {
+public class RumpusViewLoader extends AbstractViews {
     
     private static final String NAME = "RumpusViewLoader";
 
@@ -112,6 +113,17 @@ public class RumpusViewLoader extends AbstractViewLoader {
     @Override
     protected int initUserTable() {
         super.userTable = new ComponentUserTable(CSS_FRAMEWORK);
+        return SUCCESS;
+    }
+
+    @Override
+    protected int initResourceManager() {
+        this.resourceManager = ResourceManager.createEmptyManager();
+        this.resourceManager.addResource(
+            "NavbarBrand",
+            com.rumpus.common.views.Resource.ResourceType.IMAGE,
+            com.rumpus.common.views.Resource.StorageType.LOCAL,
+            "https://bulma.io/images/bulma-logo.png");
         return SUCCESS;
     }
 }

@@ -18,7 +18,6 @@ import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
-import com.rumpus.common.views.AbstractViewLoader;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.Rumpus;
 import com.rumpus.rumpus.data.IRumpusUserDao;
@@ -27,7 +26,6 @@ import com.rumpus.rumpus.database_loader.RumpusLoader;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
-import com.rumpus.rumpus.views.RumpusViewLoader;
 
 @Configuration
 // @EnableSpringWebSession

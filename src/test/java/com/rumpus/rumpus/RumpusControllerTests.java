@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.rumpus.RumpusTest;
-import com.rumpus.common.views.AbstractViewLoader;
+import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.config.WebSecurityTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
@@ -36,7 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class RumpusControllerTests extends RumpusTest {
 
     @MockBean IRumpusUserService userService;
-    @MockBean AbstractViewLoader viewLoader;
+    @MockBean AbstractViews viewLoader;
  
     @Autowired MockMvc mockMvc;
  
