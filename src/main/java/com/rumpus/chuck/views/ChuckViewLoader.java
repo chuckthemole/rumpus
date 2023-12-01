@@ -9,6 +9,10 @@ import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.NavbarItem.ItemType;
 import com.rumpus.common.views.ResourceManager;
+import com.rumpus.common.views.SectionManager;
+import com.rumpus.common.views.Framework.Bulma.Element.Block;
+import com.rumpus.common.views.Framework.Bulma.Element.Box;
+import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.AbstractViews;
 
 /**
@@ -113,6 +117,15 @@ public class ChuckViewLoader extends AbstractViews {
             com.rumpus.common.views.Resource.ResourceType.IMAGE,
             com.rumpus.common.views.Resource.StorageType.LOCAL,
             "https://bulma.io/images/bulma-logo.png");
+        return SUCCESS;
+    }
+
+    @Override
+    protected int initSections() {
+        this.sectionManager = SectionManager.createEmptyManager();
+        AbstractHtmlObject parent = Block.createWithNoBody().addChild(Box.createWithBody("Test Section"));
+        parent.addChild(Box.createWithBody("Test Section 2"));
+        this.sectionManager.addSection("TestSection", parent);
         return SUCCESS;
     }
 }
