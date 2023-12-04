@@ -10,8 +10,8 @@ import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.NavbarItem.ItemType;
 import com.rumpus.common.views.ResourceManager;
 import com.rumpus.common.views.SectionManager;
-import com.rumpus.common.views.Framework.Bulma.Element.Block;
-import com.rumpus.common.views.Framework.Bulma.Element.Box;
+import com.rumpus.common.views.CSSFramework.Bulma.Element.Block;
+import com.rumpus.common.views.CSSFramework.Bulma.Element.Box;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.AbstractViews;
 

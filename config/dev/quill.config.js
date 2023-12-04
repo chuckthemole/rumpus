@@ -5,7 +5,7 @@ module.exports = {
         mode: 'development',
         context: path.resolve(__dirname, '../../src/main/js'),
         entry: {
-            app: './rumpus-quill.js'
+            app: './rumpus_quill.js'
         },
         devtool: 'sourcemaps',
         cache: true,
