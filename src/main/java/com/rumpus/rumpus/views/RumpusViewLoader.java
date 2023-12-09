@@ -9,10 +9,11 @@ import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.ResourceManager;
 import com.rumpus.common.views.SectionManager;
-import com.rumpus.common.views.CSSFramework.Bulma.Element.Block;
-import com.rumpus.common.views.CSSFramework.Bulma.Element.Box;
+import com.rumpus.common.views.CSSFramework.Bulma.CSS.Element.Block;
+import com.rumpus.common.views.CSSFramework.Bulma.CSS.Element.Box;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.NavbarItem.ItemType;
+import com.rumpus.common.views.Template.AbstractAdmin;
 import com.rumpus.common.views.AbstractViews;
 
 /**
@@ -81,7 +82,6 @@ public class RumpusViewLoader extends AbstractViews {
 
     private RumpusViewLoader() {
         super(NAME);
-        super.init();
 	}
 
     public static RumpusViewLoader create() {
@@ -133,9 +133,14 @@ public class RumpusViewLoader extends AbstractViews {
     @Override
     protected int initSections() {
         this.sectionManager = SectionManager.createEmptyManager();
+
+        // testing
         AbstractHtmlObject parent = Block.createWithNoBody().addChild(Box.createWithBody("Test Section"));
         parent.addChild(Box.createWithBody("Test Section 2"));
         this.sectionManager.addSection("TestSection", parent);
+
+        AbstractAdmin admin = RumpusAdmin.create();
+        this.sectionManager.addSection("RumpusAdmin", admin.getHead());
         return SUCCESS;
     }
 }
