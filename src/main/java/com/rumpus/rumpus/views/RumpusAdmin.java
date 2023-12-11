@@ -1,6 +1,7 @@
 package com.rumpus.rumpus.views;
 
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaAside;
+import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaBreadcrumb;
 import com.rumpus.common.views.Component.AbstractAside;
 import com.rumpus.common.views.Component.AbstractBreadcrumb;
 import com.rumpus.common.views.Component.AbstractWelcome;
@@ -34,7 +35,15 @@ public class RumpusAdmin extends AbstractAdmin {
 
     @Override
     public AbstractBreadcrumb initBreadcrumb() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bulma");
+        sb.append(AbstractBreadcrumb.LINK_DELIMITER);
+        sb.append("www.google.com,");
+        sb.append("Another Bulma Page");
+        sb.append(AbstractBreadcrumb.LINK_DELIMITER);
+        sb.append("www.google.com,");
+        sb.append("Current Page");
+        return BulmaBreadcrumb.create(sb.toString());
     }
 
     @Override
@@ -44,6 +53,10 @@ public class RumpusAdmin extends AbstractAdmin {
 
     @Override
     public AbstractHtmlObject setHead() {
-        return this.components.get("aside");
+        AbstractHtmlObject head = AbstractHtmlObject.createEmptyAbstractHtmlObject();
+        head.setHtmlTagType(AbstractHtmlObject.HtmlTagType.DIV);
+        head.addChild(this.components.get("breadcrumb"));
+        head.addChild(this.components.get("aside"));
+        return head;
     }
 }
