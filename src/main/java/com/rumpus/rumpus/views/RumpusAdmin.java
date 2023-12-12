@@ -2,6 +2,7 @@ package com.rumpus.rumpus.views;
 
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaAside;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaBreadcrumb;
+import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaWelcome;
 import com.rumpus.common.views.Component.AbstractAside;
 import com.rumpus.common.views.Component.AbstractBreadcrumb;
 import com.rumpus.common.views.Component.AbstractWelcome;
@@ -48,13 +49,23 @@ public class RumpusAdmin extends AbstractAdmin {
 
     @Override
     public AbstractWelcome initWelcome() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(AbstractHtmlObject.HtmlTagType.H1);
+        sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
+        sb.append("Hi, there butthead!");
+        sb.append(AbstractWelcome.WELCOME_DEFAULT_DELIMITER);
+
+        sb.append(AbstractHtmlObject.HtmlTagType.H2);
+        sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
+        sb.append("What the hell are you doing?!,");
+        return BulmaWelcome.create(sb.toString());
     }
 
     @Override
     public AbstractHtmlObject setHead() {
         AbstractHtmlObject head = AbstractHtmlObject.createEmptyAbstractHtmlObject();
         head.setHtmlTagType(AbstractHtmlObject.HtmlTagType.DIV);
+        head.addChild(this.components.get("welcome"));
         head.addChild(this.components.get("breadcrumb"));
         head.addChild(this.components.get("aside"));
         return head;
