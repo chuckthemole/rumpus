@@ -15,13 +15,13 @@ export default function App() {
             <Header header_path={'/view/header'} />
             <div className='columns is-centered'>
 
-                {/* <Section section_path={'/view/section/TestSection'} /> */}
+                {/* <RumpusQuillForm quill={<RumpusQuill />} /> */}
 
-                <RumpusQuillForm quill={<RumpusQuill />} />
 
                 <div className='column'></div>
                 <div className='column is-three-fifths'>
-                    <Outlet />
+                    {/* <Outlet /> */}
+                    <Section section_path={'/view/template/RumpusAdminTemplate'} />
                 </div>
                 <div className='column'></div>
             </div>

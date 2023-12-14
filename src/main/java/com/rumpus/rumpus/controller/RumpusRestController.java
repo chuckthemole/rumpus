@@ -174,7 +174,7 @@ public class RumpusRestController extends RumpusController {
         LOG.info("RumpusRestController POST: /api/update_user");
         HttpSession session = request.getSession();
         // this.rumpusUserService.remove(StringUtil.isQuoted(user) ? user.substring(1, user.length() - 1) : user);
-        LogBuilder log = new LogBuilder("Update this user: ", user.toString());
+        LogBuilder log = new LogBuilder(true, "Update this user: ", user.toString());
         log.info();
         if(this.rumpusUserService.update(user.getId(), user) != null) { // if user was updated successfully, return session with status updateed
             session.setAttribute("status", "user updated");
@@ -197,11 +197,11 @@ public class RumpusRestController extends RumpusController {
         LOG.info("RumpusRestController::getUserById()");
         RumpusUser user = this.rumpusUserService.getById(id);
         if(user != null) {
-            LogBuilder log = new LogBuilder("Retrieved user: ", user.toString());
+            LogBuilder log = new LogBuilder(true, "Retrieved user: ", user.toString());
             log.info();
             return new ResponseEntity<RumpusUser>(user, HttpStatus.ACCEPTED);
         }
-        LogBuilder log = new LogBuilder("User with id '",  id, "' was not found.");
+        LogBuilder log = new LogBuilder(true, "User with id '",  id, "' was not found.");
         log.error();
         return null;
     }

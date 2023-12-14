@@ -31,7 +31,7 @@ public class RumpusUserService extends UserService<RumpusUser> implements IRumpu
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LogBuilder log = new LogBuilder("RumpusUserService::loadUserByUsername\n", "Loading user '", username, "'...");
+        LogBuilder log = new LogBuilder(true, "RumpusUserService::loadUserByUsername\n", "Loading user '", username, "'...");
         log.info();
         return this.get(username).getUserDetails();
     }

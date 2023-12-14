@@ -12,6 +12,9 @@ import com.rumpus.common.views.Template.AbstractAdmin;
 public class RumpusAdmin extends AbstractAdmin {
 
     private static final String NAME = "RumpusAdmin";
+    private static final String ASIDE_COMPONENT_NAME = "RumpusAdminAside";
+    private static final String BREADCRUMB_COMPONENT_NAME = "RumpusAdminBreadcrumb";
+    private static final String WELCOME_COMPONENT_NAME = "RumpusAdminWelcome";
 
     private RumpusAdmin() {
         super(NAME);
@@ -31,7 +34,7 @@ public class RumpusAdmin extends AbstractAdmin {
         stringBuilder.append(",");
         stringBuilder.append(AbstractAside.GROUP_DELIMITER);
         stringBuilder.append("group2, group2-item1, group2-item2");
-        return BulmaAside.create(stringBuilder.toString());
+        return BulmaAside.create(ASIDE_COMPONENT_NAME, stringBuilder.toString());
     }
 
     @Override
@@ -44,7 +47,7 @@ public class RumpusAdmin extends AbstractAdmin {
         sb.append(AbstractBreadcrumb.LINK_DELIMITER);
         sb.append("www.google.com,");
         sb.append("Current Page");
-        return BulmaBreadcrumb.create(sb.toString());
+        return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME, sb.toString());
     }
 
     @Override
@@ -58,16 +61,16 @@ public class RumpusAdmin extends AbstractAdmin {
         sb.append(AbstractHtmlObject.HtmlTagType.H2);
         sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
         sb.append("What the hell are you doing?!,");
-        return BulmaWelcome.create(sb.toString());
+        return BulmaWelcome.create(WELCOME_COMPONENT_NAME, sb.toString());
     }
 
     @Override
     public AbstractHtmlObject setHead() {
         AbstractHtmlObject head = AbstractHtmlObject.createEmptyAbstractHtmlObject();
         head.setHtmlTagType(AbstractHtmlObject.HtmlTagType.DIV);
-        head.addChild(this.components.get("welcome"));
-        head.addChild(this.components.get("breadcrumb"));
-        head.addChild(this.components.get("aside"));
+        head.addChild(this.get("welcome"));
+        head.addChild(this.get("breadcrumb"));
+        head.addChild(this.get("aside"));
         return head;
     }
 }
