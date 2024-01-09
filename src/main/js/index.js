@@ -23,7 +23,15 @@ const router = createBrowserRouter([
                 path: 'admin',
                 element: <Admin />,
                 loader: usersLoader,
-                errorElement: <ErrorPage />
+                errorElement: <ErrorPage />,
+                children: [
+                    {
+                        path: 'user/:userId',
+                        element: <User />,
+                        loader: userLoader,
+                        errorElement: <ErrorPage />,
+                    }
+                ]
             },
             {
                 path: 'user/:userId',

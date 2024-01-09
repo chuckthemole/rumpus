@@ -11,6 +11,7 @@ import { useLoaderData, Link, useFetcher } from 'react-router-dom';
 import SignupModal from '../common/signup_modal';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import Dropdown, { get_selected } from '../common/dropdown';
+import UserModal from './user_modal';
 
 // sort flags
 const sort_by_username = '/username';
@@ -196,7 +197,7 @@ export default function Users() {
                                 <td title={ConvertEpochToDate(user.metaData.creationTime).toString()}>{ConvertEpochToDate(user.metaData.creationTime).toDateString()}</td>
                                 <td>{user.id}</td>
                                 <td>
-                                    <Link
+                                    {/* <Link
                                         to={`/user/` + user.id}
                                         className="viewUser button is-info is-light"
                                         data-tooltip-id="user-view-button"
@@ -207,7 +208,8 @@ export default function Users() {
                                     >
                                         <FontAwesomeIcon icon={faEye} />
                                     </Link>
-                                    <ReactTooltip id='user-view-button' />
+                                    <ReactTooltip id='user-view-button' /> */}
+                                    <UserModal user_id={user.id} />
                                 </td>
                                 <td>
                                     <UserDelete user_username={user.userDetails.username} user_id={user.id}/>

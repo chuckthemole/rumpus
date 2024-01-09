@@ -3,12 +3,13 @@ import { useLoaderData } from "react-router-dom";
 import Section from '../common/section';
 
 export async function loader({ params }) {
-    return fetch(`/api/user/${params.userId}`);
+    return await fetch(`/api/user/${params.userId}`);
 }
 
-export default function User() {
+export default function User({provided_user}) {
 
-    const data = useLoaderData();
+    // const data = useLoaderData();
+    const data = provided_user !== undefined ? provided_user : useLoaderData();
     const rumpus_admin = <Section section_path={'/view/template/RumpusUserViewTemplate'} />;
     console.log(rumpus_admin);
 
@@ -24,6 +25,7 @@ export default function User() {
     return (
         <>
             {rumpus_admin}
+            {OldHardcodedUser()}
         </>
     )
 

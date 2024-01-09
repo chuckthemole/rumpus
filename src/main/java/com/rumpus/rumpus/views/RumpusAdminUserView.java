@@ -51,6 +51,8 @@ public class RumpusAdminUserView extends AbstractUserTemplate {
         sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
         sb.append("www.google.com,");
         sb.append("Current Page");
+        sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
+        sb.append("www.google.com,");
         return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME, sb.toString());
     }
 

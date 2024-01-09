@@ -15,7 +15,7 @@ export async function load_current_user() {
         });
 }
 
-export async function loader_by_id({id}) {
+export async function loader_by_id(id) {
     const requestOptions = {
         method: Common.GET,
         headers: {
