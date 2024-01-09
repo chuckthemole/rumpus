@@ -1,5 +1,7 @@
 package com.rumpus.rumpus.views;
 
+import com.rumpus.common.Builder.LogBuilder;
+import com.rumpus.common.views.CSSFramework.Bulma.CSS.Layout.BulmaTile;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaAside;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaBreadcrumb;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaWelcome;
@@ -8,22 +10,22 @@ import com.rumpus.common.views.Component.AbstractBreadcrumb;
 import com.rumpus.common.views.Component.AbstractComponent;
 import com.rumpus.common.views.Component.AbstractWelcome;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
-import com.rumpus.common.views.Template.AbstractAdmin;
 import com.rumpus.common.views.Template.AbstractTemplate;
+import com.rumpus.common.views.Template.AbstractUserTemplate;
 
-public class RumpusAdmin extends AbstractAdmin {
+public class RumpusAdminUserView extends AbstractUserTemplate {
 
-    private static final String NAME = "RumpusAdmin";
-    private static final String ASIDE_COMPONENT_NAME = "RumpusAdminAside";
-    private static final String BREADCRUMB_COMPONENT_NAME = "RumpusAdminBreadcrumb";
-    private static final String WELCOME_COMPONENT_NAME = "RumpusAdminWelcome";
+    private static final String NAME = "RumpusUserView";
+    private static final String ASIDE_COMPONENT_NAME = "RumpusUserViewAside";
+    private static final String BREADCRUMB_COMPONENT_NAME = "RumpusUserViewBreadcrumb";
+    private static final String WELCOME_COMPONENT_NAME = "RumpusUserViewWelcome";
 
-    private RumpusAdmin() {
+    public RumpusAdminUserView() {
         super(NAME);
     }
 
-    public static RumpusAdmin create() {
-        return new RumpusAdmin();
+    public static RumpusAdminUserView create() {
+        return new RumpusAdminUserView();
     }
 
     @Override
@@ -70,9 +72,19 @@ public class RumpusAdmin extends AbstractAdmin {
     public AbstractHtmlObject setHead() {
         AbstractHtmlObject head = AbstractHtmlObject.createEmptyAbstractHtmlObject();
         head.setHtmlTagType(AbstractHtmlObject.HtmlTagType.DIV);
+
+
+        // BulmaTile tile = BulmaTile.create("RumpusAdminUserViewTile", "HelloWhat?, what the hell are you doing?!");
+        // BulmaTile childTile = BulmaTile.createChildTile("Child", "HelloWhat?", "what the hell are you doing?!");
+        // BulmaTile parentTile = BulmaTile.createParentTile("Parent");
+        // parentTile.addChild(childTile);
+        // BulmaTile tile = BulmaTile.createAncestorTile("Ancestor");
+        // tile.addChild(parentTile);
         head.addChild(this.get(AbstractTemplate.TEMPLATE_WELCOME));
         head.addChild(this.get(AbstractTemplate.TEMPLATE_BREADCRUMB));
         head.addChild(this.get(AbstractTemplate.TEMPLATE_ASIDE));
+        LogBuilder.logBuilderFromStringArgsNoSpaces("DEBUG ASIDE: ", this.get(AbstractTemplate.TEMPLATE_ASIDE).toString()).info();
         return head;
     }
+    
 }

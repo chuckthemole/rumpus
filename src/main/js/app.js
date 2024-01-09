@@ -20,8 +20,7 @@ export default function App() {
 
                 <div className='column'></div>
                 <div className='column is-three-fifths'>
-                    {/* <Outlet /> */}
-                    <Section section_path={'/view/template/RumpusAdminTemplate'} />
+                    <Outlet />
                 </div>
                 <div className='column'></div>
             </div>
