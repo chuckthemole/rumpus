@@ -82,7 +82,7 @@ export default function UserModal({user_id}) {
                 style={modal_style}
                 contentLabel="User Modal"
             >
-                <div className="modal-content">
+                <div className="modal-content box">
                     <User provided_user={user} />
                 </div>
             </Modal>

@@ -132,7 +132,7 @@ public class RumpusViewLoader extends AbstractViews {
     @Override
     protected int initTemplates() {
         this.put(RUMPUS_ADMIN_TEMPLATE, RumpusAdmin.create());
-        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusAdminUserView.create());
+        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusPlaceHolderView.create());
         return SUCCESS;
     }
 }

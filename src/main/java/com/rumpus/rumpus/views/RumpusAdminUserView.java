@@ -1,91 +1,56 @@
 package com.rumpus.rumpus.views;
 
-import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.views.CSSFramework.Bulma.CSS.Layout.BulmaTile;
-import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaAside;
-import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaBreadcrumb;
-import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaWelcome;
-import com.rumpus.common.views.Component.AbstractAside;
-import com.rumpus.common.views.Component.AbstractBreadcrumb;
-import com.rumpus.common.views.Component.AbstractComponent;
-import com.rumpus.common.views.Component.AbstractWelcome;
+import com.rumpus.common.views.Component.AbstractTile;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
-import com.rumpus.common.views.Template.AbstractTemplate;
+import com.rumpus.common.views.Html.Attribute;
 import com.rumpus.common.views.Template.AbstractUserTemplate;
+import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUserMetaData;
 
-public class RumpusAdminUserView extends AbstractUserTemplate {
+public class RumpusAdminUserView extends AbstractUserTemplate<RumpusUser, RumpusUserMetaData> {
 
-    private static final String NAME = "RumpusUserView";
-    private static final String ASIDE_COMPONENT_NAME = "RumpusUserViewAside";
-    private static final String BREADCRUMB_COMPONENT_NAME = "RumpusUserViewBreadcrumb";
-    private static final String WELCOME_COMPONENT_NAME = "RumpusUserViewWelcome";
+    private static final String NAME = "RumpusAdminUserView";
 
-    public RumpusAdminUserView() {
-        super(NAME);
+    private RumpusAdminUserView(RumpusUser user) {
+        super(NAME, user);
     }
 
-    public static RumpusAdminUserView create() {
-        return new RumpusAdminUserView();
-    }
-
-    @Override
-    public AbstractAside initAside() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("group1, group1-item1, group1-item2,");
-        stringBuilder.append(AbstractAside.START_ASIDE_CHILD_LIST);
-        stringBuilder.append(",groupChildList, child-item1, child-item2,");
-        stringBuilder.append(AbstractAside.END_ASIDE_CHILD_LIST);
-        stringBuilder.append(",");
-        stringBuilder.append(AbstractAside.GROUP_DELIMITER);
-        stringBuilder.append("group2, group2-item1, group2-item2");
-        return BulmaAside.create(ASIDE_COMPONENT_NAME, stringBuilder.toString());
+    public static RumpusAdminUserView create(RumpusUser user) {
+        return new RumpusAdminUserView(user);
     }
 
     @Override
-    public AbstractBreadcrumb initBreadcrumb() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Bulma");
-        sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
-        sb.append("www.google.com,");
-        sb.append("Another Bulma Page");
-        sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
-        sb.append("www.google.com,");
-        sb.append("Current Page");
-        sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
-        sb.append("www.google.com,");
-        return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME, sb.toString());
+    public AbstractTile initUsername() {
+        AbstractTile parentTile = BulmaTile.createParentTile("RumpusUserNameParentTile");
+        AbstractTile childTile = BulmaTile.createChildTile("RumpusUsernameChildTile", "User", this.getUser().getUsername());
+        parentTile.addChild(childTile);
+        return parentTile;
     }
 
     @Override
-    public AbstractWelcome initWelcome() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(AbstractHtmlObject.HtmlTagType.H1);
-        sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
-        sb.append("Hi, there butthead!");
-        sb.append(AbstractWelcome.WELCOME_DEFAULT_DELIMITER);
+    public AbstractTile initEmail() {
+        AbstractTile parentTile = BulmaTile.createParentTile("RumpusUserEmailParentTile");
+        AbstractTile childTile = BulmaTile.createChildTile("RumpusUserEmailChildTile", "Email", this.getUser().getEmail());
+        parentTile.addChild(childTile);
+        return parentTile;
+    }
 
-        sb.append(AbstractHtmlObject.HtmlTagType.H2);
-        sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
-        sb.append("What the hell are you doing?!,");
-        return BulmaWelcome.create(WELCOME_COMPONENT_NAME, sb.toString());
+    @Override
+    public AbstractTile initAuthorities() {
+        AbstractTile parentTile = BulmaTile.createParentTile("RumpusUserAuthoritiesParentTile");
+        AbstractTile childTile = BulmaTile.createChildTile("RumpusUserAuthoritiesChildTile", "Authorities", "TODO");
+        parentTile.addChild(childTile);
+        return parentTile;
     }
 
     @Override
     public AbstractHtmlObject setHead() {
-        AbstractHtmlObject head = AbstractHtmlObject.createEmptyAbstractHtmlObject();
-        head.setHtmlTagType(AbstractHtmlObject.HtmlTagType.DIV);
-
-
-        // BulmaTile tile = BulmaTile.create("RumpusAdminUserViewTile", "HelloWhat?, what the hell are you doing?!");
-        // BulmaTile childTile = BulmaTile.createChildTile("Child", "HelloWhat?", "what the hell are you doing?!");
-        // BulmaTile parentTile = BulmaTile.createParentTile("Parent");
-        // parentTile.addChild(childTile);
-        // BulmaTile tile = BulmaTile.createAncestorTile("Ancestor");
-        // tile.addChild(parentTile);
-        head.addChild(this.get(AbstractTemplate.TEMPLATE_WELCOME));
-        head.addChild(this.get(AbstractTemplate.TEMPLATE_BREADCRUMB));
-        head.addChild(this.get(AbstractTemplate.TEMPLATE_ASIDE));
-        LogBuilder.logBuilderFromStringArgsNoSpaces("DEBUG ASIDE: ", this.get(AbstractTemplate.TEMPLATE_ASIDE).toString()).info();
+        AbstractTile head = BulmaTile.createAncestorTile("RumpusUserViewHead");
+        head.addHtmlTagAttribute(Attribute.create("class", "has-centered-text"));
+        head.addChild(this.get(AbstractUserTemplate.USERNAME_TILE));
+        head.addChild(this.get(AbstractUserTemplate.EMAIL_TILE));
+        head.addChild(this.get(AbstractUserTemplate.AUTHORITIES_TILE));
         return head;
     }
     

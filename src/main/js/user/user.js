@@ -25,7 +25,7 @@ export default function User({provided_user}) {
     return (
         <>
             {rumpus_admin}
-            {OldHardcodedUser()}
+            {/* {OldHardcodedUser()} */}
         </>
     )
 
