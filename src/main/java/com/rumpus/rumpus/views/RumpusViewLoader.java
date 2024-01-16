@@ -9,7 +9,7 @@ import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.ResourceManager;
 import com.rumpus.common.views.NavbarItem.ItemType;
-
+import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.common.views.AbstractViews;
 
 /**
@@ -134,5 +134,9 @@ public class RumpusViewLoader extends AbstractViews {
         this.put(RUMPUS_ADMIN_TEMPLATE, RumpusAdmin.create());
         this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusPlaceHolderView.create());
         return SUCCESS;
+    }
+
+    protected void updateUserTemplate(RumpusUser user) {
+        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusAdminUserView.create(user));
     }
 }

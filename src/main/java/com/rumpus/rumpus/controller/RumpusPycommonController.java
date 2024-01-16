@@ -1,5 +1,6 @@
 package com.rumpus.rumpus.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Session.CommonSession;
 
@@ -14,8 +16,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping(RumpusController.PATH_PYCOMMON_API)
+@RequestMapping(ICommonController.PATH_PYCOMMON_API)
 public class RumpusPycommonController extends RumpusRestController {
+
+    @Autowired
+    public RumpusPycommonController() {
+            super();
+    }
 
     /*
      * Testing to see if we can call pycommon from a rest api.

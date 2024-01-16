@@ -35,7 +35,7 @@ export default function UserModal({user_id}) {
     // set button if user is not undefined
     useEffect(() => {
         if(user !== undefined) {
-            console.log(user);
+            // console.log(user);
             setButton(
             <a
                 onClick={openModal}

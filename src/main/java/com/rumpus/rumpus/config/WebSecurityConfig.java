@@ -1,51 +1,17 @@
 package com.rumpus.rumpus.config;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import java.io.IOException;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.rumpus.common.Builder.LogBuilder;
+import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.Config.AbstractCommonConfig;
-import com.rumpus.common.Dao.IDao;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.AuthenticationHandler;
-import com.rumpus.rumpus.data.IRumpusUserDao;
-import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
-import com.rumpus.rumpus.service.RumpusUserService;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity // WebSecurityConfiguration
@@ -69,26 +35,26 @@ public class WebSecurityConfig extends AbstractCommonConfig {
             // .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).invalidateHttpSession(true).and() TODO: maybe customize later
             .csrf().disable() // need this disabled for signing up 5/5/2023 Chuck
             .formLogin(form -> form
-                .loginPage(PATH_INDEX)
-                .loginProcessingUrl(PATH_LOGIN).failureHandler(authHandler)
-                // .defaultSuccessUrl(PATH_INDEX, true)
-                // .failureForwardUrl(PATH_INDEX).permitAll()
+                .loginPage(ICommonController.PATH_INDEX)
+                .loginProcessingUrl(ICommonController.PATH_LOGIN).failureHandler(authHandler)
+                // .defaultSuccessUrl(ICommonController.PATH_INDEX, true)
+                // .failureForwardUrl(ICommonController.PATH_INDEX).permitAll()
             )
-            // .formLogin().failureHandler(failureHandler).loginPage(PATH_INDEX).loginProcessingUrl(PATH_LOGIN).defaultSuccessUrl(PATH_INDEX, true).successForwardUrl(PATH_INDEX).failureForwardUrl(PATH_INDEX).permitAll()
+            // .formLogin().failureHandler(failureHandler).loginPage(ICommonController.PATH_INDEX).loginProcessingUrl(ICommonController.PATH_LOGIN).defaultSuccessUrl(ICommonController.PATH_INDEX, true).successForwardUrl(ICommonController.PATH_INDEX).failureForwardUrl(ICommonController.PATH_INDEX).permitAll()
             // .and()
             // .logout().clearAuthentication(true).deleteCookies("remove").invalidateHttpSession(false).logoutUrl(PATH_LOGOUT).logoutSuccessUrl("/logout.done")
             // .and()
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(PATH_API_USERS).hasRole(ADMIN) //only admin should view user list
+                .requestMatchers(ICommonController.PATH_API_USERS).hasRole(com.rumpus.common.AbstractCommon.ADMIN) //only admin should view user list
 
                 // this should prolly be changed when deployed, permitting all for ease of use/testing rn 5/8/2023 chuck
                 .requestMatchers("/**").permitAll()
                 .anyRequest().permitAll()
                 // .anyRequest().authenticated() 
             );
-            // .requestMatchers(PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated() only admin should view user list
+            // .requestMatchers(ICommonController.PATH_API_USERS).hasRole(ROLE_ADMIN)// .anyRequest().authenticated() only admin should view user list
             // .requestMatchers("/**").permitAll();
-            // .failureForwardUrl(PATH_LOGIN_FAILURE)
+            // .failureForwardUrl(ICommonController.PATH_LOGIN_FAILURE)
             // .permitAll();
             // .and()
             // .formLogin();

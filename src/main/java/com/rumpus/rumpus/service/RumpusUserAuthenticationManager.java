@@ -10,6 +10,10 @@ import com.rumpus.common.Dao.IDao;
 import com.rumpus.common.User.AbstractCommonAuthManager;
 import com.rumpus.rumpus.models.RumpusUser;
 
+/**
+ * TODO: is this being used? if not, delete it
+ * Look more into this.
+ */
 public class RumpusUserAuthenticationManager extends AbstractCommonAuthManager<RumpusUser> {
 
     public static final String NAME = "RumpusUserAuthenticationManager";

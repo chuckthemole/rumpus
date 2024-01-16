@@ -12,6 +12,7 @@ export default function User({provided_user}) {
     const data = provided_user !== undefined ? provided_user : useLoaderData();
     const rumpus_admin = <Section section_path={'/view/template/RumpusUserViewTemplate'} />;
     console.log(rumpus_admin);
+    console.log(data);
 
     if (!data) return(
         <div className='container m-6'>

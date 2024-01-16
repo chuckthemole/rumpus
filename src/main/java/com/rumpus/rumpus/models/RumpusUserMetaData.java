@@ -21,11 +21,6 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     // TODO: add more member variables for specific meta data here
 
     // ctors
-    private RumpusUserMetaData() {
-        super(NAME);
-        this.init(List.of());
-        
-    }
     private RumpusUserMetaData(List<Map<String, String>> metaList) {
         super(NAME);
         this.init(metaList);
@@ -37,7 +32,7 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
     // factory static ctors
     public static RumpusUserMetaData createEmpty() {
-        return new RumpusUserMetaData();
+        return new RumpusUserMetaData(List.of());
     }
     public static RumpusUserMetaData createFromListOfMaps(List<Map<String, String>> metaList) {
         return new RumpusUserMetaData(metaList);
@@ -108,7 +103,7 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
             @Override
             public RumpusUserMetaData read(JsonReader in) throws IOException {
-                RumpusUserMetaData userMetaData = new RumpusUserMetaData();
+                RumpusUserMetaData userMetaData = RumpusUserMetaData.createEmpty();
                 in.beginObject();
                 String fieldname = null;
 

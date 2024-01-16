@@ -7,13 +7,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.Service.UserService;
+import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUserMetaData;
 
-public class RumpusUserService extends UserService<RumpusUser> implements IRumpusUserService {
+// public class RumpusUserService extends AbstractUserDetailsService<RumpusUser> implements IRumpusUserService {
+public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUserMetaData> implements IRumpusUserService {
 
-    protected static final String NAME = "userService";
+    protected static final String NAME = "RumpusUserService";
     private static final String USERNAME_CONDITION = "username = ?";
     private Map<String, RumpusUser> users;
 
@@ -34,6 +36,11 @@ public class RumpusUserService extends UserService<RumpusUser> implements IRumpu
         LogBuilder log = new LogBuilder(true, "RumpusUserService::loadUserByUsername\n", "Loading user '", username, "'...");
         log.info();
         return this.get(username).getUserDetails();
+    }
+
+    @Override
+    public String getKey() {
+        return "This is a cool key!";
     }
 
     // @Override

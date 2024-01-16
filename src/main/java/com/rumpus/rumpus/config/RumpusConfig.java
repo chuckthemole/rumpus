@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
@@ -18,14 +18,18 @@ import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
+import com.rumpus.common.Service.AbstractUserService;
+import com.rumpus.common.views.Template.AbstractUserTemplate;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.Rumpus;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
-import com.rumpus.rumpus.service.IRumpusUserService;
+import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUserMetaData;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
+import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @Configuration
 // @EnableSpringWebSession
@@ -35,27 +39,33 @@ import com.rumpus.rumpus.service.RumpusUserService;
 public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
 
     // @Bean
-    // public RumpusView view() {
-    //     return new RumpusView();
+    // public IRumpusUserDao rumpusUserDao() {
+    //     IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
+    //     return userDao;
     // }
 
-    @Bean
-    public IRumpusUserDao rumpusUserDao() {
-        IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
-        return userDao;
-    }
+    // @Bean
+    // @Primary
+    // public RumpusAdminUserView rumpusAdminUserView() {
+    //     return RumpusAdminUserView.create(RumpusUser.create("EMPTY_USERNAME", "EMPTY_PASSWORD", "EMPTY_EMAIL"));
+    // }
 
-    @Bean
-    @DependsOn({"rumpusUserDao"})
-    public IRumpusUserService rumpusUserService() {
-        return new RumpusUserService(this.rumpusUserDao());
-    }
+    // @Bean
+    // @DependsOn({"rumpusUserDao"})
+    // public AbstractUserService<RumpusUser, RumpusUserMetaData> rumpusUserService() {
+    //     return new RumpusUserService(this.rumpusUserDao());
+    // }
 
-    @Bean
-    @DependsOn({"rumpusUserDao"})
-    public AuthenticationManager authenticationManager() {
-        return new RumpusUserAuthenticationManager(this.rumpusUserDao());
-    }
+    // @Bean
+    // public AbstractUserTemplate<RumpusUser, RumpusUserMetaData> rumpusUserTemplate() {
+    //     return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
+    // }
+
+    // @Bean
+    // @DependsOn({"rumpusUserDao"})
+    // public AuthenticationManager authenticationManager() {
+    //     return new RumpusUserAuthenticationManager(this.rumpusUserDao());
+    // }
 
     @Bean
     public LogManager logManager() {
@@ -63,11 +73,11 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
         return manager;
     }
 
-    @Bean
-    @DependsOn({"rumpusUserDao"})
-    public RumpusLoader rumpusLoader() {
-        return new RumpusLoader(rumpusUserDao());
-    }
+    // @Bean
+    // @DependsOn({"rumpusUserDao"})
+    // public RumpusLoader rumpusLoader() {
+    //     return new RumpusLoader(rumpusUserDao());
+    // }
 
     @Bean
     public ForumThreadManager forumThreadManager() {

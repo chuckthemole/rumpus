@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.rumpus.RumpusTest;
+import com.rumpus.common.Controller.ICommonController;
+import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.config.WebSecurityTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
@@ -35,7 +38,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @WebMvcTest(RumpusRestController.class)
 public class RumpusControllerTests extends RumpusTest {
 
-    @MockBean IRumpusUserService userService;
+    // @MockBean IRumpusUserService mockUserService;
+    @MockBean AbstractUserService<RumpusUser, RumpusUserMetaData> mockUserService; // May change to IRumpusUserService if I can get to work
     @MockBean AbstractViews viewLoader;
  
     @Autowired MockMvc mockMvc;
@@ -47,9 +51,8 @@ public class RumpusControllerTests extends RumpusTest {
         user.setPassword("coolpasswordbro");
         List<RumpusUser> users = Arrays.asList(user);
 
-        Mockito.when(userService.getAll()).thenReturn(users);
-
-        mockMvc.perform(get(PATH_API_USERS + "/username")) // sorting by username
+        Mockito.when(mockUserService.getAll()).thenReturn(users);
+        mockMvc.perform(get(ICommonController.PATH_API_USERS + "/username")) // sorting by username
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", Matchers.hasSize(1)))
             .andExpect(jsonPath("$[0].username", Matchers.is("Frodo")));
@@ -62,7 +65,7 @@ public class RumpusControllerTests extends RumpusTest {
 
         Mockito.when(viewLoader.getFooter()).thenReturn(footer);
 
-        mockMvc.perform(get(PATH_VIEW_FOOTER))
+        mockMvc.perform(get(ICommonController.PATH_VIEW_FOOTER))
             .andExpect(status().isOk());
 
             // .andExpect(jsonPath("$", Matchers.hasSize(1)))
