@@ -1,6 +1,5 @@
 package com.rumpus.chuck;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +23,7 @@ public class ChuckViewController extends AbstractViewController
     < // TODO: using rumpus stuff here for now. should change to chuck stuff
         RumpusUser,
         RumpusUserMetaData,
-        AbstractUserService<RumpusUser, RumpusUserMetaData>,
+        AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO: Change to ChuckUserService when created
         RumpusAdminUserView
     > {
 

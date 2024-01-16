@@ -8,10 +8,10 @@ import com.rumpus.common.Controller.AbstractCommonController;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Server.ServerManager;
-import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @Controller
@@ -19,26 +19,9 @@ abstract public class AbstractRumpusController extends AbstractCommonController
     <
         RumpusUser,
         RumpusUserMetaData,
-        AbstractUserService<RumpusUser, RumpusUserMetaData>,
+        IRumpusUserService,
         RumpusAdminUserView
     > {
-        // Templates
-        protected static final String TEMPLATE_INDEX = "index";
-        protected static final String TEMPLATE_ADMIN = "admin";
-        protected static final String TEMPLATE_USER = "user/user";
-
-        // File paths
-        protected static final String PYTHON_DIR_PATH = "src/main/python/";
-
-        // Python files
-        protected static final String VOICE_ASSISTANT_FILE_PATH = PYTHON_DIR_PATH + "voice_assistant.py";
-
-        // @Autowired protected RumpusView view;
-        // @Autowired protected IUserService rumpusUserService;
-        // @Autowired protected ProviderManager authManager;
-        // @Autowired protected AuthenticationManager authManager;
-
-        // @Autowired protected IRumpusUserService rumpusUserService;
 
         // @Autowired
         // @Qualifier("rumpusViewLoader")

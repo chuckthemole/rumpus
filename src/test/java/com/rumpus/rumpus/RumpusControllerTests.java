@@ -9,13 +9,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.rumpus.RumpusTest;
 import com.rumpus.common.Controller.ICommonController;
-import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.config.WebSecurityTestConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
@@ -38,8 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @WebMvcTest(RumpusRestController.class)
 public class RumpusControllerTests extends RumpusTest {
 
-    // @MockBean IRumpusUserService mockUserService;
-    @MockBean AbstractUserService<RumpusUser, RumpusUserMetaData> mockUserService; // May change to IRumpusUserService if I can get to work
+    @MockBean IRumpusUserService mockUserService;
     @MockBean AbstractViews viewLoader;
  
     @Autowired MockMvc mockMvc;

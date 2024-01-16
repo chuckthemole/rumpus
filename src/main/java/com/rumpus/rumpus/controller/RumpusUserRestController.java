@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.Controller.AbstractUserController;
-import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @RestController
@@ -16,7 +16,7 @@ public class RumpusUserRestController extends AbstractUserController
     <
         RumpusUser,
         RumpusUserMetaData,
-        AbstractUserService<RumpusUser, RumpusUserMetaData>,
+        IRumpusUserService,
         RumpusAdminUserView
     > {
 

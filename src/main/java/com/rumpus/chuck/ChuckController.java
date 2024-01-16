@@ -1,6 +1,5 @@
 package com.rumpus.chuck;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
@@ -14,7 +13,7 @@ abstract public class ChuckController extends AbstractCommonController
     < // TODO: using rumpus stuff here for now. should change to chuck stuff
         RumpusUser,
         RumpusUserMetaData,
-        AbstractUserService<RumpusUser, RumpusUserMetaData>,
+        AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO: change when I implement IChuckUserService
         RumpusAdminUserView
     > {
     

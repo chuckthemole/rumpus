@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Controller.AbstractCommonController;
 import com.rumpus.common.Controller.AbstractCommonRestController;
-import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class CommonRestController extends AbstractCommonRestController
     <
         RumpusUser,
         RumpusUserMetaData,
-        AbstractUserService<RumpusUser, RumpusUserMetaData>,
+        IRumpusUserService,
         RumpusAdminUserView
     > {
 
