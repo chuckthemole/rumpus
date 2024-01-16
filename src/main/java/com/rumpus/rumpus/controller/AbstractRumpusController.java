@@ -2,7 +2,6 @@ package com.rumpus.rumpus.controller;
 
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
@@ -23,9 +22,6 @@ abstract public class AbstractRumpusController extends AbstractCommonController
         AbstractUserService<RumpusUser, RumpusUserMetaData>,
         RumpusAdminUserView
     > {
-
-        @Autowired protected static Environment environment; // TODO: look at this. can I move this to AbstractCommonController? I think I've tried before. But look again.
-
         // Templates
         protected static final String TEMPLATE_INDEX = "index";
         protected static final String TEMPLATE_ADMIN = "admin";
