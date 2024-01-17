@@ -45,7 +45,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
             // .logout().clearAuthentication(true).deleteCookies("remove").invalidateHttpSession(false).logoutUrl(PATH_LOGOUT).logoutSuccessUrl("/logout.done")
             // .and()
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(ICommonController.PATH_API_USERS).hasRole(com.rumpus.common.AbstractCommon.ADMIN) //only admin should view user list
+                .requestMatchers(ICommonController.PATH_API_USERS).hasRole(com.rumpus.common.ICommon.ADMIN) //only admin should view user list
 
                 // this should prolly be changed when deployed, permitting all for ease of use/testing rn 5/8/2023 chuck
                 .requestMatchers("/**").permitAll()

@@ -12,7 +12,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.rumpus.common.AbstractCommon;
+import com.rumpus.common.ICommon;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Model.AbstractMetaData;
 import com.rumpus.common.User.AbstractCommonUser;
@@ -86,11 +86,11 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
             @Override
             public void write(JsonWriter out, RumpusUser user) throws IOException {
                 out.beginObject(); 
-                out.name(AbstractCommon.USERNAME);
+                out.name(ICommon.USERNAME);
                 out.value(user.getUsername());
-                out.name(AbstractCommon.EMAIL);
+                out.name(ICommon.EMAIL);
                 out.value(user.getEmail());
-                out.name(AbstractCommon.PASSWORD);
+                out.name(ICommon.PASSWORD);
                 out.value(user.getPassword());
 
                 // meta data
@@ -117,12 +117,12 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
                         //get the current token 
                         fieldname = in.nextName(); 
                     }
-                    if (AbstractCommon.USERNAME.equals(fieldname)) {
+                    if (ICommon.USERNAME.equals(fieldname)) {
                         //move to next token
                         token = in.peek();
                         user.setUsername(in.nextString());
                     }
-                    if(AbstractCommon.EMAIL.equals(fieldname)) {
+                    if(ICommon.EMAIL.equals(fieldname)) {
                         //move to next token
                         token = in.peek();
                         user.setEmail(in.nextString());
