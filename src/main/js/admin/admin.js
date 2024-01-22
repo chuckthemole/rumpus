@@ -39,7 +39,7 @@ export default function Admin() {
                         </a>
                     </li>
                     <li className={`logsTab ${logsActive && is_active}`}>
-                        <a onClick={ ()=> { clear(); setLogs(true); setActiveWindow(<Log page={'ADMIN_LOG'}/>); } }>
+                        <a onClick={ ()=> { clear(); setLogs(true); setActiveWindow(<Log log_identifier={'ADMIN_LOG'}/>); } }>
                             <span>Logs</span>
                         </a>
                     </li>
