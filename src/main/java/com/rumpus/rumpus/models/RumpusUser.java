@@ -31,9 +31,13 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
             .registerTypeAdapter(this.getClass(), this.getTypeAdapter()).create();
     }
 
+    /////////////////////////////
+    // public static factory ////
+    /////////////////////////////
     public static RumpusUser createEmptyUser() {
         return new RumpusUser();
     }
+
     public static RumpusUser create(String username, String password, String email) {
         RumpusUser user = new RumpusUser();
         user.setUsername(username);
@@ -57,15 +61,19 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
             // meta = RumpusUserMetaData.createFromListOfMaps((List<Map<String, String>>) userMap.get(USER_META_DATA));
             meta = (AbstractCommonUserMetaData<RumpusUserMetaData>) userMap.get(USER_META_DATA);
         }
-        if(meta != null) {
-            LogBuilder.logBuilderFromStringArgs("Success building RumpusUserMetaData:\n", meta.toString()).info();
-            user.setMetaData(meta);
-        } else {
-            LOG.info("Error: no usermeta data.");
+
+        if(meta == null) {
+            LogBuilder.logBuilderFromStringArgs(RumpusUser.class, "Failed building RumpusUserMetaData. Setting empty meta data.").info();
+            meta = RumpusUserMetaData.createEmpty();
         }
 
+        LogBuilder.logBuilderFromStringArgs(RumpusUser.class, "Success building RumpusUserMetaData:\n", meta.toString()).info();
+        user.setMetaData(meta);
         return user;
     }
+    /////////////////////////////////
+    // end public static factory ////
+    /////////////////////////////////
 
     @Override
     public void serialize(RumpusUser object, OutputStream outputStream) throws IOException {

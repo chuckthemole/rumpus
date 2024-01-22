@@ -22,7 +22,6 @@ public class RumpusUserDao extends ApiDBJdbcUsers<RumpusUser, RumpusUserMetaData
     private static final String NAME = "RumpusUserDao";
     private static final String TABLE = "user";
     private static final String META_TABLE = "user_meta_info";
-    // private static final String sqlRumpusUserInsert = "INSERT INTO user VALUES(:id, :username, :email)"; // ApiDBJdbc look at org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
     public RumpusUserDao(JdbcUserDetailsManager manager) {
         super(manager, TABLE, RumpusUserDao.rumpusUserMapper());
