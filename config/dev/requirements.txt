@@ -25,3 +25,4 @@ wikipedia==1.4.0
 wolframalpha==5.0.0
 xmltodict==0.13.0
 yarl==1.9.2
+locust==2.20.1

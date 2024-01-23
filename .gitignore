@@ -58,3 +58,5 @@ src/main/resources/static/css/rumpus-styles.css
 
 test.log
 src/main/js/common/
+**/__pycache__/
+**/__PYCACHE__/

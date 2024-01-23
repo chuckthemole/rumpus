@@ -18,6 +18,13 @@ runDebug = "./gradlew bootRun --debug > src/main/java/com/rumpus/rumpus/log/spri
 moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
 
+########### LOCUST ###############################
+### locust ( https://docs.locust.io/ ) commands ##
+##################################################
+locust_test = "locust --locustfile ./src/main/python/test.py" # this will start the server and run the tests in test.py
+locust_version = "locust -V" # this will print the version of locust
+
+
 def commands():
     pass
 
@@ -45,6 +52,10 @@ if __name__ == '__main__':
             os.system(run)
         elif arg == "runDebug":
             os.system(runDebug)
+        elif arg == "locust_test":
+            os.system(locust_test)
+        elif arg == "locust_version":
+            os.system(locust_version)
         else:
             print("Error: bad argument")
         
