@@ -53,7 +53,7 @@ public class RumpusAdminUserView extends AbstractUserTemplate<RumpusUser, Rumpus
     @Override
     public AbstractHtmlObject setHead() {
         AbstractTile head = BulmaTile.createAncestorTile("RumpusUserViewHead");
-        head.addHtmlTagAttribute(Attribute.create("class", "has-centered-text"));
+        head.addToAttribute("class", "has-centered-text");
         head.addChild(this.get(AbstractUserTemplate.USERNAME_TILE_KEY));
         head.addChild(this.get(AbstractUserTemplate.EMAIL_TILE_KEY));
         head.addChild(this.get(AbstractUserTemplate.AUTHORITIES_TILE_KEY));
