@@ -22,7 +22,7 @@ public class RumpusViewLoader extends AbstractViews {
     private static final String NAME = "RumpusViewLoader";
 
     public static final String RUMPUS_ADMIN_TEMPLATE = "RumpusAdminTemplate";
-    public static final String RUMPUS_USER_VIEW_TEMPLATE = "RumpusUserViewTemplate";
+    public static final String RUMPUS_USER_VIEW_TEMPLATE = AbstractViews.CURRENT_USER_TEMPLATE_KEY;
 
     // Footer Columns
     // Add footers columns here, Pair<title,items>
@@ -132,11 +132,7 @@ public class RumpusViewLoader extends AbstractViews {
     @Override
     protected int initTemplates() {
         this.put(RUMPUS_ADMIN_TEMPLATE, RumpusAdmin.create());
-        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusPlaceHolderView.create());
+        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusAdminUserView.createWithEmptyUser());
         return SUCCESS;
-    }
-
-    protected void updateUserTemplate(RumpusUser user) {
-        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusAdminUserView.create(user));
     }
 }

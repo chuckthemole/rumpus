@@ -16,7 +16,13 @@ public class RumpusAdminUserView extends AbstractUserTemplate<RumpusUser, Rumpus
         super(NAME, user);
     }
 
-    public static RumpusAdminUserView create(RumpusUser user) {
+    ///////////////////////
+    /// Factory Methods ///
+    ///////////////////////
+    public static RumpusAdminUserView createWithEmptyUser() {
+        return new RumpusAdminUserView(RumpusUser.createEmptyUser());
+    }
+    public static RumpusAdminUserView createWithUser(RumpusUser user) {
         return new RumpusAdminUserView(user);
     }
 

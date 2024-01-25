@@ -40,7 +40,7 @@ public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, R
     @Bean
     @Primary
     public RumpusAdminUserView rumpusAdminUserView() {
-        return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
+        return RumpusAdminUserView.createWithEmptyUser();
     }
 
     // @Bean

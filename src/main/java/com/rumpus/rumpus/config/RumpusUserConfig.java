@@ -34,7 +34,7 @@ public class RumpusUserConfig extends AbstractCommonUserConfig<RumpusUser, Rumpu
     @Bean
     @Primary
     public RumpusAdminUserView rumpusAdminUserView() {
-        return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
+        return RumpusAdminUserView.createWithUser(RumpusUser.createEmptyUser());
     }
 
     // @Bean

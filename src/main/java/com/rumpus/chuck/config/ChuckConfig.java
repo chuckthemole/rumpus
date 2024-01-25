@@ -17,6 +17,6 @@ public class ChuckConfig extends AbstractCommonConfig {
 
     @Bean
     public RumpusAdminUserView chuckAdminUserView() {
-        return RumpusAdminUserView.create(RumpusUser.create("EMPTY_USERNAME", "EMPTY_PASSWORD", "EMPTY_EMAIL"));
+        return RumpusAdminUserView.createWithUser(RumpusUser.create("EMPTY_USERNAME", "EMPTY_PASSWORD", "EMPTY_EMAIL"));
     }
 }
