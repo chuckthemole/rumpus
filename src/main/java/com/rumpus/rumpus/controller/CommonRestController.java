@@ -44,20 +44,20 @@ public class CommonRestController extends AbstractCommonRestController
 
         @GetMapping(value = "/")
         public ResponseEntity<String> getRoot(HttpServletRequest request) {
-            LOG.info("CommonRestControler::getRoot()");
+            LOG("CommonRestControler::getRoot()");
             return new ResponseEntity<String>("TODO - getRoot()", HttpStatus.ACCEPTED);
         }
 
         // TODO: look into this. user_icon.js is giving 404 at this request
         @GetMapping(value = "/paths")
         public ResponseEntity<Map<String, String>> getCommonPaths(HttpServletRequest request) {
-            LOG.info("CommonRestControler::getCommonPaths()");
+            LOG("CommonRestControler::getCommonPaths()");
             return new ResponseEntity<Map<String, String>>(AbstractCommonController.commonPaths.getBasePath(AbstractCommonController.COMMON_REST_API_PATH), HttpStatus.ACCEPTED);
         }
 
         @GetMapping(value = "/paths/{basePath}")
         public ResponseEntity<Map<String, String>> getPathsFromBasePath(@PathVariable("basePath") String basePath, HttpServletRequest request) {
-            LOG.info("CommonRestControler::getPathsFromBasePath()");
+            LOG("CommonRestControler::getPathsFromBasePath()");
             Map<String, String> paths = AbstractCommonController.commonPaths.getBasePath(basePath);
             if(paths == null) {
                 LogBuilder.logBuilderFromStringArgs("No paths found with basePath=", basePath).info();
@@ -72,9 +72,9 @@ public class CommonRestController extends AbstractCommonRestController
         // @Override
         // @GetMapping(value = "/is_authenticated")
         // protected ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
-        //     LOG.info("CommonRestControler::getAuthenticationOfUser()");
+        //     LOG("CommonRestControler::getAuthenticationOfUser()");
         //     if(authentication == null) {
-        //         LOG.info("CommonRestControler::getAuthenticationOfUser() - authentication is null");
+        //         LOG("CommonRestControler::getAuthenticationOfUser() - authentication is null");
         //         return new ResponseEntity<Boolean>(false, HttpStatus.ACCEPTED);
         //     }
         //     Authentication auth = authenticationManager.authenticate(authentication);
@@ -82,19 +82,19 @@ public class CommonRestController extends AbstractCommonRestController
         //     if(auth != null) {
         //         isAuthenticated = auth.isAuthenticated();
         //     } else {
-        //         LOG.info("CommonRestControler::getAuthenticationOfUser() - auth is null");
+        //         LOG("CommonRestControler::getAuthenticationOfUser() - auth is null");
         //     }
         //     return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
         // }
 
         @GetMapping(value = "is_authenticated")
         public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
-            LOG.info("CommonRestController::getAuthenticationOfUser()");
+            LOG("CommonRestController::getAuthenticationOfUser()");
             boolean isAuthenticated = false;
             if(authentication != null) {
                 isAuthenticated = authentication.isAuthenticated();
             } else {
-                LOG.info("Authentication is null");
+                LOG("Authentication is null");
             }
             return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
         }
@@ -102,7 +102,7 @@ public class CommonRestController extends AbstractCommonRestController
         @Override
         @GetMapping(value = "/current_base_path")
         public ResponseEntity<Map<String, String>> currentBasePath() {
-            LOG.info("CommonRestController::getCurrentBasePath()");
+            LOG("CommonRestController::getCurrentBasePath()");
             return new ResponseEntity<Map<String, String>>(Map.of("path", this.getCurrentBasePath()), HttpStatus.ACCEPTED);
         }
 

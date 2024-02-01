@@ -17,6 +17,7 @@ import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Model.AbstractMetaData;
 import com.rumpus.common.User.AbstractCommonUser;
 import com.rumpus.common.User.AbstractCommonUserMetaData;
+import com.rumpus.rumpus.IRumpus;
 
 public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaData> {
 
@@ -48,7 +49,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
 
     @SuppressWarnings(UNCHECKED)
     public static RumpusUser createFromMap(Map<String, Object> userMap) {
-        LOG.info("RumpusUser::createFromMap()");
+        IRumpus.LOG(RumpusUser.class, "RumpusUser::createFromMap()");
         RumpusUser user = new RumpusUser();
         user.setUsername(userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
         user.setUserPassword(userMap.containsKey(PASSWORD) ? (String) userMap.get(PASSWORD) : EMPTY_FIELD);
@@ -77,13 +78,13 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
 
     @Override
     public void serialize(RumpusUser object, OutputStream outputStream) throws IOException {
-        LOG.info("RumpusUser::serialize()");
+        LOG("RumpusUser::serialize()");
         this.getTypeAdapter().write(new JsonWriter(new OutputStreamWriter(outputStream)), object);
     }
 
     @Override
     public Map<String, Object> getModelAttributesMap() {
-        LOG.info("RumpusUser::getModelAttributesMap()");
+        LOG("RumpusUser::getModelAttributesMap()");
         Map<String, Object> modelAttributesMap = Map.of(ID, this.id, EMAIL, this.getEmail());
         return modelAttributesMap;
     }

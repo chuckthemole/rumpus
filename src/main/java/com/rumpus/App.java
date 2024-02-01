@@ -14,7 +14,10 @@ import org.springframework.context.ApplicationContext;
 public class App {
     private static ApplicationContext applicationContext;
     public static void main(String[] args) {
-        applicationContext = SpringApplication.run(App.class, args);
+        SpringApplication applicationContext = new SpringApplication(App.class);
+        // applicationContext.setDefaultProperties(java.util.Collections.singletonMap("server.port", "8083"));
+        // applicationContext = SpringApplication.run(App.class, args);
+        applicationContext.run(args);
         // displayAllBeans();
     }
 

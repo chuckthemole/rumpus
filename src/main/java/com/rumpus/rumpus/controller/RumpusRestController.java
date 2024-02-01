@@ -7,7 +7,7 @@ import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Log.LogCollection;
 import com.rumpus.common.Log.LogItem;
 import com.rumpus.common.Session.CommonSession;
-import com.rumpus.rumpus.Rumpus;
+import com.rumpus.rumpus.IRumpus;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -52,21 +52,21 @@ public class RumpusRestController extends AbstractRumpusController {
 
     @GetMapping(value = "is_authenticated")
     public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
-        LOG.info("RumpusRestController::getAuthenticationOfUser()");
+        LOG("RumpusRestController::getAuthenticationOfUser()");
         boolean isAuthenticated = false;
         if(authentication != null) {
             isAuthenticated = authentication.isAuthenticated();
         } else {
-            LOG.info("Authentication is null");
+            LOG("Authentication is null");
         }
         return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = ICommonController.PATH_LOG_ACTION)
     public ResponseEntity<CommonSession> logAction(@RequestBody LogItem logItem, HttpServletRequest request) {
-        LOG.info("RumpusRestController POST: /log_action");
+        LOG("RumpusRestController POST: /log_action");
         HttpSession session = request.getSession();
-        LOG.info(logItem.toString());
+        LOG(logItem.toString());
         this.logManager.log(logItem);
 
         ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
@@ -75,35 +75,35 @@ public class RumpusRestController extends AbstractRumpusController {
 
     @GetMapping(value = "/logs/{page}")
     public ResponseEntity<LogCollection> getLogsForPage(@PathVariable("page") String page, HttpServletRequest request) {
-        LOG.info("RumpusRestController GET: /logs");
+        LOG("RumpusRestController GET: /logs");
         LogCollection logs = this.logManager.get(page);
         if(logs == null || logs.isEmpty()) {
-            LOG.info("No logs found for page: " + page);
+            LOG("No logs found for page: " + page);
         }
-        LOG.info("Successfully retrieved logs for page: " + page + "");
+        LOG("Successfully retrieved logs for page: " + page + "");
         return new ResponseEntity<>(logs, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/admin/forum_post")
     public ResponseEntity<CommonSession> adminForumPost(@RequestBody ForumPost forumPost, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        this.forumThreadManager.get(Rumpus.ADMIN_FORUM_THREAD_ID).addToSequence(ForumPostNode.createNodeFromForumPost(forumPost));
-        LOG.info(forumPost.toString());
+        this.forumThreadManager.get(IRumpus.ADMIN_FORUM_THREAD_ID).addToSequence(ForumPostNode.createNodeFromForumPost(forumPost));
+        LOG(forumPost.toString());
         return new ResponseEntity<>(new CommonSession(session), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/admin/forum_posts")
     public ResponseEntity<java.util.List<ForumPost>> getAdminForumThread(Authentication authentication) {
-        LOG.info("RumpusRestController GET: /admin/forum_posts");
+        LOG("RumpusRestController GET: /admin/forum_posts");
         if(authentication != null) {
             if(this.forumThreadManager != null) {
-                final ForumThread forumThread = this.forumThreadManager.get(Rumpus.ADMIN_FORUM_THREAD_ID);
+                final ForumThread forumThread = this.forumThreadManager.get(IRumpus.ADMIN_FORUM_THREAD_ID);
                 if(forumThread != null) {
                     return new ResponseEntity<java.util.List<ForumPost>>(forumThread.toListOfTopLevel(), HttpStatus.ACCEPTED);
                 }
             }
         }
-        LOG.info("Error: unable to get admin forum posts");
+        LOG("Error: unable to get admin forum posts");
         return null;
     }
 
@@ -118,20 +118,20 @@ public class RumpusRestController extends AbstractRumpusController {
 
     @GetMapping(value = "/python")
     public ResponseEntity<String> getPython() {
-        LOG.info("RumpusRestController::getPython()");
+        LOG("RumpusRestController::getPython()");
         this.pythonInterpreter.execfile("src/main/python/voice_assistant.py");
         return new ResponseEntity<String>("test", HttpStatus.ACCEPTED);
     }
 
     @GetMapping(value = "/current_base_path")
     public ResponseEntity<String> currentBasePath() {
-        LOG.info("RumpusRestController::getCurrentBasePath()");
+        LOG("RumpusRestController::getCurrentBasePath()");
         return new ResponseEntity<String>(this.getCurrentBasePath(), HttpStatus.ACCEPTED);
     }
 
     // @GetMapping(value = "/start_python")
     // public ResponseEntity<String> startPythonServer() {
-    //     LOG.info("RumpusRestController::startPythonServer()");
+    //     LOG("RumpusRestController::startPythonServer()");
     //     AbstractServer server = this.serverManager.get("PycommonServer");
     //     server.start();
     //     final String status = server.isRunning() ? "python server is running" : "python server is not running";
@@ -140,7 +140,7 @@ public class RumpusRestController extends AbstractRumpusController {
 
     // @GetMapping(value = "/stop_python")
     // public ResponseEntity<String> stopPythonServer() {
-    //     LOG.info("RumpusRestController::stopPythonServer()");
+    //     LOG("RumpusRestController::stopPythonServer()");
     //     AbstractServer server = this.serverManager.get("PycommonServer");
     //     server.stop();
     //     final String status = server.isRunning() ? "python server is running" : "python server is not running";
@@ -159,8 +159,8 @@ public class RumpusRestController extends AbstractRumpusController {
 
     // @RequestMapping(value = "/login", method = RequestMethod.POST)
     // public Authentication login(@RequestBody RumpusUser userRequest) {
-    //     LOG.info("RumpusRestController::login()");
-    //     LOG.info(userRequest.toString());
+    //     LOG("RumpusRestController::login()");
+    //     LOG(userRequest.toString());
     //     Authentication authentication = this.authManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
     //     boolean isAuthenticated = isAuthenticated(authentication);
     //     if(isAuthenticated) {
@@ -178,7 +178,7 @@ public class RumpusRestController extends AbstractRumpusController {
     // TODO check if I'm using these functions below here. Idk if I am - chuck 6/5/2023
     @GetMapping("/login_failure")
     public String loginFailure() {
-        LOG.info("Error logining in!!");
+        LOG("Error logining in!!");
         return "Failure to login";
     }
 

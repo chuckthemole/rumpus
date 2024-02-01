@@ -56,22 +56,22 @@ public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUse
 
     // @Override
     // public int login(RumpusUser user) {
-    //     LOG.info("UserService::login()");
+    //     LOG("UserService::login()");
 
     //     // check for username or user email
     //     User foundUser = null;
     //     if(this.users.containsKey(user.getUsername())) {
-    //         LOG.info("Found user name...");
+    //         LOG("Found user name...");
     //         foundUser = this.users.get(user.getUsername());
     //     } else if(this.users.containsKey(user.getEmail())) {
-    //         LOG.info("Found user email...");
+    //         LOG("Found user email...");
     //         foundUser = this.users.get(user.getEmail());
     //     } else {
-    //         LOG.info("User credentials are not correct.");
+    //         LOG("User credentials are not correct.");
     //         return ERROR;
     //     }
     //     if(foundUser != null && foundUser.getPassword().equals(user.getPassword())) { // check password
-    //         LOG.info("User credentials are correct. Logging in....");
+    //         LOG("User credentials are correct. Logging in....");
     //         // TODO login
     //     }
     //     return SUCCESS;

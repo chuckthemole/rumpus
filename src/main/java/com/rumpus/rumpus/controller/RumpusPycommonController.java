@@ -29,7 +29,7 @@ public class RumpusPycommonController extends RumpusRestController {
      */
     @GetMapping(value = "/test")
     public ResponseEntity<CommonSession> test(HttpServletRequest request) {
-        LOG.info("RumpusPycommonController::test()");
+        LOG("RumpusPycommonController::test()");
         HttpSession session = request.getSession();
         final String uri = "http://localhost:8000/voice_assist/";
         RestTemplate restTemplate = new RestTemplate();
@@ -41,7 +41,7 @@ public class RumpusPycommonController extends RumpusRestController {
 
     @GetMapping(value = "/scraper_test")
     public ResponseEntity<CommonSession> scraperTest(HttpServletRequest request) {
-        LOG.info("RumpusPycommonController::scraperTest()");
+        LOG("RumpusPycommonController::scraperTest()");
         HttpSession session = request.getSession();
         final String uri = "http://localhost:8000/scraper/chatgpt/";
         RestTemplate restTemplate = new RestTemplate();

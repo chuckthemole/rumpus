@@ -65,7 +65,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     // @Bean
     // @DependsOn({"rumpusUserDao"})
     // public AuthenticationManager authenticationManager() {
-    //     LOG.info("WebSecurityConfig::authenticationManager()");
+    //     LOG("WebSecurityConfig::authenticationManager()");
     //     return new RumpusUserAuthenticationManager(this.applicationContext.getBean("rumpusUserDao", IRumpusUserDao.class));
     // }
 

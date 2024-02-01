@@ -24,17 +24,17 @@ public class RumpusUserAuthenticationManager extends AbstractCommonAuthManager<R
 
     @Override
     public boolean userIsAuthenticated(String name, String password) {
-        LOG.info("RumpusUserAuthenticationManager::userIsAuthenticated");
+        LOG("RumpusUserAuthenticationManager::userIsAuthenticated");
         final UserDetails details = loadUserByUsername(name);
         if(details == null) {
             return false;
         }
         if(!details.getUsername().equals(name)) { // prolly don't need to do this since loading by username
-            LOG.info("User name is not equal");
+            LOG("User name is not equal");
             return false;
         }
         if(!details.getPassword().equals(password)) {
-            LOG.info("Password is not equal");
+            LOG("Password is not equal");
             return false;
         }
         return true;

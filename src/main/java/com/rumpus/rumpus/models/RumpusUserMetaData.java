@@ -62,14 +62,14 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
     // overriding these serializer methods here. right now just using defaults but can customize as commented out below. 2023/6/28
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-        LOG.info("RumpusUserMetaData::writeObject()");
+        LOG("RumpusUserMetaData::writeObject()");
         out.defaultWriteObject();
         // out.writeObject(this.getCreationTime());
         // out.writeChars(this.photoLink);
         // out.writeChars(this.aboutMe);
     }
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        LOG.info("RumpusUserMetaData::readObject()");
+        LOG("RumpusUserMetaData::readObject()");
         in.defaultReadObject();
         // try {
         //     this.creationTime = (Instant) stream.readObject();
@@ -143,13 +143,13 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
     @Override
     public void serialize(RumpusUserMetaData object, OutputStream outputStream) throws IOException {
-        LOG.info("RumpusUserMetaData::serialize()");
+        LOG("RumpusUserMetaData::serialize()");
         this.getTypeAdapter().write(new JsonWriter(new OutputStreamWriter(outputStream)), object);
     }
 
     @Override
     public Map<String, Object> getMetaAttributesMap() {
-        LOG.info("RumpusUserMetaData::getModelAttributesMap()");
+        LOG("RumpusUserMetaData::getModelAttributesMap()");
         Map<String, Object> modelAttributesMap = Map.of(
             USER_CREATION_DATE_TIME, (String) this.getStandardFormattedCreationTime(),
             USER_PHOTO_LINK, (String) this.getPhotoLink(),

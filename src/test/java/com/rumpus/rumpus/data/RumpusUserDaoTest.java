@@ -69,7 +69,7 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
         ReadJson<RumpusUser> json = new ReadJson<>(RumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
         users = json.readModelsFromFile();
         // for(RumpusUser user : users) {
-        //     LOG.info(user.toString());
+        //     LOG(user.toString());
         // }
     }
     
@@ -89,7 +89,7 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     @Test
     @Order(1)
 	void testGetUser() {
-        // LOG.info(this.dao.get(ROOT_USER).toString());
+        // LOG(this.dao.get(ROOT_USER).toString());
         assertEquals(expectedRootUser, this.dao.get(ROOT_USER));
 	}
 

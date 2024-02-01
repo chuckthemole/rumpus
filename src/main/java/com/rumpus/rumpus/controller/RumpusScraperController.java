@@ -21,7 +21,7 @@
     
 //     @GetMapping(value = "/start/{scraper}")
 //     public ResponseEntity<CommonSession> startScraper(@PathVariable("scraper") String scraperName, HttpServletRequest request) {
-//         LOG.info("RumpusScraperController::startScraper()");
+//         LOG("RumpusScraperController::startScraper()");
 //         HttpSession session = request.getSession();
 //         // if(!this.serverManager.containsKey(scraperName)) {
 //         //     session.setAttribute("server status", "Server not found: " + scraperName);

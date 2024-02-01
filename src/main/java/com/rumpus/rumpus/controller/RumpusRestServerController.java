@@ -26,7 +26,7 @@ public class RumpusRestServerController extends RumpusRestController {
 
     @GetMapping(value = "/start/{server}")
     public ResponseEntity<CommonSession> startServer(@PathVariable("server") String serverName, HttpServletRequest request) {
-        LOG.info("RumpusRestServerController::startServer()");
+        LOG("RumpusRestServerController::startServer()");
         HttpSession session = request.getSession();
         if(!this.serverManager.containsKey(serverName)) {
             session.setAttribute("server status", "Server not found: " + serverName);
@@ -39,21 +39,21 @@ public class RumpusRestServerController extends RumpusRestController {
 
     @GetMapping(value = "/stop/{server}")
     public ResponseEntity<CommonSession> stopServer(@PathVariable("server") String serverName, HttpServletRequest request) {
-        LOG.info("RumpusRestServerController::stopServer()");
+        LOG("RumpusRestServerController::stopServer()");
         HttpSession session = request.getSession();
         if(!this.serverManager.containsKey(serverName)) {
             session.setAttribute("server status", "Server not found: " + serverName);
             return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.NOT_FOUND);
         }
         this.serverManager.stopServer(serverName);
-        LOG.info("Server status in controller: " + this.serverManager.getServerStatus(serverName));
+        LOG("Server status in controller: " + this.serverManager.getServerStatus(serverName));
         session.setAttribute("server status", this.serverManager.getServerStatus(serverName));
         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
     }
 
     @GetMapping(value = "/get_servers")
     public java.util.List<AbstractServer> getServers(HttpServletRequest request) {
-        LOG.info("RumpusRestServerController::getServers()");
+        LOG("RumpusRestServerController::getServers()");
         return this.serverManager.getAll();
     }
 

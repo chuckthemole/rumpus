@@ -17,7 +17,7 @@ import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
-import com.rumpus.rumpus.Rumpus;
+import com.rumpus.rumpus.IRumpus;
 
 @Configuration
 // @EnableSpringWebSession
@@ -35,7 +35,7 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     @Bean
     public ForumThreadManager forumThreadManager() {
         ForumThreadManager manager = ForumThreadManager.create();
-        for(ForumThread forumThread : Rumpus.rumpusForumThreads) {
+        for(ForumThread forumThread : IRumpus.rumpusForumThreads) {
             manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
