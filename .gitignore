@@ -38,6 +38,7 @@ out/
 
 
 ### Added by Chuck ###
+application_properties.yml
 application.properties
 database.properties
 tmp/
