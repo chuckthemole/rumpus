@@ -18,7 +18,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 // @Configuration(proxyBeanMethods = false)
 @Configuration
 @EnableJdbcHttpSession
-@PropertySource("classpath:application.properties")
+// @PropertySource("classpath:application.properties")
+@org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.YamlPropertySourceFactory.class)
 public class JdbcHttpSessionConfig extends AbstractHttpSessionApplicationInitializer {
 
     private static final String TABLE_NAME = "session";

@@ -3,9 +3,10 @@ package com.rumpus.rumpus.config;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.rumpus.common.Controller.ICommonController;
@@ -17,6 +18,13 @@ import com.rumpus.common.User.AuthenticationHandler;
 @EnableWebSecurity // WebSecurityConfiguration
 // @PropertySource("classpath:database.properties")
 public class WebSecurityConfig extends AbstractCommonConfig {
+
+    public static final String NAME = "WebSecurityConfig";
+    
+    @Autowired
+    public WebSecurityConfig(Environment environment) {
+        super(NAME, environment);
+    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

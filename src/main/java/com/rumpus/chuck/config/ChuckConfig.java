@@ -1,8 +1,10 @@
 package com.rumpus.chuck.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -13,7 +15,16 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
  */
 @Configuration
 @ComponentScan("com.rumpus.chuck")
+@org.springframework.boot.context.properties.ConfigurationProperties(prefix = "rumpus")
+@org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.YamlPropertySourceFactory.class)
 public class ChuckConfig extends AbstractCommonConfig {
+
+    public static final String NAME = "ChuckConfig";
+
+    @Autowired
+    public ChuckConfig(Environment environment) {
+        super(NAME, environment);
+    }
 
     @Bean
     public RumpusAdminUserView chuckAdminUserView() {

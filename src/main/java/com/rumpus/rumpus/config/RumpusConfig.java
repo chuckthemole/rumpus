@@ -1,11 +1,12 @@
 package com.rumpus.rumpus.config;
 
 import org.python.util.PythonInterpreter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
@@ -23,8 +24,14 @@ import com.rumpus.rumpus.IRumpus;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-@PropertySource("classpath:database.properties")
 public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
+
+    public static final String NAME = "RumpusConfig";
+
+    @Autowired
+    public RumpusConfig(Environment environment) {
+        super(NAME, environment);
+    }
 
     @Bean
     public LogManager logManager() {

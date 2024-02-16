@@ -1,11 +1,12 @@
 package com.rumpus.rumpus.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
@@ -23,8 +24,17 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-@PropertySource("classpath:database.properties")
+// @PropertySource("classpath:database.properties")
+@org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.YamlPropertySourceFactory.class)
 public class RumpusUserConfig extends AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+
+    public static final String NAME = "RumpusUserConfig";
+    
+    @Autowired
+    public RumpusUserConfig(Environment environment) {
+        super(NAME, environment);
+    }
+
     @Bean
     public IRumpusUserDao rumpusUserDao() {
         IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
