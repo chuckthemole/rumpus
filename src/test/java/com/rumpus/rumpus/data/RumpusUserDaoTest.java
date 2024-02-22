@@ -24,10 +24,10 @@ import com.google.gson.JsonSyntaxException;
 import com.rumpus.RumpusTest;
 import com.rumpus.common.util.ReadJson;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
-import com.rumpus.rumpus.config.RumpusTestConfig;
+import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser;
 
-@ContextConfiguration(classes = {RumpusTestConfig.class})
+@ContextConfiguration(classes = {RumpusConfig.class})
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 public class RumpusUserDaoTest extends DaoTest<RumpusUser> {

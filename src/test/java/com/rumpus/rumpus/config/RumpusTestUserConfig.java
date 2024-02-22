@@ -26,13 +26,12 @@ import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
+import org.springframework.boot.test.context.TestConfiguration;
 
-@Configuration
+@TestConfiguration
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-// @PropertySource("classpath:database.properties")
-@org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.YamlPropertySourceFactory.class)
 public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
     public static final String NAME = "RumpusUserConfig";

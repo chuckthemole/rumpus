@@ -11,7 +11,7 @@ import com.rumpus.RumpusTest;
 import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.config.RumpusConfig;
-import com.rumpus.rumpus.config.WebSecurityTestConfig;
+import com.rumpus.rumpus.config.WebSecurityConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
@@ -31,7 +31,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {RumpusConfig.class, WebSecurityTestConfig.class})
+@ContextConfiguration(classes = {RumpusConfig.class, WebSecurityConfig.class})
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RumpusRestController.class)
 public class RumpusControllerTests extends RumpusTest {

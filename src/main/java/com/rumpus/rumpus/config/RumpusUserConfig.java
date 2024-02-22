@@ -24,8 +24,6 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-// @PropertySource("classpath:database.properties")
-@org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.YamlPropertySourceFactory.class)
 public class RumpusUserConfig extends AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
     public static final String NAME = "RumpusUserConfig";

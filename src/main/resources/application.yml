@@ -1,0 +1,21 @@
+# Description: This file is used to configure the application properties for the admin service.
+# The properties are used to configure the application
+# Secrets should be stored in a secure location, i.e. properties.yml
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Expose all endpoints, including sensitive ones. TODO: Remove this line in production.
+  info:
+    env:
+      enabled: true
+logging:
+  file.name: ./src/main/java/com/rumpus/rumpus/log/spring.log
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
