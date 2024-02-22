@@ -1,0 +1,20 @@
+# Description: This file is used to configure the application for testing purposes.
+spring:
+  main:
+    allow-bean-definition-overriding: true # Allow bean overriding durring testing
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+logging:
+  file:
+    name: ./src/main/java/com/rumpus/rumpus/log/spring.log
+  output:
+    ansi:
+      enabled: ALWAYS
+  pattern:
+    file: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx'
