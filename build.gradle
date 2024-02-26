@@ -15,6 +15,12 @@ dependencies {
     implementation(project(':common'))
 }
 
+// https://stackoverflow.com/questions/45754005/include-tests-from-other-module
+// TODO: I was looking in this stackoverflow and saw some interesting test things. Maybe look into later. 
+// test {
+//     dependsOn project(':common').tasks.named('test')
+// }
+
 frontend {
     nodeVersion = '14.17.3'
     // installScript = 'run install'

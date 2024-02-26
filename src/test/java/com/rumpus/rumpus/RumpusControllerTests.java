@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.rumpus.RumpusTest;
+import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.config.RumpusConfig;
@@ -34,12 +34,31 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {RumpusConfig.class, WebSecurityConfig.class})
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RumpusRestController.class)
-public class RumpusControllerTests extends RumpusTest {
+public class RumpusControllerTests extends AbstractRumpusTest {
 
     @MockBean IRumpusUserService mockUserService;
     @MockBean AbstractViews viewLoader;
- 
     @Autowired MockMvc mockMvc;
+
+    public RumpusControllerTests() {
+        super(RumpusControllerTests.class);
+    }
+
+    @Override
+    protected void setUpClass() {
+    }
+
+    @Override
+    protected void tearDownClass() {
+    }
+
+    @Override
+    protected void setUp() {
+    }
+
+    @Override
+    protected void tearDown() {
+    }
  
     @Test
     public void testfindAll() throws Exception {

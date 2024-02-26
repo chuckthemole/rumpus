@@ -1,22 +1,10 @@
 package com.rumpus.rumpus.common.Dao;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.google.gson.JsonSyntaxException;
-import com.rumpus.RumpusTest;
+import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.util.ReadJson;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -24,29 +12,31 @@ import com.rumpus.rumpus.models.RumpusUser;
 /**
  * TODO: make tests for common dao
  */
-public class DaoApiDBTest extends CommonDaoTest {
+public class DaoApiDBTest extends AbstractRumpusDaoTest {
 
     @MockBean private RumpusUserDao userDao;
-
     private static RumpusUser[] users;
 
-    @BeforeAll
-    public static void setUpClass() throws JsonSyntaxException, Exception {
-        ReadJson<RumpusUser> json = new ReadJson<>(RumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
-        users = json.readModelsFromFile();
+    public DaoApiDBTest() {
+        super(DaoApiDBTest.class);
     }
 
-    @AfterAll
-    public static void tearDownClass() {
+    @Override
+    protected void setUp() {
+        this.LOG("DaoApiDBTest::setUp()");
+        ReadJson<RumpusUser> json = new ReadJson<>(AbstractRumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
+        try {
+            users = json.readModelsFromFile();
+        } catch (com.google.gson.JsonSyntaxException e) {
+            this.LOG("DaoApiDBTest::setUp()::JsonSyntaxException");
+        } catch (java.lang.Exception e) {
+            this.LOG("DaoApiDBTest::setUp()::Exception");
+        }
+    }
 
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+    @Override
+    protected void tearDown() {
+        this.LOG("DaoApiDBTest::tearDown()");
     }
 
     @Test

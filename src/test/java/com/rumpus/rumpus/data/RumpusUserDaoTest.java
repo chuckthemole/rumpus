@@ -10,10 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.google.gson.JsonSyntaxException;
-import com.rumpus.RumpusTest;
+import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.util.ReadJson;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
@@ -30,10 +26,14 @@ import com.rumpus.rumpus.models.RumpusUser;
 @ContextConfiguration(classes = {RumpusConfig.class})
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
-public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
+public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
 
     // TODO test methods: get, getAll, add, update, remove, look at IDao for methods to test.
     
+    public RumpusUserDaoTest() {
+        super(RumpusUserDaoTest.class);
+    }
+
     @Autowired
     private IRumpusUserDao dao;
 
@@ -52,8 +52,16 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
     private static RumpusUser expectedRootUser;
     private static RumpusUser expectedSecondaryUser;
 
-    @BeforeAll
-    public static void setUpClass() throws JsonSyntaxException, Exception {
+    @Override
+    protected void setUpClass() {
+    }
+
+    @Override
+    protected void tearDownClass() {
+    }
+
+    @Override
+    protected void setUp() {
         // TODO should clear db before, need to implement removeAll to do this.
         expectedRootUser = RumpusUser.createEmptyUser();
         expectedRootUser.setUsername(ROOT_USER);
@@ -66,24 +74,21 @@ public class RumpusUserDaoTest extends DaoTest<RumpusUser> {
         expectedSecondaryUser.setPassword(SECONDARY_USER_PASS);
         expectedSecondaryUser.setId(SECONDARY_USER_ID);
 
-        ReadJson<RumpusUser> json = new ReadJson<>(RumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
-        users = json.readModelsFromFile();
+        ReadJson<RumpusUser> json = new ReadJson<>(AbstractRumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
+        try {
+            users = json.readModelsFromFile();
+        } catch (JsonSyntaxException e) {
+            this.LOG("DaoApiDBTest::setUp()::JsonSyntaxException");
+        } catch (java.lang.Exception e) {
+            this.LOG("DaoApiDBTest::setUp()::Exception");
+        }
         // for(RumpusUser user : users) {
         //     LOG(user.toString());
         // }
     }
-    
-    @AfterAll
-    public static void tearDownClass() {
 
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+    @Override
+    protected void tearDown() {
     }
 
     @Test
