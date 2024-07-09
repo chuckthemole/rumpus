@@ -50,8 +50,8 @@ public class RumpusViewLoader extends AbstractViews {
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
 
         // Header
-        // navbarBrand = NavbarItem.createWithImage(NAVBAR_BRAND_NAME, "/", true, null);
-        navbarBrand = NavbarItem.createNavbarBrandWithAwsS3CloudImage(NAVBAR_BRAND_NAME, "/", true, "static/default_brand.PNG");
+        navbarBrand = NavbarItem.createNavbarBrandWithLocalImage(NAVBAR_BRAND_NAME, "/", true, null);
+        // navbarBrand = NavbarItem.createNavbarBrandWithAwsS3CloudImage(NAVBAR_BRAND_NAME, "/", true, "static/default_brand.PNG");
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
             List.of(
                 NavbarItem.create("About", "/", true, ItemType.LINK),

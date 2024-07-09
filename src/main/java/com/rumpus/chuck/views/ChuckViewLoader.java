@@ -75,7 +75,7 @@ public class ChuckViewLoader extends AbstractViews {
     @Override
     protected int initHeader() {
         // Header
-        NavbarItem navbarBrand = NavbarItem.createWithImage("ChuckBrand", "/", true, NAVBAR_BRAND_HREF);
+        NavbarItem navbarBrand = NavbarItem.createNavbarBrandWithLocalImage("ChuckBrand", "/", true, NAVBAR_BRAND_HREF);
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
             List.of(
                 NavbarItem.create("About", "/", true, ItemType.LINK),

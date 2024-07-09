@@ -52,6 +52,7 @@ public class App implements WebMvcConfigurer {
     }
 
     // Added to serve static images from /WEB-INF/images
+    // you can access them from /images
     @Override
     public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
         registry
