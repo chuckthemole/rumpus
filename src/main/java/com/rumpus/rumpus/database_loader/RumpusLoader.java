@@ -11,7 +11,7 @@ public class RumpusLoader implements CommandLineRunner {
 
     private RumpusUser[] users;
     private static final String JSON_USERS_FILE = "src/main/java/com/rumpus/rumpus/database_loader/rumpus_users.json";
-	private final IRumpusUserDao userDao;
+	private final IRumpusUserDao userDao; // mayber should go through service layer...
 
 	public RumpusLoader(IRumpusUserDao userDao) {
         this.userDao = userDao;
