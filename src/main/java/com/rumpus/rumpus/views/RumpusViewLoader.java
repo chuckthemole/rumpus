@@ -9,7 +9,6 @@ import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.ResourceManager;
 import com.rumpus.common.views.NavbarItem.ItemType;
-import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.common.views.AbstractViews;
 
 /**
@@ -51,7 +50,8 @@ public class RumpusViewLoader extends AbstractViews {
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
 
         // Header
-        navbarBrand = NavbarItem.createWithImage(NAVBAR_BRAND_NAME, "/", true, NAVBAR_BRAND_HREF);
+        // navbarBrand = NavbarItem.createWithImage(NAVBAR_BRAND_NAME, "/", true, null);
+        navbarBrand = NavbarItem.createNavbarBrandWithAwsS3CloudImage(NAVBAR_BRAND_NAME, "/", true, "static/default_brand.PNG");
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
             List.of(
                 NavbarItem.create("About", "/", true, ItemType.LINK),
@@ -134,5 +134,9 @@ public class RumpusViewLoader extends AbstractViews {
         this.put(RUMPUS_ADMIN_TEMPLATE, RumpusAdmin.create());
         this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusAdminUserView.createWithEmptyUser());
         return SUCCESS;
+    }
+
+    private static void LOG_THIS(String... args) {
+        com.rumpus.common.Builder.LogBuilder.logBuilderFromStringArgsNoSpaces(RumpusViewLoader.class, args).info();
     }
 }
