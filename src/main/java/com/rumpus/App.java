@@ -3,6 +3,7 @@ package com.rumpus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // TODO: @SpringBootApplication is equivalent to using @Configuration, @EnableAutoConfiguration, and @ComponentScan with their default attributes.
 // think about customizing the attributes of these annotations. Something to look into
@@ -10,8 +11,8 @@ import org.springframework.context.ApplicationContext;
 // @EnableAutoConfiguration
 // @Import({ RumpusConfig.class, ChuckConfig.class })
 
-@SpringBootApplication
-public class App {
+@SpringBootApplication // TODO: can I put this annotation on abstract class in common and extend here and other places?
+public class App implements WebMvcConfigurer {
 
     private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(App.class);
     
@@ -48,5 +49,14 @@ public class App {
             .distinct()
             .filter(prop -> !(prop.contains("credentials") || prop.contains("password")))
             .forEach(prop -> LOGGER.info("{}: {}", prop, environment.getProperty(prop)));
+    }
+
+    // Added to serve static images from /WEB-INF/images
+    @Override
+    public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
+        registry
+            .addResourceHandler("/images/**")
+            .addResourceLocations("/WEB-INF/images/") // should I add static in resources here, too?
+            .setCacheControl(org.springframework.http.CacheControl.maxAge(2, java.util.concurrent.TimeUnit.HOURS).cachePublic());
     }
 }
