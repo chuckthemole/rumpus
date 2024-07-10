@@ -14,7 +14,7 @@ import com.rumpus.rumpus.models.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
-@Controller
+@Controller // TODO: This is being subclassed by other classes using @RestController, should this class be annotated like this with @Controller?
 abstract public class AbstractRumpusController extends AbstractCommonController
     <
         RumpusUser,

@@ -11,6 +11,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
 
+/**
+ * RumpusApplicationTests
+ * 
+ * This class tests the RumpusRestController class.
+ * <p>
+ * Note: If this test fails, a common cause is that the properties.yml file is not updated properly. Make sure you are updating the correct values for the correct environment.
+ */
 @ContextConfiguration(classes = RumpusConfig.class)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
