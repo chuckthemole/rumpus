@@ -9,6 +9,8 @@ import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.NavbarItem.ItemType;
 import com.rumpus.common.views.ResourceManager;
+import com.rumpus.common.views.CSSFramework.Bulma.CSS.Element.Block;
+import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.AbstractViews;
 
 /**
@@ -92,7 +94,7 @@ public class ChuckViewLoader extends AbstractViews {
                 NavbarItem.createAsDropdown("More", "/", true, navbarItemsStartDropdown)
             )
         );
-        List<NavbarItem> navbarItemsEnd = new ArrayList<>(
+        List<NavbarItem> navbarItemsEnd = new ArrayList<>( // TODO: probably don't need login for my website
             List.of(
                 NavbarItem.createAsReactComponent("Login", "LoginModal", true),
                 NavbarItem.createAsReactComponent("Signup", "SignupModal", true),
@@ -102,6 +104,12 @@ public class ChuckViewLoader extends AbstractViews {
             )
         );
         super.header = Header.create(navbarBrand, navbarItemsStart, navbarItemsEnd);
+        return SUCCESS;
+    }
+
+    @Override
+    protected int initBody() {
+        super.landingPageBody = AbstractHtmlObject.createEmptyAbstractHtmlObject().addChild(Block.createWithBody("Test this out!"));
         return SUCCESS;
     }
 

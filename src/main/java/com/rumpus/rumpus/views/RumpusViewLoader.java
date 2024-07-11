@@ -113,6 +113,12 @@ public class RumpusViewLoader extends AbstractViews {
     }
 
     @Override
+    protected int initBody() {
+        // TODO
+        return SUCCESS;
+    }
+
+    @Override
     protected int initUserTable() {
         super.userTable = new ComponentUserTable(CSS_FRAMEWORK);
         return SUCCESS;
