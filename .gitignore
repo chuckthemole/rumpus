@@ -61,3 +61,9 @@ test.log
 src/main/js/common/
 **/__pycache__/
 **/__PYCACHE__/
+
+# ignore tools at root
+/tools/
+
+# ignore files in out directory of tools
+src/main/java/com/rumpus/rumpus/tools/out/*

@@ -13,6 +13,18 @@ sourceCompatibility = '17'
 
 dependencies {
     implementation(project(':common'))
+    /*
+    TODO: think about publishing the common module to a maven repository: ./gradlew publishToMavenLocal
+    This would allow me to do something like this in this module:
+    repositories {
+        mavenLocal()
+    }
+
+    dependencies {
+        implementation 'com.example:common:1.0.0'
+    }
+
+    */
 }
 
 // https://stackoverflow.com/questions/45754005/include-tests-from-other-module

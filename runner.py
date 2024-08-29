@@ -1,11 +1,13 @@
-# runner.py
-
 import os
 import sys
 
-# TODO build this out to download external dependencies (buildSrc/common)
+# Define paths
+src_dir = 'src/main/java'
+build_dir = 'build/classes/java/main'
+tools_dir = 'tools'
+common_dependencies = "$(gradle -q printClasspath)"
 
-# Commands
+# Define base commands
 build = ".././gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/log/build.log"
 buildXlint = ".././gradlew clean build --refresh-dependencies -x test -Xlint:unchecked > src/main/java/com/rumpus/rumpus/log/build.log"
 buildDebug = ".././gradlew clean build --refresh-dependencies --debug -x test > src/main/java/com/rumpus/rumpus/log/build.log"
@@ -18,44 +20,61 @@ runDebug = "./gradlew bootRun --debug > src/main/java/com/rumpus/rumpus/log/spri
 moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
 
-########### LOCUST ###############################
-### locust ( https://docs.locust.io/ ) commands ##
-##################################################
-locust_test = "locust --locustfile ./src/main/python/test.py" # this will start the server and run the tests in test.py
-locust_version = "locust -V" # this will print the version of locust
-
+def compile_and_run_tool(tool_name):
+    # make the out directory if it doesn't exist
+    os.system(f'mkdir -p {tools_dir}/out')
+    # Compile the tool
+    compile_cmd = f'javac -cp "{build_dir}:{common_dependencies}" -d {tools_dir} {src_dir}/com/rumpus/rumpus/tools/{tool_name}.java > {tools_dir}/out/{tool_name}_compile.out 2>&1'
+    os.system(compile_cmd)
+    
+    # Run the tool
+    run_cmd = f'java -cp "{build_dir}:{common_dependencies}:{tools_dir}" com.rumpus.rumpus.tools.{tool_name} > {tools_dir}/out/{tool_name}_run.out 2>&1'
+    os.system(run_cmd)
 
 def commands():
     pass
 
 if __name__ == '__main__':
-    print(f"Arguments count: {len(sys.argv) - 1}")
-    for i, arg in enumerate(sys.argv):
-        if i == 0:
-            continue
-        print(f"{i:>6}: {arg}")
-        if arg == "build":
-            os.system(build)
-        elif arg == "buildXlint":
-            os.system(buildXlint)
-        elif arg == "buildTest":
-            os.system(buildTest)
-        elif arg == "buildDebug":
-            os.system(buildDebug)
-        elif arg == "buildTestInfo":
-            os.system(buildTestInfo)
-        elif arg == "buildTestDebug":
-            os.system(buildTestDebug)
-        elif arg == "test":
-            os.system(test)
-        elif arg == "run":
-            os.system(run)
-        elif arg == "runDebug":
-            os.system(runDebug)
-        elif arg == "locust_test":
-            os.system(locust_test)
-        elif arg == "locust_version":
-            os.system(locust_version)
-        else:
-            print("Error: bad argument")
-        
+    if len(sys.argv) < 2:
+        print("Usage: python runner.py [command] [tool_name]")
+        sys.exit(1)
+
+    command = sys.argv[1]
+
+    if command == "build":
+        os.system(build)
+    elif command == "buildXlint":
+        os.system(buildXlint)
+    elif command == "buildTest":
+        os.system(buildTest)
+    elif command == "buildDebug":
+        os.system(buildDebug)
+    elif command == "buildTestInfo":
+        os.system(buildTestInfo)
+    elif command == "buildTestDebug":
+        os.system(buildTestDebug)
+    elif command == "test":
+        os.system(test)
+    elif command == "run":
+        os.system(run)
+    elif command == "runDebug":
+        os.system(runDebug)
+    elif command == "locust_test":
+        os.system(locust_test)
+    elif command == "locust_version":
+        os.system(locust_version)
+    elif command == "compileTool":
+        if len(sys.argv) < 3:
+            print("Usage: python runner.py compileTool [tool_name]")
+            sys.exit(1)
+        tool_name = sys.argv[2]
+        compile_and_run_tool(tool_name)
+    elif command == "runTool":
+        if len(sys.argv) < 3:
+            print("Usage: python runner.py runTool [tool_name]")
+            sys.exit(1)
+        tool_name = sys.argv[2]
+        compile_and_run_tool(tool_name)
+    else:
+        print("Error: bad argument")
+        sys.exit(1)
