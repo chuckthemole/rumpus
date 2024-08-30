@@ -17,6 +17,7 @@ import com.rumpus.common.Controller.AbstractCommonRestController;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
+import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping(AbstractCommonRestController.COMMON_REST_API_PATH)
 public class CommonRestController extends AbstractCommonRestController
     <
+        RumpusServiceManager,
         RumpusUser,
         RumpusUserMetaData,
         IRumpusUserService,

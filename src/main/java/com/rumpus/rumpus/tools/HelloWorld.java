@@ -11,9 +11,10 @@ public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
-        String out = OcrTesseract.doOCR("src/main/tmp/test.pdf");
-        System.out.println("OCR complete!");
-        System.out.println(out);
+
+        // String out = OcrTesseract.doOCR("src/main/tmp/test.pdf");
+        // System.out.println("OCR complete!");
+        // System.out.println(out);
         // RumpusUser user = RumpusUser.create("USERNAME", "CHANGE_PASSWORD", "EMAIL");
         // Comparator<BigDecimal> comp = (a, b) -> b.compareTo(a);
         // PriorityQueue<BigDecimal> pq = new PriorityQueue<BigDecimal>(comp);

@@ -9,6 +9,7 @@ import com.rumpus.common.Controller.AbstractViewController;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
+import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 
@@ -21,6 +22,7 @@ import com.rumpus.rumpus.views.RumpusViewLoader;
 @RequestMapping(ICommonController.PATH_VIEW)
 public class RumpusViewController extends AbstractViewController
     <
+        RumpusServiceManager,
         RumpusUser,
         RumpusUserMetaData,
         IRumpusUserService,

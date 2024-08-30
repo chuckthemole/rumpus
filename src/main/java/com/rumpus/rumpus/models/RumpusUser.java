@@ -77,12 +77,6 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     /////////////////////////////////
 
     @Override
-    public void serialize(RumpusUser object, OutputStream outputStream) throws IOException {
-        LOG("RumpusUser::serialize()");
-        this.getTypeAdapter().write(new JsonWriter(new OutputStreamWriter(outputStream)), object);
-    }
-
-    @Override
     public Map<String, Object> getModelAttributesMap() {
         LOG("RumpusUser::getModelAttributesMap()");
         Map<String, Object> modelAttributesMap = Map.of(ID, this.id, EMAIL, this.getEmail());

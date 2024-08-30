@@ -6,11 +6,13 @@ import com.rumpus.common.Controller.AbstractCommonController;
 import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.rumpus.models.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @Controller
 abstract public class ChuckController extends AbstractCommonController
     < // TODO: using rumpus stuff here for now. should change to chuck stuff
+        RumpusServiceManager,
         RumpusUser,
         RumpusUserMetaData,
         AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO: change when I implement IChuckUserService
