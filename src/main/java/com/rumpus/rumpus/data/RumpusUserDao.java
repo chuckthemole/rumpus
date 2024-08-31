@@ -9,7 +9,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import com.rumpus.common.Blob.AbstractBlob;
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.Dao.IApiDB;
+import com.rumpus.common.Dao.IDao;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
 import com.rumpus.common.Dao.jdbc.Mapper;
 import com.rumpus.common.User.AbstractCommonUserMetaData;
@@ -26,7 +26,7 @@ public class RumpusUserDao extends ApiDBJdbcUsers<RumpusUser, RumpusUserMetaData
 
     public RumpusUserDao(JdbcUserDetailsManager manager) {
         super(manager, TABLE, RumpusUserDao.rumpusUserMapper());
-        IApiDB.registerIdSet("RumpusUser");
+        IDao.registerIdSet("RumpusUser"); // TODO: Can this be moved up to RumpusUserDao? Or even higher in common?
     }
 
     @Override

@@ -7,6 +7,13 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+/**
+ * RumpusPost
+ * 
+ * Represents a post in a Rumpus thread.
+ * TODO: This class can be abstracted. We can create a CommonPost class that can be used by both Rumpus and RumpusCommon.
+ * Actually look in Forum in common and see if we can use that.
+ */
 public class RumpusPost extends RumpusModel<RumpusPost> {
     private String authorID;
     private String threadID;
