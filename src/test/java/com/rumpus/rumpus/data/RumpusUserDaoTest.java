@@ -35,7 +35,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     }
 
     @Autowired
-    private IRumpusUserDao dao;
+    private IRumpusUserDao userDao;
 
     private static RumpusUser[] users;
 
@@ -94,8 +94,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     @Test
     @Order(1)
 	void testGetUser() {
-        // LOG(this.dao.get(ROOT_USER).toString());
-        assertEquals(expectedRootUser, this.dao.get(ROOT_USER));
+        assertEquals(expectedRootUser, this.userDao.getByUsername(ROOT_USER));
 	}
 
     @Test
@@ -105,8 +104,8 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
             // TODO check for duplicate user being added. what does this return? what should it return?
             final String username = user.getUsername();
             if(!username.equals(ROOT_USER) && !username.equals(SECONDARY_USER)) {
-                this.dao.add(user);
-                assertEquals(user, this.dao.get(user.getUsername()));
+                this.userDao.add(user);
+                assertEquals(user, this.userDao.getByUsername(user.getUsername()));
             }
         }
 
@@ -116,7 +115,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     @Order(3)
     void testAddUserThatAlreadyExists() {
         for(RumpusUser user : RumpusUserDaoTest.users) {
-            assertNull(this.dao.add(user));
+            assertNull(this.userDao.add(user));
         }
     }
 
@@ -124,7 +123,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     @Order(4)
 	void testGetUsers() {
         RumpusUserCollection expected = new RumpusUserCollection(new ArrayList<>(List.of(users))); // TODO: get rid of ArrayList
-        RumpusUserCollection actual = new RumpusUserCollection(this.dao.getAll());
+        RumpusUserCollection actual = new RumpusUserCollection(this.userDao.getAll());
         assertEquals(expected.sortByUsername(), actual.sortByUsername());
 	}
 
@@ -149,8 +148,8 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         for(RumpusUser user : RumpusUserDaoTest.users) {
             final String username = user.getUsername();
             if(!username.equals(ROOT_USER) && !username.equals(SECONDARY_USER)) {
-                this.dao.remove(username);
-                assertNull(this.dao.get(username));
+                this.userDao.remove(username);
+                assertNull(this.userDao.getByUsername(username));
             }
         }
     }
