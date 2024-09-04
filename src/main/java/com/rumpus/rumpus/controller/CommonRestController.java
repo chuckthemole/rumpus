@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,12 +94,19 @@ public class CommonRestController extends AbstractCommonRestController
         @GetMapping(value = "is_authenticated")
         public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
             LOG("CommonRestController::getAuthenticationOfUser()");
+
+            // For debugging SecurityContext
+            // SecurityContext context = SecurityContextHolder.getContext();
+            // LOG("SecurityContext: " + context);
+
             boolean isAuthenticated = false;
             if(authentication != null) {
+                LOG("Authentication is not null");
                 isAuthenticated = authentication.isAuthenticated();
             } else {
                 LOG("Authentication is null");
             }
+            // LOG("isAuthenticated: " + isAuthenticated);
             return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
         }
 

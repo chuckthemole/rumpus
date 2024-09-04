@@ -42,11 +42,13 @@ public class RumpusUserAuthenticationManager extends AbstractCommonAuthManager<R
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        LOG("RumpusUserAuthenticationManager::loadUserByUsername");
         return this.dao.get(username).getUserDetails();
     }
 
     @Override
     public Set<GrantedAuthority> getAuthorities(String name) {
+        LOG("RumpusUserAuthenticationManager::getAuthorities");
         return this.dao.get(name).getUserDetails().getAuthorities();
     }
     
