@@ -3,6 +3,7 @@ package com.rumpus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // TODO: @SpringBootApplication is equivalent to using @Configuration, @EnableAutoConfiguration, and @ComponentScan with their default attributes.
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // @Import({ RumpusConfig.class, ChuckConfig.class })
 
 @SpringBootApplication // TODO: can I put this annotation on abstract class in common and extend here and other places?
+@EnableJpaRepositories(basePackages = "com.rumpus.rumpus.data")
 public class App implements WebMvcConfigurer {
 
     private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(App.class);
