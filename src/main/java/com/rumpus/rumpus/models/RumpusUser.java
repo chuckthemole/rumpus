@@ -19,6 +19,11 @@ import com.rumpus.common.User.AbstractCommonUser;
 import com.rumpus.common.User.AbstractCommonUserMetaData;
 import com.rumpus.rumpus.IRumpus;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "rumpus_user")
 public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaData> {
 
     private static final String NAME = "RumpusUser";
@@ -79,7 +84,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     @Override
     public Map<String, Object> getModelAttributesMap() {
         LOG("RumpusUser::getModelAttributesMap()");
-        Map<String, Object> modelAttributesMap = Map.of(ID, this.id, EMAIL, this.getEmail());
+        Map<String, Object> modelAttributesMap = Map.of(ID, this.getId(), EMAIL, this.getEmail());
         return modelAttributesMap;
     }
 
