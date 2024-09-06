@@ -156,5 +156,5 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
                 return user;
             }
         };
-    }  
+    }
 }
