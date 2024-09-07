@@ -29,7 +29,7 @@ public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
 
     @Override
     @SuppressWarnings(UNCHECKED)
-    protected Function<Pair<ResultSet, Integer>, RumpusUser> initMapFunction() {
+    protected Function<Pair<ResultSet, Integer>, RumpusUser> initMapperFunction() {
         return ((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
