@@ -103,4 +103,9 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     public ActiveUserStore activeUserStore() {
         return new ActiveUserStore();
     }
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
 }

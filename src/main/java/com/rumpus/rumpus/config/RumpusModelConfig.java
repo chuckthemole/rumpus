@@ -23,5 +23,10 @@ public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceMa
     public RumpusServiceManager childServices() {
         return RumpusServiceManager.create();
     }
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
     
 }

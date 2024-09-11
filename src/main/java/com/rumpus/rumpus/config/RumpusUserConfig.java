@@ -65,5 +65,10 @@ public class RumpusUserConfig extends AbstractCommonUserConfig<RumpusUser, Rumpu
     @Override
     public IRumpusUserService childUserService() {
         return new RumpusUserService(this.rumpusUserDao());
-    }    
+    }
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
 }

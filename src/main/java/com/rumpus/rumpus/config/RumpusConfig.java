@@ -93,6 +93,11 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
         return serializer;
     }
 
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
+
     // @Bean
     // @DependsOn({"rumpusDaoManager"})
     // @ConditionalOnProperty(prefix = "database", name = "loader", havingValue = "true")

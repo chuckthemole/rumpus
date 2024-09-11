@@ -30,4 +30,9 @@ public class ChuckConfig extends AbstractCommonConfig {
     public RumpusAdminUserView chuckAdminUserView() {
         return RumpusAdminUserView.createWithUser(RumpusUser.create("EMPTY_USERNAME", "EMPTY_PASSWORD", "EMPTY_EMAIL"));
     }
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
 }

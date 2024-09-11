@@ -9,4 +9,9 @@ public class RumpusPortCustomizer extends com.rumpus.common.Config.AbstractServe
     public RumpusPortCustomizer(org.springframework.core.env.Environment environment, com.rumpus.common.Server.Port.IPort port) {
         super(NAME, environment, port);
     }
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
 }

@@ -78,4 +78,9 @@ public class RumpusTestConfig extends AbstractCommonConfig {
 	public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
 		return new HandlerMappingIntrospector();
 	}
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
 }

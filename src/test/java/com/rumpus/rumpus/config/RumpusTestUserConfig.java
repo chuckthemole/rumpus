@@ -1,22 +1,14 @@
 package com.rumpus.rumpus.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 
-import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Config.AbstractCommonUserConfig;
-import com.rumpus.common.Log.LogManager;
-import com.rumpus.common.Log.LogManagerLoader;
-import com.rumpus.common.Service.AbstractUserService;
-import com.rumpus.common.views.Template.AbstractUserTemplate;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
@@ -79,5 +71,10 @@ public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, R
     @Override
     public IRumpusUserService childUserService() {
         return new RumpusUserService(this.rumpusUserDao());
-    }    
+    }
+
+    @Override
+    public String sqlDialect() {
+        return "MYSQL";
+    }
 }
