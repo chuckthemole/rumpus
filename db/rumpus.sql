@@ -46,8 +46,8 @@ CREATE TABLE authorities (
 
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuckthemole','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);
 INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuck','$2a$12$nASTBHmfkGpzV/yXV3dxpO2vPgxKnm0HHHjB7Ld9z1a/OxWHSTA0y',1);
-INSERT INTO user (username, email, id) values('chuckthemole', 'chuckthemole@gmail.com', '1111111111');
-INSERT INTO user (username, email, id) values('chuck', 'chuck@gmail.com', '2222222222');
+INSERT INTO user (username, email, id) values('chuckthemole', 'chuckthemole@gmail.com', '11111111-1111-1111-1111-111111111111');
+INSERT INTO user (username, email, id) values('chuck', 'chuck@gmail.com', '22222222-2222-2222-2222-222222222222');
 
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_EMPLOYEE');
 INSERT INTO AUTHORITIES VALUES('chuck','ROLE_USER');
