@@ -31,6 +31,17 @@ def compile_and_run_tool(tool_name):
     run_cmd = f'java -cp "{build_dir}:{common_dependencies}:{tools_dir}" com.rumpus.rumpus.tools.{tool_name} > {tools_dir}/out/{tool_name}_run.out 2>&1'
     os.system(run_cmd)
 
+def compile_and_run_tool_with_input(tool_name, input_file):
+    # make the out directory if it doesn't exist
+    os.system(f'mkdir -p {tools_dir}/out')
+    # Compile the tool
+    compile_cmd = f'javac -cp "{build_dir}:{common_dependencies}" -d {tools_dir} {src_dir}/com/rumpus/rumpus/tools/{tool_name}.java > {tools_dir}/out/{tool_name}_compile.out 2>&1'
+    os.system(compile_cmd)
+    
+    # Run the tool
+    run_cmd = f'java -cp "{build_dir}:{common_dependencies}:{tools_dir}" com.rumpus.rumpus.tools.{tool_name} < {input_file} > {tools_dir}/out/{tool_name}_run.out 2>&1'
+    os.system(run_cmd)
+
 def commands():
     pass
 
@@ -75,6 +86,13 @@ if __name__ == '__main__':
             sys.exit(1)
         tool_name = sys.argv[2]
         compile_and_run_tool(tool_name)
+    elif command == "runToolWithInput":
+        if len(sys.argv) < 4:
+            print("Usage: python runner.py runToolWithInput [tool_name] [input_file]")
+            sys.exit(1)
+        tool_name = sys.argv[2]
+        input_file = sys.argv[3]
+        compile_and_run_tool_with_input(tool_name, input_file)
     else:
         print("Error: bad argument")
         sys.exit(1)
