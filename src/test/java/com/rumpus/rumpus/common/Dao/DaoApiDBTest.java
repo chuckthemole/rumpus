@@ -24,9 +24,8 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
     @Override
     protected void setUp() {
         this.LOG("DaoApiDBTest::setUp()");
-        ReadJson<RumpusUser> json = new ReadJson<>(AbstractRumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
         try {
-            users = json.readModelsFromFile();
+            users = ReadJson.readModelsFromFile(AbstractRumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
         } catch (com.google.gson.JsonSyntaxException e) {
             this.LOG("DaoApiDBTest::setUp()::JsonSyntaxException");
         } catch (java.lang.Exception e) {

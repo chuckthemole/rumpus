@@ -1,11 +1,12 @@
 package com.rumpus.rumpus.models;
 
 import java.io.IOException;
-import java.util.Map;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.rumpus.common.Model.IModelIdManager;
+import com.rumpus.common.Model.SqlIdManager;
 
 /**
  * RumpusPost
@@ -15,6 +16,7 @@ import com.google.gson.stream.JsonWriter;
  * Actually look in Forum in common and see if we can use that.
  */
 public class RumpusPost extends RumpusModel<RumpusPost> {
+    private static SqlIdManager idManager;
     private String authorID;
     private String threadID;
     private String created;
@@ -22,6 +24,10 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
     private String title;
     private String content;
     private String parentPostID;
+
+    static {
+        RumpusPost.idManager = new SqlIdManager();
+    }
 
     private RumpusPost() {
         super("RumpusPost");
@@ -171,18 +177,13 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
             }
         };
     }
-
     @Override
-    public Map<String, Object> getModelAttributesMap() {
-        LOG("Post::getModelAttributesMap()");
-        return Map.of(
-            "title", this.title,
-            "content", this.content,
-            "author", this.authorID,
-            "threadID", this.threadID,
-            "created", this.created,
-            "updated", this.updated,
-            "parentPostID", this.parentPostID
-        );
+    public int compareTo(RumpusPost o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
+    @Override
+    public IModelIdManager getIdManager() {
+        return RumpusPost.idManager;
     }
 }

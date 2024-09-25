@@ -1,8 +1,6 @@
 package com.rumpus.rumpus.models;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,6 +13,8 @@ import com.google.gson.stream.JsonWriter;
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Model.AbstractMetaData;
+import com.rumpus.common.Model.IModelIdManager;
+import com.rumpus.common.Model.SqlIdManager;
 import com.rumpus.common.User.AbstractCommonUser;
 import com.rumpus.common.User.AbstractCommonUserMetaData;
 import com.rumpus.rumpus.IRumpus;
@@ -28,6 +28,11 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
 
     private static final String NAME = "RumpusUser";
     @JsonIgnore transient private Gson rumpusUserGson;
+    @JsonIgnore private static SqlIdManager idManager;
+
+    static {
+        RumpusUser.idManager = new SqlIdManager();
+    }
 
     private RumpusUser() {
         super(NAME);
@@ -59,7 +64,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
         user.setUsername(userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
         user.setUserPassword(userMap.containsKey(PASSWORD) ? (String) userMap.get(PASSWORD) : EMPTY_FIELD);
         user.setEmail(userMap.containsKey(EMAIL) ? (String) userMap.get(EMAIL) : EMPTY_FIELD);
-        user.setId(userMap.containsKey(ID) ? (String) userMap.get(ID) : EMPTY_FIELD);
+        user.setId(userMap.containsKey(ID) ? java.util.UUID.fromString((String) userMap.get(ID)) : EMPTY_UUID);
 
         // user meta data
         AbstractCommonUserMetaData<RumpusUserMetaData> meta = null;
@@ -80,13 +85,6 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     /////////////////////////////////
     // end public static factory ////
     /////////////////////////////////
-
-    @Override
-    public Map<String, Object> getModelAttributesMap() {
-        LOG("RumpusUser::getModelAttributesMap()");
-        Map<String, Object> modelAttributesMap = Map.of(ID, this.getId(), EMAIL, this.getEmail());
-        return modelAttributesMap;
-    }
 
     @Override
     public TypeAdapter<RumpusUser> createTypeAdapter() {
@@ -156,5 +154,10 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
                 return user;
             }
         };
+    }
+
+    @Override
+    public IModelIdManager<java.util.UUID> getIdManager() {
+        return RumpusUser.idManager;
     }
 }

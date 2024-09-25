@@ -20,8 +20,7 @@ public class RumpusLoader implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
         LogBuilder.logBuilderFromStringArgs("RumpusLoader::run()").info();
-        ReadJson<RumpusUser> json = new ReadJson<>(JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
-        users = json.readModelsFromFile();
+        users = ReadJson.readModelsFromFile(JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
         LogBuilder log = LogBuilder.logBuilderFromStringArgs("\nPopulating rumpus users...");
         for(RumpusUser user : users) {
             if(userDao.add(user) != null) {

@@ -11,6 +11,8 @@ public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
+        java.time.LocalDate localDate = java.time.LocalDate.now();
+
 
         // String out = OcrTesseract.doOCR("src/main/tmp/test.pdf");
         // System.out.println("OCR complete!");
@@ -40,3 +42,4 @@ public class HelloWorld {
         // java.util.Set<String> set = new java.util.TreeSet<String>(comp2);
     }
 }
+

@@ -38,29 +38,6 @@ public class RumpusPostTest {
     }
 
     @Test
-    public void testGetModelAttributesMap() {
-        RumpusPost post = RumpusPost.create(
-            "Title",
-            "Content",
-            "authorID",
-            "threadID",
-            "2024-08-30T12:00:00Z",
-            "2024-08-30T12:30:00Z",
-            "parentPostID"
-        );
-
-        Map<String, Object> attributesMap = post.getModelAttributesMap();
-
-        assertEquals("Title", attributesMap.get("title"));
-        assertEquals("Content", attributesMap.get("content"));
-        assertEquals("authorID", attributesMap.get("author"));
-        assertEquals("threadID", attributesMap.get("threadID"));
-        assertEquals("2024-08-30T12:00:00Z", attributesMap.get("created"));
-        assertEquals("2024-08-30T12:30:00Z", attributesMap.get("updated"));
-        assertEquals("parentPostID", attributesMap.get("parentPostID"));
-    }
-
-    @Test
     public void testJsonSerialization() throws IOException {
         RumpusPost post = RumpusPost.create(
             "Title",

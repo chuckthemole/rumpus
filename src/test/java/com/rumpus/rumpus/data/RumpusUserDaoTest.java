@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.google.gson.JsonSyntaxException;
 import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.util.ReadJson;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
@@ -43,11 +42,11 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     private static final String ROOT_USER = "chuckthemole";
     private static final String ROOT_USER_EMAIL = "chuckthemole@gmail.com";
     private static final String ROOT_USER_PASS = "coolpassbro";
-    private static final String ROOT_USER_ID = "1111111111";
+    private static final java.util.UUID ROOT_USER_ID = java.util.UUID.fromString("11111111-1111-1111-1111-111111111111");
     private static final String SECONDARY_USER = "chuck";
     private static final String SECONDARY_USER_EMAIL = "chuck@gmail.com";
     private static final String SECONDARY_USER_PASS = "supersecretsecret";
-    private static final String SECONDARY_USER_ID = "2222222222";
+    private static final java.util.UUID SECONDARY_USER_ID = java.util.UUID.fromString("22222222-2222-2222-2222-222222222222");
 
     private static RumpusUser expectedRootUser;
     private static RumpusUser expectedSecondaryUser;
@@ -74,14 +73,11 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         expectedSecondaryUser.setPassword(SECONDARY_USER_PASS);
         expectedSecondaryUser.setId(SECONDARY_USER_ID);
 
-        ReadJson<RumpusUser> json = new ReadJson<>(AbstractRumpusTest.JSON_USERS_FILE, new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
-        try {
-            users = json.readModelsFromFile();
-        } catch (JsonSyntaxException e) {
-            this.LOG("DaoApiDBTest::setUp()::JsonSyntaxException");
-        } catch (java.lang.Exception e) {
-            this.LOG("DaoApiDBTest::setUp()::Exception");
-        }
+        // populate users from file
+        RumpusUserDaoTest.users = ReadJson.readModelsFromFile(
+                AbstractRumpusTest.JSON_USERS_FILE,
+                new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
+
         // for(RumpusUser user : users) {
         //     LOG(user.toString());
         // }
@@ -122,7 +118,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     @Test
     @Order(4)
 	void testGetUsers() {
-        RumpusUserCollection expected = new RumpusUserCollection(new ArrayList<>(List.of(users))); // TODO: get rid of ArrayList
+        RumpusUserCollection expected = new RumpusUserCollection(new ArrayList<>(List.of(RumpusUserDaoTest.users))); // TODO: get rid of ArrayList
         RumpusUserCollection actual = new RumpusUserCollection(this.userDao.getAll());
         assertEquals(expected.sortByUsername(), actual.sortByUsername());
 	}
@@ -136,8 +132,8 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         // users1.sortById();
         // users2.sortById();
 
-        RumpusUserCollection users1 = new RumpusUserCollection(List.of(users));
-        RumpusUserCollection users2 = new RumpusUserCollection(List.of(users));
+        RumpusUserCollection users1 = new RumpusUserCollection(List.of(RumpusUserDaoTest.users));
+        RumpusUserCollection users2 = new RumpusUserCollection(List.of(RumpusUserDaoTest.users));
         assertEquals(users1.sortByUsername(), users2.sortByUsername());
         assertNotEquals(users1.sortByEmail(), users2.sortById());
     }
