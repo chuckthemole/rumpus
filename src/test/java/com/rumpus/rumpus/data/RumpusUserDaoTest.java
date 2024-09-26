@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.reflect.Type;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -16,8 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.google.gson.reflect.TypeToken;
 import com.rumpus.AbstractRumpusTest;
-import com.rumpus.common.util.ReadJson;
+import com.rumpus.common.util.ModelReader.FileProcessor;
+import com.rumpus.common.util.ModelReader.IFileReader;
+import com.rumpus.common.util.ModelReader.JsonReader;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -28,9 +32,12 @@ import com.rumpus.rumpus.models.RumpusUser;
 public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
 
     // TODO test methods: get, getAll, add, update, remove, look at IDao for methods to test.
+    private final IFileReader fileReader = JsonReader.create();
+    private FileProcessor fileProcessor;
     
     public RumpusUserDaoTest() {
         super(RumpusUserDaoTest.class);
+        this.fileProcessor = new FileProcessor(fileReader);
     }
 
     @Autowired
@@ -74,9 +81,8 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         expectedSecondaryUser.setId(SECONDARY_USER_ID);
 
         // populate users from file
-        RumpusUserDaoTest.users = ReadJson.readModelsFromFile(
-                AbstractRumpusTest.JSON_USERS_FILE,
-                new com.google.gson.reflect.TypeToken<RumpusUser[]>(){}.getType());
+        final Type type = new TypeToken<RumpusUser[]>(){}.getType();
+        RumpusUserDaoTest.users = this.fileProcessor.<RumpusUser>processFile(AbstractRumpusTest.JSON_USERS_FILE, type).get();
 
         // for(RumpusUser user : users) {
         //     LOG(user.toString());
