@@ -7,9 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.util.FileIO.FileProcessor;
-import com.rumpus.common.util.FileIO.IFileReader;
-import com.rumpus.common.util.FileIO.JsonReader;
+import com.rumpus.common.FileIO.FileProcessor;
+import com.rumpus.common.FileIO.IFileReader;
+import com.rumpus.common.FileIO.JsonReader;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 

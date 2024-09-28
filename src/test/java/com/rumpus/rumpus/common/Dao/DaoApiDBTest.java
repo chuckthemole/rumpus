@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.rumpus.AbstractRumpusTest;
-import com.rumpus.common.util.FileIO.FileProcessor;
-import com.rumpus.common.util.FileIO.IFileReader;
-import com.rumpus.common.util.FileIO.JsonReader;
+import com.rumpus.common.FileIO.FileProcessor;
+import com.rumpus.common.FileIO.IFileReader;
+import com.rumpus.common.FileIO.JsonReader;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 

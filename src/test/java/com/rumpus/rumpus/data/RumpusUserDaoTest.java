@@ -19,9 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.google.gson.reflect.TypeToken;
 import com.rumpus.AbstractRumpusTest;
-import com.rumpus.common.util.FileIO.FileProcessor;
-import com.rumpus.common.util.FileIO.IFileReader;
-import com.rumpus.common.util.FileIO.JsonReader;
+import com.rumpus.common.FileIO.FileProcessor;
+import com.rumpus.common.FileIO.IFileReader;
+import com.rumpus.common.FileIO.JsonReader;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser;
