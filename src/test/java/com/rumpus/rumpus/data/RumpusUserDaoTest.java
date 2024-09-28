@@ -20,8 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import com.google.gson.reflect.TypeToken;
 import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.FileIO.FileProcessor;
-import com.rumpus.common.FileIO.IFileReader;
-import com.rumpus.common.FileIO.JsonReader;
+import com.rumpus.common.FileIO.IFileIO;
+import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -32,7 +32,7 @@ import com.rumpus.rumpus.models.RumpusUser;
 public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
 
     // TODO test methods: get, getAll, add, update, remove, look at IDao for methods to test.
-    private final IFileReader fileReader = JsonReader.create();
+    private final IFileIO fileReader = JsonIO.create();
     private FileProcessor fileProcessor;
     
     public RumpusUserDaoTest() {

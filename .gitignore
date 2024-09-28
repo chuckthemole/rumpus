@@ -67,3 +67,5 @@ src/main/js/common/
 
 # ignore files in out directory of tools
 src/main/java/com/rumpus/rumpus/tools/out/*
+
+.DS_Store

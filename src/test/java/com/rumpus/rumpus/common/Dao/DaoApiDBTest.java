@@ -6,8 +6,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.FileIO.FileProcessor;
-import com.rumpus.common.FileIO.IFileReader;
-import com.rumpus.common.FileIO.JsonReader;
+import com.rumpus.common.FileIO.IFileIO;
+import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 
@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
  */
 public class DaoApiDBTest extends AbstractRumpusDaoTest {
 
-    private final IFileReader fileReader = JsonReader.create();
+    private final IFileIO fileReader = JsonIO.create();
     private FileProcessor fileProcessor;
 
     @MockBean private RumpusUserDao userDao;
