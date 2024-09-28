@@ -7,9 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.util.ModelReader.FileProcessor;
-import com.rumpus.common.util.ModelReader.IFileReader;
-import com.rumpus.common.util.ModelReader.JsonReader;
+import com.rumpus.common.util.FileIO.FileProcessor;
+import com.rumpus.common.util.FileIO.IFileReader;
+import com.rumpus.common.util.FileIO.JsonReader;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 
@@ -32,8 +32,10 @@ public class RumpusLoader implements CommandLineRunner {
         LogBuilder.logBuilderFromStringArgs("RumpusLoader::run()").info();
 
         // TODO: make this a service layer call
-        final Type type = new TypeToken<RumpusUser[]>(){}.getType();
-        this.users = this.fileProcessor.<RumpusUser>processFile(JSON_USERS_FILE, type).get();
+        this.users = this.fileProcessor.<RumpusUser>processFile(
+            JSON_USERS_FILE,
+            RumpusUser[].class
+        ).get();
 
         LogBuilder log = LogBuilder.logBuilderFromStringArgs("\nPopulating rumpus users...");
         for(RumpusUser user : users) {

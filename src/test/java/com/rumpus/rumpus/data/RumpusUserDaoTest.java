@@ -19,9 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.google.gson.reflect.TypeToken;
 import com.rumpus.AbstractRumpusTest;
-import com.rumpus.common.util.ModelReader.FileProcessor;
-import com.rumpus.common.util.ModelReader.IFileReader;
-import com.rumpus.common.util.ModelReader.JsonReader;
+import com.rumpus.common.util.FileIO.FileProcessor;
+import com.rumpus.common.util.FileIO.IFileReader;
+import com.rumpus.common.util.FileIO.JsonReader;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser;
@@ -81,8 +81,10 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         expectedSecondaryUser.setId(SECONDARY_USER_ID);
 
         // populate users from file
-        final Type type = new TypeToken<RumpusUser[]>(){}.getType();
-        RumpusUserDaoTest.users = this.fileProcessor.<RumpusUser>processFile(AbstractRumpusTest.JSON_USERS_FILE, type).get();
+        RumpusUserDaoTest.users = this.fileProcessor.<RumpusUser>processFile(
+            AbstractRumpusTest.JSON_USERS_FILE,
+            RumpusUser[].class
+        ).get();
 
         // for(RumpusUser user : users) {
         //     LOG(user.toString());

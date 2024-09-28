@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.rumpus.AbstractRumpusTest;
-import com.rumpus.common.util.ModelReader.FileProcessor;
-import com.rumpus.common.util.ModelReader.IFileReader;
-import com.rumpus.common.util.ModelReader.JsonReader;
+import com.rumpus.common.util.FileIO.FileProcessor;
+import com.rumpus.common.util.FileIO.IFileReader;
+import com.rumpus.common.util.FileIO.JsonReader;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser;
 
@@ -35,8 +35,10 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
     protected void setUp() {
         this.LOG("DaoApiDBTest::setUp()");
         try {
-            final Type type = new TypeToken<RumpusUser[]>(){}.getType();
-            DaoApiDBTest.users = this.fileProcessor.<RumpusUser>processFile(AbstractRumpusTest.JSON_USERS_FILE, type).get();
+            DaoApiDBTest.users = this.fileProcessor.<RumpusUser>processFile(
+                AbstractRumpusTest.JSON_USERS_FILE,
+                RumpusUser[].class
+            ).get();
         } catch (com.google.gson.JsonSyntaxException e) {
             this.LOG("DaoApiDBTest::setUp()::JsonSyntaxException");
         } catch (java.lang.Exception e) {
