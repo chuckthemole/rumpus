@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import com.rumpus.common.OCR.OcrTesseract;
-import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 
 public class HelloWorld {
     public static void main(String[] args) {

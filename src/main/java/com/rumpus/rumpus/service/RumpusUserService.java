@@ -2,8 +2,8 @@ package com.rumpus.rumpus.service;
 
 import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.rumpus.data.IRumpusUserDao;
-import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 /**
  * RumpusUserService

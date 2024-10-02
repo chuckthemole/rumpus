@@ -12,8 +12,8 @@ import com.rumpus.common.ICommon;
 import com.rumpus.common.Dao.IUserDao;
 import com.rumpus.common.Logger.AbstractCommonLogger.LogLevel;
 import com.rumpus.common.User.AbstractCommonAuthManager;
-import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 /**
  * TODO: is this being used? if not, delete it

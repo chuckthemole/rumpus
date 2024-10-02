@@ -13,7 +13,7 @@ import com.rumpus.common.views.AbstractViews;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.config.WebSecurityConfig;
 import com.rumpus.rumpus.controller.RumpusRestController;
-import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.views.RumpusViewLoader;
 

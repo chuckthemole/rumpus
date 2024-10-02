@@ -9,8 +9,7 @@ import com.rumpus.common.FileIO.FileProcessor;
 import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.data.RumpusUserDao;
-import com.rumpus.rumpus.models.RumpusUser;
-
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;

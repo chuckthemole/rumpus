@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.models;
+package com.rumpus.rumpus.models.RumpusUser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -57,7 +57,6 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
         return user;
     }
 
-    @SuppressWarnings(UNCHECKED)
     public static RumpusUser createFromMap(Map<String, Object> userMap) {
         IRumpus.LOG(RumpusUser.class, "RumpusUser::createFromMap()");
         RumpusUser user = new RumpusUser();
@@ -67,10 +66,10 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
         user.setId(userMap.containsKey(ID) ? java.util.UUID.fromString((String) userMap.get(ID)) : EMPTY_UUID);
 
         // user meta data
-        AbstractCommonUserMetaData<RumpusUserMetaData> meta = null;
+        RumpusUserMetaData meta = null;
         if(userMap.containsKey(USER_META_DATA)) {
             // meta = RumpusUserMetaData.createFromListOfMaps((List<Map<String, String>>) userMap.get(USER_META_DATA));
-            meta = (AbstractCommonUserMetaData<RumpusUserMetaData>) userMap.get(USER_META_DATA);
+            meta = (RumpusUserMetaData) userMap.get(USER_META_DATA);
         }
 
         if(meta == null) {

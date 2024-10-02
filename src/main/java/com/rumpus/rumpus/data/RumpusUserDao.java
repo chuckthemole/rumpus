@@ -4,8 +4,8 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import com.rumpus.common.Dao.IDao;
 import com.rumpus.common.Dao.jdbc.ApiDBJdbcUsers;
-import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusUserDao extends ApiDBJdbcUsers<RumpusUser, RumpusUserMetaData> implements IRumpusUserDao {
 

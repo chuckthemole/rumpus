@@ -11,7 +11,7 @@ import com.rumpus.common.FileIO.FileProcessor;
 import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.data.IRumpusUserDao;
-import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 
 public class RumpusLoader implements CommandLineRunner {
 

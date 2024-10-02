@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
 import com.rumpus.common.Service.AbstractUserService;
-import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 

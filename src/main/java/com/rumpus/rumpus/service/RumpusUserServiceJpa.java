@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rumpus.common.Service.AbstractUserServiceJpa;
 import com.rumpus.rumpus.data.IRumpusUserDaoJpa;
-import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, RumpusUserMetaData> {
 

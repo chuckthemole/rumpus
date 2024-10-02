@@ -19,6 +19,7 @@ run = "./gradlew bootRun &> src/main/java/com/rumpus/rumpus/log/spring.log"
 runDebug = "./gradlew bootRun --debug > src/main/java/com/rumpus/rumpus/log/spring.log"
 moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
+dependencies = ".././gradlew dependencies > src/main/java/com/rumpus/rumpus/log/dependencies.log"
 
 def compile_and_run_tool(tool_name):
     # make the out directory if it doesn't exist
@@ -74,6 +75,8 @@ if __name__ == '__main__':
         os.system(locust_test)
     elif command == "locust_version":
         os.system(locust_version)
+    elif command == "dependencies":
+        os.system(dependencies)
     elif command == "compileTool":
         if len(sys.argv) < 3:
             print("Usage: python runner.py compileTool [tool_name]")

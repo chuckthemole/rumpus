@@ -4,8 +4,8 @@ import com.rumpus.common.views.CSSFramework.Bulma.CSS.Layout.BulmaTile;
 import com.rumpus.common.views.Component.AbstractTile;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.Template.AbstractUserTemplate;
-import com.rumpus.rumpus.models.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusAdminUserView extends AbstractUserTemplate<RumpusUser, RumpusUserMetaData> {
 

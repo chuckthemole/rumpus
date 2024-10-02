@@ -24,7 +24,7 @@ import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
-import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 
 @ContextConfiguration(classes = {RumpusConfig.class})
 @SpringBootTest

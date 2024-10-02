@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
-import com.rumpus.rumpus.models.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 /**
