@@ -1,12 +1,11 @@
 package com.rumpus.rumpus.models;
 
-import java.io.IOException;
+import java.util.UUID;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import com.rumpus.common.Model.IModelIdManager;
 import com.rumpus.common.Model.SqlIdManager;
+
+import com.rumpus.common.Forum.ForumPost;
 
 /**
  * RumpusPost
@@ -14,6 +13,8 @@ import com.rumpus.common.Model.SqlIdManager;
  * Represents a post in a Rumpus thread.
  * TODO: This class can be abstracted. We can create a CommonPost class that can be used by both Rumpus and RumpusCommon.
  * Actually look in Forum in common and see if we can use that.
+ * 
+ * UPDATE: I've already created a package Forum and elements like {@link ForumPost}
  */
 public class RumpusPost extends RumpusModel<RumpusPost> {
     private static SqlIdManager idManager;
@@ -59,6 +60,10 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
         String updated,
         String parentPostID) {
             return new RumpusPost(title, content, authorID, threadID, created, updated, parentPostID);
+    }
+
+    public static RumpusPost createEmpty() {
+        return new RumpusPost();
     }
 
     public String getTitle() {
@@ -118,72 +123,12 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
     }
 
     @Override
-    public TypeAdapter<RumpusPost> createTypeAdapter() {
-        return new TypeAdapter<RumpusPost>() {
-            @Override
-            public void write(JsonWriter out, RumpusPost post) throws IOException {
-                out.beginObject(); 
-                out.name("title");
-                out.value(post.getTitle());
-                out.name("content");
-                out.value(post.getContent());
-                out.name("author");
-                out.value(post.getAuthorID());
-                out.name("threadID");
-                out.value(post.getThreadID());
-                out.name("created");
-                out.value(post.getCreated());
-                out.name("updated");
-                out.value(post.getUpdated());
-                out.name("parentPostID");
-                out.value(post.getParentPostID());
-                out.endObject();
-            }
-
-            @Override
-            public RumpusPost read(JsonReader in) throws IOException {
-                RumpusPost post = new RumpusPost();
-                in.beginObject();
-
-                while (in.hasNext()) {
-                    String name = in.nextName();
-                    switch (name) {
-                        case "title":
-                            post.setTitle(in.nextString());
-                            break;
-                        case "content":
-                            post.setContent(in.nextString());
-                            break;
-                        case "author":
-                            post.setAuthorID(in.nextString());
-                            break;
-                        case "threadID":
-                            post.setThreadID(in.nextString());
-                            break;
-                        case "created":
-                            post.setCreated(in.nextString());
-                            break;
-                        case "updated":
-                            post.setUpdated(in.nextString());
-                            break;
-                        case "parentPostID":
-                            post.setParentPostID(in.nextString());
-                            break;
-                    }
-                }
-
-                in.endObject();
-                return post;
-            }
-        };
-    }
-    @Override
     public int compareTo(RumpusPost o) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
     }
     @Override
-    public IModelIdManager getIdManager() {
+    public IModelIdManager<UUID> getIdManager() {
         return RumpusPost.idManager;
     }
 }

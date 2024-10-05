@@ -49,7 +49,8 @@ public class RumpusPostTest {
             "parentPostID"
         );
 
-        TypeAdapter<RumpusPost> adapter = post.createTypeAdapter();
+        final RumpusPostSerializer serializer = new RumpusPostSerializer();
+        final TypeAdapter<RumpusPost> adapter = serializer.getTypeAdapter();
         StringWriter writer = new StringWriter();
         JsonWriter jsonWriter = new JsonWriter(writer);
 
@@ -65,7 +66,8 @@ public class RumpusPostTest {
         String json = "{\"title\":\"Title\",\"content\":\"Content\",\"author\":\"authorID\",\"threadID\":\"threadID\",\"created\":\"2024-08-30T12:00:00Z\",\"updated\":\"2024-08-30T12:30:00Z\",\"parentPostID\":\"parentPostID\"}";
 
         RumpusPost post = RumpusPost.create("", "", "", "", "", "", "");
-        TypeAdapter<RumpusPost> adapter = post.createTypeAdapter();
+        final RumpusPostSerializer serializer = new RumpusPostSerializer();
+        final TypeAdapter<RumpusPost> adapter = serializer.getTypeAdapter();
         JsonReader jsonReader = new JsonReader(new StringReader(json));
 
         RumpusPost deserializedPost = adapter.read(jsonReader);

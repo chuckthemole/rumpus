@@ -1,22 +1,12 @@
 package com.rumpus.rumpus.models.RumpusUser;
 
-import java.io.IOException;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-import com.rumpus.common.ICommon;
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.Model.AbstractMetaData;
 import com.rumpus.common.Model.IModelIdManager;
 import com.rumpus.common.Model.SqlIdManager;
 import com.rumpus.common.User.AbstractCommonUser;
-import com.rumpus.common.User.AbstractCommonUserMetaData;
 import com.rumpus.rumpus.IRumpus;
 
 import jakarta.persistence.Entity;
@@ -27,7 +17,6 @@ import jakarta.persistence.Table;
 public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaData> {
 
     private static final String NAME = "RumpusUser";
-    @JsonIgnore transient private Gson rumpusUserGson;
     @JsonIgnore private static SqlIdManager idManager;
 
     static {
@@ -37,9 +26,6 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     private RumpusUser() {
         super(NAME);
         this.setMetaData(RumpusUserMetaData.createEmpty());
-        this.setTypeAdapter(this.createTypeAdapter()); // TODO can I make this static?
-        this.rumpusUserGson = new GsonBuilder()
-            .registerTypeAdapter(this.getClass(), this.getTypeAdapter()).create();
     }
 
     /////////////////////////////
@@ -84,76 +70,6 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     /////////////////////////////////
     // end public static factory ////
     /////////////////////////////////
-
-    @Override
-    public TypeAdapter<RumpusUser> createTypeAdapter() {
-        return new TypeAdapter<RumpusUser>() {
-            @Override
-            public void write(JsonWriter out, RumpusUser user) throws IOException {
-                out.beginObject(); 
-                out.name(ICommon.USERNAME);
-                out.value(user.getUsername());
-                out.name(ICommon.EMAIL);
-                out.value(user.getEmail());
-                out.name(ICommon.PASSWORD);
-                out.value(user.getPassword());
-
-                // meta data
-                out.name(AbstractMetaData.USER_CREATION_DATE_TIME);
-                out.value(user.getMetaData().getStandardFormattedCreationTime());
-                out.name(AbstractCommonUserMetaData.USER_PHOTO_LINK);
-                out.value(user.getMetaData().getPhotoLink());
-                out.name(AbstractCommonUserMetaData.USER_ABOUT_ME);
-                out.value(user.getMetaData().getAboutMe());
-                out.endObject();
-            }
-
-            @Override
-            public RumpusUser read(JsonReader in) throws IOException {
-                RumpusUser user = RumpusUser.createEmptyUser();
-                RumpusUserMetaData metaData = RumpusUserMetaData.createEmpty();
-                in.beginObject();
-                String fieldname = null;
-
-                while (in.hasNext()) {
-                    JsonToken token = in.peek();
-                    
-                    if (token.equals(JsonToken.NAME)) {
-                        //get the current token 
-                        fieldname = in.nextName(); 
-                    }
-                    if (ICommon.USERNAME.equals(fieldname)) {
-                        //move to next token
-                        token = in.peek();
-                        user.setUsername(in.nextString());
-                    }
-                    if(ICommon.EMAIL.equals(fieldname)) {
-                        //move to next token
-                        token = in.peek();
-                        user.setEmail(in.nextString());
-                    }
-
-                    // meta data
-                    if(AbstractMetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
-                        //move to next token
-                        token = in.peek();
-                        metaData.setCreationTime(in.nextString());
-                    }
-                    if(AbstractCommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
-                        token = in.peek();
-                        metaData.setPhotoLink(in.nextString());
-                    }
-                    if(AbstractCommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
-                        token = in.peek();
-                        metaData.setAboutMe(in.nextString());
-                    }
-                }
-                user.setMetaData(metaData);
-                in.endObject();
-                return user;
-            }
-        };
-    }
 
     @Override
     public IModelIdManager<java.util.UUID> getIdManager() {

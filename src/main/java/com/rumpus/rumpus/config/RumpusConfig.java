@@ -15,10 +15,14 @@ import com.rumpus.common.Log.LogManager;
 import com.rumpus.common.Log.LogManagerLoader;
 import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
+import com.rumpus.common.Serializer.ISerializerRegistry;
+import com.rumpus.common.Serializer.SerializerRegistry;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.IRumpus;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserSerializer;
 
 @Configuration
 // @EnableSpringWebSession

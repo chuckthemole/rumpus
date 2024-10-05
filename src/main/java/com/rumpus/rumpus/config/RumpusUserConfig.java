@@ -10,11 +10,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Serializer.ISerializerRegistry;
+import com.rumpus.common.Serializer.SerializerRegistry;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserSerializer;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
@@ -24,7 +27,11 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-public class RumpusUserConfig extends AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+public class RumpusUserConfig extends AbstractCommonUserConfig<
+    RumpusUser,
+    RumpusUserMetaData,
+    IRumpusUserService
+> {
 
     public static final String NAME = "RumpusUserConfig";
     
