@@ -39,5 +39,12 @@ public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceMa
         serializerRegistry.registerSerializer(RumpusUser.class, RumpusUserSerializer.jsonSerializer());
         return serializerRegistry;
     }
+
+    @Override
+    public ISerializerRegistry childSerializerService() {
+        ISerializerRegistry serializerRegistry = SerializerRegistry.create();
+        serializerRegistry.registerSerializer(RumpusUser.class, RumpusUserSerializer.jsonSerializer());
+        return serializerRegistry;
+    }
     
 }

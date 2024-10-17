@@ -1,5 +1,8 @@
 package com.rumpus.rumpus.config;
 
-@org.springframework.stereotype.Component
-public class RumpusUserAuthentication extends com.rumpus.common.User.AbstractCommonAuthentication {
+import org.springframework.stereotype.Component;
+import com.rumpus.common.User.AbstractCommonAuthentication;
+
+@Component
+public class RumpusUserAuthentication extends AbstractCommonAuthentication {
 }

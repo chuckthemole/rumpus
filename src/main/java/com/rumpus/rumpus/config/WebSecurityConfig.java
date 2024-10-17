@@ -10,13 +10,16 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.rumpus.common.Controller.ICommonController;
+import com.rumpus.common.ICommon;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.common.User.AuthenticationHandler;
+import com.rumpus.rumpus.security.Unauthorized;
 
 @Configuration
 @EnableWebSecurity // WebSecurityConfiguration
 // @PropertySource("classpath:database.properties")
+// TODO: Can we abstract this to common?
 public class WebSecurityConfig extends AbstractCommonConfig {
 
     public static final String NAME = "WebSecurityConfig";
@@ -44,7 +47,9 @@ public class WebSecurityConfig extends AbstractCommonConfig {
             .csrf().disable() // need this disabled for signing up 5/5/2023 Chuck
             .formLogin(form -> form
                 .loginPage(ICommonController.PATH_INDEX)
-                .loginProcessingUrl(ICommonController.PATH_LOGIN).failureHandler(authHandler)
+                .loginProcessingUrl(ICommonController.PATH_LOGIN)
+                .failureHandler(authHandler)
+                .successHandler(authHandler)
                 // .defaultSuccessUrl(ICommonController.PATH_INDEX, true)
                 // .failureForwardUrl(ICommonController.PATH_INDEX).permitAll()
             )
@@ -52,8 +57,11 @@ public class WebSecurityConfig extends AbstractCommonConfig {
             // .and()
             // .logout().clearAuthentication(true).deleteCookies("remove").invalidateHttpSession(false).logoutUrl(PATH_LOGOUT).logoutSuccessUrl("/logout.done")
             // .and()
+            .exceptionHandling()
+                .authenticationEntryPoint(new Unauthorized())
+            .and()
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(ICommonController.PATH_API_USERS).hasRole(com.rumpus.common.ICommon.ADMIN) //only admin should view user list
+                .requestMatchers(ICommonController.PATH_API_USERS).hasRole(ICommon.ADMIN) //only admin should view user list
 
                 // this should prolly be changed when deployed, permitting all for ease of use/testing rn 5/8/2023 chuck
                 .requestMatchers("/**").permitAll()

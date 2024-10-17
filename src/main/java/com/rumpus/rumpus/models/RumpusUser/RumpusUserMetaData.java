@@ -37,7 +37,9 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
             this.readObject(stream);
         } catch (ClassNotFoundException | IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            // e.printStackTrace();
+            LOG("TODO: catch error in RumpusUserMetaData");
+            LOG(e.getMessage());
         }
     }
 
