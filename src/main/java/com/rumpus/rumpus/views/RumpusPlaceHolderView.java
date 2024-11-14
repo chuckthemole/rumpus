@@ -1,7 +1,6 @@
 package com.rumpus.rumpus.views;
 
 import com.rumpus.common.Builder.LogBuilder;
-import com.rumpus.common.views.CSSFramework.Bulma.CSS.Layout.BulmaTile;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaAside;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaBreadcrumb;
 import com.rumpus.common.views.CSSFramework.Bulma.CommonComponents.BulmaWelcome;
@@ -12,18 +11,14 @@ import com.rumpus.common.views.Component.AbstractWelcome;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.Template.AbstractPlaceHolderTemplate;
 import com.rumpus.common.views.Template.AbstractTemplate;
-import com.rumpus.common.views.Template.AbstractUserTemplate;
 
 public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
 
-    private static final String NAME = "RumpusUserView";
     private static final String ASIDE_COMPONENT_NAME = "RumpusUserViewAside";
     private static final String BREADCRUMB_COMPONENT_NAME = "RumpusUserViewBreadcrumb";
     private static final String WELCOME_COMPONENT_NAME = "RumpusUserViewWelcome";
 
-    public RumpusPlaceHolderView() {
-        super(NAME);
-    }
+    public RumpusPlaceHolderView() {}
 
     public static RumpusPlaceHolderView create() {
         return new RumpusPlaceHolderView();
@@ -86,8 +81,10 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
         head.addChild(this.get(AbstractTemplate.TEMPLATE_WELCOME));
         head.addChild(this.get(AbstractTemplate.TEMPLATE_BREADCRUMB));
         head.addChild(this.get(AbstractTemplate.TEMPLATE_ASIDE));
-        LogBuilder.logBuilderFromStringArgsNoSpaces("DEBUG ASIDE: ", this.get(AbstractTemplate.TEMPLATE_ASIDE).toString()).info();
+        final String log = LogBuilder.logBuilderFromStringArgsNoSpaces(
+            "DEBUG ASIDE: ",
+            this.get(AbstractTemplate.TEMPLATE_ASIDE).toString()).toString();
+        LOG(log);
         return head;
     }
-    
 }

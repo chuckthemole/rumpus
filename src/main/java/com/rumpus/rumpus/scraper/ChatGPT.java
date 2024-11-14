@@ -7,8 +7,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class ChatGPT extends AbstractRumpusScraper {
 
-    private static final String NAME = "ChatGPT";
-
     private static final String URI = "https://chat.openai.com/";
     private final static List<String> parameterList = List.of( // parameters in the relative path, using default values but they can be set below
             "cc1=us",
@@ -28,7 +26,7 @@ public class ChatGPT extends AbstractRumpusScraper {
             "_=1687292000524");
 
     private ChatGPT() {
-        super(NAME, BrowserVersion.CHROME.toString(), URI, null);
+        super(BrowserVersion.CHROME.toString(), URI, null);
     }
 
     public static ChatGPT getInstance() {
@@ -41,6 +39,12 @@ public class ChatGPT extends AbstractRumpusScraper {
         this.body = htmlPage.getBody().asNormalizedText();
         this.head = htmlPage.getHead().asNormalizedText();
         this.page = htmlPage.asNormalizedText();
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
     
 }

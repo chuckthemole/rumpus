@@ -34,13 +34,10 @@ public class CommonRestController extends AbstractCommonRestController
         RumpusAdminUserView
     > {
 
-        private static final String NAME = "Rumpus - CommonRestController";
-
         // @Autowired private AuthenticationManager authenticationManager;
 
         @Autowired
         public CommonRestController() {
-            super(NAME);
             this.setDefaultCurrentBasePath();
         }
 
@@ -62,11 +59,18 @@ public class CommonRestController extends AbstractCommonRestController
             LOG("CommonRestControler::getPathsFromBasePath()");
             Map<String, String> paths = AbstractCommonController.commonPaths.getBasePath(basePath);
             if(paths == null) {
-                LogBuilder.logBuilderFromStringArgs("No paths found with basePath=", basePath).info();
+                final String log = LogBuilder.logBuilderFromStringArgs(
+                    "No paths found with basePath=",
+                    basePath).toString();
+                LOG(log);
                 return new ResponseEntity<Map<String, String>>(Map.of(), HttpStatus.NOT_FOUND);
             }
             if(paths.isEmpty()) {
-                LogBuilder.logBuilderFromStringArgs("No paths found with basePath=", basePath, " (EMPTY)").info();
+                final String log = LogBuilder.logBuilderFromStringArgs(
+                    "No paths found with basePath=",
+                    basePath,
+                    " (EMPTY)").toString();
+                LOG(log);
             }
             return new ResponseEntity<Map<String, String>>(paths, HttpStatus.ACCEPTED);
         }
@@ -118,5 +122,11 @@ public class CommonRestController extends AbstractCommonRestController
         @Override
         public void setDefaultCurrentBasePath() {
             this.setCurrentBasePath(AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH);
+        }
+
+        @Override
+        public String toString() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toString'");
         }
 }

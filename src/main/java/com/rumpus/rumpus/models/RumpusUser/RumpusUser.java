@@ -7,7 +7,6 @@ import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Model.IModelIdManager;
 import com.rumpus.common.Model.SqlIdManager;
 import com.rumpus.common.User.AbstractCommonUser;
-import com.rumpus.rumpus.IRumpus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,7 +15,6 @@ import jakarta.persistence.Table;
 @Table(name = "rumpus_user")
 public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaData> {
 
-    private static final String NAME = "RumpusUser";
     @JsonIgnore private static SqlIdManager idManager;
 
     static {
@@ -24,7 +22,6 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     }
 
     private RumpusUser() {
-        super(NAME);
         this.setMetaData(RumpusUserMetaData.createEmpty());
     }
 
@@ -44,7 +41,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     }
 
     public static RumpusUser createFromMap(Map<String, Object> userMap) {
-        IRumpus.LOG(RumpusUser.class, "RumpusUser::createFromMap()");
+        LOG(RumpusUser.class, "RumpusUser::createFromMap()");
         RumpusUser user = new RumpusUser();
         user.setUsername(userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
         user.setUserPassword(userMap.containsKey(PASSWORD) ? (String) userMap.get(PASSWORD) : EMPTY_FIELD);
@@ -59,11 +56,18 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
         }
 
         if(meta == null) {
-            LogBuilder.logBuilderFromStringArgs(RumpusUser.class, "Failed building RumpusUserMetaData. Setting empty meta data.").info();
+            final String log = LogBuilder.logBuilderFromStringArgs(
+                RumpusUser.class,
+                "Failed building RumpusUserMetaData. Setting empty meta data.").toString();
+            LOG(RumpusUser.class, log);
             meta = RumpusUserMetaData.createEmpty();
         }
 
-        LogBuilder.logBuilderFromStringArgs(RumpusUser.class, "Success building RumpusUserMetaData:\n", meta.toString()).info();
+        final String log = LogBuilder.logBuilderFromStringArgs(
+            RumpusUser.class,
+            "Success building RumpusUserMetaData:\n",
+            meta.toString()).toString();
+        LOG(RumpusUser.class, log);
         user.setMetaData(meta);
         return user;
     }

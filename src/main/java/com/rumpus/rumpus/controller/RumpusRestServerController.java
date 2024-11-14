@@ -21,7 +21,7 @@ public class RumpusRestServerController extends RumpusRestController {
 
     @Autowired
     public RumpusRestServerController() {
-            super();
+            
     }
 
     @GetMapping(value = "/start/{server}")

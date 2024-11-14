@@ -17,8 +17,6 @@ import com.rumpus.common.views.AbstractViews;
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
 public class RumpusViewLoader extends AbstractViews {
-    
-    private static final String NAME = "RumpusViewLoader";
 
     public static final String RUMPUS_ADMIN_TEMPLATE = "RumpusAdminTemplate";
     public static final String RUMPUS_USER_VIEW_TEMPLATE = AbstractViews.CURRENT_USER_TEMPLATE_KEY;
@@ -79,9 +77,7 @@ public class RumpusViewLoader extends AbstractViews {
         );
     }
 
-    private RumpusViewLoader() {
-        super(NAME);
-	}
+    private RumpusViewLoader() {}
 
     public static RumpusViewLoader create() {
         return new RumpusViewLoader();
@@ -142,7 +138,9 @@ public class RumpusViewLoader extends AbstractViews {
         return SUCCESS;
     }
 
-    private static void LOG_THIS(String... args) {
-        com.rumpus.common.Builder.LogBuilder.logBuilderFromStringArgsNoSpaces(RumpusViewLoader.class, args).info();
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

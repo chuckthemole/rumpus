@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
 import com.rumpus.common.Forum.ForumThreadManager;
-import com.rumpus.common.Log.LogManager;
+import com.rumpus.common.Log.LogItem.LogItemCollectionManager;
 import com.rumpus.common.Server.ServerManager;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
@@ -34,7 +34,7 @@ abstract public class AbstractRumpusController extends AbstractCommonController
 
         @Autowired protected ForumThreadManager forumThreadManager;
 
-        @Autowired protected LogManager logManager;
+        @Autowired protected LogItemCollectionManager logManager;
 
         @Autowired protected PythonInterpreter pythonInterpreter;
 
@@ -42,8 +42,7 @@ abstract public class AbstractRumpusController extends AbstractCommonController
 
         protected static String RUMPUS_DEFAULT_BASE_PATH = "/api";
 
-        public AbstractRumpusController(String name) {
-            super(name);
+        public AbstractRumpusController() {
             this.init();
         }
         

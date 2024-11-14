@@ -19,11 +19,9 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 @org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.YamlPropertySourceFactory.class)
 public class ChuckConfig extends AbstractCommonConfig {
 
-    public static final String NAME = "ChuckConfig";
-
     @Autowired
     public ChuckConfig(Environment environment) {
-        super(NAME, environment);
+        super(environment);
     }
 
     @Bean
@@ -34,5 +32,11 @@ public class ChuckConfig extends AbstractCommonConfig {
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

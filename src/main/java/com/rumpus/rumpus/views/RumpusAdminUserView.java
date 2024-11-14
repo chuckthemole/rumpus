@@ -9,10 +9,8 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusAdminUserView extends AbstractUserTemplate<RumpusUser, RumpusUserMetaData> {
 
-    private static final String NAME = "RumpusAdminUserView";
-
     private RumpusAdminUserView(RumpusUser user) {
-        super(NAME, user);
+        super(user);
     }
 
     ///////////////////////

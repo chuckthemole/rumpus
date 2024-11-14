@@ -10,8 +10,8 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserSerializer;
 
 public class RumpusSerializerConfig extends AbstractCommonSerializerConfig {
 
-    public RumpusSerializerConfig(String name, Environment environment) {
-        super(name, environment);
+    public RumpusSerializerConfig(Environment environment) {
+        super(environment);
     }
 
     @Override
@@ -24,5 +24,11 @@ public class RumpusSerializerConfig extends AbstractCommonSerializerConfig {
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

@@ -13,14 +13,11 @@ import com.rumpus.common.views.Template.AbstractTemplate;
 
 public class RumpusAdmin extends AbstractAdmin {
 
-    private static final String NAME = "RumpusAdmin";
     private static final String ASIDE_COMPONENT_NAME = "RumpusAdminAside";
     private static final String BREADCRUMB_COMPONENT_NAME = "RumpusAdminBreadcrumb";
     private static final String WELCOME_COMPONENT_NAME = "RumpusAdminWelcome";
 
-    private RumpusAdmin() {
-        super(NAME);
-    }
+    private RumpusAdmin() {}
 
     public static RumpusAdmin create() {
         return new RumpusAdmin();

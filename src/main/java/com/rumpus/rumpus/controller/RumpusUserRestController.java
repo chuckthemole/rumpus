@@ -22,9 +22,11 @@ public class RumpusUserRestController extends AbstractUserController
         RumpusAdminUserView
     > {
 
-        private static final String NAME = "RumpusUserRestController";
+        public RumpusUserRestController() {}
 
-        public RumpusUserRestController() {
-            super(NAME);
+        @Override
+        public String toString() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toString'");
         }
 }

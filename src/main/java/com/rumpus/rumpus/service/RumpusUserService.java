@@ -14,14 +14,18 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
  */
 public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUserMetaData> implements IRumpusUserService {
 
-    protected static final String NAME = "RumpusUserService";
-
     public RumpusUserService(IRumpusUserDao userDao) {
-        super(NAME, userDao);
+        super(userDao);
     }
 
     @Override
     public String getKey() {
         return "This is a cool key!";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

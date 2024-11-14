@@ -4,8 +4,8 @@ import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.Forum.ForumPost;
 import com.rumpus.common.Forum.ForumPostNode;
 import com.rumpus.common.Forum.ForumThread;
-import com.rumpus.common.Log.LogCollection;
-import com.rumpus.common.Log.LogItem;
+import com.rumpus.common.Log.LogItem.LogItem;
+import com.rumpus.common.Log.LogItem.LogItemCollection;
 import com.rumpus.common.Session.CommonSession;
 import com.rumpus.rumpus.IRumpus;
 
@@ -37,16 +37,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ICommonController.PATH_API)
 public class RumpusRestController extends AbstractRumpusController {
 
-    private static final String NAME = "RumpusRestController";
-
     @Autowired
-    public RumpusRestController() {
-        super(NAME);
-    }
+    public RumpusRestController() {}
 
     @GetMapping(value = ICommonController.PATH_INDEX)
     public String getIndex() {
-        return NAME;
+        return this.getClass().getSimpleName(); // TODO: look at this later
     }
 
     @GetMapping(value = "is_authenticated")
@@ -73,9 +69,9 @@ public class RumpusRestController extends AbstractRumpusController {
     }
 
     @GetMapping(value = "/logs/{page}")
-    public ResponseEntity<LogCollection> getLogsForPage(@PathVariable("page") String page, HttpServletRequest request) {
+    public ResponseEntity<LogItemCollection> getLogsForPage(@PathVariable("page") String page, HttpServletRequest request) {
         LOG("RumpusRestController GET: /logs");
-        LogCollection logs = this.logManager.get(page);
+        LogItemCollection logs = this.logManager.get(page);
         if(logs == null || logs.isEmpty()) {
             LOG("No logs found for page: " + page);
         }
@@ -185,4 +181,10 @@ public class RumpusRestController extends AbstractRumpusController {
 	public void destroySession(HttpServletRequest request) {
 		request.getSession().invalidate();
 	}
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
 }

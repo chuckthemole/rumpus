@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
+import com.rumpus.common.ICommon;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.FileIO.FileProcessor;
 import com.rumpus.common.FileIO.IFileIO;
@@ -29,7 +30,7 @@ public class RumpusLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-        LogBuilder.logBuilderFromStringArgs("RumpusLoader::run()").info();
+        LogBuilder.logBuilderFromStringArgs("RumpusLoader::run()").toString();
 
         // TODO: make this a service layer call
         this.users = this.fileProcessor.<RumpusUser>processFile(
@@ -45,7 +46,6 @@ public class RumpusLoader implements CommandLineRunner {
                 log.append("\n  ERROR adding user: ", user.toString());
             }
         }
-        log.info();
-
+        ICommon.LOG(RumpusLoader.class, log.toString());
 	}
 }

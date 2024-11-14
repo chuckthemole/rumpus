@@ -19,8 +19,7 @@ import com.rumpus.common.views.AbstractViews;
  * Views for Rumpus. Add your view init function to init() just as initFooter().
  */
 public class ChuckViewLoader extends AbstractViews {
-    
-    private static final String NAME = "ChuckViewLoader";
+
 
     private static final String NAVBAR_BRAND_HREF = "https://bulma.io/images/bulma-logo.png";
 
@@ -42,7 +41,6 @@ public class ChuckViewLoader extends AbstractViews {
     }
 
     private ChuckViewLoader() {
-        super(NAME);
         init();
 	}
 
@@ -128,5 +126,11 @@ public class ChuckViewLoader extends AbstractViews {
     protected int initTemplates() {
         // TODO
         return SUCCESS;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

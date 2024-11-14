@@ -10,4 +10,10 @@ public class RumpusUserCollection extends AbstractCommonUserCollection<RumpusUse
     public RumpusUserCollection(List<RumpusUser> users) {
         super(users);
     }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
 }

@@ -29,11 +29,13 @@ public class ChuckViewController extends AbstractViewController
         RumpusAdminUserView
     > {
 
-        private static final String NAME = "RumpusViewController";
-
         public ChuckViewController() {
-            super(
-                NAME,
-                ChuckViewLoader.create());
+            super(ChuckViewLoader.create());
+        }
+
+        @Override
+        public String toString() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toString'");
         }
 }

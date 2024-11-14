@@ -60,16 +60,32 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     // TODO: this isn't really doing anything right now. 2024/1/22 - chuck
     // it's just printing out the metaList that is passed in
     private void init(List<Map<String, String>> metaList) {
-        LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::init()").info();
+        String log = LogBuilder.logBuilderFromStringArgs(
+            RumpusUserMetaData.class,
+            "RumpusUserMetaData::init()").toString();
+        LOG(log);
         if(metaList == null) {
-            LogBuilder.logBuilderFromStringArgsNoSpaces(RumpusUserMetaData.class, "Provided metaList is null").info();
+            log = LogBuilder.logBuilderFromStringArgsNoSpaces(
+                RumpusUserMetaData.class,
+                "Provided metaList is null").toString();
+            LOG(log);
         } else if(metaList.isEmpty()) {
-            LogBuilder.logBuilderFromStringArgsNoSpaces(RumpusUserMetaData.class, "Provided metaList is empty").info();
+            log = LogBuilder.logBuilderFromStringArgsNoSpaces(
+                RumpusUserMetaData.class,
+                "Provided metaList is empty").toString();
+            LOG(log);
         } else {
             for(Map<String, String> map : metaList) {
-                LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "New Map:").info();
+                log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "New Map:").toString();
+                LOG(log);
                 map.forEach((key, value) -> {
-                    LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "  ", key, value, "\n").info();;
+                    final String mapLog = LogBuilder.logBuilderFromStringArgs(
+                        RumpusUserMetaData.class,
+                        "  ",
+                        key,
+                        value,
+                        "\n").toString();
+                    LOG(mapLog);
                 });
             }
         }

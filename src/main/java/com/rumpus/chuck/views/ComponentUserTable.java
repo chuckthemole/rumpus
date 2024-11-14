@@ -9,5 +9,11 @@ public class ComponentUserTable extends AbstractTableBuilder {
     public ComponentUserTable(String css) {
         super(NAME, css);
     }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
     
 }

@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationProperties extends AbstractYamlApplicationProperties {
 
-    private static final String NAME = "ApplicationProperties";
+    public ApplicationProperties() {}
 
-    public ApplicationProperties() {
-        super(NAME);
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

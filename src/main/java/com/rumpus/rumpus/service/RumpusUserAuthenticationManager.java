@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Dao.IUserDao;
-import com.rumpus.common.Logger.AbstractCommonLogger.LogLevel;
+import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.User.AbstractCommonAuthManager;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
@@ -21,10 +21,8 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
  */
 public class RumpusUserAuthenticationManager extends AbstractCommonAuthManager<RumpusUser, RumpusUserMetaData> {
 
-    public static final String NAME = "RumpusUserAuthenticationManager";
-
     public RumpusUserAuthenticationManager(IUserDao<RumpusUser, RumpusUserMetaData> rumpusUserDao) {
-        super(NAME, rumpusUserDao);
+        super(rumpusUserDao);
     }
 
     @Override
@@ -64,6 +62,12 @@ public class RumpusUserAuthenticationManager extends AbstractCommonAuthManager<R
 
     private static void LOG_THIS(LogLevel level, String... args) {
         ICommon.LOG(RumpusUserAuthenticationManager.class, level, args);
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
     
 }

@@ -26,11 +26,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
-    public static final String NAME = "RumpusUserConfig";
-
     @Autowired
     public RumpusTestUserConfig(Environment environment) {
-        super(NAME, environment);
+        super(environment);
     }
 
     @Bean
@@ -76,5 +74,11 @@ public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, R
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

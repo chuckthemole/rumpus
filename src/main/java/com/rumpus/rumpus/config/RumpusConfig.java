@@ -11,18 +11,13 @@ import org.springframework.core.env.Environment;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
-import com.rumpus.common.Log.LogManager;
-import com.rumpus.common.Log.LogManagerLoader;
+import com.rumpus.common.Log.LogItem.LogItemCollectionManager;
 import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
-import com.rumpus.common.Serializer.ISerializerRegistry;
-import com.rumpus.common.Serializer.SerializerRegistry;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.IRumpus;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUserSerializer;
 
 @Configuration
 // @EnableSpringWebSession
@@ -30,16 +25,14 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserSerializer;
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
 
-    public static final String NAME = "RumpusConfig";
-
     @Autowired
     public RumpusConfig(Environment environment) {
-        super(NAME, environment);
+        super(environment);
     }
 
     @Bean
-    public LogManager logManager() {
-        LogManager manager = LogManagerLoader.getDefaultLogManager();
+    public LogItemCollectionManager logManager() {
+        LogItemCollectionManager manager = LogItemCollectionManager.createWithMainAndAdmin();
         return manager;
     }
 
@@ -100,6 +93,12 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 
     // @Bean

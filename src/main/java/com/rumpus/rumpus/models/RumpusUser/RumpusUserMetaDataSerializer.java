@@ -12,15 +12,14 @@ import com.rumpus.common.User.AbstractCommonUserMetaData;
 
 public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<RumpusUserMetaData> {
 
-    private static final String NAME = "RumpusUserMetaDataSerializer";
-
     public RumpusUserMetaDataSerializer() {
-        super(NAME, SerializationType.JSON);
+        super(SerializationType.JSON);
     }
 
     @Override
     public void writeJson(JsonWriter out, RumpusUserMetaData object) throws IOException {
-        LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::createTypeAdapter()::write()").info();
+        final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::createTypeAdapter()::write()").toString();
+        LOG(log);
         out.beginObject(); 
         out.name(AbstractCommonUserMetaData.USER_CREATION_DATE_TIME);
         out.value(object.getStandardFormattedCreationTime());
@@ -33,7 +32,8 @@ public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<Rum
 
     @Override
     public RumpusUserMetaData readJson(JsonReader in) throws IOException {
-        LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::createTypeAdapter()::read()").info();
+        final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::createTypeAdapter()::read()").toString();
+        LOG(log);
         RumpusUserMetaData userMetaData = RumpusUserMetaData.createEmpty();
         in.beginObject();
         String fieldname = null;
@@ -66,5 +66,11 @@ public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<Rum
         }
         in.endObject();
         return userMetaData;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

@@ -29,11 +29,14 @@ public class RumpusViewController extends AbstractViewController
         RumpusAdminUserView
     > {
 
-        private static final String NAME = "RumpusViewController";
-
         public RumpusViewController() {
             super(
-                NAME,
                 RumpusViewLoader.create());
+        }
+
+        @Override
+        public String toString() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toString'");
         }
 }

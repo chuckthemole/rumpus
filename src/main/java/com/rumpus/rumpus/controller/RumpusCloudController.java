@@ -22,9 +22,11 @@ public class RumpusCloudController extends AbstractCloudController
         RumpusAdminUserView
     > {
 
-        private static final String NAME = "RumpusCloudController";
+        public RumpusCloudController() {}
 
-        public RumpusCloudController() {
-            super(NAME);
+        @Override
+        public String toString() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toString'");
         }
 }

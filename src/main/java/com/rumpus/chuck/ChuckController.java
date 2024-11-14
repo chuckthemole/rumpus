@@ -18,8 +18,6 @@ abstract public class ChuckController extends AbstractCommonController
         AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO: change when I implement IChuckUserService
         RumpusAdminUserView
     > {
-    
-        private static final String NAME = "ChuckController";
 
         // Paths for charles pikaart thomas
         protected static final String PATH_CHARLES_PIKAART_THOMAS = "/charles_pikaart_thomas";
@@ -34,7 +32,5 @@ abstract public class ChuckController extends AbstractCommonController
         // @Qualifier("chuckViewLoader")
         // protected AbstractViewLoader viewLoader;
 
-        public ChuckController() {
-            super(NAME);
-        }
+        public ChuckController() {}
 }

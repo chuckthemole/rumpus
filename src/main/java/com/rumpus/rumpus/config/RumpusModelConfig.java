@@ -15,12 +15,10 @@ import com.rumpus.rumpus.service.RumpusServiceManager;
 @Configuration
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceManager, ISerializerRegistry> {
-
-    public static final String NAME = "RumpusModelConfig";
     
     @Autowired
     public RumpusModelConfig(Environment environment) {
-        super(NAME, environment);
+        super(environment);
     }
 
     @Override
@@ -45,6 +43,12 @@ public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceMa
         ISerializerRegistry serializerRegistry = SerializerRegistry.create();
         serializerRegistry.registerSerializer(RumpusUser.class, RumpusUserSerializer.jsonSerializer());
         return serializerRegistry;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
     
 }

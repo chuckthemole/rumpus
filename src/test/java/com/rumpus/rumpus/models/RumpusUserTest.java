@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class RumpusUserTest {
     Long id = Long.valueOf(1);
     String name = "Pipin";

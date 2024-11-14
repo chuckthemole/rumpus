@@ -13,8 +13,7 @@ import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
-import com.rumpus.common.Log.LogManager;
-import com.rumpus.common.Log.LogManagerLoader;
+import com.rumpus.common.Log.LogItem.LogItemCollectionManager;
 import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
@@ -25,16 +24,14 @@ import com.rumpus.rumpus.IRumpus;
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusTestConfig extends AbstractCommonConfig {
 
-    public static final String NAME = "RumpusTestConfig";
-
     @Autowired
     public RumpusTestConfig(Environment environment) {
-        super(NAME, environment);
+        super(environment);
     }
 
     @Bean
-    public LogManager logManager() {
-        LogManager manager = LogManagerLoader.getDefaultLogManager();
+    public LogItemCollectionManager logManager() {
+        LogItemCollectionManager manager = LogItemCollectionManager.createWithMainAndAdmin();
         return manager;
     }
 
@@ -82,5 +79,11 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

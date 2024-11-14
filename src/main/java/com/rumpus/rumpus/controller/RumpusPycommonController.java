@@ -21,7 +21,7 @@ public class RumpusPycommonController extends RumpusRestController {
 
     @Autowired
     public RumpusPycommonController() {
-            super();
+            
     }
 
     /*
@@ -35,7 +35,10 @@ public class RumpusPycommonController extends RumpusRestController {
         RestTemplate restTemplate = new RestTemplate();
         final String result = restTemplate.getForObject(uri, String.class);
         session.setAttribute("pycommon", result);
-        LogBuilder.logBuilderFromStringArgs("Pycommon call from rest api: ", result).info();
+        final String log = LogBuilder.logBuilderFromStringArgs(
+            "Pycommon call from rest api: ",
+            result).toString();
+        LOG(log);
         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
     }
 
@@ -47,7 +50,10 @@ public class RumpusPycommonController extends RumpusRestController {
         RestTemplate restTemplate = new RestTemplate();
         final String result = restTemplate.getForObject(uri, String.class);
         session.setAttribute("scraper test", result);
-        LogBuilder.logBuilderFromStringArgs("Pycommon scraper test: ", result).info();
+        final String log = LogBuilder.logBuilderFromStringArgs(
+            "Pycommon scraper test: ",
+            result).toString();
+        LOG(log);
         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
     }
 }

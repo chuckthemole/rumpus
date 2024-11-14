@@ -21,12 +21,10 @@ import com.rumpus.rumpus.security.Unauthorized;
 // @PropertySource("classpath:database.properties")
 // TODO: Can we abstract this to common?
 public class WebSecurityConfig extends AbstractCommonConfig {
-
-    public static final String NAME = "WebSecurityConfig";
     
     @Autowired
     public WebSecurityConfig(Environment environment) {
-        super(NAME, environment);
+        super(environment);
     }
 
     @Bean
@@ -38,7 +36,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception { // allowing 'ADMIN' access to /api/users
-        AuthenticationHandler authHandler = new AuthenticationHandler(null);
+        AuthenticationHandler authHandler = new AuthenticationHandler(null); // TODO: look into activeUserStore later. It's causing a problem being set to null right now. 11/13/2024 chuck
 
         http
             .cors()
@@ -115,5 +113,11 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

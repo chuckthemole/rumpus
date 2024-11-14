@@ -5,10 +5,7 @@ import com.rumpus.rumpus.models.RumpusPost;
 
 public class RumpusServiceManager extends AbstractServiceManager<IRumpusService<?>> {
 
-        public static final String NAME = "RumpusServiceManager";
-
         private RumpusServiceManager() {
-            super(NAME);
             this.registerServices();
         }
 
@@ -19,5 +16,11 @@ public class RumpusServiceManager extends AbstractServiceManager<IRumpusService<
         private void registerServices() {
             IRumpusService<RumpusPost> postService = new RumpusPostService();
             this.put("RumpusPostService", postService);
+        }
+
+        @Override
+        public String toString() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toString'");
         }
 }

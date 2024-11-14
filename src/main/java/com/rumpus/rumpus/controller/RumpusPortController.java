@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ICommonController.PATH_PORTS_API)
 public class RumpusPortController extends AbstractRumpusController {
 
-    private static final String NAME = "RumpusPortController";
     private static final String PORT = "8089"; // TODO: USE ENVIRONMENT
 
     private static com.rumpus.common.Server.Port.PortManager rumpusPortManager; // TODO: should use service dao instead of direct access to the port manager
@@ -28,9 +27,7 @@ public class RumpusPortController extends AbstractRumpusController {
         com.rumpus.common.Server.Port.PortManager.setAdminPort(RumpusPortController.PORT);
     }
 
-    public RumpusPortController() {
-        super(NAME);
-    }
+    public RumpusPortController() {}
 
     @GetMapping(value = "get_ports")
     public ResponseEntity<java.util.Set<String>> getPorts(Authentication authentication) {
@@ -42,5 +39,11 @@ public class RumpusPortController extends AbstractRumpusController {
     public ResponseEntity<Boolean> addPort(@PathVariable("port") String port) {
         LOG("RumpusPortController::addPort()");
         return new ResponseEntity<Boolean>(rumpusPortManager.add(port), HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

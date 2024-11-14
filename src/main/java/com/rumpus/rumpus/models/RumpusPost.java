@@ -30,9 +30,8 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
         RumpusPost.idManager = new SqlIdManager();
     }
 
-    private RumpusPost() {
-        super("RumpusPost");
-    }
+    private RumpusPost() {}
+    
     private RumpusPost(
         String title,
         String content,
@@ -41,7 +40,6 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
         String created,
         String updated,
         String parentPostID) {
-            super("RumpusPost");
             this.title = title;
             this.content = content;
             this.authorID = authorID;
@@ -130,5 +128,11 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
     @Override
     public IModelIdManager<UUID> getIdManager() {
         return RumpusPost.idManager;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

@@ -8,8 +8,8 @@ import com.rumpus.rumpus.models.RumpusPost;
 
 public class RumpusPostDao extends RumpusDao<RumpusPost> implements IRumpusPostDao {
 
-    public RumpusPostDao(String name, DataSource ds, String table, RowMapper<RumpusPost> mapper) {
-        super(name, ds, table, mapper);
+    public RumpusPostDao(DataSource ds, String table, RowMapper<RumpusPost> mapper) {
+        super(ds, table, mapper);
         //TODO Auto-generated constructor stub
     }
 
@@ -23,5 +23,11 @@ public class RumpusPostDao extends RumpusDao<RumpusPost> implements IRumpusPostD
     public RumpusPost update(String id, RumpusPost updatedModel) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

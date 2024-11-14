@@ -3,6 +3,7 @@ package com.rumpus.rumpus.data;
 import com.rumpus.common.Blob.BlobUtil;
 import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.Dao.jdbc.AbstractJdbcRowMapper;
+import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.IRumpus;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
@@ -17,11 +18,7 @@ import java.sql.Blob;
 
 public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
 
-    private static final String NAME = "RumpusUserRowMapper";
-
-    private RumpusUserRowMapper() {
-        super(NAME);
-    }
+    private RumpusUserRowMapper() {}
 
     protected static RumpusUserRowMapper create() {
         return new RumpusUserRowMapper();
@@ -47,10 +44,16 @@ public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
                     rumpusUserMap.put(USER_META_DATA, RumpusUserMetaData.createEmpty());
                 }
             } catch (SQLException e) {
-                IRumpus.LOG(RumpusUserDao.class, "Error: rumpusUserMapping RumpusUser");
-                LogBuilder.logBuilderFromStackTraceElementArray(e.getMessage(), e.getStackTrace()).error();
+                final String log = LogBuilder.logBuilderFromStackTraceElementArray(e.getMessage(), e.getStackTrace()).toString();
+                LOG(LogLevel.ERROR, log);
             }
             return RumpusUser.createFromMap(rumpusUserMap);
         });
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

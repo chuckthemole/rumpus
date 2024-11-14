@@ -12,7 +12,7 @@ import com.rumpus.rumpus.models.RumpusModel;
  */
 public abstract class RumpusDao<MODEL extends RumpusModel<MODEL>> extends AbstractApiDBJdbc<MODEL> implements IRumpusDao<MODEL> {
     
-    public RumpusDao(String name, DataSource ds, String table, RowMapper<MODEL> mapper) {
-        super(name, ds, table, mapper);
+    public RumpusDao(DataSource ds, String table, RowMapper<MODEL> mapper) {
+        super(ds, table, mapper);
     }
 }

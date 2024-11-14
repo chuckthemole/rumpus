@@ -13,7 +13,7 @@ import com.rumpus.common.User.AbstractCommonUserSerializer;
 public class RumpusUserSerializer extends AbstractCommonUserSerializer<RumpusUser, RumpusUserMetaData> {
 
     private RumpusUserSerializer(SerializationType serializationType) {
-        super("RumpusUserSerializer", serializationType);
+        super(serializationType);
     }
 
     public static RumpusUserSerializer jsonSerializer() {

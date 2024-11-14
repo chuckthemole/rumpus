@@ -9,7 +9,7 @@ import com.rumpus.common.Model.AbstractModel.AbstractModelSerializer;
 public class RumpusPostSerializer extends AbstractModelSerializer<RumpusPost> {
 
     public RumpusPostSerializer() {
-        super("RumpusPostSerializer", SerializationType.JSON);
+        super(SerializationType.JSON);
     }
 
     @Override
@@ -66,6 +66,12 @@ public class RumpusPostSerializer extends AbstractModelSerializer<RumpusPost> {
 
         in.endObject();
         return post;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
     
 }

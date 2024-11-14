@@ -9,11 +9,9 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, RumpusUserMetaData> {
 
-    protected static final String NAME = "RumpusUserServiceJpa";
-
     @Autowired
     public RumpusUserServiceJpa(IRumpusUserDaoJpa userDaoJpa) {
-        super(NAME, userDaoJpa);
+        super(userDaoJpa);
     }
 
     @Override
@@ -21,5 +19,11 @@ public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, Rum
         RumpusUser user = RumpusUser.createEmptyUser();
         user.setUsername(username);
         return user;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Forum.ForumThread;
+import com.rumpus.common.Log.ICommonLogger.LogLevel;
 
 public interface IRumpus extends ICommon {
 
@@ -30,7 +31,7 @@ public interface IRumpus extends ICommon {
      * @param level the level to log the message at
      * @param args the message to log
      */
-    public static void LOG(Class<?> clazz, com.rumpus.common.Logger.AbstractCommonLogger.LogLevel level, String... args) {
+    public static void LOG(Class<?> clazz, LogLevel level, String... args) {
         ICommon.LOG(clazz, level, args);
     }
 }
