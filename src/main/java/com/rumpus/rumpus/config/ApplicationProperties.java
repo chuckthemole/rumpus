@@ -1,8 +1,8 @@
 package com.rumpus.rumpus.config;
 
-import com.rumpus.common.Config.Properties.AbstractYamlApplicationProperties;
-
 import org.springframework.context.annotation.Configuration;
+
+import com.rumpus.common.Config.Properties.yaml.AbstractYamlApplicationProperties;
 
 @Configuration
 public class ApplicationProperties extends AbstractYamlApplicationProperties {

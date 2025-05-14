@@ -14,13 +14,15 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 @RestController
 @RequestMapping(ICommonController.PATH_CLOUD)
 public class RumpusCloudController extends AbstractCloudController
-    <
-        RumpusServiceManager,
-        RumpusUser,
-        RumpusUserMetaData,
-        IRumpusUserService,
-        RumpusAdminUserView
-    > {
+    // commenting out for now. See comment in AbstractCloudController.
+    // <
+    //     RumpusServiceManager,
+    //     RumpusUser,
+    //     RumpusUserMetaData,
+    //     IRumpusUserService,
+    //     RumpusAdminUserView
+    // >
+    {
 
         public RumpusCloudController() {}
 

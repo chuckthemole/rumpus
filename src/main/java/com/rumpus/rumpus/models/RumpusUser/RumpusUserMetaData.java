@@ -22,17 +22,17 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
     // ctors
     private RumpusUserMetaData(List<Map<String, String>> metaList) {
-        super(NAME);
+        super(null, null, null);
         this.init(metaList);
     }
 
     private RumpusUserMetaData(Map<String, String> metaMap) {
-        super(NAME);
+        super(null, null, null);
         this.init(List.of(metaMap));
     }
 
     private RumpusUserMetaData(ObjectInputStream stream) {
-        super(NAME);
+        super(null, null, null);
         try {
             this.readObject(stream);
         } catch (ClassNotFoundException | IOException e) {

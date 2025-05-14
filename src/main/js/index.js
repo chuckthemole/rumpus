@@ -8,6 +8,7 @@ import Users, {delete_user, loader as usersLoader} from './user/users';
 import User, {loader as userLoader} from './user/user';
 import Logout, { loader } from "./common/logout";
 import Admin from "./admin/admin";
+import Landing from "./common/landing";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,12 @@ const router = createBrowserRouter([
             {
                 path: 'error',
                 element: <h1>Something went wrong! </h1>,
+            },
+            {
+                index: true, // default child for "/"
+                element: <Landing />,
+                // loader: landingLoader,
+                errorElement: <ErrorPage />
             },
             {
                 path: 'admin',

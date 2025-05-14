@@ -1,5 +1,6 @@
 plugins {
     id 'rumpus'
+    id 'common.aws' // TODO: look at common.gradle comment about this
 	id 'org.springframework.boot' version '3.0.1' // look at this and the below plugin. newer versions have depreciated cors, csrf, and other security features for HttpSecurity. see WebSecurityConfig.java
 	id 'io.spring.dependency-management' version '1.1.0'
     id 'org.siouan.frontend-jdk11' version '6.0.0'
