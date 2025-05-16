@@ -1,4 +1,5 @@
-import * as RumpusCommon from "../../../../common/src/main/js/common.js";
+// import * as RumpusCommon from "../../../../common/src/main/js/common.js";
+import * as RumpusCommon from '@rumpushub/common-react/dist/components/common';
 import useSWR from 'swr';
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
