@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
-import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
+import { isModalActive, modal_style, setModalActive, setModalInactive } from '@rumpushub/common-react/dist/components/modal_manager';
 import User, {loader as userLoader} from './user';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { common_loader } from '../common/common_requests';
+import { common_loader } from '@rumpushub/common-react/dist/components/common_requests';
 import { GET_USER_PATH } from '../rumpus';
 
 export function loader(id) {

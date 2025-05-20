@@ -7,9 +7,9 @@ import { useFetcher } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
+import { isModalActive, modal_style, setModalActive, setModalInactive } from '@rumpushub/common-react/dist/components/modal_manager';
 import { load_current_user } from './user_loader';
-import { CreateLogItemRequest } from '../common/common';
+import { CreateLogItemRequest } from '@rumpushub/common-react/dist/components/common';
 
 export default function UserDelete({ user_id, user_username }) {
 

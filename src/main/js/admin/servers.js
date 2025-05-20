@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 const ReactDOM = require('react-dom/client');
 
 import useSWR from 'swr';
-import { common_fetcher } from '../common/common_requests';
+import { common_fetcher } from '@rumpushub/common-react/dist/components/common_requests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Common, DELETE_USER_PATH, GET_USERS_PATH, CREATE_USER_PATH, GET_SERVERS_PATH, START_SERVER_PATH, STOP_SERVER_PATH } from "../rumpus";
 import { useLoaderData, Link, useFetcher } from 'react-router-dom';
 import ServerAction, { StartServer } from './server_action';
-import { RenderFromSWR } from '../common/error_page';
+import { RenderFromSWR } from '@rumpushub/common-react/dist/components/error_page';
 
 export async function delete_server(server_name) {
 }

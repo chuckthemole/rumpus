@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom/client');
 
-import RumpusQuill from '../common/rumpus_quill';
+import RumpusQuill from '@rumpushub/common-react/dist/components/rumpus_quill';
 import { load_current_user } from '../user/user_loader';
 import AdminForumThread from './admin_forum_thread';
 

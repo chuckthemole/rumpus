@@ -3,7 +3,7 @@ const ReactDOM = require('react-dom/client');
 
 import AdminHome from './tab_home';
 import Users from '../user/users';
-import Log from '../common/log';
+import Log from '@rumpushub/common-react/dist/components/log';
 import Servers from './servers';
 
 export default function Admin() {

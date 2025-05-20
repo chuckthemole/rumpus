@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData } from "react-router-dom";
-import Section from '../common/section';
+import Section from '@rumpushub/common-react/dist/components/section';
 
 export async function loader({ params }) {
     return await fetch(`/api/user/${params.userId}`);

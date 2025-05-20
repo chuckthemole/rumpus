@@ -7,8 +7,8 @@ import { useFetcher } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { isModalActive, modal_style, setModalActive, setModalInactive } from '../common/modal_manager';
-import { CreateLogItemRequest } from '../common/common';
+import { isModalActive, modal_style, setModalActive, setModalInactive } from '@rumpushub/common-react/dist/components/modal_manager';
+import { CreateLogItemRequest } from '@rumpushub/common-react/dist/components/common';
 import { load_current_user } from './user_loader';
 
 export async function loader({ params }) {
