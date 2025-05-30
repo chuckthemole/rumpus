@@ -15,46 +15,46 @@ import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
-@Controller // TODO: This is being subclassed by other classes using @RestController, should this class be annotated like this with @Controller?
-abstract public class AbstractRumpusController extends AbstractCommonController
-    <
-        RumpusServiceManager,
-        RumpusUser,
-        RumpusUserMetaData,
-        IRumpusUserService,
-        RumpusAdminUserView
-    > {
+@Controller // TODO: This is being subclassed by other classes using @RestController, should
+            // this class be annotated like this with @Controller?
+abstract public class AbstractRumpusController extends
+        AbstractCommonController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 
-        // @Autowired
-        // @Qualifier("rumpusViewLoader")
-        // protected AbstractViewLoader viewLoader;
-        // @Autowired protected JdbcUserDetailsManager userManager;
-        @Autowired protected ActiveUserStore activeUserStore;
-        // @Autowired protected Gson gson;
+    // @Autowired
+    // @Qualifier("rumpusViewLoader")
+    // protected AbstractViewLoader viewLoader;
+    // @Autowired protected JdbcUserDetailsManager userManager;
+    @Autowired
+    protected ActiveUserStore activeUserStore;
+    // @Autowired protected Gson gson;
 
-        @Autowired protected ForumThreadManager forumThreadManager;
+    @Autowired
+    protected ForumThreadManager forumThreadManager;
 
-        @Autowired protected LogItemCollectionManager logManager;
+    @Autowired
+    protected LogItemCollectionManager logManager;
 
-        @Autowired protected PythonInterpreter pythonInterpreter;
+    @Autowired
+    protected PythonInterpreter pythonInterpreter;
 
-        @Autowired protected ServerManager serverManager;
+    @Autowired
+    protected ServerManager serverManager;
 
-        protected static String RUMPUS_DEFAULT_BASE_PATH = "/api";
+    protected static String RUMPUS_DEFAULT_BASE_PATH = "/api";
 
-        public AbstractRumpusController() {
-            this.init();
-        }
-        
-        private void init() {
-            // this.setUserController(todo stopped here);
+    public AbstractRumpusController() {
+        this.init();
+    }
 
-            //Common Paths
-            java.util.Map<String, String> paths = java.util.Map.of(
+    private void init() {
+        // this.setUserController(todo stopped here);
+
+        // Common Paths
+        java.util.Map<String, String> paths = java.util.Map.of(
                 "CurrentUserInfo", "/current_user",
-                "CreateUser", "/create_user"
-            );
-            AbstractCommonController.commonPaths.addBasePath(AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH, paths, true);
-            // this.setCurrentBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH);
-        }
+                "CreateUser", "/create_user");
+        AbstractCommonController.commonPaths.addBasePath(AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH, paths,
+                true);
+        // this.setCurrentBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH);
+    }
 }

@@ -48,7 +48,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                 .loginProcessingUrl(ICommonController.PATH_LOGIN)
                 .failureHandler(authHandler)
                 .successHandler(authHandler)
-                // .defaultSuccessUrl(ICommonController.PATH_INDEX, true)
+                .defaultSuccessUrl(ICommonController.PATH_INDEX, true)
                 // .failureForwardUrl(ICommonController.PATH_INDEX).permitAll()
             )
             // .formLogin().failureHandler(failureHandler).loginPage(ICommonController.PATH_INDEX).loginProcessingUrl(ICommonController.PATH_LOGIN).defaultSuccessUrl(ICommonController.PATH_INDEX, true).successForwardUrl(ICommonController.PATH_INDEX).failureForwardUrl(ICommonController.PATH_INDEX).permitAll()

@@ -3,12 +3,9 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from './app';
-// import ErrorPage from './common/error_page';
 import Users, {delete_user, loader as usersLoader} from './user/users';
 import User, {loader as userLoader} from './user/user';
-// import Logout, { loader } from "./common/logout";
 import Admin from "./admin/admin";
-// import Landing from "./common/landing";
 import { ErrorPage, Landing, Logout } from '@rumpushub/common-react'
 
 const router = createBrowserRouter([
