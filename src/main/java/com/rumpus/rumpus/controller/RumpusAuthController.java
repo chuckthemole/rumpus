@@ -1,0 +1,189 @@
+package com.rumpus.rumpus.controller;
+
+import com.rumpus.common.Auth.OAuth2Provider;
+import com.rumpus.common.Config.AbstractCommonConfig;
+import com.rumpus.common.Controller.AbstractAuthController;
+import com.rumpus.common.Service.JwtService;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
+import com.rumpus.rumpus.service.IRumpusUserService;
+import com.rumpus.rumpus.service.RumpusServiceManager;
+import com.rumpus.rumpus.views.RumpusAdminUserView;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.UUID;
+
+@RestController // TODO: start here maybe. I changed from Controller.
+public class RumpusAuthController extends
+        AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
+
+    // @Autowired
+    // @Value(AbstractCommonConfig.JWT_SECRET_VALUE_ANNOTATION)
+    // private String jwtSecret;
+
+    // @Value(AbstractCommonConfig.JWT_SECRET_EXPIRATION_ANNOTATION)
+    // private long jwtExpiration;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Value("${properties.oauth2.client.registration.google.client-id}")
+    private String googleClientId;
+
+    @Value("${properties.oauth2.client.registration.google.client-secret}")
+    private String googleClientSecret;
+
+    // @Value("${properties.oauth2.client.registration.github.client-id}")
+    // private String githubClientId;
+
+    // @Value("${properties.oauth2.client.registration.github.client-secret}")
+    // private String githubClientSecret;
+
+    @Value("${properties.app.base-url}")
+    private String baseUrl;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    // private RumpusAuthController() {
+    //     this.jwtService = JwtService.create(this.jwtSecret, this.jwtExpiration);
+    // }
+
+    @Override
+    protected String buildAuthorizationUrl(OAuth2Provider provider, HttpServletRequest request) {
+        String clientId = getClientId(provider);
+        String redirectUri = baseUrl + provider.getCallbackPath();
+        String state = generateState(); // Store this in session/cache for validation
+
+        return provider.getAuthorizationUrl() +
+                "?client_id=" + clientId +
+                "&redirect_uri=" + redirectUri +
+                "&scope=" + provider.getDefaultScopes() +
+                "&response_type=code" +
+                "&state=" + state;
+    }
+
+    @Override
+    protected String exchangeCodeForToken(OAuth2Provider provider, String code) throws Exception {
+        String clientId = getClientId(provider);
+        String clientSecret = getClientSecret(provider);
+        String redirectUri = baseUrl + provider.getCallbackPath();
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
+        params.add("code", code);
+        params.add("redirect_uri", redirectUri);
+        params.add("grant_type", "authorization_code");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", "application/json");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                provider.getTokenUrl(), request, Map.class);
+
+        Map<String, Object> responseBody = response.getBody();
+        return (String) responseBody.get("access_token");
+    }
+
+    @Override
+    protected Map<String, Object> getUserInfo(OAuth2Provider provider, String accessToken) throws Exception {
+        if (provider.getUserInfoUrl() == null) {
+            return new HashMap<>(); // For providers like Apple that don't have separate user info endpoint
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(
+                provider.getUserInfoUrl(), HttpMethod.GET, entity, Map.class);
+
+        return response.getBody();
+    }
+
+    @Override
+    protected ResponseEntity<?> handleUserAuthentication(
+            OAuth2Provider provider,
+            Map<String, Object> userInfo,
+            String accessToken) {
+        try {
+            // Generate JWT token using your JwtService
+            String jwtToken = jwtService.generateToken(provider, userInfo);
+
+            // Extract user details for response
+            String email = provider.extractEmail(userInfo);
+            String name = provider.extractName(userInfo);
+            String picture = provider.extractPicture(userInfo);
+
+            // Here you could also:
+            // - Save/update user in your database
+            // - Log the authentication event
+            // - Set additional claims or permissions
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", jwtToken);
+            response.put("user", Map.of(
+                    "email", email,
+                    "name", name,
+                    "picture", picture,
+                    "provider", provider.getProviderId()));
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body("Failed to authenticate user: " + e.getMessage());
+        }
+    }
+
+    private String getClientId(OAuth2Provider provider) {
+        switch (provider) {
+            case GOOGLE:
+                return googleClientId;
+            // case GITHUB:
+            //     return githubClientId;
+            // Add other providers as needed
+            default:
+                throw new IllegalArgumentException("Client ID not configured for " + provider);
+        }
+    }
+
+    private String getClientSecret(OAuth2Provider provider) {
+        switch (provider) {
+            case GOOGLE:
+                return googleClientSecret;
+            // case GITHUB:
+            //     return githubClientSecret;
+            // Add other providers as needed
+            default:
+                throw new IllegalArgumentException("Client secret not configured for " + provider);
+        }
+    }
+
+    private String generateState() {
+        return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
+}

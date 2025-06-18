@@ -1,7 +1,11 @@
 package com.rumpus.rumpus.config;
 
-@org.springframework.boot.test.context.TestConfiguration
-public class JdbcHttpSessionTestConfig extends com.rumpus.common.Config.AbstractJdbcHttpSessionConfig {
+import org.springframework.boot.test.context.TestConfiguration;
+
+import com.rumpus.common.Config.AbstractJdbcHttpSessionConfig;
+
+@TestConfiguration
+public class JdbcHttpSessionTestConfig extends AbstractJdbcHttpSessionConfig {
     public JdbcHttpSessionTestConfig() {
         
     }

@@ -18,6 +18,7 @@ import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
+import com.rumpus.common.Service.JwtService;
 import com.rumpus.rumpus.IRumpus;
 
 @TestConfiguration
@@ -38,7 +39,7 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     @Bean
     public ForumThreadManager forumThreadManager() {
         ForumThreadManager manager = ForumThreadManager.create();
-        for(ForumThread forumThread : IRumpus.rumpusForumThreads) {
+        for (ForumThread forumThread : IRumpus.rumpusForumThreads) {
             manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
@@ -55,7 +56,7 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     }
 
     @Bean
-    @DependsOn({"pycommonServer"})
+    @DependsOn({ "pycommonServer" })
     public ServerManager serverManager() {
         ServerManager manager = ServerManager.create();
         manager.addServer("PycommonServer", pycommonServer());
@@ -69,16 +70,22 @@ public class RumpusTestConfig extends AbstractCommonConfig {
 
     // TODO:
     // Added this 2023/11/28 to fix the following error:
-    // Please ensure Spring Security & Spring MVC are configured in a shared ApplicationContext.
+    // Please ensure Spring Security & Spring MVC are configured in a shared
+    // ApplicationContext.
     // Maybe look into a bit more
     @Bean(name = "mvcHandlerMappingIntrospector")
-	public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
-		return new HandlerMappingIntrospector();
-	}
+    public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+        return new HandlerMappingIntrospector();
+    }
 
     @Override
     public String sqlDialect() {
         return "MYSQL";
+    }
+
+    @Bean
+    public JwtService jwtService() {
+        return new JwtService();
     }
 
     @Override

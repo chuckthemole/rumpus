@@ -16,24 +16,19 @@ import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
+import com.rumpus.common.Service.JwtService;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.IRumpus;
 
 @Configuration
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
-@ComponentScan("com.rumpus.rumpus")
+@ComponentScan(basePackages = {"com.rumpus.rumpus"})
 public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
 
     @Autowired
     public RumpusConfig(Environment environment) {
         super(environment);
-    }
-
-    @Bean
-    public LogItemCollectionManager logManager() {
-        LogItemCollectionManager manager = LogItemCollectionManager.createWithMainAndAdmin();
-        return manager;
     }
 
     @Bean
