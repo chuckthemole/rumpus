@@ -1,9 +1,9 @@
 package com.rumpus.rumpus.controller;
 
 import com.rumpus.common.Auth.OAuth2Provider;
-import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Controller.AbstractAuthController;
 import com.rumpus.common.Service.JwtService;
+import com.rumpus.common.util.Map.MapStringObject;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
@@ -12,6 +12,8 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,8 @@ import java.util.UUID;
 @RestController // TODO: start here maybe. I changed from Controller.
 public class RumpusAuthController extends
         AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractAuthController.class);
 
     // @Autowired
     // @Value(AbstractCommonConfig.JWT_SECRET_VALUE_ANNOTATION)
@@ -59,7 +63,7 @@ public class RumpusAuthController extends
     private final RestTemplate restTemplate = new RestTemplate();
 
     // private RumpusAuthController() {
-    //     this.jwtService = JwtService.create(this.jwtSecret, this.jwtExpiration);
+    // this.jwtService = JwtService.create(this.jwtSecret, this.jwtExpiration);
     // }
 
     @Override
@@ -78,6 +82,7 @@ public class RumpusAuthController extends
 
     @Override
     protected String exchangeCodeForToken(OAuth2Provider provider, String code) throws Exception {
+        logger.info("exchangeCodeForToken");
         String clientId = getClientId(provider);
         String clientSecret = getClientSecret(provider);
         String redirectUri = baseUrl + provider.getCallbackPath();
@@ -93,27 +98,34 @@ public class RumpusAuthController extends
         headers.add("Accept", "application/json");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+        logger.info("request: ", request.toString());
 
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 provider.getTokenUrl(), request, Map.class);
+        logger.info("response: ", response.toString());
 
         Map<String, Object> responseBody = response.getBody();
+        logger.info("response body: ", responseBody.toString());
         return (String) responseBody.get("access_token");
     }
 
     @Override
     protected Map<String, Object> getUserInfo(OAuth2Provider provider, String accessToken) throws Exception {
+        logger.info("getUserInfo");
         if (provider.getUserInfoUrl() == null) {
+            logger.info("provider user info is null");
             return new HashMap<>(); // For providers like Apple that don't have separate user info endpoint
         }
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
+        logger.info("accessToken: ", accessToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ResponseEntity<Map> response = restTemplate.exchange(
                 provider.getUserInfoUrl(), HttpMethod.GET, entity, Map.class);
+        logger.info("response: ", response.toString());
 
         return response.getBody();
     }
@@ -144,10 +156,13 @@ public class RumpusAuthController extends
                     "name", name,
                     "picture", picture,
                     "provider", provider.getProviderId()));
+            
+            logger.info(MapStringObject.toString(response));
 
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
+            logger.error("Error handling user auth");
             return ResponseEntity.badRequest()
                     .body("Failed to authenticate user: " + e.getMessage());
         }
@@ -158,7 +173,7 @@ public class RumpusAuthController extends
             case GOOGLE:
                 return googleClientId;
             // case GITHUB:
-            //     return githubClientId;
+            // return githubClientId;
             // Add other providers as needed
             default:
                 throw new IllegalArgumentException("Client ID not configured for " + provider);
@@ -170,7 +185,7 @@ public class RumpusAuthController extends
             case GOOGLE:
                 return googleClientSecret;
             // case GITHUB:
-            //     return githubClientSecret;
+            // return githubClientSecret;
             // Add other providers as needed
             default:
                 throw new IllegalArgumentException("Client secret not configured for " + provider);
