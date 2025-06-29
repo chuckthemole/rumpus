@@ -69,3 +69,8 @@ src/main/js/common/
 src/main/java/com/rumpus/rumpus/tools/out/*
 
 .DS_Store
+
+# CSS Source Maps
+*.css.map
+*.scss.map
+*.sass.map

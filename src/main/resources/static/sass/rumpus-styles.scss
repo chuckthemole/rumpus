@@ -1,42 +1,63 @@
-// We can set global variables for Bulma in this file
-// https://bulma.io/documentation/customize/variables/
+// Main styles file for Rumpus
+// https://bulma.io/documentation/customize/with-modular-sass/
 
 @charset "utf-8";
-@import "../../../../../node_modules/bulma/bulma.sass"; // can't use variable for path name, check here: https://stackoverflow.com/questions/37568179/import-path-using-variable-sass
 
-// Import a Google Font
+// Import our variables first - @use must come before any other rules
+@use "variables" as *;
+
+// Import the full Bulma library to avoid missing placeholder errors
+@use "bulma/bulma" with ($family-primary: $family-sans-serif,
+    $grey-dark: $grey-dark,
+    $grey-light: $grey-light,
+    $primary: $primary,
+    $link: $link,
+    $widescreen-enabled: $widescreen-enabled,
+    $fullhd-enabled: $fullhd-enabled,
+    $control-border-width: $control-border-width,
+    $input-border-color: $input-border-color,
+    $input-shadow: $input-shadow);
+
+// Import Google Font after all @use/@forward statements
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-// Set your brand colors
-$purple: #8A4D76;
-$pink: #FA7C91;
-$brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
+// Your custom styles can go here
+// You can use your brand colors from the variables file:
+// .my-custom-class {
+//   color: $primary;
+//   background-color: $beige-lighter;
+//   font-family: $family-sans-serif;
+// }
 
-// Update Bulma's global variables
-$family-sans-serif: "Nunito", sans-serif;
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
-$link: $pink;
-$background: $black;
-$widescreen-enabled: false;
-$fullhd-enabled: false;
+// Previously used modular imports (commented out for reference):
+/*
+// Override global Sass variables from the /utilities folder
+@use "bulma/sass/utilities/_all.sass" as utilities with (
+  $family-primary: $family-sans-serif,
+  $grey-dark: $grey-dark,
+  $grey-light: $grey-light,
+  $primary: $primary,
+  $link: $link,
+  $widescreen-enabled: $widescreen-enabled,
+  $fullhd-enabled: $fullhd-enabled,
+  $control-border-width: $control-border-width
+);
 
-// Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
+// Override Sass variables from the /form folder
+@use "bulma/sass/form/_all.sass" as form with (
+  $input-border-color: $input-border-color,
+  $input-shadow: $input-shadow
+);
 
-// Import only what you need from Bulma
-@import "../../../../../node_modules/bulma/sass/utilities/_all.sass";
-@import "../../../../../node_modules/bulma/sass/base/_all.sass";
-@import "../../../../../node_modules/bulma/sass/elements/button.sass";
-@import "../../../../../node_modules/bulma/sass/elements/container.sass";
-@import "../../../../../node_modules/bulma/sass/elements/title.sass";
-@import "../../../../../node_modules/bulma/sass/form/_all.sass";
-@import "../../../../../node_modules/bulma/sass/components/navbar.sass";
-@import "../../../../../node_modules/bulma/sass/layout/hero.sass";
-@import "../../../../../node_modules/bulma/sass/layout/section.sass";
+// Import the components you need using @forward
+@use "bulma/sass/base/_all.sass";
+@use "bulma/sass/elements/button";
+@use "bulma/sass/elements/container";
+@use "bulma/sass/elements/title";
+@use "bulma/sass/components/navbar";
+@use "bulma/sass/layout/hero";
+@use "bulma/sass/layout/section";
+
+// Import the themes so that all CSS variables have a value
+@use "bulma/sass/themes";
+*/

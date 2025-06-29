@@ -11,6 +11,8 @@ import { CREATE_USER_PATH, getCurrentUserAuthorities, isCurrentUserAuthenticated
 
 export default function App() {
 
+    console.log('rumpus React version:', React.version);
+
     return (
         <>
             <Header header_path={'/view/header'} />
