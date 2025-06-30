@@ -24,7 +24,6 @@
         "@fortawesome/free-brands-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/react-fontawesome": "^0.2.0",
-        "@rumpushub/common-react": "^1.1.2",
         "aws-sdk": "^2.1655.0",
         "bulma": "^0.9.4",
         "quill": "^1.3.7",
@@ -41,6 +40,7 @@
     "scripts": {
         "watch": "webpack --watch -d --output ./target/classes/static/built/app.bundle.js",
         "build": "echo Building frontend && echo Running webpack... && webpack --config config/dev/webpack.config.js",
+        "build:watch": "echo Building frontend in watch mode && echo Running webpack... && webpack --config config/dev/webpack.config.js --watch",
         "check": "echo Checking frontend && npm run lint && npm run test",
         "lint": "echo Linting frontend",
         "test": "echo Testing frontend",
@@ -51,7 +51,10 @@
         "preinstall": "./config/dev/scripts/preinstall.sh",
         "postinstall": "./config/dev/scripts/postinstall.sh",
         "clean": "echo Cleaning frontend && rm -rf node_modules package-lock.json",
-        "fresh": "npm run clean && npm install"
+        "fresh": "npm run clean && npm install",
+        "check-global-links": "npm list -g --depth=0 --link=true",
+        "install:dev": "npm uninstall @rumpushub/common-react && npm link @rumpushub/common-react",
+        "install:prod": "npm uninstall @rumpushub/common-react && npm install @rumpushub/common-react@^1.1.2"
     },
     "devDependencies": {
         "@babel/cli": "^7.20.7",

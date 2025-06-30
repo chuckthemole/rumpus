@@ -19,8 +19,12 @@ module.exports = {
         alias: {
             'Parchment': path.resolve(__dirname, '../../node_modules/parchment/src/parchment.ts'),
             'quill$': path.resolve(__dirname, '../../node_modules/quill/quill.js'),
+            'react': path.resolve(__dirname, '../../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../../node_modules/react-dom'),
+            'react-router-dom': path.resolve(__dirname, '../../node_modules/react-router-dom')
         },
-        extensions: ['.mjs', '.js', '.ts', '.svg']
+        extensions: ['.mjs', '.js', '.ts', '.svg'],
+        symlinks: true
     },
     module: {
         rules: [
