@@ -16,6 +16,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     resolve: {
+        // TODO: may need to not alias for production
         alias: {
             'Parchment': path.resolve(__dirname, '../../node_modules/parchment/src/parchment.ts'),
             'quill$': path.resolve(__dirname, '../../node_modules/quill/quill.js'),
