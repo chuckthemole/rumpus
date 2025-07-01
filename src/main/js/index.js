@@ -1,10 +1,15 @@
+import { createApiClient, setApi } from '@rumpushub/common-react'
+const api = createApiClient(process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080');
+setApi(api); // inject the instance early
+console.log(api);
+
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from './app';
-import Users, {delete_user, loader as usersLoader} from './user/users';
-import User, {loader as userLoader} from './user/user';
+import Users, { delete_user, loader as usersLoader } from './user/users';
+import User, { loader as userLoader } from './user/user';
 import Admin from "./admin/admin";
 import { ErrorPage, Landing, Logout } from '@rumpushub/common-react'
 

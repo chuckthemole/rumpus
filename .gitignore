@@ -74,3 +74,5 @@ src/main/java/com/rumpus/rumpus/tools/out/*
 *.css.map
 *.scss.map
 *.sass.map
+
+.env
