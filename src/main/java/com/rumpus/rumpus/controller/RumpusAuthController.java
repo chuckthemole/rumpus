@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,11 @@ import java.util.UUID;
 @RestController // TODO: start here maybe. I changed from Controller.
 public class RumpusAuthController extends
         AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
+
+    @Autowired
+    public RumpusAuthController(AuthenticationManager authenticationManager) {
+        super(authenticationManager);
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractAuthController.class);
 
@@ -156,7 +162,7 @@ public class RumpusAuthController extends
                     "name", name,
                     "picture", picture,
                     "provider", provider.getProviderId()));
-            
+
             logger.info(MapStringObject.toString(response));
 
             return ResponseEntity.ok(response);

@@ -11,7 +11,7 @@ import App from './app';
 import Users, { delete_user, loader as usersLoader } from './user/users';
 import User, { loader as userLoader } from './user/user';
 import Admin from "./admin/admin";
-import { ErrorPage, Landing, Logout } from '@rumpushub/common-react'
+import { ErrorPage, Landing, Logout } from '@rumpushub/common-react';
 
 const router = createBrowserRouter([
     {

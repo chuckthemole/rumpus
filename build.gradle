@@ -57,39 +57,39 @@ dependencies {
 //     dependsOn project(':common').tasks.named('test')
 // }
 
-frontend {
-    nodeVersion = '14.17.3'
-    // installScript = 'run install'
-    assembleScript = 'run build'
-    cleanScript = 'run clean'
-    checkScript = 'run check'
-    nodeInstallDirectory = file("${projectDir}/node")
-    // packageJsonDirectory.set(file("${projectDir}/frontend"))
-}
+// frontend {
+//     nodeVersion = '14.17.3'
+//     // installScript = 'run install'
+//     assembleScript = 'run build'
+//     cleanScript = 'run clean'
+//     checkScript = 'run check'
+//     nodeInstallDirectory = file("${projectDir}/node")
+//     // packageJsonDirectory.set(file("${projectDir}/frontend"))
+// }
 
 
-// * * * Tasks * * * 
+// // * * * Tasks * * * 
 
-import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
-tasks.register('npxVersion', RunNpx) {
-    // dependsOn tasks.named('installNode')
-    // dependsOn tasks.named('installFrontend')
-    script = '--version'
-}
-tasks.register('webpack', RunNpx) {
-    // dependsOn tasks.named('installNode')
-    // dependsOn tasks.named('installFrontend')
-    script = 'webpack --config config/dev/webpack.config.js'
-}
-tasks.register('quill', RunNpx) {
-    // dependsOn tasks.named('installNode')
-    // dependsOn tasks.named('installFrontend')
-    script = 'webpack --config config/dev/quill.config.js'
-}
+// import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpx
+// tasks.register('npxVersion', RunNpx) {
+//     // dependsOn tasks.named('installNode')
+//     // dependsOn tasks.named('installFrontend')
+//     script = '--version'
+// }
+// tasks.register('webpack', RunNpx) {
+//     // dependsOn tasks.named('installNode')
+//     // dependsOn tasks.named('installFrontend')
+//     script = 'webpack --config config/dev/webpack.config.js'
+// }
+// tasks.register('quill', RunNpx) {
+//     // dependsOn tasks.named('installNode')
+//     // dependsOn tasks.named('installFrontend')
+//     script = 'webpack --config config/dev/quill.config.js'
+// }
 
-import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpm
-tasks.register('bulma', RunNpm) {
-    // dependsOn tasks.named('installNode')
-    // dependsOn tasks.named('installFrontend')
-    script = 'install bulma'
-}
+// import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpm
+// tasks.register('bulma', RunNpm) {
+//     // dependsOn tasks.named('installNode')
+//     // dependsOn tasks.named('installFrontend')
+//     script = 'install bulma'
+// }

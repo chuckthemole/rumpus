@@ -7,11 +7,19 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.ICommon;
@@ -23,6 +31,8 @@ import com.rumpus.common.User.AuthenticationHandler;
 import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Failure;
 import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Success;
 import com.rumpus.rumpus.security.Unauthorized;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity // WebSecurityConfiguration
@@ -59,13 +69,39 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                 // .logout().logoutRequestMatcher(new
                 // AntPathRequestMatcher("/logout")).invalidateHttpSession(true).and() TODO:
                 // maybe customize later
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            if (authentication == null) {
+                                // Could log a warning, return 400, etc.
+                                response.setStatus(HttpServletResponse.SC_OK);
+                                response.getWriter().write("{\"message\": \"No active session\"}");
+                            } else {
+                                response.setStatus(HttpServletResponse.SC_OK);
+                                response.getWriter().write("{\"message\": \"Logged out successfully\"}");
+                            }
+                            response.setContentType("application/json");
+                        })
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll())
                 .csrf().disable() // need this disabled for signing up 5/5/2023 Chuck
                 .formLogin(form -> form
-                        .loginPage(ICommonController.PATH_INDEX)
-                        .loginProcessingUrl(ICommonController.PATH_LOGIN)
-                        .failureHandler(authHandler)
-                        .successHandler(authHandler)
-                        .defaultSuccessUrl(ICommonController.PATH_INDEX, true)
+                        // .loginPage("/")
+                        // .loginProcessingUrl(ICommonController.PATH_LOGIN)
+                        .loginProcessingUrl("/auth/login") // <- matches frontend call
+                        .successHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                        .failureHandler((request, response, exception) -> {
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                        })
+                        .permitAll()
+                // .failureHandler(authHandler)
+                // .successHandler(authHandler)
+                // .defaultSuccessUrl(ICommonController.PATH_INDEX, true)
                 // .failureForwardUrl(ICommonController.PATH_INDEX).permitAll()
                 )
                 // .formLogin().failureHandler(failureHandler).loginPage(ICommonController.PATH_INDEX).loginProcessingUrl(ICommonController.PATH_LOGIN).defaultSuccessUrl(ICommonController.PATH_INDEX,
@@ -83,6 +119,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                         // this should prolly be changed when deployed, permitting all for ease of
                         // use/testing rn 5/8/2023 chuck
                         .requestMatchers("/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/api/auth/**", "/oauth2/**", "/login/oauth2/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         .anyRequest().permitAll()
@@ -114,6 +151,31 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                         .tokenUri("https://provider.com/oauth2/token")
                         .clientName("Custom Provider")
                         .build());
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // TODO: this is a hack for now, getProperty is having trouble parsing List
+        // Look at issue number 12, 'Create a config class bound to properties'
+        // configuration.setAllowedOrigins(List.of(
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ORIGINS + "[0]"),
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ORIGINS + "[1]")));
+        // configuration.setAllowedMethods(List.of(
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[0]"),
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[1]"),
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[2]"),
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[3]"),
+        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[4]")));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true); // Needed if sending cookies/auth headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     // @Bean
