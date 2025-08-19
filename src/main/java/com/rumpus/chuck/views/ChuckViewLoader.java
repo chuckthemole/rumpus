@@ -35,7 +35,7 @@ public class ChuckViewLoader extends AbstractViews {
     // Add more views here...
 
     static {
-        FOOTER_COLUMN_1 = new Pair<>("Useful", new ArrayList<>(List.of("Shop", "Rules", "News")));
+        FOOTER_COLUMN_1 = new Pair<>("Useful", new ArrayList<>(List.of("Chuck", "Chuck", "Chuck")));
         FOOTER_COLUMN_2 = new Pair<>("Support", new ArrayList<>(List.of("Shop", "Rules", "News")));
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
     }

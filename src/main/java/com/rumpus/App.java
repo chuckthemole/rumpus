@@ -6,31 +6,54 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// TODO: @SpringBootApplication is equivalent to using @Configuration, @EnableAutoConfiguration, and @ComponentScan with their default attributes.
-// think about customizing the attributes of these annotations. Something to look into
-// @Configuration
-// @EnableAutoConfiguration
-// @Import({ RumpusConfig.class, ChuckConfig.class })
-
-@SpringBootApplication // TODO: can I put this annotation on abstract class in common and extend here and other places?
-@EnableJpaRepositories(basePackages = "com.rumpus.rumpus.data")
+@SpringBootApplication
 public class App implements WebMvcConfigurer {
 
     private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(App.class);
-    
+
     private static ApplicationContext applicationContext;
+
     public static void main(String[] args) {
-        SpringApplication applicationContext = new SpringApplication(App.class);
-        // applicationContext.setDefaultProperties(java.util.Collections.singletonMap("server.port", "8083"));
-        // applicationContext = SpringApplication.run(App.class, args);
-        applicationContext.run(args);
+        // Default to "rumpus" app
+        String targetApp = "rumpus";
+
+        // Check args for flag like: --app=chuck
+        for (String arg : args) {
+            if (arg.startsWith("--app=")) {
+                targetApp = arg.substring("--app=".length());
+            }
+        }
+
+        Class<?> appClass;
+        switch (targetApp.toLowerCase()) {
+            case "chuck":
+                System.out.println("Running ChuckApp");
+                appClass = com.chuck.ChuckApp.class;
+                break;
+            case "rumpus":
+                System.out.println("Running RumpusApp");
+                appClass = com.rumpus.RumpusApp.class;
+                break;
+            case "buildshift":
+                System.out.println("Running BuildShiftApp");
+                appClass = com.rumpus.BuildShift.class;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown app: " + targetApp);
+        }
+
+        LOGGER.info("Starting application for target: {}", targetApp);
+        SpringApplication app = new SpringApplication(appClass);
+        applicationContext = app.run(args);
+
+        // Optional: dump beans
         // displayAllBeans();
     }
 
     public static void displayAllBeans() {
         String[] allBeanNames = applicationContext.getBeanDefinitionNames();
         System.out.println("* * * Beans List * * * ");
-        for(String beanName : allBeanNames) {
+        for (String beanName : allBeanNames) {
             System.out.println(beanName);
         }
         System.out.println("* * * Beans List End * * * ");
@@ -41,25 +64,14 @@ public class App implements WebMvcConfigurer {
         LOGGER.info("App::handleContextRefresh()");
         final org.springframework.core.env.Environment environment = event.getApplicationContext().getEnvironment();
         LOGGER.info("Active profiles: {}", java.util.Arrays.toString(environment.getActiveProfiles()));
-
-        final org.springframework.core.env.MutablePropertySources sources = ((org.springframework.core.env.AbstractEnvironment) environment).getPropertySources();
-
-        java.util.stream.StreamSupport.stream(sources.spliterator(), false)
-            .filter(propertySource -> propertySource instanceof org.springframework.core.env.EnumerablePropertySource)
-            .map(propertySource -> ((org.springframework.core.env.EnumerablePropertySource) propertySource).getPropertyNames())
-            .flatMap(java.util.Arrays::stream)
-            .distinct()
-            .filter(prop -> !(prop.contains("credentials") || prop.contains("password")))
-            .forEach(prop -> LOGGER.info("{}: {}", prop, environment.getProperty(prop)));
     }
 
-    // Added to serve static images from /WEB-INF/images
-    // you can access them from /images
     @Override
-    public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
-        registry
-            .addResourceHandler("/images/**")
-            .addResourceLocations("/WEB-INF/images/") // should I add static in resources here, too?
-            .setCacheControl(org.springframework.http.CacheControl.maxAge(2, java.util.concurrent.TimeUnit.HOURS).cachePublic());
+    public void addResourceHandlers(
+            org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("/WEB-INF/images/")
+                .setCacheControl(org.springframework.http.CacheControl.maxAge(2, java.util.concurrent.TimeUnit.HOURS)
+                        .cachePublic());
     }
 }
