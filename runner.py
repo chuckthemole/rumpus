@@ -18,6 +18,7 @@ test = ".././gradlew test > src/test/java/com/rumpus/rumpus/log/test.log"
 run = "./gradlew bootRun --args='--app=rumpus' &> src/main/java/com/rumpus/rumpus/log/spring.log"
 run_rumpus = "./gradlew bootRun --args='--app=rumpus' &> src/main/java/com/rumpus/rumpus/log/spring.log"
 run_chuck = "./gradlew bootRun --args='--app=chuck' &> src/main/java/com/rumpus/rumpus/log/spring.log"
+run_bs = "./gradlew bootRun --args='--app=buildshift' &> src/main/java/com/rumpus/rumpus/log/spring.log"
 runDebug = "./gradlew bootRun --debug > src/main/java/com/rumpus/rumpus/log/spring.log"
 moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
@@ -79,6 +80,8 @@ if __name__ == '__main__':
         os.system(run_rumpus)
     elif command == "run_chuck":
         os.system(run_chuck)
+    elif command == "run_bs":
+        os.system(run_bs)
     elif command == "runDebug":
         os.system(runDebug)
     elif command == "locust_test":

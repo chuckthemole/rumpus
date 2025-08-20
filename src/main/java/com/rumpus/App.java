@@ -2,11 +2,13 @@ package com.rumpus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication
+// @SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class App implements WebMvcConfigurer {
 
     private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(App.class);
@@ -36,7 +38,7 @@ public class App implements WebMvcConfigurer {
                 break;
             case "buildshift":
                 System.out.println("Running BuildShiftApp");
-                appClass = com.rumpus.BuildShift.class;
+                appClass = com.buildshift.BuildShiftApp.class;
                 break;
             default:
                 throw new IllegalArgumentException("Unknown app: " + targetApp);
