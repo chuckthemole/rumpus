@@ -3,6 +3,8 @@ package com.rumpus.buildshift.controller.rest;
 import com.rumpus.common.Controller.Integrations.AbstractNotionIntegrationController;
 import com.rumpus.common.Integrations.NotionIntegration;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +22,11 @@ public class NotionController extends AbstractNotionIntegrationController {
     /**
      * Constructor for NotionController.
      *
-     * @param notion The Notion integration bean, injected via Spring.
+     * @param notionMap The Notion integration bean, injected via Spring.
      */
     @Autowired
-    public NotionController(NotionIntegration notion) {
-        super(notion);
+    public NotionController(Map<String, NotionIntegration> notionMap) {
+        super(notionMap);
     }
 
     /**
@@ -38,13 +40,13 @@ public class NotionController extends AbstractNotionIntegrationController {
      * @return The raw JSON response from the Notion API.
      * @throws Exception If an error occurs while creating the page.
      */
-    @PostMapping("/database/{databaseId}/page")
-    public String createPage(
-            @PathVariable String databaseId,
-            @RequestBody String jsonBody
-    ) throws Exception {
-        return getNotionIntegration().createPage(databaseId, jsonBody);
-    }
+    // @PostMapping("/database/{databaseId}/page")
+    // public String createPage(
+    //         @PathVariable String databaseId,
+    //         @RequestBody String jsonBody
+    // ) throws Exception {
+    //     return getNotionIntegration().createPage(databaseId, jsonBody);
+    // }
 
     // TODO: Add additional endpoints here, e.g., updatePage, queryDatabase, deletePage, etc.
 }

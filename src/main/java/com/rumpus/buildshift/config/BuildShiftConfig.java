@@ -1,5 +1,7 @@
 package com.rumpus.buildshift.config;
 
+import java.util.Map;
+
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +29,7 @@ import com.fasterxml.jackson.databind.ser.BeanSerializer;
 public class BuildShiftConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
 
     private static final String NOTION_PROJECT_MANAGEMENT_TOKEN = "properties.notion.token.project-management";
+    private static final String NOTION_CONSOLE_TOKEN = "properties.notion.token.console";
 
     @Autowired
     public BuildShiftConfig(Environment environment) {
@@ -50,7 +53,12 @@ public class BuildShiftConfig extends AbstractCommonConfig { // AbstractHttpSess
     }
 
     @Bean
-    public NotionIntegration projectManagementNotionIntegration() {
-        return new NotionIntegration(this.environment.getProperty(NOTION_PROJECT_MANAGEMENT_TOKEN));
+    public Map<String, NotionIntegration> projectManagementNotionIntegration() {
+        NotionIntegration consoleIntegration = new NotionIntegration(
+                this.environment.getProperty(NOTION_CONSOLE_TOKEN));
+        NotionIntegration projectManagementIntegration = new NotionIntegration(
+                this.environment.getProperty(NOTION_PROJECT_MANAGEMENT_TOKEN));
+        return Map.of("consoleIntegration", consoleIntegration, "projectManagementIntegration",
+                projectManagementIntegration);
     }
 }
