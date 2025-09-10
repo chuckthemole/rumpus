@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
+import com.rumpus.common.Integrations.NotionIntegration;
 import com.rumpus.common.Log.LogItem.LogItemCollectionManager;
 import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
@@ -24,6 +25,8 @@ import com.fasterxml.jackson.databind.ser.BeanSerializer;
 // @EnableJdbcHttpSession
 @ComponentScan(basePackages = { "com.rumpus.buildshift" })
 public class BuildShiftConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
+
+    private static final String NOTION_PROJECT_MANAGEMENT_TOKEN = "properties.notion.token.project-management";
 
     @Autowired
     public BuildShiftConfig(Environment environment) {
@@ -44,5 +47,10 @@ public class BuildShiftConfig extends AbstractCommonConfig { // AbstractHttpSess
     public String toString() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
+
+    @Bean
+    public NotionIntegration projectManagementNotionIntegration() {
+        return new NotionIntegration(this.environment.getProperty(NOTION_PROJECT_MANAGEMENT_TOKEN));
     }
 }
