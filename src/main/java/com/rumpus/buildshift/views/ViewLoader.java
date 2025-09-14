@@ -32,6 +32,8 @@ public class ViewLoader extends AbstractViews {
     private static final List<NavbarItem> navbarItemsStart;
     private static final List<NavbarItem> navbarItemsEnd;
 
+    private static final String BUILDSHIFT_BRAND = "/images/buildshift_brand.png";
+
     // Tables
     private static final String CSS_FRAMEWORK = "bulma";
 
@@ -46,7 +48,8 @@ public class ViewLoader extends AbstractViews {
         FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
 
         // Header
-        navbarBrand = NavbarItem.createNavbarBrandWithLocalImage(NAVBAR_BRAND_NAME, "/", true, null);
+        navbarBrand = NavbarItem.createNavbarBrandWithLocalImage(NAVBAR_BRAND_NAME, "/", true,
+                ViewLoader.BUILDSHIFT_BRAND);
         // navbarBrand =
         // NavbarItem.createNavbarBrandWithAwsS3CloudImage(NAVBAR_BRAND_NAME, "/", true,
         // "static/default_brand.PNG");
