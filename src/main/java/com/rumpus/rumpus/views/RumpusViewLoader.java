@@ -2,6 +2,7 @@ package com.rumpus.rumpus.views;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
@@ -14,7 +15,8 @@ import com.rumpus.common.views.AbstractViews;
 /**
  * @author Chuck Thomas
  * 
- * Views for Rumpus. Add your view init function to init() just as initFooter().
+ *         Views for Rumpus. Add your view init function to init() just as
+ *         initFooter().
  */
 public class RumpusViewLoader extends AbstractViews {
 
@@ -49,35 +51,34 @@ public class RumpusViewLoader extends AbstractViews {
 
         // Header
         navbarBrand = NavbarItem.createNavbarBrandWithLocalImage(NAVBAR_BRAND_NAME, "/", true, null);
-        // navbarBrand = NavbarItem.createNavbarBrandWithAwsS3CloudImage(NAVBAR_BRAND_NAME, "/", true, "static/default_brand.PNG");
+        // navbarBrand =
+        // NavbarItem.createNavbarBrandWithAwsS3CloudImage(NAVBAR_BRAND_NAME, "/", true,
+        // "static/default_brand.PNG");
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
-            List.of(
-                NavbarItem.create("About", "/", true, ItemType.LINK),
-                NavbarItem.create("Jobs", "/", true, ItemType.LINK),
-                NavbarItem.create("Contact", "/", true, ItemType.LINK),
-                NavbarItem.createDropdownDivider("DropdownDivider1", true),
-                NavbarItem.create("Report an issue", "/", true, ItemType.LINK)
-            )
-        );
+                List.of(
+                        NavbarItem.create("About", "/", true, ItemType.LINK),
+                        NavbarItem.create("Jobs", "/", true, ItemType.LINK),
+                        NavbarItem.create("Contact", "/", true, ItemType.LINK),
+                        NavbarItem.createDropdownDivider("DropdownDivider1", true),
+                        NavbarItem.create("Report an issue", "/", true, ItemType.LINK)));
         navbarItemsStart = new ArrayList<>(
-            List.of(
-                NavbarItem.create("Home", "/", true, ItemType.LINK),
-                NavbarItem.create("Documentation", "/", false, ItemType.LINK),
-                NavbarItem.createAsDropdown("More", "/", true, navbarItemsStartDropdown)
-            )
-        );
+                List.of(
+                        NavbarItem.create("Home", "/", true, ItemType.LINK),
+                        NavbarItem.create("Documentation", "/", false, ItemType.LINK),
+                        NavbarItem.createAsDropdown("More", "/", true, navbarItemsStartDropdown)));
         navbarItemsEnd = new ArrayList<>(
-            List.of(
-                NavbarItem.createAsReactComponent("Login", "LoginModal", true),
-                NavbarItem.createAsReactComponent("Signup", "SignupModal", true),
-                NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true),
-                NavbarItem.createAsReactComponent("Admin", "Admin", true),
-                NavbarItem.createAsReactComponent("Logout", "Logout", true)
-            )
-        );
+                List.of(
+                        NavbarItem.createAsReactComponent("Login", "LoginModal", true, null),
+                        NavbarItem.createAsReactComponent("Signup", "SignupModal", true,
+                                Map.of("redirectTo", "/api/user")),
+                        NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true, null),
+                        NavbarItem.createAsReactComponent("Admin", "Admin", true, null),
+                        NavbarItem.createAsReactComponent("Logout", "Logout", true,
+                                Map.of("redirectTo", "/api/user"))));
     }
 
-    private RumpusViewLoader() {}
+    private RumpusViewLoader() {
+    }
 
     public static RumpusViewLoader create() {
         return new RumpusViewLoader();
@@ -87,14 +88,12 @@ public class RumpusViewLoader extends AbstractViews {
     protected int initFooter() {
         super.footer = new Footer();
         List<Pair<String, List<String>>> columns = new ArrayList<>(
-            List.of(
-                FOOTER_COLUMN_1,
-                FOOTER_COLUMN_2,
-                FOOTER_COLUMN_3
-            )
-        );
+                List.of(
+                        FOOTER_COLUMN_1,
+                        FOOTER_COLUMN_2,
+                        FOOTER_COLUMN_3));
 
-        for(Pair<String, List<String>> column : columns) {
+        for (Pair<String, List<String>> column : columns) {
             this.footer.add(column.getFirst(), column.getSecond());
         }
 
@@ -124,10 +123,10 @@ public class RumpusViewLoader extends AbstractViews {
     protected int initResourceManager() {
         this.resourceManager = ResourceManager.createEmptyManager();
         this.resourceManager.addResource(
-            "NavbarBrand",
-            com.rumpus.common.views.Resource.ResourceType.IMAGE,
-            com.rumpus.common.views.Resource.StorageType.LOCAL,
-            "https://bulma.io/images/bulma-logo.png");
+                "NavbarBrand",
+                com.rumpus.common.views.Resource.ResourceType.IMAGE,
+                com.rumpus.common.views.Resource.StorageType.LOCAL,
+                "https://bulma.io/images/bulma-logo.png");
         return SUCCESS;
     }
 

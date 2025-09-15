@@ -2,6 +2,7 @@ package com.rumpus.buildshift.views;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.rumpus.common.util.Pair;
 import com.rumpus.common.views.Footer;
@@ -65,13 +66,20 @@ public class ViewLoader extends AbstractViews {
                         NavbarItem.create("Home", "/", true, ItemType.LINK),
                         NavbarItem.create("Documentation", "/", false, ItemType.LINK),
                         NavbarItem.createAsDropdown("More", "/", true, navbarItemsStartDropdown)));
+        List<NavbarItem> navbarItemsEndDropdown = new ArrayList<>(
+                List.of(
+                        NavbarItem.create("Console", "/notion_console/", true, ItemType.LINK),
+                        NavbarItem.create("Leaderboard", "/notion_leader", true, ItemType.LINK)));
         navbarItemsEnd = new ArrayList<>(
                 List.of(
-                        NavbarItem.createAsReactComponent("Login", "LoginModal", true),
-                        NavbarItem.createAsReactComponent("Signup", "SignupModal", true),
-                        NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true),
-                        NavbarItem.createAsReactComponent("Admin", "Admin", true),
-                        NavbarItem.createAsReactComponent("Logout", "Logout", true)));
+                        NavbarItem.createAsDropdown("Notion", "/", true, navbarItemsEndDropdown),
+                        NavbarItem.createAsReactComponent("Login", "LoginModal", true, null),
+                        NavbarItem.createAsReactComponent("Signup", "SignupModal", true,
+                                Map.of("redirectTo", "/api/user")),
+                        NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true, null),
+                        NavbarItem.createAsReactComponent("Admin", "Admin", true, null),
+                        NavbarItem.createAsReactComponent("Logout", "Logout", true,
+                                Map.of("redirectTo", "/api/user"))));
     }
 
     private ViewLoader() {
