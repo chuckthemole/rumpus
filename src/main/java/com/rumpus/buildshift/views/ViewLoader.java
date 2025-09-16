@@ -79,7 +79,7 @@ public class ViewLoader extends AbstractViews {
                         NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true, null),
                         NavbarItem.createAsReactComponent("Admin", "Admin", true, null),
                         NavbarItem.createAsReactComponent("Logout", "Logout", true,
-                                Map.of("redirectTo", "/api/user"))));
+                                Map.of("redirectTo", "/"))));
     }
 
     private ViewLoader() {
