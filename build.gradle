@@ -39,15 +39,15 @@ repositories {
 // println "ENV equals DEV: ${env == "DEV"}"
 dependencies {
     if (env == "DEV") {
-        println "📦 Rumpus is loading dependency :common"
+        println "Rumpus is loading dependency :common"
         implementation(project(':common'))
 
         // Force build order
         compileJava.dependsOn ':common:compileJava'
         processResources.dependsOn ':common:processResources'
     } else { // LIVE or BETA
-        println "📦 Rumpus is loading dependency com.rumpushub.common:common"
-        implementation "com.rumpushub.common:common:0.1.3" // update version as needed
+        println "Rumpus is loading dependency com.rumpushub.common:common"
+        implementation "com.rumpushub.common:common:1.0.0" // update version as needed
     }
 }
 
