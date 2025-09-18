@@ -39,6 +39,11 @@ out/
 
 ### Added by Chuck ###
 properties.yml
+properties-dev.yml
+properties-beta.yml
+properties-live.yml
+properties-backup.yml
+application-*.yml
 application.properties
 database.properties
 tmp/

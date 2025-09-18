@@ -3,6 +3,8 @@
 # Secrets should be stored in a secure location, i.e. properties.yml
 
 spring:
+  profiles:
+    active: ${env:dev}
   output:
     ansi:
       enabled: ALWAYS

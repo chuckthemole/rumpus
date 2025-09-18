@@ -1,0 +1,85 @@
+spring:
+  security:
+    user:
+      name:
+      password:
+      roles:
+  session:
+    store-type:
+    jdbc:
+      initialize-schema:
+  boot:
+    admin:
+      client:
+        url:
+  profiles:
+    active:
+  jpa:
+    hibernate:
+      ddl-auto:
+  cloud:
+    aws:
+      credentials:
+        access-key:
+        secret-key:
+      s3:
+        region:
+properties:
+  name:
+  app:
+    base-url:
+  aliases:
+    - abc
+    - xyz
+  port:
+  database:
+    loader:
+  datasource:
+    url:
+    username:
+    password:
+    server:
+      port:
+    driver:
+  redis:
+    host:
+    port:
+  cloud:
+    aws:
+      s3:
+        bucket:
+        region:
+      credentials:
+        access-key:
+        secret-key:
+  frontend:
+    origins:
+      - "http://localhost:3000"
+      - "http://localhost:3001"
+    methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "OPTIONS"
+  jwt:
+    secret:
+    expiration: 86400000
+  notion:
+    token:
+      project-management:
+      console:
+  oauth2:
+    client:
+      registration:
+        google:
+          client-id:
+          client-secret:
+          scope:
+            - email
+            - profile
+          redirect-uri: "http://localhost:8888/login/oauth2/code/google"
+      provider:
+        google:
+          authorization-uri: https://accounts.google.com/o/oauth2/auth
+          token-uri: https://oauth2.googleapis.com/token

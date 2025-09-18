@@ -51,6 +51,18 @@ dependencies {
     }
 }
 
+// This will set the env in applications.yml, see ${env:dev}
+bootRun {
+    println "bootRun setting env..."
+    if (env == "DEV") {
+        println "Rumpus is setting env to dev"
+        systemProperty "env", "dev"
+    } else { // LIVE or BETA
+        println "Rumpus is setting env to live"
+        systemProperty "env", "live"
+    }
+}
+
 // https://stackoverflow.com/questions/45754005/include-tests-from-other-module
 // TODO: I was looking in this stackoverflow and saw some interesting test things. Maybe look into later. 
 // test {
