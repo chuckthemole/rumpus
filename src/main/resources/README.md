@@ -13,15 +13,21 @@ The main entry point is:
 application.yml
 ```
 
-That file imports another configuration file:
+That file delegates to an environment-specific file:
 
 ```
-properties.yml
+application-{env}.yml
 ```
 
-### `properties.yml`
+For example:
 
-This file imports other YAML files for different configuration domains:
+```
+application-dev.yml
+```
+
+### `application-{env}.yml`
+
+Each environment-specific file imports other YAML files for different configuration domains:
 
 ```
 spring:
@@ -99,16 +105,3 @@ app:
    Each developer should create their own local versions of these files.  
 2. You can provide defaults for non-sensitive values in these files to help new developers get started quickly.  
 3. For production, override values using environment variables or a secrets manager (e.g., AWS Secrets Manager, Vault).
-
----
-
-## Quick Start
-
-After cloning, create the `properties/` directory structure:
-
-```
-mkdir -p src/main/resources/properties
-```
-
-Then copy the template files above into that folder, filling in your own values.
-
