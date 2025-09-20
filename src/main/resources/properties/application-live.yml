@@ -1,0 +1,8 @@
+spring:
+  config:
+    import:
+      - classpath:properties/dev/security.yml
+      - classpath:properties/dev/database.yml
+      - classpath:properties/dev/cloud.yml
+      - classpath:properties/dev/admin.yml
+      - classpath:properties/dev/app.yml

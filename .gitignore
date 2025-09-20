@@ -47,6 +47,8 @@ out/
 # But keep templates
 !src/main/resources/properties/*-template.yml
 
+!src/main/resources/properties/application-*.yml
+
 # Keep application.yml at the top level
 !src/main/resources/application.yml
 
