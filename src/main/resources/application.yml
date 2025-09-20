@@ -1,26 +1,72 @@
-# Description: This file is used to configure the application properties for the admin service.
-# The properties are used to configure the application
-# Secrets should be stored in a secure location, i.e. properties.yml
+# ------------------------------------------------------------
+# Description:
+# This file configures the Spring Boot application properties
+# for the admin service. It includes logging, management endpoints,
+# and profile selection.
+# Secrets (like passwords or API keys) should NOT be stored here.
+# Use a separate secure properties file (e.g., properties.yml) instead.
+# ------------------------------------------------------------
 
 spring:
+  # Set the active Spring profile.
+  # You can override this with an environment variable 'env'.
   profiles:
-    active: ${env:dev}
+    active: ${env:dev} # Default to 'dev' if no env variable is provided.
+
+  config:
+    import: classpath:properties/application-${spring.profiles.active}.yml
+
+  # Optional output configuration for the console.
   output:
     ansi:
-      enabled: ALWAYS
+      enabled: ALWAYS # Enable ANSI colors in the console logs.
+
+  # Devtools settings (commented out here)
   # devtools:
   #   restart:
-  #     enabled: false
+  #     enabled: false  # Disable automatic restart in development if needed.
+
 management:
+  # Configuration for Spring Boot actuator endpoints
   endpoints:
     web:
       exposure:
-        include: "*" # Expose all endpoints, including sensitive ones. TODO: Remove this line in production.
+        include:
+          "*" # Expose all endpoints (health, metrics, etc.).
+          # TODO: Remove or restrict this in production.
   info:
     env:
-      enabled: true
+      enabled: true # Include environment info in the /actuator/info endpoint.
+
 logging:
-  file.name: ./src/main/java/com/rumpus/rumpus/log/spring.log
+  # Path to the main log file. Adjust as needed for your deployment environment.
+  file:
+    name: ./src/main/java/com/rumpus/rumpus/log/spring.log
+
+  logback:
+    rollingpolicy:
+      # Use a time-based rolling policy to rotate logs daily
+      type: time-based
+
+      # Pattern for rotated log files.
+      # `%d{yyyy-MM-dd}` creates a new file for each day.
+      file-name-pattern: ./src/main/java/com/rumpus/rumpus/log/spring.log.%d{yyyy-MM-dd}.log
+
+      # Number of days to keep old log files.
+      # In production, we may want to increase this or configure via env variable.
+      max-history: 1
+
+      # Optional: total size cap for all log files combined.
+      # Prevents runaway disk usage in case of high log volume.
+      total-size-cap: 100MB
+
+      # TODO: Consider making `max-history` and `total-size-cap` configurable via
+      # environment variables or Spring properties for easier production tuning.
+
+  # Log output patterns
   pattern:
+    # Console log format
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+
+    # File log format
     file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"

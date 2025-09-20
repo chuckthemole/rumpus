@@ -38,14 +38,31 @@ out/
 
 
 ### Added by Chuck ###
-properties.yml
-properties-dev.yml
-properties-beta.yml
-properties-live.yml
-properties-backup.yml
-application-*.yml
-application.properties
-database.properties
+# Ignore all YAML files in resources/properties
+/src/main/resources/properties/**/*.yml
+
+# Ignore backup
+/src/main/resources/backup/
+
+# But keep templates
+!src/main/resources/properties/*-template.yml
+
+# Keep application.yml at the top level
+!src/main/resources/application.yml
+
+# Keep README
+!src/main/resources/README.md
+
+# Keep directory structure
+!src/main/resources/properties/
+!src/main/resources/properties/dev/
+
+# Ignore all other files in dev folder (secrets)
+src/main/resources/properties/dev/*
+
+# Look at this file later. We can probably remove.
+src/test/resources/properties.yml
+
 tmp/
 target/
 

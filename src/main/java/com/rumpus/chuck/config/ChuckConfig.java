@@ -16,7 +16,7 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 @Configuration
 @ComponentScan("com.rumpus.chuck")
 @org.springframework.boot.context.properties.ConfigurationProperties(prefix = "rumpus")
-@org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.yaml.YamlPropertySourceFactory.class)
+// @org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.yaml.YamlPropertySourceFactory.class)
 public class ChuckConfig extends AbstractCommonConfig {
 
     @Autowired

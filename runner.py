@@ -19,7 +19,7 @@ run = "./gradlew bootRun --args='--app=rumpus' &> src/main/java/com/rumpus/rumpu
 run_rumpus = "./gradlew bootRun --args='--app=rumpus' &> src/main/java/com/rumpus/rumpus/log/spring.log"
 run_chuck = "./gradlew bootRun --args='--app=chuck' &> src/main/java/com/rumpus/rumpus/log/spring.log"
 run_bs = "./gradlew bootRun --args='--app=buildshift' &> src/main/java/com/rumpus/rumpus/log/spring.log"
-runDebug = "./gradlew bootRun --debug > src/main/java/com/rumpus/rumpus/log/spring.log"
+runDebug = "./gradlew bootRun --args='--app=rumpus' --debug &> src/main/java/com/rumpus/rumpus/log/spring.log"
 moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
 dependencies = ".././gradlew dependencies > src/main/java/com/rumpus/rumpus/log/dependencies.log"
