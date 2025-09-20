@@ -65,6 +65,9 @@ src/main/resources/properties/dev/*
 # Look at this file later. We can probably remove.
 src/test/resources/properties.yml
 
+# AWS specific
+rds-ca-bundle.pem
+
 tmp/
 target/
 
