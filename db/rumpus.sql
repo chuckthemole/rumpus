@@ -13,7 +13,7 @@ CREATE TABLE users (
 
 CREATE TABLE user (
 	-- user_id INT AUTO_INCREMENT,
-    id VARCHAR(10) NOT NULL UNIQUE,
+    id VARCHAR(36) NOT NULL UNIQUE,
     user_meta_data BLOB,
     -- CONSTRAINT pk_user
 -- 		PRIMARY KEY (user_id),
@@ -49,11 +49,11 @@ INSERT INTO users (USERNAME, PASSWORD, ENABLED) VALUES('chuck','$2a$12$nASTBHmfk
 INSERT INTO user (username, email, id) values('chuckthemole', 'chuckthemole@gmail.com', '11111111-1111-1111-1111-111111111111');
 INSERT INTO user (username, email, id) values('chuck', 'chuck@gmail.com', '22222222-2222-2222-2222-222222222222');
 
-INSERT INTO AUTHORITIES VALUES('chuck','ROLE_EMPLOYEE');
-INSERT INTO AUTHORITIES VALUES('chuck','ROLE_USER');
-INSERT INTO AUTHORITIES VALUES('chuckthemole','ROLE_MANAGER');
-INSERT INTO AUTHORITIES VALUES('chuckthemole','ROLE_ADMIN');
-INSERT INTO AUTHORITIES VALUES('chuckthemole','ROLE_USER');
+INSERT INTO authorities VALUES('chuck','ROLE_EMPLOYEE');
+INSERT INTO authorities VALUES('chuck','ROLE_USER');
+INSERT INTO authorities VALUES('chuckthemole','ROLE_MANAGER');
+INSERT INTO authorities VALUES('chuckthemole','ROLE_ADMIN');
+INSERT INTO authorities VALUES('chuckthemole','ROLE_USER');
 
 -- CREATE TABLE session (
 -- 	session_id INT AUTO_INCREMENT,
