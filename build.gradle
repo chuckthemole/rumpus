@@ -49,7 +49,7 @@ dependencies {
         processResources.dependsOn ':common:processResources'
     } else { // LIVE or BETA
         println "Rumpus is loading dependency com.rumpushub.common:common"
-        implementation "com.rumpushub.common:common:1.0.0" // update version as needed
+        implementation "com.rumpushub.common:common:1.0.1" // update version as needed
     }
 }
 
