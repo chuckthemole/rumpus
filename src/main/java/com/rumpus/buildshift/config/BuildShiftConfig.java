@@ -2,7 +2,6 @@ package com.rumpus.buildshift.config;
 
 import java.util.Map;
 
-import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

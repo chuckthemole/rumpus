@@ -1,6 +1,5 @@
 package com.rumpus.rumpus.config;
 
-import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -38,11 +37,6 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
             manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
-    }
-
-    @Bean
-    public PythonInterpreter pythonInterpreter() {
-        return CommonPython.getInterpreter();
     }
 
     @Bean

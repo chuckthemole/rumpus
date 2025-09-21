@@ -111,12 +111,12 @@ public class RumpusRestController extends AbstractRumpusController {
         return re;
     }
 
-    @GetMapping(value = "/python")
-    public ResponseEntity<String> getPython() {
-        LOG("RumpusRestController::getPython()");
-        this.pythonInterpreter.execfile("src/main/python/voice_assistant.py");
-        return new ResponseEntity<String>("test", HttpStatus.ACCEPTED);
-    }
+    // @GetMapping(value = "/python")
+    // public ResponseEntity<String> getPython() {
+    //     LOG("RumpusRestController::getPython()");
+    //     this.pythonInterpreter.execfile("src/main/python/voice_assistant.py");
+    //     return new ResponseEntity<String>("test", HttpStatus.ACCEPTED);
+    // }
 
     @GetMapping(value = "/current_base_path")
     public ResponseEntity<String> currentBasePath() {

@@ -1,6 +1,5 @@
 package com.rumpus.rumpus.controller;
 
-import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -34,8 +33,8 @@ abstract public class AbstractRumpusController extends
     @Autowired
     protected LogItemCollectionManager logManager;
 
-    @Autowired
-    protected PythonInterpreter pythonInterpreter;
+    // @Autowired
+    // protected PythonInterpreter pythonInterpreter;
 
     @Autowired
     protected ServerManager serverManager;
