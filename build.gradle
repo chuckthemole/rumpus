@@ -14,7 +14,7 @@ EnvLoader.loadDotEnv(project)
 def env = project.hasProperty("ENV") ? project.ENV : "DEV"
 println "Rumpus is using environment: ${env}"
 def heap = project.hasProperty("HEAP") ? project.HEAP : "LIMITED_HEAP"
-println "Rumpus is using environment: ${mem_mode}"
+println "Rumpus is using environment: ${heap}"
 
 repositories {
     gradlePluginPortal()
