@@ -40,28 +40,37 @@ management:
 
 logging:
   # Path to the main log file. Adjust as needed for your deployment environment.
+  # Note: The path we're using (./src/main/java/...) is inside source tree.
+  # In production, logs usually go to something like:
+  # file-name-pattern: ./logs/spring.log.%d{yyyy-MM-dd}.log
   file:
     name: ./src/main/java/com/rumpus/rumpus/log/spring.log
 
   logback:
     rollingpolicy:
-      # Use a time-based rolling policy to rotate logs daily
+      # Use a time-based rolling policy: a new log file is created each day.
       type: time-based
 
-      # Pattern for rotated log files.
-      # `%d{yyyy-MM-dd}` creates a new file for each day.
+      # Naming pattern for rotated logs.
+      # "%d{yyyy-MM-dd}" inserts the current date into the filename.
+      # Example: spring.log.2025-09-20.log
+      # Note: The path we're using (./src/main/java/...) is inside source tree.
+      # In production, logs usually go to something like:
+      # file-name-pattern: ./logs/spring.log.%d{yyyy-MM-dd}.log
       file-name-pattern: ./src/main/java/com/rumpus/rumpus/log/spring.log.%d{yyyy-MM-dd}.log
 
-      # Number of days to keep old log files.
-      # In production, we may want to increase this or configure via env variable.
+      # Keep only the most recent N log files.
+      # Here, it keeps only 1 day of history — yesterday’s log is removed when a new one is created.
       max-history: 1
 
-      # Optional: total size cap for all log files combined.
-      # Prevents runaway disk usage in case of high log volume.
+      # Optional: total cap on combined log file size.
+      # If total logs exceed 100MB, older files are deleted regardless of max-history.
       total-size-cap: 100MB
 
-      # TODO: Consider making `max-history` and `total-size-cap` configurable via
-      # environment variables or Spring properties for easier production tuning.
+      # With `max-history` + `total-size-cap`, logs are bounded and will not grow unbounded.
+      # (TODO from your note) In production, it’s common to make max-history and
+      # total-size-cap configurable via environment variables
+      # (e.g., dev keeps 1 day, prod keeps 30 days)
 
   # Log output patterns
   pattern:

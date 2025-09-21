@@ -12,7 +12,9 @@ import EnvLoader
 // --- Load environment variables from .env ---
 EnvLoader.loadDotEnv(project)
 def env = project.hasProperty("ENV") ? project.ENV : "DEV"
-println "📦 Rumpus is using environment: ${env}"
+println "Rumpus is using environment: ${env}"
+def heap = project.hasProperty("HEAP") ? project.HEAP : "LIMITED_HEAP"
+println "Rumpus is using environment: ${mem_mode}"
 
 repositories {
     gradlePluginPortal()
@@ -60,6 +62,21 @@ bootRun {
     } else { // LIVE or BETA
         println "Rumpus is setting env to live"
         systemProperty "env", "live"
+    }
+
+    println "bootRun: checking memory profile..."
+
+    if (heap == "LIMITED_HEAP") {
+        // Print message to console for visibility
+        println "Running in LIMITED_HEAP mode"
+
+        // Configure JVM memory options:
+        // -Xmx512m → limit the maximum heap size to 512 MB
+        // -Xms256m → set the initial heap size to 256 MB
+        //
+        // This prevents the JVM from consuming too much memory,
+        // which is useful on small EC2 instances or resource-constrained environments.
+        jvmArgs = ["-Xmx512m", "-Xms256m"]
     }
 }
 
