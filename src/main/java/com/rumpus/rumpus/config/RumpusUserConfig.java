@@ -58,11 +58,11 @@ public class RumpusUserConfig extends AbstractCommonUserConfig<
         return new RumpusUserAuthenticationManager(this.rumpusUserDao());
     }
 
-    @Bean
-    @DependsOn({"rumpusUserDao"})
-    public RumpusLoader rumpusLoader() {
-        return new RumpusLoader(rumpusUserDao());
-    }
+    // @Bean
+    // @DependsOn({"rumpusUserDao"})
+    // public RumpusLoader rumpusLoader() {
+    //     return new RumpusLoader(rumpusUserDao());
+    // }
 
     @Override
     public IRumpusUserService childUserService() {

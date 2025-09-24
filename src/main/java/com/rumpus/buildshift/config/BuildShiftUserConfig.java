@@ -58,11 +58,11 @@ public class BuildShiftUserConfig extends AbstractCommonUserConfig<
         return new UserAuthenticationManager(this.buildshiftUserDao());
     }
 
-    @Bean
-    @DependsOn({"buildshiftUserDao"})
-    public BuildShiftLoader buildshiftLoader() {
-        return new BuildShiftLoader(buildshiftUserDao());
-    }
+    // @Bean
+    // @DependsOn({"buildshiftUserDao"})
+    // public BuildShiftLoader buildshiftLoader() {
+    //     return new BuildShiftLoader(buildshiftUserDao());
+    // }
 
     @Override
     public IUserService childUserService() {
