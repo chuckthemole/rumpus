@@ -29,6 +29,7 @@ public class BuildShiftConfig extends AbstractCommonConfig { // AbstractHttpSess
 
     private static final String NOTION_PROJECT_MANAGEMENT_TOKEN = "properties.notion.token.project-management";
     private static final String NOTION_CONSOLE_TOKEN = "properties.notion.token.console";
+    private static final String NAVBAR_BRAND = "properties.views.brand";
 
     @Autowired
     public BuildShiftConfig(Environment environment) {
@@ -38,6 +39,11 @@ public class BuildShiftConfig extends AbstractCommonConfig { // AbstractHttpSess
     public BeanSerializer beanSerializer() {
         BeanSerializer serializer = new BeanSerializer(null, null, null, null);
         return serializer;
+    }
+
+    @Bean
+    public String navbarBrand() {
+        return this.environment.getProperty(this.NAVBAR_BRAND);
     }
 
     @Override

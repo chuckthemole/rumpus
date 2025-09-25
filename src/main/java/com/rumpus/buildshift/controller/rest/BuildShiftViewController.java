@@ -23,9 +23,9 @@ import com.rumpus.buildshift.views.AdminUserView;
 public class BuildShiftViewController extends
         AbstractViewController<ServiceManager, User, UserMetaData, IUserService, AdminUserView> {
 
-    public BuildShiftViewController() {
-        super(
-                ViewLoader.create());
+    @Autowired
+    public BuildShiftViewController(ViewLoader viewLoader) {
+        super(viewLoader);
     }
 
     @Override
