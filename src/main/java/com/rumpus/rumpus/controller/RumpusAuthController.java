@@ -25,6 +25,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.core.ParameterizedTypeReference;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -106,9 +107,20 @@ public class RumpusAuthController extends
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
         logger.info("request: ", request.toString());
 
-        ResponseEntity<Map> response = restTemplate.postForEntity(
-                provider.getTokenUrl(), request, Map.class);
-        logger.info("response: ", response.toString());
+        // ResponseEntity<Map> response = restTemplate.postForEntity(
+        // provider.getTokenUrl(), request, Map.class);
+        // logger.info("response: ", response.toString());
+
+        // Map<String, Object> responseBody = response.getBody();
+        // logger.info("response body: ", responseBody.toString());
+        // return (String) responseBody.get("access_token");
+
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                provider.getTokenUrl(),
+                HttpMethod.POST,
+                request,
+                new ParameterizedTypeReference<Map<String, Object>>() {
+                });
 
         Map<String, Object> responseBody = response.getBody();
         logger.info("response body: ", responseBody.toString());
@@ -129,8 +141,15 @@ public class RumpusAuthController extends
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<Map> response = restTemplate.exchange(
-                provider.getUserInfoUrl(), HttpMethod.GET, entity, Map.class);
+        // ResponseEntity<Map> response = restTemplate.exchange(
+        // provider.getUserInfoUrl(), HttpMethod.GET, entity, Map.class);
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                provider.getUserInfoUrl(),
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<Map<String, Object>>() {
+                });
+
         logger.info("response: ", response.toString());
 
         return response.getBody();
