@@ -2,12 +2,42 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 import com.rumpushub.buildlogic.utils.EnvLoader
 import com.rumpushub.buildlogic.plugins.RumpusPlugin
 import com.rumpushub.buildlogic.plugins.AwsDependenciesPlugin
+import com.rumpushub.buildlogic.plugins.CommonSessionDependencies
+import com.rumpushub.buildlogic.plugins.RumpusTest
+import com.rumpushub.buildlogic.plugins.RumpusTestConventions
 
 // --------------------------------------------------------------------------
 // Apply custom Rumpus-specific Gradle plugins
 // --------------------------------------------------------------------------
 apply<RumpusPlugin>()
-apply<AwsDependenciesPlugin>() // Provides AWS-related dependencies/configuration
+
+apply<AwsDependenciesPlugin>()
+configure<AwsDependenciesPlugin.AwsExtension> {
+    awsCoreDependency = rumpusLibs.springCloudAws
+    awsS3Dependency = rumpusLibs.springCloudAwsS3
+}
+
+apply<CommonSessionDependencies>()
+configure<CommonSessionDependencies.SessionExtension> {
+    core = rumpusLibs.springSessionCore
+    jdbc = rumpusLibs.springSessionJdbc
+}
+
+apply<RumpusTest>()
+configure<RumpusTest.TestExtension> {
+    springBoot = rumpusLibs.springBootStarterTest
+    mockito = rumpusLibs.mockito
+    junitApi = rumpusLibs.junit
+    junitEngine = rumpusLibs.junitEngine
+    springSecurityTest = rumpusLibs.springSecurityTest
+}
+
+apply<RumpusTestConventions>()
+configure<RumpusTestConventions.TestConventionsExtension> {
+    junitVersion = rumpusLibs.junit4
+    showStandardStreams = true
+}
+
 
 /*
  * --------------------------------------------------------------------------
