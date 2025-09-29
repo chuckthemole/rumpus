@@ -5,6 +5,7 @@ import com.rumpushub.buildlogic.plugins.AwsDependenciesPlugin
 import com.rumpushub.buildlogic.plugins.CommonSessionDependencies
 import com.rumpushub.buildlogic.plugins.RumpusTest
 import com.rumpushub.buildlogic.plugins.RumpusTestConventions
+import com.rumpushub.buildlogic.plugins.RumpusDependenciesPlugin
 
 // --------------------------------------------------------------------------
 // Apply custom Rumpus-specific Gradle plugins
@@ -38,6 +39,63 @@ configure<RumpusTestConventions.TestConventionsExtension> {
     showStandardStreams = true
 }
 
+apply<RumpusDependenciesPlugin>()
+
+configure<RumpusDependenciesPlugin.RumpusDepsExtension> {
+    core.addAll(listOf(
+        rumpusLibs.rumpusSpringBoot.get(),
+        rumpusLibs.springBootWeb.get()
+    ))
+
+    web.addAll(listOf(
+        rumpusLibs.webFlux.get(),
+        rumpusLibs.webSocket.get()
+    ))
+
+    db.addAll(listOf(
+        rumpusLibs.jpa.get(),
+        rumpusLibs.jdbc.get(),
+        rumpusLibs.mysql.get()
+    ))
+
+    security.addAll(listOf(
+        rumpusLibs.springSecurity.get(),
+        rumpusLibs.oauth2Client.get(),
+        rumpusLibs.jjwtApi.get(),
+        rumpusLibs.jjwtImpl.get(),
+        rumpusLibs.jjwtJackson.get()
+    ))
+
+    cloud.addAll(listOf(
+        rumpusLibs.springCloudAws.get(),
+        rumpusLibs.springCloudAwsS3.get()
+    ))
+
+    devTools.addAll(listOf(
+        rumpusLibs.devTools.get()
+    ))
+
+    testing.addAll(listOf(
+        rumpusLibs.junit.get(),
+        rumpusLibs.mockito.get()
+    ))
+
+    // 👇 Miscellaneous dependencies that don’t neatly fit in other buckets
+    additionalDeps.addAll(listOf(
+        rumpusLibs.springBootActuator.get(),
+        rumpusLibs.springBootAdminClient.get(),
+        rumpusLibs.springBootAdminServer.get(),
+        rumpusLibs.commonsValidator.get(),
+        rumpusLibs.bootstrap.get(),
+        rumpusLibs.htmlunit.get(),
+        rumpusLibs.unirest.get(),
+        rumpusLibs.jsr305.get(),
+        rumpusLibs.j2html.get(),
+        rumpusLibs.jython.get(),
+        rumpusLibs.tess4j.get(),
+        rumpusLibs.oauth2ResourceServer.get()
+    ))
+}
 
 /*
  * --------------------------------------------------------------------------
@@ -62,7 +120,7 @@ version = rumpusLibs.versions.rumpus.get()
  * - 'springBoot':  Official Spring Boot Gradle plugin (3.x)
  * - 'dependencyManagement': Spring's dependency-management plugin for centralized dependency control
  *
- * Both external plugins are declared via the version catalog (libs.versions.toml).
+ * Both external plugins are declared via the version catalog (rumpusLibs.versions.toml).
  */
 plugins {
     alias(rumpusLibs.plugins.springBoot)
@@ -125,7 +183,7 @@ repositories {
  *
  * BETA/LIVE:
  *   - Resolves published artifact com.rumpushub.common:common via version catalog.
- *   - Versions are centrally managed in `gradle/libs.versions.toml`.
+ *   - Versions are centrally managed in `gradle/rumpusLibs.versions.toml`.
  */
 dependencies {
     when (env) {
@@ -172,6 +230,6 @@ tasks.named<BootRun>("bootRun") {
  * - Test task wiring for `:common` is currently commented out; revisit if 
  *   cross-project test execution is required.
  * - EnvLoader provides Kotlin DSL–friendly environment loading.
- * - Dependency versions are now centralized via `libs.versions.toml` 
+ * - Dependency versions are now centralized via `rumpusLibs.versions.toml` 
  *   (avoid hardcoding versions in build scripts).
  */
