@@ -154,24 +154,40 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource(Environment environment) {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // TODO: this is a hack for now, getProperty is having trouble parsing List
-        // Look at issue number 12, 'Create a config class bound to properties'
-        // configuration.setAllowedOrigins(List.of(
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ORIGINS + "[0]"),
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ORIGINS + "[1]")));
-        // configuration.setAllowedMethods(List.of(
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[0]"),
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[1]"),
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[2]"),
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[3]"),
-        // environment.getProperty(CORS_ALLOWED_FRONTEND_ALLOWED_METHODS + "[4]")));
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true); // Needed if sending cookies/auth headers
+        // Get origins as comma-separated string
+        String origins = environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS);
+        if (origins != null && !origins.isBlank()) {
+            configuration.setAllowedOrigins(Arrays.asList(origins.split(",")));
+        } else { // fallback
+            configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        }
+
+        // Methods
+        String methods = environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS);
+        if (methods != null && !methods.isBlank()) {
+            configuration.setAllowedMethods(Arrays.asList(methods.split(",")));
+        } else {
+            configuration.setAllowedMethods(List.of("GET"));
+        }
+
+        // Headers
+        String headers = environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS);
+        if (headers != null && !headers.isBlank()) {
+            configuration.setAllowedHeaders(Arrays.asList(headers.split(",")));
+        }
+
+        // Credentials
+        Boolean credentials = environment.getProperty(
+                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS,
+                Boolean.class);
+        if (credentials != null) {
+            configuration.setAllowCredentials(credentials);
+        } else {
+            configuration.setAllowCredentials(false);
+        }
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
