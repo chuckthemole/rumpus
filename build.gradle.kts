@@ -1,44 +1,55 @@
 import org.springframework.boot.gradle.tasks.run.BootRun
 import com.rumpushub.buildlogic.utils.EnvLoader
-
 import com.rumpushub.buildlogic.plugins.RumpusPlugin
 import com.rumpushub.buildlogic.plugins.AwsDependenciesPlugin
 
-
+// --------------------------------------------------------------------------
+// Apply custom Rumpus-specific Gradle plugins
+// --------------------------------------------------------------------------
 apply<RumpusPlugin>()
-apply<AwsDependenciesPlugin>() // TODO: review common.gradle comment regarding AWS plugin
+apply<AwsDependenciesPlugin>() // Provides AWS-related dependencies/configuration
+
+/*
+ * --------------------------------------------------------------------------
+ * Project Metadata
+ * --------------------------------------------------------------------------
+ * - group:    Logical namespace for artifacts published from this project.
+ * - version:  Project version identifier.
+ *
+ * Both values are centralized in `gradle/rumpusLibs.versions.toml`.
+ * Accessed via the generated type-safe accessor `rumpusLibs.versions`.
+ * This avoids hardcoding metadata across multiple modules.
+ */
+group = rumpusLibs.versions.rumpusGroup.get()
+version = rumpusLibs.versions.rumpus.get()
 
 /*
  * --------------------------------------------------------------------------
  * Plugins
  * --------------------------------------------------------------------------
- * - 'rumpus': custom plugin for Rumpus-specific build logic
- * - 'common.aws': TODO: review common.gradle comment regarding AWS plugin
- * - 'org.springframework.boot': Spring Boot plugin; version 3.x disables some defaults (CSRF/CORS)
- * - 'io.spring.dependency-management': allows centralized dependency version management
+ * - 'rumpus':      Custom plugin providing common Rumpus build logic
+ * - 'aws':         Custom plugin for AWS dependencies/configuration
+ * - 'springBoot':  Official Spring Boot Gradle plugin (3.x)
+ * - 'dependencyManagement': Spring's dependency-management plugin for centralized dependency control
+ *
+ * Both external plugins are declared via the version catalog (libs.versions.toml).
  */
 plugins {
-    id("org.springframework.boot") version "3.0.1"
-    id("io.spring.dependency-management") version "1.1.0"
+    alias(rumpusLibs.plugins.springBoot)
+    alias(rumpusLibs.plugins.dependencyManagement)
 }
 
 /*
  * --------------------------------------------------------------------------
- * Java compatibility
+ * Environment Setup
  * --------------------------------------------------------------------------
- */
-// java.sourceCompatibility = JavaVersion.VERSION_17
-tasks.withType<org.gradle.api.tasks.compile.JavaCompile> {
-    sourceCompatibility = "17"
-    targetCompatibility = "17"
-}
-
-/*
- * --------------------------------------------------------------------------
- * Load environment variables from .env
- * --------------------------------------------------------------------------
- * EnvLoader reads `.env` files from project root or parent directory.
- * Loaded properties are available as `project.extensions.extraProperties`.
+ * EnvLoader:
+ *   - Reads `.env` files from project root (or parent directory).
+ *   - Injects values into Gradle’s `extraProperties`, making them accessible via `project.findProperty`.
+ *
+ * Runtime environment:
+ *   - ENV:   Controls dependency resolution and repository usage (DEV, BETA, LIVE).
+ *   - HEAP:  Controls JVM heap size profile (e.g., LIMITED_HEAP).
  */
 EnvLoader.loadDotEnv(project)
 
@@ -52,10 +63,10 @@ println("Rumpus is using heap configuration: $heap")
  * --------------------------------------------------------------------------
  * Repositories
  * --------------------------------------------------------------------------
- * Conditional repository setup depending on environment:
- * - DEV: Maven Local
- * - BETA: Local TestRepo
- * - LIVE: GitHub Packages
+ * - gradlePluginPortal + Maven Central (always available).
+ * - LIVE: Pulls artifacts from GitHub Packages (requires GPR_USER + GPR_TOKEN).
+ * - BETA: Uses a local test repository ($rootDir/TestRepo).
+ * - DEV: Uses Maven Local to resolve locally published artifacts.
  */
 repositories {
     gradlePluginPortal()
@@ -78,8 +89,13 @@ repositories {
  * --------------------------------------------------------------------------
  * Dependencies
  * --------------------------------------------------------------------------
- * - DEV: include local ':common' project for IDE support and live development
- * - BETA/LIVE: include published artifact from Maven
+ * DEV:
+ *   - Uses local project dependency (:common) for live development and IDE navigation.
+ *   - Keeps iteration fast by avoiding remote lookups.
+ *
+ * BETA/LIVE:
+ *   - Resolves published artifact com.rumpushub.common:common via version catalog.
+ *   - Versions are centrally managed in `gradle/libs.versions.toml`.
  */
 dependencies {
     when (env) {
@@ -87,17 +103,12 @@ dependencies {
             println("Rumpus is loading dependency :common (local project)")
             add("implementation", project(":common"))
 
-            // Force build order to ensure :common is compiled first
+            // Optional: enforce build ordering between :common and this project
             // tasks.named("compileJava") { dependsOn(":common:compileJava") }
             // tasks.named("processResources") { dependsOn(":common:processResources") }
         }
-        else -> { // LIVE or BETA
-            println("Rumpus is loading dependency com.rumpushub.common:common")
-            // Using version catalog (gradle/libs.versions.toml) for dependency management.
-            //    - The actual version number is defined in: gradle/libs.versions.toml under [versions]
-            //    - The module coordinates are defined in: gradle/libs.versions.toml under [libraries]
-            //    - Update the version there (not here!) when bumping `com.rumpushub.common:common`.
-            //    - This keeps versions centralized and easier to manage across projects.
+        else -> { // BETA or LIVE
+            println("Rumpus is loading dependency com.rumpushub.common:common (from version catalog)")
             add("implementation", rumpusLibs.common)
         }
     }
@@ -105,9 +116,11 @@ dependencies {
 
 /*
  * --------------------------------------------------------------------------
- * Spring Boot run configuration
+ * Spring Boot Run Configuration
  * --------------------------------------------------------------------------
- * Sets system properties and JVM memory options based on environment and heap profile.
+ * Configures `bootRun` task:
+ *   - Passes `env` as a system property to the running Spring Boot app.
+ *   - Applies JVM memory settings based on the selected heap profile.
  */
 tasks.named<BootRun>("bootRun") {
     println("bootRun: setting environment properties...")
@@ -124,8 +137,11 @@ tasks.named<BootRun>("bootRun") {
  * --------------------------------------------------------------------------
  * Notes / TODOs
  * --------------------------------------------------------------------------
- * - Frontend tasks (NodeJS/webpack) were removed for clarity; reintegrate if needed
- * - Test tasks for ':common' were commented out; revisit later
- * - EnvLoader ensures environment variables are loaded inline and Kotlin DSL compatible
- * - Reference: https://stackoverflow.com/questions/45754005/include-tests-from-other-module
+ * - Frontend tasks (NodeJS/webpack) were intentionally removed for clarity.
+ *   Reintroduce them if frontend build integration is needed.
+ * - Test task wiring for `:common` is currently commented out; revisit if 
+ *   cross-project test execution is required.
+ * - EnvLoader provides Kotlin DSL–friendly environment loading.
+ * - Dependency versions are now centralized via `libs.versions.toml` 
+ *   (avoid hardcoding versions in build scripts).
  */
