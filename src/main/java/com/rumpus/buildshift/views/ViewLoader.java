@@ -99,7 +99,7 @@ public class ViewLoader extends AbstractViews {
                 NavbarItem.create("Jobs", "/", true, ItemType.LINK),
                 NavbarItem.create("Contact", "/", true, ItemType.LINK),
                 NavbarItem.createDropdownDivider("DropdownDivider1", true),
-                NavbarItem.create("Report an issue", "/", true, ItemType.LINK));
+                NavbarItem.create("Report an issue", "/bug_report", true, ItemType.LINK));
 
         this.navbarItemsStart = List.of(
                 NavbarItem.create("Home", "/", true, ItemType.LINK),

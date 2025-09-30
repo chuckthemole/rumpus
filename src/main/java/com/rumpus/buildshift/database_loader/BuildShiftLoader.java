@@ -18,11 +18,11 @@ import java.util.Optional;
  * BuildShiftLoader seeds the database with initial BuildShiftUser data.
  *
  * <p>
- * This loader is only active in the "dev" profile to prevent accidental
+ * This loader is only active in the "DEV" profile to prevent accidental
  * data insertion in production environments.
  */
 @Component
-@Profile("dev") // Only active when the 'dev' profile is enabled
+@Profile("DEV") // Only active when the 'DEV' profile is enabled
 public class BuildShiftLoader implements CommandLineRunner {
 
     // JSON file reader utility
@@ -54,7 +54,7 @@ public class BuildShiftLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Log that the loader is executing and which profile is active
-        ICommon.LOG(BuildShiftLoader.class, "BuildShiftLoader::run() - executing in dev profile");
+        ICommon.LOG(BuildShiftLoader.class, "BuildShiftLoader::run() - executing in DEV profile");
 
         // Attempt to read users from the JSON file safely
         Optional<User[]> usersOpt = this.fileProcessor.<User>processFile(JSON_USERS_FILE, User[].class);
