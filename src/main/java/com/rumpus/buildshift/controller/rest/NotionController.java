@@ -2,6 +2,7 @@ package com.rumpus.buildshift.controller.rest;
 
 import com.rumpus.common.Controller.Integrations.AbstractNotionIntegrationController;
 import com.rumpus.common.Integrations.NotionIntegration;
+import com.rumpus.common.Integrations.NotionIntegrationRegistry;
 
 import java.util.Map;
 
@@ -25,8 +26,14 @@ public class NotionController extends AbstractNotionIntegrationController {
      * @param notionMap The Notion integration bean, injected via Spring.
      */
     @Autowired
-    public NotionController(Map<String, NotionIntegration> notionMap) {
-        super(notionMap);
+    public NotionController(
+            Map<String, NotionIntegration> notionMap,
+            NotionIntegrationRegistry notionRegistry) {
+        super(
+                notionMap,
+                notionRegistry);
+        this.debugNotionMap();
+        this.debugNotionRegistry();
     }
 
     /**
@@ -42,12 +49,41 @@ public class NotionController extends AbstractNotionIntegrationController {
      */
     // @PostMapping("/database/{databaseId}/page")
     // public String createPage(
-    //         @PathVariable String databaseId,
-    //         @RequestBody String jsonBody
+    // @PathVariable String databaseId,
+    // @RequestBody String jsonBody
     // ) throws Exception {
-    //     return getNotionIntegration().createPage(databaseId, jsonBody);
+    // return getNotionIntegration().createPage(databaseId, jsonBody);
     // }
 
-    // TODO: Add additional endpoints here, e.g., updatePage, queryDatabase, deletePage, etc.
-}
+    // TODO: Add additional endpoints here, e.g., updatePage, queryDatabase,
+    // deletePage, etc.
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("NotionController {")
+                .append("class=").append(this.getClass().getSimpleName());
+
+        try {
+            // Reflectively access fields from AbstractNotionIntegrationController
+            var fieldMap = AbstractNotionIntegrationController.class.getDeclaredField("notionMap");
+            fieldMap.setAccessible(true);
+            @SuppressWarnings("unchecked") // TODO: look into
+            Map<String, NotionIntegration> notionMap = (Map<String, NotionIntegration>) fieldMap.get(this);
+
+            var fieldRegistry = AbstractNotionIntegrationController.class.getDeclaredField("notionRegistry");
+            fieldRegistry.setAccessible(true);
+            Object notionRegistry = fieldRegistry.get(this);
+
+            sb.append(", notionMapSize=").append(notionMap != null ? notionMap.size() : "null");
+            sb.append(", notionMapKeys=").append(notionMap != null ? notionMap.keySet() : "null");
+            sb.append(", notionRegistryInjected=").append(notionRegistry != null);
+        } catch (Exception e) {
+            sb.append(", errorReadingFields=").append(e.getMessage());
+        }
+
+        sb.append(" }");
+        return sb.toString();
+    }
+
+}
