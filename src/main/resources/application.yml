@@ -1,7 +1,7 @@
 # ------------------------------------------------------------
 # Description:
-# This file configures the Spring Boot application properties
-# for the admin service. It includes logging, management endpoints,
+# This file configures the Spring Boot application properties. 
+# It includes logging, management endpoints,
 # and profile selection.
 # Secrets (like passwords or API keys) should NOT be stored here.
 # Use a separate secure properties file (e.g., properties.yml) instead.
@@ -39,6 +39,13 @@ management:
       enabled: true # Include environment info in the /actuator/info endpoint.
 
 logging:
+  # NOTE: Logging level is now determined per environment profile.
+  #       See the profile-specific sections below.
+  #
+  # TODO: In the future, we should replace this with explicit
+  #       environment variables like LOGGING_LEVEL_ROOT or
+  #       LOGGING_LEVEL_APP for more granular control per service or module.
+
   # Path to the main log file. Adjust as needed for your deployment environment.
   # Note: The path we're using (./src/main/java/...) is inside source tree.
   # In production, logs usually go to something like:
@@ -79,3 +86,33 @@ logging:
 
     # File log format
     file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+
+# ------------------------------------------------------------
+# Environment-specific sections
+# ------------------------------------------------------------
+
+# Development profile settings
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.security: DEBUG
+    com.rumpus: DEBUG
+
+# Production profile settings
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+    com.rumpus: INFO

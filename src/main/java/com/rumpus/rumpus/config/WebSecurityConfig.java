@@ -7,8 +7,11 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.rumpus.common.Controller.ICommonController;
+import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractFailureHandler;
@@ -39,6 +43,8 @@ import jakarta.servlet.http.HttpServletResponse;
 // @PropertySource("classpath:database.properties")
 // TODO: Can we abstract this to common?
 public class WebSecurityConfig extends AbstractCommonConfig {
+
+    private static final String FRONTEND_LOCAL_HOST = "http://localhost:3000";
 
     // TODO: can maybe make these Beans that have depend injection using Autowire -
     // chuck
@@ -93,9 +99,11 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                         // .loginProcessingUrl(ICommonController.PATH_LOGIN)
                         .loginProcessingUrl("/auth/login") // <- matches frontend call
                         .successHandler((request, response, authentication) -> {
+                            LOG(WebSecurityConfig.class, LogLevel.DEBUG, authentication.getName());
                             response.setStatus(HttpServletResponse.SC_OK);
                         })
                         .failureHandler((request, response, exception) -> {
+                            LOG(WebSecurityConfig.class, LogLevel.DEBUG, exception.getMessage());
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                         })
                         .permitAll()
@@ -153,45 +161,138 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                         .build());
     }
 
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource(Environment
+    // environment) {
+    // CorsConfiguration configuration = new CorsConfiguration();
+
+    // // Get origins as comma-separated string
+    // String origins =
+    // environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS);
+    // if (origins != null && !origins.isBlank()) {
+    // configuration.setAllowedOrigins(Arrays.asList(origins.split(",")));
+    // } else { // fallback
+    // configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+    // }
+
+    // // Methods
+    // String methods =
+    // environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS);
+    // if (methods != null && !methods.isBlank()) {
+    // configuration.setAllowedMethods(Arrays.asList(methods.split(",")));
+    // } else {
+    // configuration.setAllowedMethods(List.of("GET"));
+    // }
+
+    // // Headers
+    // String headers =
+    // environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS);
+    // if (headers != null && !headers.isBlank()) {
+    // configuration.setAllowedHeaders(Arrays.asList(headers.split(",")));
+    // }
+
+    // // Credentials
+    // Boolean credentials = environment.getProperty(
+    // AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS,
+    // Boolean.class);
+    // if (credentials != null) {
+    // configuration.setAllowCredentials(credentials);
+    // } else {
+    // configuration.setAllowCredentials(false);
+    // }
+
+    // UrlBasedCorsConfigurationSource source = new
+    // UrlBasedCorsConfigurationSource();
+    // source.registerCorsConfiguration("/**", configuration);
+    // return source;
+    // }
+
+    // ------------------------------------------------------------
+    // CORS Configuration
+    // ------------------------------------------------------------
+    // This bean configures Cross-Origin Resource Sharing (CORS)
+    // using values loaded from the YAML properties file.
+    //
+    // It uses Spring's Binder to read lists from YAML properly
+    // (e.g., `origins`, `methods`, and `headers` under
+    // `properties.frontend`), and falls back to safe defaults
+    // when properties are not defined.
+    // ------------------------------------------------------------
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource(Environment environment) {
         CorsConfiguration configuration = new CorsConfiguration();
+        StringBuilder debugOutput = new StringBuilder();
 
-        // Get origins as comma-separated string
-        String origins = environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS);
-        if (origins != null && !origins.isBlank()) {
-            configuration.setAllowedOrigins(Arrays.asList(origins.split(",")));
-        } else { // fallback
-            configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-        }
+        Binder binder = Binder.get(environment);
 
-        // Methods
-        String methods = environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS);
-        if (methods != null && !methods.isBlank()) {
-            configuration.setAllowedMethods(Arrays.asList(methods.split(",")));
-        } else {
-            configuration.setAllowedMethods(List.of("GET"));
-        }
+        // --- Allowed Origins ---
+        List<String> origins = bindList(
+                binder,
+                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS,
+                debugOutput);
+        configuration.setAllowedOrigins(!origins.isEmpty()
+                ? origins
+                : List.of(FRONTEND_LOCAL_HOST));
 
-        // Headers
-        String headers = environment.getProperty(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS);
-        if (headers != null && !headers.isBlank()) {
-            configuration.setAllowedHeaders(Arrays.asList(headers.split(",")));
-        }
+        // --- Allowed Methods ---
+        List<String> methods = bindList(
+                binder,
+                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS,
+                debugOutput);
+        configuration.setAllowedMethods(!methods.isEmpty()
+                ? methods
+                : List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-        // Credentials
-        Boolean credentials = environment.getProperty(
-                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS,
-                Boolean.class);
-        if (credentials != null) {
-            configuration.setAllowCredentials(credentials);
-        } else {
-            configuration.setAllowCredentials(false);
-        }
+        // --- Allowed Headers ---
+        List<String> headers = bindList(
+                binder,
+                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS,
+                debugOutput);
+        configuration.setAllowedHeaders(!headers.isEmpty()
+                ? headers
+                : List.of("*"));
 
+        // --- Allow Credentials ---
+        Boolean credentials = binder
+                .bind(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS, Boolean.class)
+                .orElse(true);
+        configuration.setAllowCredentials(credentials);
+
+        // --- Log configuration results ---
+        LOG_THIS("Loaded CORS Configuration:\n" + debugOutput);
+
+        // Register the CORS configuration for all routes
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    /**
+     * Safely binds a YAML list property (e.g., frontend.origins)
+     * using Spring Boot's Binder API.
+     * Logs debug information for visibility.
+     *
+     * @param binder      the Spring Binder instance
+     * @param propertyKey the property path to bind
+     * @param debugOutput buffer for logging property results
+     * @return the bound list, or an empty list if not found
+     */
+    private List<String> bindList(Binder binder, String propertyKey, StringBuilder debugOutput) {
+        try {
+            List<String> list = binder.bind(propertyKey, Bindable.listOf(String.class))
+                    .orElse(Collections.emptyList());
+            if (!list.isEmpty()) {
+                debugOutput.append(String.format("Read property '%s' as YAML list: %s%n", propertyKey, list));
+            } else {
+                debugOutput.append(String.format("Property '%s' not found or empty%n", propertyKey));
+            }
+            return list;
+        } catch (Exception e) {
+            debugOutput
+                    .append(String.format("Failed to read property '%s' as list: %s%n", propertyKey, e.getMessage()));
+            return Collections.emptyList();
+        }
     }
 
     // @Bean
@@ -244,5 +345,9 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     public String toString() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
+
+    private static void LOG_THIS(String... msg) {
+        LOG(WebSecurityConfig.class, LogLevel.DEBUG, msg);
     }
 }
