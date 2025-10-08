@@ -85,5 +85,4 @@ public class NotionController extends AbstractNotionIntegrationController {
         sb.append(" }");
         return sb.toString();
     }
-
 }
