@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.config;
+package com.rumpus.shared.config;
 
 import com.rumpus.common.Config.AbstractJdbcHttpSessionConfig;
 

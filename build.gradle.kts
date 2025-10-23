@@ -42,7 +42,7 @@ configure<RumpusTestConventions.TestConventionsExtension> {
 
 apply<OpenApiDependenciesPlugin>()
 configure<OpenApiDependenciesPlugin.OpenApiExtension> {
-    springdocCore = rumpusLibs.openApiUi
+    springdocUi = rumpusLibs.openApiUi
 }
 
 apply<RumpusDependenciesPlugin>()
