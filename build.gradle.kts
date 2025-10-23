@@ -6,6 +6,7 @@ import com.rumpushub.buildlogic.plugins.CommonSessionDependencies
 import com.rumpushub.buildlogic.plugins.RumpusTest
 import com.rumpushub.buildlogic.plugins.RumpusTestConventions
 import com.rumpushub.buildlogic.plugins.RumpusDependenciesPlugin
+import com.rumpushub.buildlogic.plugins.OpenApiDependenciesPlugin
 
 // --------------------------------------------------------------------------
 // Apply custom Rumpus-specific Gradle plugins
@@ -37,6 +38,11 @@ apply<RumpusTestConventions>()
 configure<RumpusTestConventions.TestConventionsExtension> {
     junitVersion = rumpusLibs.junit4
     showStandardStreams = true
+}
+
+apply<OpenApiDependenciesPlugin>()
+configure<OpenApiDependenciesPlugin.OpenApiExtension> {
+    springdocCore = rumpusLibs.openApiUi
 }
 
 apply<RumpusDependenciesPlugin>()

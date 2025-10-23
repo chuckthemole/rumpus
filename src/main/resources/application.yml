@@ -1,6 +1,6 @@
 # ------------------------------------------------------------
 # Description:
-# This file configures the Spring Boot application properties. 
+# This file configures the Spring Boot application properties.
 # It includes logging, management endpoints,
 # and profile selection.
 # Secrets (like passwords or API keys) should NOT be stored here.
@@ -78,6 +78,45 @@ logging:
       # (TODO from your note) In production, it’s common to make max-history and
       # total-size-cap configurable via environment variables
       # (e.g., dev keeps 1 day, prod keeps 30 days)
+
+# ------------------------------------------------------------
+# OpenAPI / Swagger Configuration
+# ------------------------------------------------------------
+# Description:
+#   Configures the auto-generated OpenAPI documentation for this service.
+#   SpringDoc automatically scans your controllers and generates OpenAPI 3 docs.
+#
+# Access:
+#   - JSON/OpenAPI spec: http://localhost:8080/v3/api-docs
+#   - Swagger UI:        http://localhost:8080/api/docs
+#
+# Notes:
+#   - The `/api/docs` path below can be changed to `/openapi`, `/api-docs`, etc.
+#   - For production, you may wish to disable or restrict access to these endpoints.
+#   - The title, version, and description shown in the UI can be set via
+#     application properties (see below).
+#
+# TODO:
+#   - Customize title/version to reflect the actual service.
+#   - Consider using Spring Security to restrict documentation access in production.
+springdoc:
+  api-docs:
+    # Enables or disables the OpenAPI JSON endpoint.
+    enabled: true
+    # Default path for the raw OpenAPI spec.
+    path: /v3/api-docs
+
+  swagger-ui:
+    # Path for the interactive Swagger UI.
+    # Visit http://localhost:8080/api/docs while the app is running.
+    path: /api/docs
+
+  # Optional: metadata displayed in Swagger UI.
+  # These values help document your API in a professional way.
+  info:
+    title: "Rumpus API"
+    description: "RESTful API documentation for the Rumpus service."
+    version: "v1.0"
 
   # Log output patterns
   pattern:
