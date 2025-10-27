@@ -108,7 +108,7 @@ springdoc:
 
   swagger-ui:
     # Path for the interactive Swagger UI.
-    # Visit http://localhost:8080/api/docs while the app is running.
+    # Visit http://localhost:8888/api/docs while the app is running.
     path: /api/docs
 
   # Optional: metadata displayed in Swagger UI.
@@ -139,9 +139,12 @@ spring:
 
 logging:
   level:
-    root: DEBUG
-    org.springframework.security: DEBUG
-    com.rumpus: DEBUG
+    # root: DEBUG
+    # org.springframework.security: DEBUG
+    # com.rumpus: DEBUG
+    root: INFO
+    org.springframework.security: INFO
+    com.rumpus: INFO
 
 # Production profile settings
 ---

@@ -17,9 +17,8 @@ public class OpenApiConfigBS extends AbstractOpenApiConfig {
     @Override
     protected List<ApiGroup> initApiGroups() {
         return List.of(
-                new ApiGroup("public", "/api/public/**"),
-                new ApiGroup("admin", "/api/admin/**"),
-                new ApiGroup("experimental", "/api/experimental/**"));
+                new ApiGroup("notion", "/notion-api/**"),
+                new ApiGroup("views", "/view_bs/**"));
     }
 
     @Override
