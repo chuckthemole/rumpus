@@ -104,7 +104,7 @@ springdoc:
     # Enables or disables the OpenAPI JSON endpoint.
     enabled: true
     # Default path for the raw OpenAPI spec.
-    path: /v3/api-docs
+    path: /api/schema
 
   swagger-ui:
     # Path for the interactive Swagger UI.
