@@ -1,0 +1,1 @@
+look in rumpus/src/main/resources/static/images for images

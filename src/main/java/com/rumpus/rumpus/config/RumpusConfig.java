@@ -22,18 +22,31 @@ import com.rumpus.rumpus.IRumpus;
 @Configuration
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
-@ComponentScan(basePackages = {"com.rumpus.rumpus"})
+@ComponentScan(basePackages = { "com.rumpus.rumpus" })
 public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
+
+    private static final String NAVBAR_BRAND = "properties.views.rumpus_brand";
 
     @Autowired
     public RumpusConfig(Environment environment) {
         super(environment);
     }
 
+    // TODO: DELETE
+    @Bean
+    public JwtService jwtService() {
+        return new JwtService();
+    }
+
+    @Bean
+    public String navbarBrand() {
+        return this.environment.getProperty(NAVBAR_BRAND);
+    }
+
     @Bean
     public ForumThreadManager forumThreadManager() {
         ForumThreadManager manager = ForumThreadManager.create();
-        for(ForumThread forumThread : IRumpus.rumpusForumThreads) {
+        for (ForumThread forumThread : IRumpus.rumpusForumThreads) {
             manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
@@ -45,7 +58,7 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     }
 
     @Bean
-    @DependsOn({"pycommonServer"})
+    @DependsOn({ "pycommonServer" })
     public ServerManager serverManager() {
         ServerManager manager = ServerManager.create();
         manager.addServer("PycommonServer", pycommonServer());
@@ -54,24 +67,24 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
 
     // @Bean
     // public ForumThread forumThread() {
-    //     ForumThread thread = ForumThread.createEmpty();
-    //     return ForumThread.createEmpty();
+    // ForumThread thread = ForumThread.createEmpty();
+    // return ForumThread.createEmpty();
     // }
 
     // @Bean
     // public List<LogItem> logItems() {
-    //     return new ArrayList<>();
+    // return new ArrayList<>();
     // }
 
     // @Bean
     // public ProviderManager providerManager() {
-    //     List<AuthenticationProvider> providers = new ArrayList<>();
-    //     return new ProviderManager(providers);
+    // List<AuthenticationProvider> providers = new ArrayList<>();
+    // return new ProviderManager(providers);
     // }
 
     // @Bean
     // public RumpusUserTypeAdapter rumpusUserTypeAdapter() {
-    //     return new RumpusUserTypeAdapter();
+    // return new RumpusUserTypeAdapter();
     // }
 
     public BeanSerializer beanSerializer() {
@@ -92,8 +105,9 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
 
     // @Bean
     // @DependsOn({"rumpusDaoManager"})
-    // @ConditionalOnProperty(prefix = "database", name = "loader", havingValue = "true")
+    // @ConditionalOnProperty(prefix = "database", name = "loader", havingValue =
+    // "true")
     // public RumpusLoader rumpusLoader() {
-    //     return new RumpusLoader(userDao(), rumpusAuthDao());
+    // return new RumpusLoader(userDao(), rumpusAuthDao());
     // }
 }

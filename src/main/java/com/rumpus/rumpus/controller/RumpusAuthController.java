@@ -31,7 +31,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.UUID;
 
-@RestController // TODO: start here maybe. I changed from Controller.
+// TODO: DELETE
+// @RestController // TODO: start here maybe. I changed from Controller.
 public class RumpusAuthController extends
         AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 

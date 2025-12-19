@@ -29,9 +29,8 @@ public class RumpusViewController extends AbstractViewController
         RumpusAdminUserView
     > {
 
-        public RumpusViewController() {
-            super(
-                RumpusViewLoader.create());
+        public RumpusViewController(RumpusViewLoader viewLoader) {
+            super(viewLoader);
         }
 
         @Override

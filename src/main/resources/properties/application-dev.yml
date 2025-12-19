@@ -6,3 +6,6 @@ spring:
       - classpath:properties/dev/cloud.yml
       - classpath:properties/dev/admin.yml
       - classpath:properties/dev/app.yml
+  devtools:
+    restart:
+      enabled: true

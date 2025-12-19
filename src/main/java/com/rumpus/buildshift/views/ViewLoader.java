@@ -66,8 +66,8 @@ public class ViewLoader extends AbstractViews {
     /**
      * Constructor using Spring's constructor injection for the navbar brand.
      *
-     * @param BUILDSHIFT_BRAND The brand value from the Spring context, qualified by
-     *                         "navbarBrand".
+     * @param BUILDSHIFT_BRANDThe brand value from the Spring context, qualified by
+     *                            "navbarBrand".
      */
     @Autowired
     public ViewLoader(@Qualifier("navbarBrand") String BUILDSHIFT_BRAND) {
