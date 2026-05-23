@@ -22,7 +22,7 @@ public interface IRumpus extends ICommon {
      *            the message to log
      */
     public static void LOG(Class<?> clazz, String... args) {
-        ICommon.LOG(clazz,args);
+        ICommon.LOG(clazz, args);
     }
 
     /**
@@ -36,6 +36,6 @@ public interface IRumpus extends ICommon {
      *            the message to log
      */
     public static void LOG(Class<?> clazz, LogLevel level, String... args) {
-        ICommon.LOG(clazz,level,args);
+        ICommon.LOG(clazz, level, args);
     }
 }

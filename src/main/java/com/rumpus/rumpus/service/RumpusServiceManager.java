@@ -15,7 +15,7 @@ public class RumpusServiceManager extends AbstractServiceManager<IRumpusService<
 
     private void registerServices() {
         IRumpusService<RumpusPost> postService = new RumpusPostService();
-        this.put("RumpusPostService",postService);
+        this.put("RumpusPostService", postService);
     }
 
     @Override

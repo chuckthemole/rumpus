@@ -51,10 +51,10 @@ abstract public class AbstractRumpusController
 
         // Common Paths
         java.util.Map<String, String> paths = java.util.Map.of(
-                "CurrentUserInfo","/current_user",
-                "CreateUser","/create_user");
+                "CurrentUserInfo", "/current_user",
+                "CreateUser", "/create_user");
         AbstractCommonController.commonPaths.addBasePath(
-                AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH,paths,
+                AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH, paths,
                 true);
         // this.setCurrentBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH);
     }

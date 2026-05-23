@@ -73,8 +73,8 @@ public class RumpusControllerTests extends AbstractRumpusTest {
         Mockito.when(mockUserService.getAll()).thenReturn(users);
         mockMvc.perform(get(ICommonController.PATH_API_USERS + "/username")) // sorting by username
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$",Matchers.hasSize(1)))
-                .andExpect(jsonPath("$[0].username",Matchers.is("Frodo")));
+                .andExpect(jsonPath("$", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].username", Matchers.is("Frodo")));
     }
 
     @Test

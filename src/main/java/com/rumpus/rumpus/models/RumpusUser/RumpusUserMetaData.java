@@ -80,7 +80,7 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
             LOG(log);
         } else {
             for (Map<String, String> map : metaList) {
-                log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class,"New Map:")
+                log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "New Map:")
                         .toString();
                 LOG(log);
                 map.forEach((key, value) -> {
@@ -126,9 +126,9 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     public Map<String, Object> getMetaAttributesMap() {
         LOG("RumpusUserMetaData::getModelAttributesMap()");
         Map<String, Object> modelAttributesMap = Map.of(
-                USER_CREATION_DATE_TIME,(String) this.getStandardFormattedCreationTime(),
-                USER_PHOTO_LINK,(String) this.getPhotoLink(),
-                USER_ABOUT_ME,(String) this.getAboutMe());
+                USER_CREATION_DATE_TIME, (String) this.getStandardFormattedCreationTime(),
+                USER_PHOTO_LINK, (String) this.getPhotoLink(),
+                USER_ABOUT_ME, (String) this.getAboutMe());
         return modelAttributesMap;
     }
 }

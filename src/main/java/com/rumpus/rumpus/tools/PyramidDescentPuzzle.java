@@ -70,7 +70,7 @@ public class PyramidDescentPuzzle {
         findPyramidPaths(
                 parentRow + 1,
                 parentColumn,
-                product(currentProduct,leftChild),
+                product(currentProduct, leftChild),
                 pathBuilder.append(LEFT).toString());
 
         pathBuilder = new StringBuilder();
@@ -78,7 +78,7 @@ public class PyramidDescentPuzzle {
         findPyramidPaths(
                 parentRow + 1,
                 parentColumn + 1,
-                product(currentProduct,rightChild),
+                product(currentProduct, rightChild),
                 pathBuilder.append(RIGHT).toString());
     }
 
@@ -129,7 +129,7 @@ public class PyramidDescentPuzzle {
             pyramidDescentPuzzle.setPyramid(pyramid);
 
             // Find all paths that multiply to the target value
-            pyramidDescentPuzzle.findPyramidPaths(0,0,pyramid.get(0).get(0),"");
+            pyramidDescentPuzzle.findPyramidPaths(0, 0, pyramid.get(0).get(0), "");
             pyramidDescentPuzzle.printPaths();
 
         } catch (IOException e) {

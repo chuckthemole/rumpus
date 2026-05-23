@@ -58,11 +58,11 @@ public class UserAuthenticationManager extends AbstractCommonAuthManager<User, U
     }
 
     private static void LOG_THIS(String... args) {
-        ICommon.LOG(UserAuthenticationManager.class,args);
+        ICommon.LOG(UserAuthenticationManager.class, args);
     }
 
     private static void LOG_THIS(LogLevel level, String... args) {
-        ICommon.LOG(UserAuthenticationManager.class,level,args);
+        ICommon.LOG(UserAuthenticationManager.class, level, args);
     }
 
     @Override

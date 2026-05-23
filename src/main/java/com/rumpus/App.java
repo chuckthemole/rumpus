@@ -43,7 +43,7 @@ public class App implements WebMvcConfigurer {
                 throw new IllegalArgumentException("Unknown app: " + targetApp);
         }
 
-        LOGGER.info("Starting application for target: {}",targetApp);
+        LOGGER.info("Starting application for target: {}", targetApp);
         SpringApplication app = new SpringApplication(appClass);
         applicationContext = app.run(args);
 
@@ -76,7 +76,7 @@ public class App implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("/WEB-INF/images/")
                 .setCacheControl(org.springframework.http.CacheControl
-                        .maxAge(2,java.util.concurrent.TimeUnit.HOURS)
+                        .maxAge(2, java.util.concurrent.TimeUnit.HOURS)
                         .cachePublic());
     }
 }

@@ -45,7 +45,7 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     public ForumThreadManager forumThreadManager() {
         ForumThreadManager manager = ForumThreadManager.create();
         for (ForumThread forumThread : IRumpus.rumpusForumThreads) {
-            manager.put(forumThread.getPageID(),forumThread);
+            manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
     }
@@ -59,7 +59,7 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
     @DependsOn({"pycommonServer"})
     public ServerManager serverManager() {
         ServerManager manager = ServerManager.create();
-        manager.addServer("PycommonServer",pycommonServer());
+        manager.addServer("PycommonServer", pycommonServer());
         return manager;
     }
 

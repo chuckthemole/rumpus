@@ -54,7 +54,7 @@ public class RumpusLoader implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        ICommon.LOG(RumpusLoader.class,"RumpusLoader::run() - running in dev profile");
+        ICommon.LOG(RumpusLoader.class, "RumpusLoader::run() - running in dev profile");
 
         // Try to read users from JSON file
         Optional<RumpusUser[]> usersOpt = this.fileProcessor.<RumpusUser>processFile(
@@ -67,13 +67,13 @@ public class RumpusLoader implements CommandLineRunner {
             LogBuilder log = LogBuilder.logBuilderFromStringArgs("\nPopulating Rumpus users...");
             for (RumpusUser user : users) {
                 if (userDao.add(user) != null) {
-                    log.append("\n  Success adding user: ",user.getUsername());
+                    log.append("\n  Success adding user: ", user.getUsername());
                 } else {
-                    log.append("\n  ERROR adding user: ",user.toString());
+                    log.append("\n  ERROR adding user: ", user.toString());
                 }
             }
 
-            ICommon.LOG(RumpusLoader.class,log.toString());
+            ICommon.LOG(RumpusLoader.class, log.toString());
         } else {
             ICommon.LOG(RumpusLoader.class,
                     "RumpusLoader::run() - no users found, skipping population");

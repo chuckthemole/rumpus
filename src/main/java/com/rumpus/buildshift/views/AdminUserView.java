@@ -28,7 +28,7 @@ public class AdminUserView extends AbstractUserTemplate<User, UserMetaData> {
     @Override
     public AbstractTile initUsername() {
         AbstractTile parentTile = BulmaTile.createParentTile("UserNameParentTile");
-        AbstractTile childTile = BulmaTile.createChildTile("UsernameChildTile","User",
+        AbstractTile childTile = BulmaTile.createChildTile("UsernameChildTile", "User",
                 this.getUser().getUsername());
         parentTile.addChild(childTile);
         return parentTile;
@@ -37,7 +37,7 @@ public class AdminUserView extends AbstractUserTemplate<User, UserMetaData> {
     @Override
     public AbstractTile initEmail() {
         AbstractTile parentTile = BulmaTile.createParentTile("UserEmailParentTile");
-        AbstractTile childTile = BulmaTile.createChildTile("UserEmailChildTile","Email",
+        AbstractTile childTile = BulmaTile.createChildTile("UserEmailChildTile", "Email",
                 this.getUser().getEmail());
         parentTile.addChild(childTile);
         return parentTile;
@@ -46,7 +46,8 @@ public class AdminUserView extends AbstractUserTemplate<User, UserMetaData> {
     @Override
     public AbstractTile initAuthorities() {
         AbstractTile parentTile = BulmaTile.createParentTile("UserAuthoritiesParentTile");
-        AbstractTile childTile = BulmaTile.createChildTile("UserAuthoritiesChildTile","Authorities",
+        AbstractTile childTile = BulmaTile.createChildTile("UserAuthoritiesChildTile",
+                "Authorities",
                 "TODO");
         parentTile.addChild(childTile);
         return parentTile;
@@ -55,7 +56,7 @@ public class AdminUserView extends AbstractUserTemplate<User, UserMetaData> {
     @Override
     public AbstractHtmlObject setHead() {
         AbstractTile head = BulmaTile.createAncestorTile("UserViewHead");
-        head.addToAttribute("class","has-centered-text");
+        head.addToAttribute("class", "has-centered-text");
         head.addChild(this.get(AbstractUserTemplate.USERNAME_TILE_KEY));
         head.addChild(this.get(AbstractUserTemplate.EMAIL_TILE_KEY));
         head.addChild(this.get(AbstractUserTemplate.AUTHORITIES_TILE_KEY));

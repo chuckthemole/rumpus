@@ -13,7 +13,7 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 public class RumpusUserTest {
     Long id = Long.valueOf(1);
     String name = "Pipin";
-    RumpusUser user = RumpusUser.create("Pipin","marryandpippin","pipin@shire.com");
+    RumpusUser user = RumpusUser.create("Pipin", "marryandpippin", "pipin@shire.com");
 
     @BeforeAll
     public static void setUpClass() {
@@ -33,6 +33,6 @@ public class RumpusUserTest {
 
     @Test
     void testId() {
-        assertEquals(name,user.getUsername());
+        assertEquals(name, user.getUsername());
     }
 }

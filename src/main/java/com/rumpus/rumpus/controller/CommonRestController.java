@@ -115,7 +115,7 @@ public class CommonRestController
     @GetMapping(value = "/current_base_path")
     public ResponseEntity<Map<String, String>> currentBasePath() {
         LOG("CommonRestController::getCurrentBasePath()");
-        return new ResponseEntity<Map<String, String>>(Map.of("path",this.getCurrentBasePath()),
+        return new ResponseEntity<Map<String, String>>(Map.of("path", this.getCurrentBasePath()),
                 HttpStatus.ACCEPTED);
     }
 

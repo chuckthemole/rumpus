@@ -56,7 +56,7 @@ public class BuildShiftLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Log that the loader is executing and which profile is active
-        ICommon.LOG(BuildShiftLoader.class,"BuildShiftLoader::run() - executing in DEV profile");
+        ICommon.LOG(BuildShiftLoader.class, "BuildShiftLoader::run() - executing in DEV profile");
 
         // Attempt to read users from the JSON file safely
         Optional<User[]> usersOpt = this.fileProcessor.<User>processFile(JSON_USERS_FILE,
@@ -73,18 +73,19 @@ public class BuildShiftLoader implements CommandLineRunner {
                 try {
                     // Persist user via DAO
                     if (userDao.add(user) != null) {
-                        log.append("\n  Success adding user: ",user.getUsername());
+                        log.append("\n  Success adding user: ", user.getUsername());
                     } else {
-                        log.append("\n  ERROR adding user: ",user.toString());
+                        log.append("\n  ERROR adding user: ", user.toString());
                     }
                 } catch (Exception e) {
                     // Catch individual failures so one bad record doesn't stop the whole process
-                    log.append("\n  EXCEPTION adding user: ",user.toString()," - ",e.getMessage());
+                    log.append("\n  EXCEPTION adding user: ", user.toString(), " - ",
+                            e.getMessage());
                 }
             }
 
             // Log the final results
-            ICommon.LOG(BuildShiftLoader.class,log.toString());
+            ICommon.LOG(BuildShiftLoader.class, log.toString());
         } else {
             // No users found; skip population safely
             ICommon.LOG(BuildShiftLoader.class,

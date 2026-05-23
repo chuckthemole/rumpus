@@ -1,12 +1,12 @@
-import org.springframework.boot.gradle.tasks.run.BootRun
-import com.rumpushub.buildlogic.utils.EnvLoader
-import com.rumpushub.buildlogic.plugins.RumpusPlugin
 import com.rumpushub.buildlogic.plugins.AwsDependenciesPlugin
 import com.rumpushub.buildlogic.plugins.CommonSessionDependencies
+import com.rumpushub.buildlogic.plugins.OpenApiDependenciesPlugin
+import com.rumpushub.buildlogic.plugins.RumpusDependenciesPlugin
+import com.rumpushub.buildlogic.plugins.RumpusPlugin
 import com.rumpushub.buildlogic.plugins.RumpusTest
 import com.rumpushub.buildlogic.plugins.RumpusTestConventions
-import com.rumpushub.buildlogic.plugins.RumpusDependenciesPlugin
-import com.rumpushub.buildlogic.plugins.OpenApiDependenciesPlugin
+import com.rumpushub.buildlogic.utils.EnvLoader
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 // --------------------------------------------------------------------------
 // Apply custom Rumpus-specific Gradle plugins
@@ -14,93 +14,78 @@ import com.rumpushub.buildlogic.plugins.OpenApiDependenciesPlugin
 apply<RumpusPlugin>()
 
 apply<AwsDependenciesPlugin>()
+
 configure<AwsDependenciesPlugin.AwsExtension> {
-    awsCoreDependency = rumpusLibs.springCloudAws
-    awsS3Dependency = rumpusLibs.springCloudAwsS3
+  awsCoreDependency = rumpusLibs.springCloudAws
+  awsS3Dependency = rumpusLibs.springCloudAwsS3
 }
 
 apply<CommonSessionDependencies>()
+
 configure<CommonSessionDependencies.SessionExtension> {
-    core = rumpusLibs.springSessionCore
-    jdbc = rumpusLibs.springSessionJdbc
+  core = rumpusLibs.springSessionCore
+  jdbc = rumpusLibs.springSessionJdbc
 }
 
 apply<RumpusTest>()
+
 configure<RumpusTest.TestExtension> {
-    springBoot = rumpusLibs.springBootStarterTest
-    mockito = rumpusLibs.mockito
-    junitApi = rumpusLibs.junit
-    junitEngine = rumpusLibs.junitEngine
-    springSecurityTest = rumpusLibs.springSecurityTest
+  springBoot = rumpusLibs.springBootStarterTest
+  mockito = rumpusLibs.mockito
+  junitApi = rumpusLibs.junit
+  junitEngine = rumpusLibs.junitEngine
+  springSecurityTest = rumpusLibs.springSecurityTest
 }
 
 apply<RumpusTestConventions>()
+
 configure<RumpusTestConventions.TestConventionsExtension> {
-    junitVersion = rumpusLibs.junit4
-    showStandardStreams = true
+  junitVersion = rumpusLibs.junit4
+  showStandardStreams = true
 }
 
 apply<OpenApiDependenciesPlugin>()
-configure<OpenApiDependenciesPlugin.OpenApiExtension> {
-    springdocUi = rumpusLibs.openApiUi
-}
+
+configure<OpenApiDependenciesPlugin.OpenApiExtension> { springdocUi = rumpusLibs.openApiUi }
 
 apply<RumpusDependenciesPlugin>()
 
 configure<RumpusDependenciesPlugin.RumpusDepsExtension> {
-    core.addAll(listOf(
-        rumpusLibs.rumpusSpringBoot.get(),
-        rumpusLibs.springBootWeb.get()
-    ))
+  core.addAll(listOf(rumpusLibs.rumpusSpringBoot.get(), rumpusLibs.springBootWeb.get()))
 
-    web.addAll(listOf(
-        rumpusLibs.webFlux.get(),
-        rumpusLibs.webSocket.get()
-    ))
+  web.addAll(listOf(rumpusLibs.webFlux.get(), rumpusLibs.webSocket.get()))
 
-    db.addAll(listOf(
-        rumpusLibs.jpa.get(),
-        rumpusLibs.jdbc.get(),
-        rumpusLibs.mysql.get()
-    ))
+  db.addAll(listOf(rumpusLibs.jpa.get(), rumpusLibs.jdbc.get(), rumpusLibs.mysql.get()))
 
-    security.addAll(listOf(
-        rumpusLibs.springSecurity.get(),
-        rumpusLibs.oauth2Client.get(),
-        rumpusLibs.jjwtApi.get(),
-        rumpusLibs.jjwtImpl.get(),
-        rumpusLibs.jjwtJackson.get()
-    ))
+  security.addAll(
+      listOf(
+          rumpusLibs.springSecurity.get(),
+          rumpusLibs.oauth2Client.get(),
+          rumpusLibs.jjwtApi.get(),
+          rumpusLibs.jjwtImpl.get(),
+          rumpusLibs.jjwtJackson.get()))
 
-    cloud.addAll(listOf(
-        rumpusLibs.springCloudAws.get(),
-        rumpusLibs.springCloudAwsS3.get()
-    ))
+  cloud.addAll(listOf(rumpusLibs.springCloudAws.get(), rumpusLibs.springCloudAwsS3.get()))
 
-    devTools.addAll(listOf(
-        rumpusLibs.devTools.get()
-    ))
+  devTools.addAll(listOf(rumpusLibs.devTools.get()))
 
-    testing.addAll(listOf(
-        rumpusLibs.junit.get(),
-        rumpusLibs.mockito.get()
-    ))
+  testing.addAll(listOf(rumpusLibs.junit.get(), rumpusLibs.mockito.get()))
 
-    // Miscellaneous dependencies that don’t neatly fit in other buckets
-    additionalDeps.addAll(listOf(
-        rumpusLibs.springBootActuator.get(),
-        rumpusLibs.springBootAdminClient.get(),
-        rumpusLibs.springBootAdminServer.get(),
-        rumpusLibs.commonsValidator.get(),
-        rumpusLibs.bootstrap.get(),
-        rumpusLibs.htmlunit.get(),
-        rumpusLibs.unirest.get(),
-        rumpusLibs.jsr305.get(),
-        rumpusLibs.j2html.get(),
-        rumpusLibs.jython.get(),
-        rumpusLibs.tess4j.get(),
-        rumpusLibs.oauth2ResourceServer.get()
-    ))
+  // Miscellaneous dependencies that don’t neatly fit in other buckets
+  additionalDeps.addAll(
+      listOf(
+          rumpusLibs.springBootActuator.get(),
+          rumpusLibs.springBootAdminClient.get(),
+          rumpusLibs.springBootAdminServer.get(),
+          rumpusLibs.commonsValidator.get(),
+          rumpusLibs.bootstrap.get(),
+          rumpusLibs.htmlunit.get(),
+          rumpusLibs.unirest.get(),
+          rumpusLibs.jsr305.get(),
+          rumpusLibs.j2html.get(),
+          rumpusLibs.jython.get(),
+          rumpusLibs.tess4j.get(),
+          rumpusLibs.oauth2ResourceServer.get()))
 }
 
 /*
@@ -115,6 +100,7 @@ configure<RumpusDependenciesPlugin.RumpusDepsExtension> {
  * This avoids hardcoding metadata across multiple modules.
  */
 group = rumpusLibs.versions.rumpusGroup.get()
+
 version = rumpusLibs.versions.rumpus.get()
 
 /*
@@ -129,8 +115,8 @@ version = rumpusLibs.versions.rumpus.get()
  * Both external plugins are declared via the version catalog (rumpusLibs.versions.toml).
  */
 plugins {
-    alias(rumpusLibs.plugins.springBoot)
-    alias(rumpusLibs.plugins.dependencyManagement)
+  alias(rumpusLibs.plugins.springBoot)
+  alias(rumpusLibs.plugins.dependencyManagement)
 }
 
 /*
@@ -148,9 +134,11 @@ plugins {
 EnvLoader.loadDotEnv(project)
 
 val env: String = project.findProperty("ENV") as? String ?: "DEV"
+
 println("Rumpus is using environment: $env")
 
 val heap: String = project.findProperty("HEAP") as? String ?: "LIMITED_HEAP"
+
 println("Rumpus is using heap configuration: $heap")
 
 /*
@@ -163,20 +151,21 @@ println("Rumpus is using heap configuration: $heap")
  * - DEV: Uses Maven Local to resolve locally published artifacts.
  */
 repositories {
-    gradlePluginPortal()
-    mavenCentral()
+  gradlePluginPortal()
+  mavenCentral()
 
-    when (env) {
-        "LIVE" -> maven {
-            url = uri("https://maven.pkg.github.com/chuckthemole/common")
-            credentials {
-                username = project.findProperty("GPR_USER") as? String ?: System.getenv("GPR_USER")
-                password = project.findProperty("GPR_TOKEN") as? String ?: System.getenv("GPR_TOKEN")
-            }
+  when (env) {
+    "LIVE" ->
+        maven {
+          url = uri("https://maven.pkg.github.com/chuckthemole/common")
+          credentials {
+            username = project.findProperty("GPR_USER") as? String ?: System.getenv("GPR_USER")
+            password = project.findProperty("GPR_TOKEN") as? String ?: System.getenv("GPR_TOKEN")
+          }
         }
-        "BETA" -> maven { url = uri("$rootDir/TestRepo") }
-        "DEV" -> mavenLocal()
-    }
+    "BETA" -> maven { url = uri("$rootDir/TestRepo") }
+    "DEV" -> mavenLocal()
+  }
 }
 
 /*
@@ -192,20 +181,20 @@ repositories {
  *   - Versions are centrally managed in `gradle/rumpusLibs.versions.toml`.
  */
 dependencies {
-    when (env) {
-        "DEV" -> {
-            println("Rumpus is loading dependency :common (local project)")
-            add("implementation", project(":common"))
+  when (env) {
+    "DEV" -> {
+      println("Rumpus is loading dependency :common (local project)")
+      add("implementation", project(":common"))
 
-            // Optional: enforce build ordering between :common and this project
-            // tasks.named("compileJava") { dependsOn(":common:compileJava") }
-            // tasks.named("processResources") { dependsOn(":common:processResources") }
-        }
-        else -> { // BETA or LIVE
-            println("Rumpus is loading dependency com.rumpushub.common:common (from version catalog)")
-            add("implementation", rumpusLibs.common)
-        }
+      // Optional: enforce build ordering between :common and this project
+      // tasks.named("compileJava") { dependsOn(":common:compileJava") }
+      // tasks.named("processResources") { dependsOn(":common:processResources") }
     }
+    else -> { // BETA or LIVE
+      println("Rumpus is loading dependency com.rumpushub.common:common (from version catalog)")
+      add("implementation", rumpusLibs.common)
+    }
+  }
 }
 
 /*
@@ -217,25 +206,25 @@ dependencies {
  *   - Applies JVM memory settings based on the selected heap profile.
  */
 tasks.named<BootRun>("bootRun") {
-    println("bootRun: setting environment properties...")
-    systemProperty("env", if (env == "DEV") "dev" else "live")
+  println("bootRun: setting environment properties...")
+  systemProperty("env", if (env == "DEV") "dev" else "live")
 
-    println("bootRun: checking memory profile...")
-    if (heap == "LIMITED_HEAP") {
-        println("Running in LIMITED_HEAP mode")
-        jvmArgs = listOf("-Xmx512m", "-Xms256m")
-    }
+  println("bootRun: checking memory profile...")
+  if (heap == "LIMITED_HEAP") {
+    println("Running in LIMITED_HEAP mode")
+    jvmArgs = listOf("-Xmx512m", "-Xms256m")
+  }
 }
 
 /*
- * --------------------------------------------------------------------------
- * Notes / TODOs
- * --------------------------------------------------------------------------
- * - Frontend tasks (NodeJS/webpack) were intentionally removed for clarity.
- *   Reintroduce them if frontend build integration is needed.
- * - Test task wiring for `:common` is currently commented out; revisit if 
- *   cross-project test execution is required.
- * - EnvLoader provides Kotlin DSL–friendly environment loading.
- * - Dependency versions are now centralized via `rumpusLibs.versions.toml` 
- *   (avoid hardcoding versions in build scripts).
- */
+  * --------------------------------------------------------------------------
+  * Notes / TODOs
+  * --------------------------------------------------------------------------
+  * - Frontend tasks (NodeJS/webpack) were intentionally removed for clarity.
+  *   Reintroduce them if frontend build integration is needed.
+  * - Test task wiring for `:common` is currently commented out; revisit if
+  *   cross-project test execution is required.
+  * - EnvLoader provides Kotlin DSL–friendly environment loading.
+  * - Dependency versions are now centralized via `rumpusLibs.versions.toml`
+  *   (avoid hardcoding versions in build scripts).
+  */

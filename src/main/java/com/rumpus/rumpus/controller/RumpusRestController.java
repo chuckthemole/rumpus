@@ -119,7 +119,7 @@ public class RumpusRestController extends AbstractRumpusController {
     public ResponseEntity<CommonSession> setMinuteDifferenceUTC(String minutesDifferenceUTC,
             HttpServletRequest request) {
         HttpSession session = request.getSession();
-        session.setAttribute(CommonSession.UTC_TIME_DIFFERENCE,minutesDifferenceUTC);
+        session.setAttribute(CommonSession.UTC_TIME_DIFFERENCE, minutesDifferenceUTC);
         ResponseEntity<CommonSession> re = new ResponseEntity<>(new CommonSession(session),
                 HttpStatus.CREATED);
         return re;

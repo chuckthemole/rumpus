@@ -30,12 +30,12 @@ public class RumpusRestServerController extends RumpusRestController {
         LOG("RumpusRestServerController::startServer()");
         HttpSession session = request.getSession();
         if (!this.serverManager.containsKey(serverName)) {
-            session.setAttribute("server status","Server not found: " + serverName);
+            session.setAttribute("server status", "Server not found: " + serverName);
             return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
                     HttpStatus.NOT_FOUND);
         }
         this.serverManager.startServer(serverName);
-        session.setAttribute("server status",this.serverManager.getServerStatus(serverName));
+        session.setAttribute("server status", this.serverManager.getServerStatus(serverName));
         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
                 HttpStatus.ACCEPTED);
     }
@@ -46,13 +46,13 @@ public class RumpusRestServerController extends RumpusRestController {
         LOG("RumpusRestServerController::stopServer()");
         HttpSession session = request.getSession();
         if (!this.serverManager.containsKey(serverName)) {
-            session.setAttribute("server status","Server not found: " + serverName);
+            session.setAttribute("server status", "Server not found: " + serverName);
             return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
                     HttpStatus.NOT_FOUND);
         }
         this.serverManager.stopServer(serverName);
         LOG("Server status in controller: " + this.serverManager.getServerStatus(serverName));
-        session.setAttribute("server status",this.serverManager.getServerStatus(serverName));
+        session.setAttribute("server status", this.serverManager.getServerStatus(serverName));
         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
                 HttpStatus.ACCEPTED);
     }

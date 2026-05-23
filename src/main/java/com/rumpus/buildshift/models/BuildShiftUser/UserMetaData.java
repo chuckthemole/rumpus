@@ -73,9 +73,9 @@ public class UserMetaData extends AbstractCommonUserMetaData<UserMetaData> {
     public Map<String, Object> getMetaAttributesMap() {
         LOG("UserMetaData::getModelAttributesMap()");
         Map<String, Object> modelAttributesMap = Map.of(
-                USER_CREATION_DATE_TIME,(String) this.getStandardFormattedCreationTime(),
-                USER_PHOTO_LINK,(String) this.getPhotoLink(),
-                USER_ABOUT_ME,(String) this.getAboutMe());
+                USER_CREATION_DATE_TIME, (String) this.getStandardFormattedCreationTime(),
+                USER_PHOTO_LINK, (String) this.getPhotoLink(),
+                USER_ABOUT_ME, (String) this.getAboutMe());
         return modelAttributesMap;
     }
 }

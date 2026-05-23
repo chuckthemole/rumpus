@@ -17,7 +17,7 @@ public class RumpusSerializerConfig extends AbstractCommonSerializerConfig {
     @Override
     public ISerializerRegistry childSerializerRegistry() {
         ISerializerRegistry registry = SerializerRegistry.create();
-        registry.registerSerializer(RumpusUser.class,RumpusUserSerializer.jsonSerializer());
+        registry.registerSerializer(RumpusUser.class, RumpusUserSerializer.jsonSerializer());
         return registry;
     }
 

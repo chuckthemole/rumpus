@@ -98,7 +98,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     @Test
     @Order(1)
     void testGetUser() {
-        assertEquals(expectedRootUser,this.userDao.getByUsername(ROOT_USER));
+        assertEquals(expectedRootUser, this.userDao.getByUsername(ROOT_USER));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
             final String username = user.getUsername();
             if (!username.equals(ROOT_USER) && !username.equals(SECONDARY_USER)) {
                 this.userDao.add(user);
-                assertEquals(user,this.userDao.getByUsername(user.getUsername()));
+                assertEquals(user, this.userDao.getByUsername(user.getUsername()));
             }
         }
 
@@ -130,7 +130,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         RumpusUserCollection expected = new RumpusUserCollection(
                 new ArrayList<>(List.of(RumpusUserDaoTest.users))); // TODO: get rid of ArrayList
         RumpusUserCollection actual = new RumpusUserCollection(this.userDao.getAll());
-        assertEquals(expected.sortByUsername(),actual.sortByUsername());
+        assertEquals(expected.sortByUsername(), actual.sortByUsername());
     }
 
     // TODO: should create expected lists then sort then assertEquals/notEquals
@@ -146,8 +146,8 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
 
         RumpusUserCollection users1 = new RumpusUserCollection(List.of(RumpusUserDaoTest.users));
         RumpusUserCollection users2 = new RumpusUserCollection(List.of(RumpusUserDaoTest.users));
-        assertEquals(users1.sortByUsername(),users2.sortByUsername());
-        assertNotEquals(users1.sortByEmail(),users2.sortById());
+        assertEquals(users1.sortByUsername(), users2.sortByUsername());
+        assertNotEquals(users1.sortByEmail(), users2.sortById());
     }
 
     @Test

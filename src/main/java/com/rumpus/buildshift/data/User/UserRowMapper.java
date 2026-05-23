@@ -31,28 +31,28 @@ public class UserRowMapper extends AbstractJdbcRowMapper<User> {
             // int row = resultSetAndRow.getSecond();
             Map<String, Object> UserMap = new HashMap<>();
             try {
-                UserMap.put(ID,rs.getString(ID));
-                UserMap.put(USERNAME,rs.getString(USERNAME));
+                UserMap.put(ID, rs.getString(ID));
+                UserMap.put(USERNAME, rs.getString(USERNAME));
                 // UserMap.put(PASSWORD, rs.getString(PASSWORD));
-                UserMap.put(EMAIL,rs.getString(EMAIL));
+                UserMap.put(EMAIL, rs.getString(EMAIL));
                 Blob blob = rs.getBlob(USER_META_DATA);
                 if (blob != null) {
                     // UserMap.put(USER_META_DATA,
                     // BlobUtil.<UserMetaData>getObjectFromBlob(blob).get());
                     UserMetaData metaData = UserMetaData
                             .createFromStream(BlobUtil.getObjectInputStream(blob).get());
-                    UserMap.put(USER_META_DATA,metaData);
+                    UserMap.put(USER_META_DATA, metaData);
                 } else {
-                    UserMap.put(USER_META_DATA,UserMetaData.createEmpty());
+                    UserMap.put(USER_META_DATA, UserMetaData.createEmpty());
                 }
             } catch (SQLException e) {
                 final String log = LogBuilder
-                        .logBuilderFromStackTraceElementArray(e.getMessage(),e.getStackTrace())
+                        .logBuilderFromStackTraceElementArray(e.getMessage(), e.getStackTrace())
                         .toString();
-                LOG(LogLevel.ERROR,log);
+                LOG(LogLevel.ERROR, log);
             }
             // return User.createFromMap(UserMap);
-            return User.create((String) UserMap.get(USERNAME),"",(String) UserMap.get(EMAIL));
+            return User.create((String) UserMap.get(USERNAME), "", (String) UserMap.get(EMAIL));
         });
     }
 

@@ -42,7 +42,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     }
 
     public static RumpusUser createFromMap(Map<String, Object> userMap) {
-        LOG(RumpusUser.class,"RumpusUser::createFromMap()");
+        LOG(RumpusUser.class, "RumpusUser::createFromMap()");
         RumpusUser user = new RumpusUser();
         user.setUsername(
                 userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
@@ -65,7 +65,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
             final String log = LogBuilder.logBuilderFromStringArgs(
                     RumpusUser.class,
                     "Failed building RumpusUserMetaData. Setting empty meta data.").toString();
-            LOG(RumpusUser.class,log);
+            LOG(RumpusUser.class, log);
             meta = RumpusUserMetaData.createEmpty();
         }
 
@@ -73,7 +73,7 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
                 RumpusUser.class,
                 "Success building RumpusUserMetaData:\n",
                 meta.toString()).toString();
-        LOG(RumpusUser.class,log);
+        LOG(RumpusUser.class, log);
         user.setMetaData(meta);
         return user;
     }

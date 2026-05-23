@@ -49,8 +49,8 @@ public class BuildShiftConfig extends AbstractCommonConfig {
         NotionIntegration projectManagementIntegration = new NotionIntegration(
                 this.environment.getProperty(NOTION_PROJECT_MANAGEMENT_TOKEN));
         return Map.of(
-                "consoleIntegration",consoleIntegration,
-                "projectManagementIntegration",projectManagementIntegration);
+                "consoleIntegration", consoleIntegration,
+                "projectManagementIntegration", projectManagementIntegration);
     }
 
     @Bean
@@ -75,9 +75,9 @@ public class BuildShiftConfig extends AbstractCommonConfig {
      */
     @PostConstruct
     public void logPostConstructStatus() {
-        LOG(BuildShiftConfig.class,LogLevel.INFO,"===== BuildShiftConfig PostConstruct =====");
-        LOG(BuildShiftConfig.class,LogLevel.INFO,postConstructDebug.toString());
-        LOG(BuildShiftConfig.class,LogLevel.INFO,
+        LOG(BuildShiftConfig.class, LogLevel.INFO, "===== BuildShiftConfig PostConstruct =====");
+        LOG(BuildShiftConfig.class, LogLevel.INFO, postConstructDebug.toString());
+        LOG(BuildShiftConfig.class, LogLevel.INFO,
                 "Loaded Notion registry with "
                         + (notionRegistry != null ? notionRegistry.size() : 0) + " entries.");
     }

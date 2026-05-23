@@ -38,7 +38,7 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     public ForumThreadManager forumThreadManager() {
         ForumThreadManager manager = ForumThreadManager.create();
         for (ForumThread forumThread : IRumpus.rumpusForumThreads) {
-            manager.put(forumThread.getPageID(),forumThread);
+            manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
     }
@@ -52,7 +52,7 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     @DependsOn({"pycommonServer"})
     public ServerManager serverManager() {
         ServerManager manager = ServerManager.create();
-        manager.addServer("PycommonServer",pycommonServer());
+        manager.addServer("PycommonServer", pycommonServer());
         return manager;
     }
 

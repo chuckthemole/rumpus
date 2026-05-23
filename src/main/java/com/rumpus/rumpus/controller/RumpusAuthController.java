@@ -96,17 +96,17 @@ public class RumpusAuthController
         String redirectUri = baseUrl + provider.getCallbackPath();
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("client_id",clientId);
-        params.add("client_secret",clientSecret);
-        params.add("code",code);
-        params.add("redirect_uri",redirectUri);
-        params.add("grant_type","authorization_code");
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
+        params.add("code", code);
+        params.add("redirect_uri", redirectUri);
+        params.add("grant_type", "authorization_code");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Accept","application/json");
+        headers.add("Accept", "application/json");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-        logger.info("request: ",request.toString());
+        logger.info("request: ", request.toString());
 
         // ResponseEntity<Map> response = restTemplate.postForEntity(
         // provider.getTokenUrl(), request, Map.class);
@@ -124,7 +124,7 @@ public class RumpusAuthController
                 });
 
         Map<String, Object> responseBody = response.getBody();
-        logger.info("response body: ",responseBody.toString());
+        logger.info("response body: ", responseBody.toString());
         return (String) responseBody.get("access_token");
     }
 
@@ -139,8 +139,8 @@ public class RumpusAuthController
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization","Bearer " + accessToken);
-        logger.info("accessToken: ",accessToken);
+        headers.add("Authorization", "Bearer " + accessToken);
+        logger.info("accessToken: ", accessToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -153,7 +153,7 @@ public class RumpusAuthController
                 new ParameterizedTypeReference<Map<String, Object>>() {
                 });
 
-        logger.info("response: ",response.toString());
+        logger.info("response: ", response.toString());
 
         return response.getBody();
     }
@@ -165,7 +165,7 @@ public class RumpusAuthController
             String accessToken) {
         try {
             // Generate JWT token using your JwtService
-            String jwtToken = jwtService.generateToken(provider,userInfo);
+            String jwtToken = jwtService.generateToken(provider, userInfo);
 
             // Extract user details for response
             String email = provider.extractEmail(userInfo);
@@ -178,12 +178,12 @@ public class RumpusAuthController
             // - Set additional claims or permissions
 
             Map<String, Object> response = new HashMap<>();
-            response.put("token",jwtToken);
-            response.put("user",Map.of(
-                    "email",email,
-                    "name",name,
-                    "picture",picture,
-                    "provider",provider.getProviderId()));
+            response.put("token", jwtToken);
+            response.put("user", Map.of(
+                    "email", email,
+                    "name", name,
+                    "picture", picture,
+                    "provider", provider.getProviderId()));
 
             logger.info(MapStringObject.toString(response));
 

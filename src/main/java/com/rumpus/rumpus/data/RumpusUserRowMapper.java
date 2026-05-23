@@ -31,25 +31,25 @@ public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
             // int row = resultSetAndRow.getSecond();
             Map<String, Object> rumpusUserMap = new HashMap<>();
             try {
-                rumpusUserMap.put(ID,rs.getString(ID));
-                rumpusUserMap.put(USERNAME,rs.getString(USERNAME));
+                rumpusUserMap.put(ID, rs.getString(ID));
+                rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
                 // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
-                rumpusUserMap.put(EMAIL,rs.getString(EMAIL));
+                rumpusUserMap.put(EMAIL, rs.getString(EMAIL));
                 Blob blob = rs.getBlob(USER_META_DATA);
                 if (blob != null) {
                     // rumpusUserMap.put(USER_META_DATA,
                     // BlobUtil.<RumpusUserMetaData>getObjectFromBlob(blob).get());
                     RumpusUserMetaData metaData = RumpusUserMetaData
                             .createFromStream(BlobUtil.getObjectInputStream(blob).get());
-                    rumpusUserMap.put(USER_META_DATA,metaData);
+                    rumpusUserMap.put(USER_META_DATA, metaData);
                 } else {
-                    rumpusUserMap.put(USER_META_DATA,RumpusUserMetaData.createEmpty());
+                    rumpusUserMap.put(USER_META_DATA, RumpusUserMetaData.createEmpty());
                 }
             } catch (SQLException e) {
                 final String log = LogBuilder
-                        .logBuilderFromStackTraceElementArray(e.getMessage(),e.getStackTrace())
+                        .logBuilderFromStackTraceElementArray(e.getMessage(), e.getStackTrace())
                         .toString();
-                LOG(LogLevel.ERROR,log);
+                LOG(LogLevel.ERROR, log);
             }
             return RumpusUser.createFromMap(rumpusUserMap);
         });

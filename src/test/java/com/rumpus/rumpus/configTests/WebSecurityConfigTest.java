@@ -70,8 +70,8 @@ public class WebSecurityConfigTest {
     @Test
     public void testLoginWithInvalidCredentials() throws Exception {
         mockMvc.perform(post(ICommonController.PATH_LOGIN)
-                .param(ICommon.USERNAME,"invalidUser")
-                .param("password","invalidPassword")
+                .param(ICommon.USERNAME, "invalidUser")
+                .param("password", "invalidPassword")
                 .with(csrf())) // Add CSRF token
                 .andExpect(status().isUnauthorized());
     }

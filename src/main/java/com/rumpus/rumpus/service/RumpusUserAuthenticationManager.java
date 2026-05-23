@@ -60,11 +60,11 @@ public class RumpusUserAuthenticationManager
     }
 
     private static void LOG_THIS(String... args) {
-        ICommon.LOG(RumpusUserAuthenticationManager.class,args);
+        ICommon.LOG(RumpusUserAuthenticationManager.class, args);
     }
 
     private static void LOG_THIS(LogLevel level, String... args) {
-        ICommon.LOG(RumpusUserAuthenticationManager.class,level,args);
+        ICommon.LOG(RumpusUserAuthenticationManager.class, level, args);
     }
 
     @Override

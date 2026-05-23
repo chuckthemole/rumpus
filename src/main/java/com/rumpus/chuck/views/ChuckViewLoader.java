@@ -36,9 +36,9 @@ public class ChuckViewLoader extends AbstractViews {
     // Add more views here...
 
     static {
-        FOOTER_COLUMN_1 = new Pair<>("Useful", new ArrayList<>(List.of("Chuck","Chuck","Chuck")));
-        FOOTER_COLUMN_2 = new Pair<>("Support", new ArrayList<>(List.of("Shop","Rules","News")));
-        FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop","Rules","News")));
+        FOOTER_COLUMN_1 = new Pair<>("Useful", new ArrayList<>(List.of("Chuck", "Chuck", "Chuck")));
+        FOOTER_COLUMN_2 = new Pair<>("Support", new ArrayList<>(List.of("Shop", "Rules", "News")));
+        FOOTER_COLUMN_3 = new Pair<>("Extras", new ArrayList<>(List.of("Shop", "Rules", "News")));
     }
 
     private ChuckViewLoader() {
@@ -59,7 +59,7 @@ public class ChuckViewLoader extends AbstractViews {
                         FOOTER_COLUMN_3));
 
         for (Pair<String, List<String>> column : columns) {
-            this.footer.add(column.getFirst(),column.getSecond());
+            this.footer.add(column.getFirst(), column.getSecond());
         }
 
         return SUCCESS;
@@ -74,30 +74,30 @@ public class ChuckViewLoader extends AbstractViews {
     @Override
     protected int initHeader() {
         // Header
-        NavbarItem navbarBrand = NavbarItem.createNavbarBrandWithLocalImage("ChuckBrand","/",true,
+        NavbarItem navbarBrand = NavbarItem.createNavbarBrandWithLocalImage("ChuckBrand", "/", true,
                 NAVBAR_BRAND_HREF);
         List<NavbarItem> navbarItemsStartDropdown = new ArrayList<>(
                 List.of(
-                        NavbarItem.create("About","/",true,ItemType.LINK),
-                        NavbarItem.create("Jobs","/",true,ItemType.LINK),
-                        NavbarItem.create("Contact","/",true,ItemType.LINK),
-                        NavbarItem.createDropdownDivider("DropdownDivider1",true),
-                        NavbarItem.create("Report an issue","/",true,ItemType.LINK)));
+                        NavbarItem.create("About", "/", true, ItemType.LINK),
+                        NavbarItem.create("Jobs", "/", true, ItemType.LINK),
+                        NavbarItem.create("Contact", "/", true, ItemType.LINK),
+                        NavbarItem.createDropdownDivider("DropdownDivider1", true),
+                        NavbarItem.create("Report an issue", "/", true, ItemType.LINK)));
         List<NavbarItem> navbarItemsStart = new ArrayList<>(
                 List.of(
-                        NavbarItem.create("Home","/",true,ItemType.LINK),
-                        NavbarItem.create("Documentation","/",false,ItemType.LINK),
-                        NavbarItem.createAsDropdown("More","/",true,navbarItemsStartDropdown)));
+                        NavbarItem.create("Home", "/", true, ItemType.LINK),
+                        NavbarItem.create("Documentation", "/", false, ItemType.LINK),
+                        NavbarItem.createAsDropdown("More", "/", true, navbarItemsStartDropdown)));
         List<NavbarItem> navbarItemsEnd = new ArrayList<>(
                 List.of(
-                        NavbarItem.createAsReactComponent("Login","LoginModal",true,null),
-                        NavbarItem.createAsReactComponent("Signup","SignupModal",true,
-                                Map.of("redirectTo","/api/user")),
-                        NavbarItem.createAsReactComponent("UserIcon","UserIcon",true,null),
-                        NavbarItem.createAsReactComponent("Admin","Admin",true,null),
-                        NavbarItem.createAsReactComponent("Logout","Logout",true,
-                                Map.of("redirectTo","/api/user"))));
-        super.header = Header.create(navbarBrand,navbarItemsStart,navbarItemsEnd);
+                        NavbarItem.createAsReactComponent("Login", "LoginModal", true, null),
+                        NavbarItem.createAsReactComponent("Signup", "SignupModal", true,
+                                Map.of("redirectTo", "/api/user")),
+                        NavbarItem.createAsReactComponent("UserIcon", "UserIcon", true, null),
+                        NavbarItem.createAsReactComponent("Admin", "Admin", true, null),
+                        NavbarItem.createAsReactComponent("Logout", "Logout", true,
+                                Map.of("redirectTo", "/api/user"))));
+        super.header = Header.create(navbarBrand, navbarItemsStart, navbarItemsEnd);
         return SUCCESS;
     }
 

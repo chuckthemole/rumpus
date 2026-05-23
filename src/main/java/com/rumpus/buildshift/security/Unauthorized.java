@@ -18,6 +18,6 @@ public class Unauthorized extends AbstractAuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException) throws IOException {
         // Respond with a 401 Unauthorized when access is denied
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }
