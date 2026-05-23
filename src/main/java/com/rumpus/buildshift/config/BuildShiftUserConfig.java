@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
-import com.rumpus.buildshift.database_loader.BuildShiftLoader;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 import com.rumpus.buildshift.service.IUserService;
@@ -24,12 +23,10 @@ import com.rumpus.buildshift.views.AdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.buildshift")
-public class BuildShiftUserConfig extends AbstractCommonUserConfig<
-    User,
-    UserMetaData,
-    IUserService
-> {
-    
+public class BuildShiftUserConfig
+        extends
+            AbstractCommonUserConfig<User, UserMetaData, IUserService> {
+
     @Autowired
     public BuildShiftUserConfig(Environment environment) {
         super(environment);
@@ -49,7 +46,7 @@ public class BuildShiftUserConfig extends AbstractCommonUserConfig<
 
     // @Bean
     // public AbstractUserTemplate<User, UserMetaData> rumpusUserTemplate() {
-    //     return AdminUserView.create(User.createEmptyUser());
+    // return AdminUserView.create(User.createEmptyUser());
     // }
 
     @Bean
@@ -61,7 +58,7 @@ public class BuildShiftUserConfig extends AbstractCommonUserConfig<
     // @Bean
     // @DependsOn({"buildshiftUserDao"})
     // public BuildShiftLoader buildshiftLoader() {
-    //     return new BuildShiftLoader(buildshiftUserDao());
+    // return new BuildShiftLoader(buildshiftUserDao());
     // }
 
     @Override

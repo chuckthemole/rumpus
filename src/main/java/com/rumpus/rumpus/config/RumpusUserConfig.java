@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
-import com.rumpus.rumpus.database_loader.RumpusLoader;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
@@ -24,12 +23,10 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-public class RumpusUserConfig extends AbstractCommonUserConfig<
-    RumpusUser,
-    RumpusUserMetaData,
-    IRumpusUserService
-> {
-    
+public class RumpusUserConfig
+        extends
+            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+
     @Autowired
     public RumpusUserConfig(Environment environment) {
         super(environment);
@@ -48,8 +45,9 @@ public class RumpusUserConfig extends AbstractCommonUserConfig<
     }
 
     // @Bean
-    // public AbstractUserTemplate<RumpusUser, RumpusUserMetaData> rumpusUserTemplate() {
-    //     return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
+    // public AbstractUserTemplate<RumpusUser, RumpusUserMetaData>
+    // rumpusUserTemplate() {
+    // return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
     // }
 
     @Bean
@@ -61,7 +59,7 @@ public class RumpusUserConfig extends AbstractCommonUserConfig<
     // @Bean
     // @DependsOn({"rumpusUserDao"})
     // public RumpusLoader rumpusLoader() {
-    //     return new RumpusLoader(rumpusUserDao());
+    // return new RumpusLoader(rumpusUserDao());
     // }
 
     @Override

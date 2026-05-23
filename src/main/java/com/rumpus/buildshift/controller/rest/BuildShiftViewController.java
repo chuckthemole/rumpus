@@ -20,8 +20,9 @@ import com.rumpus.buildshift.views.AdminUserView;
 
 @RestController
 @RequestMapping(ICommonController.PATH_VIEW + "_bs")
-public class BuildShiftViewController extends
-        AbstractViewController<ServiceManager, User, UserMetaData, IUserService, AdminUserView> {
+public class BuildShiftViewController
+        extends
+            AbstractViewController<ServiceManager, User, UserMetaData, IUserService, AdminUserView> {
 
     @Autowired
     public BuildShiftViewController(ViewLoader viewLoader) {

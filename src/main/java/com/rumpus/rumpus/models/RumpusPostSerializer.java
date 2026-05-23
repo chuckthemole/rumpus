@@ -14,7 +14,7 @@ public class RumpusPostSerializer extends AbstractModelSerializer<RumpusPost> {
 
     @Override
     protected void writeJson(JsonWriter out, RumpusPost object) throws IOException {
-        out.beginObject(); 
+        out.beginObject();
         out.name("title");
         out.value(object.getTitle());
         out.name("content");
@@ -40,25 +40,25 @@ public class RumpusPostSerializer extends AbstractModelSerializer<RumpusPost> {
         while (in.hasNext()) {
             String name = in.nextName();
             switch (name) {
-                case "title":
+                case "title" :
                     post.setTitle(in.nextString());
                     break;
-                case "content":
+                case "content" :
                     post.setContent(in.nextString());
                     break;
-                case "author":
+                case "author" :
                     post.setAuthorID(in.nextString());
                     break;
-                case "threadID":
+                case "threadID" :
                     post.setThreadID(in.nextString());
                     break;
-                case "created":
+                case "created" :
                     post.setCreated(in.nextString());
                     break;
-                case "updated":
+                case "updated" :
                     post.setUpdated(in.nextString());
                     break;
-                case "parentPostID":
+                case "parentPostID" :
                     post.setParentPostID(in.nextString());
                     break;
             }
@@ -73,5 +73,5 @@ public class RumpusPostSerializer extends AbstractModelSerializer<RumpusPost> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
-    
+
 }

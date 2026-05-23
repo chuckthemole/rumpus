@@ -7,12 +7,16 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 /**
  * RumpusUserService
- * 
+ *
  * This class is the main service for the RumpusUser user model.
  * <p>
- * This implementation is used to create a new {@link com.rumpus.common.Service.IUserService} instance in {@link com.rumpus.rumpus.config.RumpusUserConfig}.
+ * This implementation is used to create a new
+ * {@link com.rumpus.common.Service.IUserService} instance in
+ * {@link com.rumpus.rumpus.config.RumpusUserConfig}.
  */
-public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUserMetaData> implements IRumpusUserService {
+public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUserMetaData>
+        implements
+            IRumpusUserService {
 
     public RumpusUserService(IRumpusUserDao userDao) {
         super(userDao);

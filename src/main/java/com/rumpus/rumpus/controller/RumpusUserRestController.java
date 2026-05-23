@@ -13,20 +13,16 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @RestController
 @RequestMapping(ICommonController.PATH_API)
-public class RumpusUserRestController extends AbstractUserController
-    <
-        RumpusServiceManager,
-        RumpusUser,
-        RumpusUserMetaData,
-        IRumpusUserService,
-        RumpusAdminUserView
-    > {
+public class RumpusUserRestController
+        extends
+            AbstractUserController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 
-        public RumpusUserRestController() {}
+    public RumpusUserRestController() {
+    }
 
-        @Override
-        public String toString() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'toString'");
-        }
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
 }

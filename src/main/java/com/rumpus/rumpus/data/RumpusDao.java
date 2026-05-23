@@ -10,8 +10,10 @@ import com.rumpus.rumpus.models.RumpusModel;
 /**
  * Assigning AbstractApiDBJdbc for RumpusDao and implementing IRumpusDao
  */
-public abstract class RumpusDao<MODEL extends RumpusModel<MODEL>> extends AbstractApiDBJdbc<MODEL> implements IRumpusDao<MODEL> {
-    
+public abstract class RumpusDao<MODEL extends RumpusModel<MODEL>> extends AbstractApiDBJdbc<MODEL>
+        implements
+            IRumpusDao<MODEL> {
+
     public RumpusDao(DataSource ds, String table, RowMapper<MODEL> mapper) {
         super(ds, table, mapper);
     }

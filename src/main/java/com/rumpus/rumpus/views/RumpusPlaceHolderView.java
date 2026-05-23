@@ -18,7 +18,8 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
     private static final String BREADCRUMB_COMPONENT_NAME = "RumpusUserViewBreadcrumb";
     private static final String WELCOME_COMPONENT_NAME = "RumpusUserViewWelcome";
 
-    public RumpusPlaceHolderView() {}
+    public RumpusPlaceHolderView() {
+    }
 
     public static RumpusPlaceHolderView create() {
         return new RumpusPlaceHolderView();
@@ -34,7 +35,7 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
         stringBuilder.append(",");
         stringBuilder.append(AbstractAside.GROUP_DELIMITER);
         stringBuilder.append("group2, group2-item1, group2-item2");
-        return BulmaAside.create(ASIDE_COMPONENT_NAME, stringBuilder.toString());
+        return BulmaAside.create(ASIDE_COMPONENT_NAME,stringBuilder.toString());
     }
 
     @Override
@@ -49,7 +50,7 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
         sb.append("Current Page");
         sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
         sb.append("www.google.com,");
-        return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME, sb.toString());
+        return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME,sb.toString());
     }
 
     @Override
@@ -63,7 +64,7 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
         sb.append(AbstractHtmlObject.HtmlTagType.H2);
         sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
         sb.append("What the hell are you doing?!,");
-        return BulmaWelcome.create(WELCOME_COMPONENT_NAME, sb.toString());
+        return BulmaWelcome.create(WELCOME_COMPONENT_NAME,sb.toString());
     }
 
     @Override
@@ -71,9 +72,10 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
         AbstractHtmlObject head = AbstractHtmlObject.createEmptyAbstractHtmlObject();
         head.setHtmlTagType(AbstractHtmlObject.HtmlTagType.DIV);
 
-
-        // BulmaTile tile = BulmaTile.create("RumpusAdminUserViewTile", "HelloWhat?, what the hell are you doing?!");
-        // BulmaTile childTile = BulmaTile.createChildTile("Child", "HelloWhat?", "what the hell are you doing?!");
+        // BulmaTile tile = BulmaTile.create("RumpusAdminUserViewTile", "HelloWhat?,
+        // what the hell are you doing?!");
+        // BulmaTile childTile = BulmaTile.createChildTile("Child", "HelloWhat?", "what
+        // the hell are you doing?!");
         // BulmaTile parentTile = BulmaTile.createParentTile("Parent");
         // parentTile.addChild(childTile);
         // BulmaTile tile = BulmaTile.createAncestorTile("Ancestor");
@@ -82,8 +84,8 @@ public class RumpusPlaceHolderView extends AbstractPlaceHolderTemplate {
         head.addChild(this.get(AbstractTemplate.TEMPLATE_BREADCRUMB));
         head.addChild(this.get(AbstractTemplate.TEMPLATE_ASIDE));
         final String log = LogBuilder.logBuilderFromStringArgsNoSpaces(
-            "DEBUG ASIDE: ",
-            this.get(AbstractTemplate.TEMPLATE_ASIDE).toString()).toString();
+                "DEBUG ASIDE: ",
+                this.get(AbstractTemplate.TEMPLATE_ASIDE).toString()).toString();
         LOG(log);
         return head;
     }

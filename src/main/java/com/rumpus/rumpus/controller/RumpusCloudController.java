@@ -5,30 +5,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.common.Controller.AbstractCloudController;
 import com.rumpus.common.Controller.ICommonController;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
-import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.service.RumpusServiceManager;
-import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @RestController
 @RequestMapping(ICommonController.PATH_CLOUD)
 public class RumpusCloudController extends AbstractCloudController
-    // commenting out for now. See comment in AbstractCloudController.
-    // <
-    //     RumpusServiceManager,
-    //     RumpusUser,
-    //     RumpusUserMetaData,
-    //     IRumpusUserService,
-    //     RumpusAdminUserView
-    // >
-    {
+// commenting out for now. See comment in AbstractCloudController.
+// <
+// RumpusServiceManager,
+// RumpusUser,
+// RumpusUserMetaData,
+// IRumpusUserService,
+// RumpusAdminUserView
+// >
+{
 
-        public RumpusCloudController() {}
+    public RumpusCloudController() {
+    }
 
-        @Override
-        public String toString() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'toString'");
-        }
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
 }

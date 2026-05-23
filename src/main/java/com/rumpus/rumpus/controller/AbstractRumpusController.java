@@ -16,8 +16,9 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @Controller // TODO: This is being subclassed by other classes using @RestController, should
             // this class be annotated like this with @Controller?
-abstract public class AbstractRumpusController extends
-        AbstractCommonController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
+abstract public class AbstractRumpusController
+        extends
+            AbstractCommonController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 
     // @Autowired
     // @Qualifier("rumpusViewLoader")
@@ -50,9 +51,10 @@ abstract public class AbstractRumpusController extends
 
         // Common Paths
         java.util.Map<String, String> paths = java.util.Map.of(
-                "CurrentUserInfo", "/current_user",
-                "CreateUser", "/create_user");
-        AbstractCommonController.commonPaths.addBasePath(AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH, paths,
+                "CurrentUserInfo","/current_user",
+                "CreateUser","/create_user");
+        AbstractCommonController.commonPaths.addBasePath(
+                AbstractRumpusController.RUMPUS_DEFAULT_BASE_PATH,paths,
                 true);
         // this.setCurrentBasePath(RumpusController.RUMPUS_DEFAULT_BASE_PATH);
     }

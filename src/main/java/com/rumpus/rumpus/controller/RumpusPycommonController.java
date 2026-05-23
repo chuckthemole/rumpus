@@ -21,7 +21,7 @@ public class RumpusPycommonController extends RumpusRestController {
 
     @Autowired
     public RumpusPycommonController() {
-            
+
     }
 
     /*
@@ -33,13 +33,14 @@ public class RumpusPycommonController extends RumpusRestController {
         HttpSession session = request.getSession();
         final String uri = "http://localhost:8000/voice_assist/";
         RestTemplate restTemplate = new RestTemplate();
-        final String result = restTemplate.getForObject(uri, String.class);
-        session.setAttribute("pycommon", result);
+        final String result = restTemplate.getForObject(uri,String.class);
+        session.setAttribute("pycommon",result);
         final String log = LogBuilder.logBuilderFromStringArgs(
-            "Pycommon call from rest api: ",
-            result).toString();
+                "Pycommon call from rest api: ",
+                result).toString();
         LOG(log);
-        return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
+        return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
+                HttpStatus.ACCEPTED);
     }
 
     @GetMapping(value = "/scraper_test")
@@ -48,12 +49,13 @@ public class RumpusPycommonController extends RumpusRestController {
         HttpSession session = request.getSession();
         final String uri = "http://localhost:8000/scraper/chatgpt/";
         RestTemplate restTemplate = new RestTemplate();
-        final String result = restTemplate.getForObject(uri, String.class);
-        session.setAttribute("scraper test", result);
+        final String result = restTemplate.getForObject(uri,String.class);
+        session.setAttribute("scraper test",result);
         final String log = LogBuilder.logBuilderFromStringArgs(
-            "Pycommon scraper test: ",
-            result).toString();
+                "Pycommon scraper test: ",
+                result).toString();
         LOG(log);
-        return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
+        return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
+                HttpStatus.ACCEPTED);
     }
 }

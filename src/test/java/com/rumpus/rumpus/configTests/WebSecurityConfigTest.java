@@ -2,7 +2,6 @@ package com.rumpus.rumpus.configTests;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,6 +18,7 @@ import com.rumpus.common.Controller.ICommonController;
 
 /**
  * TODO: instead of PATH_API_USERS, can we use a TEST_PROTECTED_ENDPOINT?
+ *
  * @throws Exception
  */
 @SpringBootTest
@@ -43,7 +43,8 @@ public class WebSecurityConfigTest {
     @Test
     @WithMockUser(roles = ICommon.ADMIN)
     public void testAdminAccessToProtectedPage() throws Exception {
-        mockMvc.perform(get(ICommonController.PATH_API_USERS + "/username")) // TODO: replace final string
+        mockMvc.perform(get(ICommonController.PATH_API_USERS + "/username")) // TODO: replace final
+                                                                             // string
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
     }
@@ -55,22 +56,23 @@ public class WebSecurityConfigTest {
                 .andExpect(status().isForbidden());
     }
 
-    // TODO: Create a mock user for this test. I don't want to expose any passwords that are in the database for valid users.
+    // TODO: Create a mock user for this test. I don't want to expose any passwords
+    // that are in the database for valid users.
     // @Test
     // public void testLoginWithValidCredentials() throws Exception {
-    //     mockMvc.perform(post(ICommonController.PATH_LOGIN)
-    //             .param(ICommon.USERNAME, "chuck")
-    //             .param("password", "validPassword") // Replace with a valid password
-    //             .with(csrf()))  // Add CSRF token
-    //             .andExpect(status().isOk());
+    // mockMvc.perform(post(ICommonController.PATH_LOGIN)
+    // .param(ICommon.USERNAME, "chuck")
+    // .param("password", "validPassword") // Replace with a valid password
+    // .with(csrf())) // Add CSRF token
+    // .andExpect(status().isOk());
     // }
 
     @Test
     public void testLoginWithInvalidCredentials() throws Exception {
         mockMvc.perform(post(ICommonController.PATH_LOGIN)
-                .param(ICommon.USERNAME, "invalidUser")
-                .param("password", "invalidPassword")
-                .with(csrf()))  // Add CSRF token
+                .param(ICommon.USERNAME,"invalidUser")
+                .param("password","invalidPassword")
+                .with(csrf())) // Add CSRF token
                 .andExpect(status().isUnauthorized());
     }
 }

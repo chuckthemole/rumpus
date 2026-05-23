@@ -1,4 +1,5 @@
-// TODO: commented this out to not mess with controller logic. Need to come back later and figure out how to implement this.
+// TODO: commented this out to not mess with controller logic. Need to come back
+// later and figure out how to implement this.
 
 // package com.rumpus.rumpus.controller;
 
@@ -18,22 +19,28 @@
 // @RestController
 // @RequestMapping(ICommonController.PATH_SCRAPER)
 // public class RumpusScraperController extends RumpusController {
-    
-//     @GetMapping(value = "/start/{scraper}")
-//     public ResponseEntity<CommonSession> startScraper(@PathVariable("scraper") String scraperName, HttpServletRequest request) {
-//         LOG("RumpusScraperController::startScraper()");
-//         HttpSession session = request.getSession();
-//         // if(!this.serverManager.containsKey(scraperName)) {
-//         //     session.setAttribute("server status", "Server not found: " + scraperName);
-//         //     return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.NOT_FOUND);
-//         // }
-//         // this.serverManager.startServer(scraperName);
-//         // session.setAttribute("server status", this.serverManager.getServerStatus(scraperName));
 
-//         ChatGPT chatGPT = ChatGPT.getInstance();
-//         chatGPT.run();
-//         session.setAttribute("chatGPT", chatGPT.getBody());
+// @GetMapping(value = "/start/{scraper}")
+// public ResponseEntity<CommonSession> startScraper(@PathVariable("scraper")
+// String scraperName, HttpServletRequest request) {
+// LOG("RumpusScraperController::startScraper()");
+// HttpSession session = request.getSession();
+// // if(!this.serverManager.containsKey(scraperName)) {
+// // session.setAttribute("server status", "Server not found: " + scraperName);
+// // return new
+// ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
+// HttpStatus.NOT_FOUND);
+// // }
+// // this.serverManager.startServer(scraperName);
+// // session.setAttribute("server status",
+// this.serverManager.getServerStatus(scraperName));
 
-//         return new ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session), HttpStatus.ACCEPTED);
-//     }
+// ChatGPT chatGPT = ChatGPT.getInstance();
+// chatGPT.run();
+// session.setAttribute("chatGPT", chatGPT.getBody());
+
+// return new
+// ResponseEntity<CommonSession>(CommonSession.createFromHttpSession(session),
+// HttpStatus.ACCEPTED);
+// }
 // }

@@ -14,6 +14,7 @@ public class UserDao extends ApiDBJdbcUsers<User, UserMetaData> implements IUser
 
     public UserDao(JdbcUserDetailsManager manager) {
         super(manager, TABLE, UserRowMapper.create());
-        IDao.registerIdSet("BuildShiftUser"); // TODO: Can this be moved up to RumpusUserDao? Or even higher in common?
+        IDao.registerIdSet("BuildShiftUser"); // TODO: Can this be moved up to RumpusUserDao? Or
+                                              // even higher in common?
     }
 }

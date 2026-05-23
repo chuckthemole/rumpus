@@ -14,7 +14,8 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     transient private static final String NAME = "RumpusUserMetaData";
 
     /**
-     * TODO: think about this placement. Can we put this in the AbstractMetaData class?
+     * TODO: think about this placement. Can we put this in the AbstractMetaData
+     * class?
      */
     transient private static final RumpusUserMetaDataSerializer SERIALIZER = new RumpusUserMetaDataSerializer();
 
@@ -47,12 +48,15 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     public static RumpusUserMetaData createEmpty() {
         return new RumpusUserMetaData(List.of());
     }
+
     public static RumpusUserMetaData createFromListOfMaps(List<Map<String, String>> metaList) {
         return new RumpusUserMetaData(metaList);
     }
+
     public static RumpusUserMetaData createFromMap(Map<String, String> metaMap) {
         return new RumpusUserMetaData(metaMap);
     }
+
     public static RumpusUserMetaData createFromStream(ObjectInputStream stream) {
         return new RumpusUserMetaData(stream);
     }
@@ -61,37 +65,39 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     // it's just printing out the metaList that is passed in
     private void init(List<Map<String, String>> metaList) {
         String log = LogBuilder.logBuilderFromStringArgs(
-            RumpusUserMetaData.class,
-            "RumpusUserMetaData::init()").toString();
+                RumpusUserMetaData.class,
+                "RumpusUserMetaData::init()").toString();
         LOG(log);
-        if(metaList == null) {
+        if (metaList == null) {
             log = LogBuilder.logBuilderFromStringArgsNoSpaces(
-                RumpusUserMetaData.class,
-                "Provided metaList is null").toString();
+                    RumpusUserMetaData.class,
+                    "Provided metaList is null").toString();
             LOG(log);
-        } else if(metaList.isEmpty()) {
+        } else if (metaList.isEmpty()) {
             log = LogBuilder.logBuilderFromStringArgsNoSpaces(
-                RumpusUserMetaData.class,
-                "Provided metaList is empty").toString();
+                    RumpusUserMetaData.class,
+                    "Provided metaList is empty").toString();
             LOG(log);
         } else {
-            for(Map<String, String> map : metaList) {
-                log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "New Map:").toString();
+            for (Map<String, String> map : metaList) {
+                log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class,"New Map:")
+                        .toString();
                 LOG(log);
                 map.forEach((key, value) -> {
                     final String mapLog = LogBuilder.logBuilderFromStringArgs(
-                        RumpusUserMetaData.class,
-                        "  ",
-                        key,
-                        value,
-                        "\n").toString();
+                            RumpusUserMetaData.class,
+                            "  ",
+                            key,
+                            value,
+                            "\n").toString();
                     LOG(mapLog);
                 });
             }
         }
     }
 
-    // overriding these serializer methods here. right now just using defaults but can customize as commented out below. 2023/6/28
+    // overriding these serializer methods here. right now just using defaults but
+    // can customize as commented out below. 2023/6/28
     protected void writeObject(java.io.ObjectOutputStream out) throws IOException {
         LOG("RumpusUserMetaData::writeObject()");
         out.defaultWriteObject();
@@ -99,19 +105,20 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
         // out.writeChars(this.photoLink);
         // out.writeChars(this.aboutMe);
     }
+
     protected void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         LOG("RumpusUserMetaData::readObject()");
         in.defaultReadObject();
         // try {
-        //     this.creationTime = (Instant) stream.readObject();
-        //     this.photoLink = (String) stream.readObject();
-        //     this.aboutMe = (String) stream.readObject();
+        // this.creationTime = (Instant) stream.readObject();
+        // this.photoLink = (String) stream.readObject();
+        // this.aboutMe = (String) stream.readObject();
         // } catch (ClassNotFoundException e) {
-        //     LogBuilder.logBuilderFromStringArgs(e.getMessage()).error();
-        //     LogBuilder.logBuilderFromStackTraceElementArray(e.getStackTrace()).error();
+        // LogBuilder.logBuilderFromStringArgs(e.getMessage()).error();
+        // LogBuilder.logBuilderFromStackTraceElementArray(e.getStackTrace()).error();
         // } catch (IOException e) {
-        //     LogBuilder.logBuilderFromStringArgs(e.getMessage()).error();
-        //     LogBuilder.logBuilderFromStackTraceElementArray(e.getStackTrace()).error();
+        // LogBuilder.logBuilderFromStringArgs(e.getMessage()).error();
+        // LogBuilder.logBuilderFromStackTraceElementArray(e.getStackTrace()).error();
         // }
     }
 
@@ -119,9 +126,9 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     public Map<String, Object> getMetaAttributesMap() {
         LOG("RumpusUserMetaData::getModelAttributesMap()");
         Map<String, Object> modelAttributesMap = Map.of(
-            USER_CREATION_DATE_TIME, (String) this.getStandardFormattedCreationTime(),
-            USER_PHOTO_LINK, (String) this.getPhotoLink(),
-            USER_ABOUT_ME, (String) this.getAboutMe());
+                USER_CREATION_DATE_TIME,(String) this.getStandardFormattedCreationTime(),
+                USER_PHOTO_LINK,(String) this.getPhotoLink(),
+                USER_ABOUT_ME,(String) this.getAboutMe());
         return modelAttributesMap;
     }
 }

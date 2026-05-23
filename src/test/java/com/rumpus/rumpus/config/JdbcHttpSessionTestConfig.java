@@ -7,6 +7,6 @@ import com.rumpus.common.Config.AbstractJdbcHttpSessionConfig;
 @TestConfiguration
 public class JdbcHttpSessionTestConfig extends AbstractJdbcHttpSessionConfig {
     public JdbcHttpSessionTestConfig() {
-        
+
     }
 }

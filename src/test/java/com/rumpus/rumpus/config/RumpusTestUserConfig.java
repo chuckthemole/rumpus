@@ -24,7 +24,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
-public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+public class RumpusTestUserConfig
+        extends
+            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
     @Autowired
     public RumpusTestUserConfig(Environment environment) {
@@ -45,13 +47,15 @@ public class RumpusTestUserConfig extends AbstractCommonUserConfig<RumpusUser, R
 
     // @Bean
     // @DependsOn({"rumpusUserDao"})
-    // public AbstractUserService<RumpusUser, RumpusUserMetaData> rumpusUserService() {
-    //     return new RumpusUserService(this.rumpusUserDao());
+    // public AbstractUserService<RumpusUser, RumpusUserMetaData>
+    // rumpusUserService() {
+    // return new RumpusUserService(this.rumpusUserDao());
     // }
 
     // @Bean
-    // public AbstractUserTemplate<RumpusUser, RumpusUserMetaData> rumpusUserTemplate() {
-    //     return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
+    // public AbstractUserTemplate<RumpusUser, RumpusUserMetaData>
+    // rumpusUserTemplate() {
+    // return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
     // }
 
     @Bean

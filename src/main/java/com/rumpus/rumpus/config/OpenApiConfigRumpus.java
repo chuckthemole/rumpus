@@ -11,8 +11,8 @@ import com.rumpus.common.Config.AbstractOpenApiConfig.ApiGroup;
 public class OpenApiConfigRumpus extends AbstractOpenApiConfig {
 
     /**
-     * Define the API groups for this application.
-     * These will be used to create GroupedOpenApi beans.
+     * Define the API groups for this application. These will be used to create
+     * GroupedOpenApi beans.
      */
     @Override
     protected List<ApiGroup> initApiGroups() {

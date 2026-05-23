@@ -13,7 +13,6 @@ import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem.LogItemCollectionManager;
-import com.rumpus.common.Python.CommonPython;
 import com.rumpus.common.Python.PycommonServer;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
@@ -39,7 +38,7 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     public ForumThreadManager forumThreadManager() {
         ForumThreadManager manager = ForumThreadManager.create();
         for (ForumThread forumThread : IRumpus.rumpusForumThreads) {
-            manager.put(forumThread.getPageID(), forumThread);
+            manager.put(forumThread.getPageID(),forumThread);
         }
         return manager;
     }
@@ -50,10 +49,10 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     }
 
     @Bean
-    @DependsOn({ "pycommonServer" })
+    @DependsOn({"pycommonServer"})
     public ServerManager serverManager() {
         ServerManager manager = ServerManager.create();
-        manager.addServer("PycommonServer", pycommonServer());
+        manager.addServer("PycommonServer",pycommonServer());
         return manager;
     }
 

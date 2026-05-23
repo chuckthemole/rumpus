@@ -23,7 +23,7 @@ public class Hist {
     Hist(int[] ages) {
         this.ages = ages;
         this.buckets = new int[NUMBER_OF_BUCKETS];
-        for(int i = 0; i < NUMBER_OF_BUCKETS; i++) {
+        for (int i = 0; i < NUMBER_OF_BUCKETS; i++) {
             this.buckets[i] = 0;
         }
     }
@@ -31,17 +31,17 @@ public class Hist {
     public BigDecimal[] get_histo() {
 
         // populate buckets
-        for(int age : this.ages) {
+        for (int age : this.ages) {
             this.buckets[age / NUMBER_OF_BUCKETS]++;
         }
 
         BigDecimal[] histo = new BigDecimal[NUMBER_OF_BUCKETS];
-        for(int i = 0; i < NUMBER_OF_BUCKETS; i++) {
+        for (int i = 0; i < NUMBER_OF_BUCKETS; i++) {
             histo[i] = BigDecimal.valueOf(buckets[i])
-                .divide(
-                    BigDecimal.valueOf(ages.length),
-                        2,
-                        RoundingMode.HALF_UP);
+                    .divide(
+                            BigDecimal.valueOf(ages.length),
+                            2,
+                            RoundingMode.HALF_UP);
         }
         return histo;
     }
@@ -59,16 +59,16 @@ public class Hist {
         // 0.17
 
         BigDecimal[] expectedHisto = {
-            BigDecimal.valueOf(0.50),
-            BigDecimal.valueOf(0.00),
-            BigDecimal.valueOf(0.00),
-            BigDecimal.valueOf(0.00),
-            BigDecimal.valueOf(0.17),
-            BigDecimal.valueOf(0.00),
-            BigDecimal.valueOf(0.00),
-            BigDecimal.valueOf(0.00),
-            BigDecimal.valueOf(0.17),
-            BigDecimal.valueOf(0.17)
+                BigDecimal.valueOf(0.50),
+                BigDecimal.valueOf(0.00),
+                BigDecimal.valueOf(0.00),
+                BigDecimal.valueOf(0.00),
+                BigDecimal.valueOf(0.17),
+                BigDecimal.valueOf(0.00),
+                BigDecimal.valueOf(0.00),
+                BigDecimal.valueOf(0.00),
+                BigDecimal.valueOf(0.17),
+                BigDecimal.valueOf(0.17)
         };
 
         int[] ages = {1, 2, 3, 40, 80, 90};
@@ -82,13 +82,13 @@ public class Hist {
     }
 
     public void printBuckets() {
-        if(buckets == null || buckets.length == 0) {
+        if (buckets == null || buckets.length == 0) {
             System.out.println("Buckets is empty");
             return;
         }
         StringBuilder sb = new StringBuilder();
         sb.append("{ ");
-        for(int i = 0; i < NUMBER_OF_BUCKETS; i++) {
+        for (int i = 0; i < NUMBER_OF_BUCKETS; i++) {
             sb.append(buckets[i]);
             sb.append(",");
         }
@@ -99,13 +99,13 @@ public class Hist {
     }
 
     public static void printHisto(BigDecimal[] histo) {
-        if(histo == null || histo.length == 0) {
+        if (histo == null || histo.length == 0) {
             System.out.println("Histo is empty");
             return;
         }
         StringBuilder sb = new StringBuilder();
         sb.append("{ ");
-        for(int i = 0; i < Hist.NUMBER_OF_BUCKETS; i++) {
+        for (int i = 0; i < Hist.NUMBER_OF_BUCKETS; i++) {
             sb.append(histo[i]);
             sb.append(",");
         }

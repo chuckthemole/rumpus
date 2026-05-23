@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // @SpringBootApplication
@@ -28,23 +27,23 @@ public class App implements WebMvcConfigurer {
 
         Class<?> appClass;
         switch (targetApp.toLowerCase()) {
-            case "chuck":
+            case "chuck" :
                 System.out.println("Running ChuckApp");
                 appClass = com.chuck.ChuckApp.class;
                 break;
-            case "rumpus":
+            case "rumpus" :
                 System.out.println("Running RumpusApp");
                 appClass = com.rumpus.RumpusApp.class;
                 break;
-            case "buildshift":
+            case "buildshift" :
                 System.out.println("Running BuildShiftApp");
                 appClass = com.buildshift.BuildShiftApp.class;
                 break;
-            default:
+            default :
                 throw new IllegalArgumentException("Unknown app: " + targetApp);
         }
 
-        LOGGER.info("Starting application for target: {}", targetApp);
+        LOGGER.info("Starting application for target: {}",targetApp);
         SpringApplication app = new SpringApplication(appClass);
         applicationContext = app.run(args);
 
@@ -62,10 +61,13 @@ public class App implements WebMvcConfigurer {
     }
 
     @org.springframework.context.event.EventListener
-    public void handleContextRefresh(org.springframework.context.event.ContextRefreshedEvent event) {
+    public void handleContextRefresh(
+            org.springframework.context.event.ContextRefreshedEvent event) {
         LOGGER.info("App::handleContextRefresh()");
-        final org.springframework.core.env.Environment environment = event.getApplicationContext().getEnvironment();
-        LOGGER.info("Active profiles: {}", java.util.Arrays.toString(environment.getActiveProfiles()));
+        final org.springframework.core.env.Environment environment = event.getApplicationContext()
+                .getEnvironment();
+        LOGGER.info("Active profiles: {}",
+                java.util.Arrays.toString(environment.getActiveProfiles()));
     }
 
     @Override
@@ -73,7 +75,8 @@ public class App implements WebMvcConfigurer {
             org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("/WEB-INF/images/")
-                .setCacheControl(org.springframework.http.CacheControl.maxAge(2, java.util.concurrent.TimeUnit.HOURS)
+                .setCacheControl(org.springframework.http.CacheControl
+                        .maxAge(2,java.util.concurrent.TimeUnit.HOURS)
                         .cachePublic());
     }
 }

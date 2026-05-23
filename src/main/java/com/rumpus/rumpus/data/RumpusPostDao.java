@@ -10,7 +10,7 @@ public class RumpusPostDao extends RumpusDao<RumpusPost> implements IRumpusPostD
 
     public RumpusPostDao(DataSource ds, String table, RowMapper<RumpusPost> mapper) {
         super(ds, table, mapper);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override

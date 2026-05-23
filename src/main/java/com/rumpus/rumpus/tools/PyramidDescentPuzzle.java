@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * PyramidDescentPuzzle
- * 
+ *
  * A program that finds all paths in a pyramid that multiply to a target value.
  */
 public class PyramidDescentPuzzle {
@@ -19,61 +19,66 @@ public class PyramidDescentPuzzle {
     private List<String> paths = new ArrayList<>();
     private List<List<Integer>> pyramid;
 
-
     private int product(int... values) {
         int product = 1;
-        for(int value : values) {
+        for (int value : values) {
             product *= value;
         }
         return product;
     }
 
     /**
-     * Recursive function to find all paths in the pyramid that multiply to the target value
-     * 
-     * @param parentRow index of the parent row
-     * @param parentColumn index of the parent column
-     * @param currentProduct product of the path so far
-     * @param pathBuilder string builder to build the path
+     * Recursive function to find all paths in the pyramid that multiply to the
+     * target value
+     *
+     * @param parentRow
+     *            index of the parent row
+     * @param parentColumn
+     *            index of the parent column
+     * @param currentProduct
+     *            product of the path so far
+     * @param pathBuilder
+     *            string builder to build the path
      * @return the path if found, otherwise NOT_A_PATH
      */
     public void findPyramidPaths(
-        int parentRow,
-        int parentColumn,
-        int currentProduct,
-        String currentPath) {
+            int parentRow,
+            int parentColumn,
+            int currentProduct,
+            String currentPath) {
 
-            // Debug
-            // System.out.println("Row: " + parentRow + ", Column: " + parentColumn + ", Product: " + currentProduct + ", Path: " + currentPath);
+        // Debug
+        // System.out.println("Row: " + parentRow + ", Column: " + parentColumn + ",
+        // Product: " + currentProduct + ", Path: " + currentPath);
 
-            // Base case
-            if(currentProduct > this.target) {
-                return;
+        // Base case
+        if (currentProduct > this.target) {
+            return;
+        }
+        if (parentRow == this.pyramid.size() - 1) {
+            if (currentProduct == this.target) {
+                this.paths.add(currentPath);
             }
-            if(parentRow == this.pyramid.size() - 1) {
-                if(currentProduct == this.target) {
-                    this.paths.add(currentPath);
-                }
-                return;
-            }
+            return;
+        }
 
-            // Recursive case
-            StringBuilder pathBuilder = new StringBuilder();
-            pathBuilder.append(currentPath);
-            int leftChild = this.pyramid.get(parentRow + 1).get(parentColumn);
-            int rightChild = this.pyramid.get(parentRow + 1).get(parentColumn + 1);
-            findPyramidPaths(
+        // Recursive case
+        StringBuilder pathBuilder = new StringBuilder();
+        pathBuilder.append(currentPath);
+        int leftChild = this.pyramid.get(parentRow + 1).get(parentColumn);
+        int rightChild = this.pyramid.get(parentRow + 1).get(parentColumn + 1);
+        findPyramidPaths(
                 parentRow + 1,
-                parentColumn, 
-                product(currentProduct, leftChild),
+                parentColumn,
+                product(currentProduct,leftChild),
                 pathBuilder.append(LEFT).toString());
 
-            pathBuilder = new StringBuilder();
-            pathBuilder.append(currentPath);
-            findPyramidPaths(
+        pathBuilder = new StringBuilder();
+        pathBuilder.append(currentPath);
+        findPyramidPaths(
                 parentRow + 1,
                 parentColumn + 1,
-                product(currentProduct, rightChild),
+                product(currentProduct,rightChild),
                 pathBuilder.append(RIGHT).toString());
     }
 
@@ -86,8 +91,9 @@ public class PyramidDescentPuzzle {
     }
 
     public void printPaths() {
-        // System.out.println("Paths (" + this.paths.size() + ") that multiply to the target value:");
-        for(String path : this.paths) {
+        // System.out.println("Paths (" + this.paths.size() + ") that multiply to the
+        // target value:");
+        for (String path : this.paths) {
             System.out.println(path);
         }
     }
@@ -110,7 +116,7 @@ public class PyramidDescentPuzzle {
             List<List<Integer>> pyramid = new ArrayList<>();
             String input;
             // int row = 0;
-            while((input = br.readLine()) != null) {
+            while ((input = br.readLine()) != null) {
                 // System.out.println("Row " + row + ": " + input);
                 // row++;
                 final String[] pyramidLevel = input.split(",");
@@ -123,7 +129,7 @@ public class PyramidDescentPuzzle {
             pyramidDescentPuzzle.setPyramid(pyramid);
 
             // Find all paths that multiply to the target value
-            pyramidDescentPuzzle.findPyramidPaths(0, 0, pyramid.get(0).get(0), "");
+            pyramidDescentPuzzle.findPyramidPaths(0,0,pyramid.get(0).get(0),"");
             pyramidDescentPuzzle.printPaths();
 
         } catch (IOException e) {

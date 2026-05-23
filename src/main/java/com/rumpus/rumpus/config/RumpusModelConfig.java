@@ -14,8 +14,10 @@ import com.rumpus.rumpus.service.RumpusServiceManager;
 
 @Configuration
 @ComponentScan("com.rumpus.rumpus")
-public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceManager, ISerializerRegistry> {
-    
+public class RumpusModelConfig
+        extends
+            AbstractCommonModelConfig<RumpusServiceManager, ISerializerRegistry> {
+
     @Autowired
     public RumpusModelConfig(Environment environment) {
         super(environment);
@@ -34,14 +36,16 @@ public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceMa
     @Override
     public ISerializerRegistry childSerializerRegistry() {
         ISerializerRegistry serializerRegistry = SerializerRegistry.create();
-        serializerRegistry.registerSerializer(RumpusUser.class, RumpusUserSerializer.jsonSerializer());
+        serializerRegistry.registerSerializer(RumpusUser.class,
+                RumpusUserSerializer.jsonSerializer());
         return serializerRegistry;
     }
 
     @Override
     public ISerializerRegistry childSerializerService() {
         ISerializerRegistry serializerRegistry = SerializerRegistry.create();
-        serializerRegistry.registerSerializer(RumpusUser.class, RumpusUserSerializer.jsonSerializer());
+        serializerRegistry.registerSerializer(RumpusUser.class,
+                RumpusUserSerializer.jsonSerializer());
         return serializerRegistry;
     }
 
@@ -50,5 +54,5 @@ public class RumpusModelConfig extends AbstractCommonModelConfig<RumpusServiceMa
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
-    
+
 }

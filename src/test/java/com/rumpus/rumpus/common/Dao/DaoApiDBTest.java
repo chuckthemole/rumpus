@@ -10,9 +10,6 @@ import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 
 /**
  * TODO: make tests for common dao
@@ -22,7 +19,8 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
     private final IFileIO fileReader = JsonIO.create();
     private FileProcessor fileProcessor;
 
-    @MockBean private RumpusUserDao userDao;
+    @MockBean
+    private RumpusUserDao userDao;
     private static RumpusUser[] users;
 
     public DaoApiDBTest() {
@@ -35,9 +33,8 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
         this.LOG("DaoApiDBTest::setUp()");
         try {
             DaoApiDBTest.users = this.fileProcessor.<RumpusUser>processFile(
-                AbstractRumpusTest.JSON_USERS_FILE,
-                RumpusUser[].class
-            ).get();
+                    AbstractRumpusTest.JSON_USERS_FILE,
+                    RumpusUser[].class).get();
         } catch (com.google.gson.JsonSyntaxException e) {
             this.LOG("DaoApiDBTest::setUp()::JsonSyntaxException");
         } catch (java.lang.Exception e) {
@@ -52,8 +49,8 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
 
     @Test
     @Order(1)
-	void testGetUser() {
-	}
+    void testGetUser() {
+    }
 
     @Test
     @Order(2)
@@ -68,8 +65,8 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
 
     @Test
     @Order(4)
-	void testGetUsers() {
-	}
+    void testGetUsers() {
+    }
 
     @Test
     @Order(5)

@@ -8,5 +8,5 @@ import com.rumpus.rumpus.models.RumpusPost;
 @Repository
 @Profile("database")
 public interface IRumpusPostDao extends IRumpusDao<RumpusPost> {
-    
+
 }

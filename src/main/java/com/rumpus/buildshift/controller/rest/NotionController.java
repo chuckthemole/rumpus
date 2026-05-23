@@ -23,7 +23,8 @@ public class NotionController extends AbstractNotionIntegrationController {
     /**
      * Constructor for NotionController.
      *
-     * @param notionMap The Notion integration bean, injected via Spring.
+     * @param notionMap
+     *            The Notion integration bean, injected via Spring.
      */
     @Autowired
     public NotionController(
@@ -42,10 +43,13 @@ public class NotionController extends AbstractNotionIntegrationController {
      * Consumer app sends a JSON body matching Notion page properties format.
      * </p>
      *
-     * @param databaseId The ID of the Notion database.
-     * @param jsonBody   The JSON body representing page properties.
+     * @param databaseId
+     *            The ID of the Notion database.
+     * @param jsonBody
+     *            The JSON body representing page properties.
      * @return The raw JSON response from the Notion API.
-     * @throws Exception If an error occurs while creating the page.
+     * @throws Exception
+     *             If an error occurs while creating the page.
      */
     // @PostMapping("/database/{databaseId}/page")
     // public String createPage(
@@ -69,9 +73,11 @@ public class NotionController extends AbstractNotionIntegrationController {
             var fieldMap = AbstractNotionIntegrationController.class.getDeclaredField("notionMap");
             fieldMap.setAccessible(true);
             @SuppressWarnings("unchecked") // TODO: look into
-            Map<String, NotionIntegration> notionMap = (Map<String, NotionIntegration>) fieldMap.get(this);
+            Map<String, NotionIntegration> notionMap = (Map<String, NotionIntegration>) fieldMap
+                    .get(this);
 
-            var fieldRegistry = AbstractNotionIntegrationController.class.getDeclaredField("notionRegistry");
+            var fieldRegistry = AbstractNotionIntegrationController.class
+                    .getDeclaredField("notionRegistry");
             fieldRegistry.setAccessible(true);
             Object notionRegistry = fieldRegistry.get(this);
 

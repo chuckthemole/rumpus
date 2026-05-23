@@ -18,9 +18,10 @@ public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<Rum
 
     @Override
     public void writeJson(JsonWriter out, RumpusUserMetaData object) throws IOException {
-        final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::createTypeAdapter()::write()").toString();
+        final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class,
+                "RumpusUserMetaData::createTypeAdapter()::write()").toString();
         LOG(log);
-        out.beginObject(); 
+        out.beginObject();
         out.name(AbstractCommonUserMetaData.USER_CREATION_DATE_TIME);
         out.value(object.getStandardFormattedCreationTime());
         out.name(AbstractCommonUserMetaData.USER_PHOTO_LINK);
@@ -32,7 +33,8 @@ public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<Rum
 
     @Override
     public RumpusUserMetaData readJson(JsonReader in) throws IOException {
-        final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class, "RumpusUserMetaData::createTypeAdapter()::read()").toString();
+        final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class,
+                "RumpusUserMetaData::createTypeAdapter()::read()").toString();
         LOG(log);
         RumpusUserMetaData userMetaData = RumpusUserMetaData.createEmpty();
         in.beginObject();
@@ -40,26 +42,26 @@ public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<Rum
 
         while (in.hasNext()) {
             JsonToken token = in.peek();
-            
-            if(token.equals(JsonToken.NAME)) {
-                //get the current token 
-                fieldname = in.nextName(); 
+
+            if (token.equals(JsonToken.NAME)) {
+                // get the current token
+                fieldname = in.nextName();
             }
-            
-            if(AbstractCommonUserMetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
-                //move to next token
+
+            if (AbstractCommonUserMetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
+                // move to next token
                 token = in.peek();
                 userMetaData.setCreationTime(in.nextString());
             }
-            
-            if(AbstractCommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
-                //move to next token
+
+            if (AbstractCommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
+                // move to next token
                 token = in.peek();
                 userMetaData.setPhotoLink(in.nextString());
             }
 
-            if(AbstractCommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
-                //move to next token
+            if (AbstractCommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
+                // move to next token
                 token = in.peek();
                 userMetaData.setAboutMe(in.nextString());
             }

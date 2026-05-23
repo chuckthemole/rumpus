@@ -1,6 +1,5 @@
 package com.rumpus.rumpus.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,22 +19,17 @@ import com.rumpus.rumpus.views.RumpusViewLoader;
 
 @RestController
 @RequestMapping(ICommonController.PATH_VIEW)
-public class RumpusViewController extends AbstractViewController
-    <
-        RumpusServiceManager,
-        RumpusUser,
-        RumpusUserMetaData,
-        IRumpusUserService,
-        RumpusAdminUserView
-    > {
+public class RumpusViewController
+        extends
+            AbstractViewController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 
-        public RumpusViewController(RumpusViewLoader viewLoader) {
-            super(viewLoader);
-        }
+    public RumpusViewController(RumpusViewLoader viewLoader) {
+        super(viewLoader);
+    }
 
-        @Override
-        public String toString() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'toString'");
-        }
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
 }

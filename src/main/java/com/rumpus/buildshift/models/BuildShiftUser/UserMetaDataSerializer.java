@@ -19,7 +19,8 @@ public class UserMetaDataSerializer extends AbstractMetaDataSerializer<UserMetaD
     @Override
     public void writeJson(JsonWriter out, UserMetaData object) throws IOException {
         final String log = LogBuilder
-                .logBuilderFromStringArgs(UserMetaData.class, "UserMetaData::createTypeAdapter()::write()")
+                .logBuilderFromStringArgs(UserMetaData.class,
+                        "UserMetaData::createTypeAdapter()::write()")
                 .toString();
         LOG(log);
         out.beginObject();
@@ -35,7 +36,8 @@ public class UserMetaDataSerializer extends AbstractMetaDataSerializer<UserMetaD
     @Override
     public UserMetaData readJson(JsonReader in) throws IOException {
         final String log = LogBuilder
-                .logBuilderFromStringArgs(UserMetaData.class, "UserMetaData::createTypeAdapter()::read()")
+                .logBuilderFromStringArgs(UserMetaData.class,
+                        "UserMetaData::createTypeAdapter()::read()")
                 .toString();
         LOG(log);
         UserMetaData userMetaData = UserMetaData.createEmpty();

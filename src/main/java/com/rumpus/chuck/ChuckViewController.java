@@ -19,23 +19,27 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @RestController
 @RequestMapping(ChuckController.PATH_CHARLES_PIKAART_THOMAS_VIEW)
-@CrossOrigin(origins = {ChuckController.CHARLES_PIKAART_THOMAS_DEV_URI, ChuckController.CHARLES_PIKAART_THOMAS_BETA_URI, ChuckController.CHARLES_PIKAART_THOMAS_LIVE_URI})
-public class ChuckViewController extends AbstractViewController
-    < // TODO: using rumpus stuff here for now. should change to chuck stuff
-        RumpusServiceManager,
-        RumpusUser,
-        RumpusUserMetaData,
-        AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO: Change to ChuckUserService when created
-        RumpusAdminUserView
-    > {
+@CrossOrigin(origins = {ChuckController.CHARLES_PIKAART_THOMAS_DEV_URI,
+        ChuckController.CHARLES_PIKAART_THOMAS_BETA_URI,
+        ChuckController.CHARLES_PIKAART_THOMAS_LIVE_URI})
+public class ChuckViewController extends AbstractViewController< // TODO: using rumpus stuff here
+                                                                 // for now. should change to chuck
+                                                                 // stuff
+        RumpusServiceManager, RumpusUser, RumpusUserMetaData, AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO:
+                                                                                                                   // Change
+                                                                                                                   // to
+                                                                                                                   // ChuckUserService
+                                                                                                                   // when
+                                                                                                                   // created
+        RumpusAdminUserView> {
 
-        public ChuckViewController() {
-            super(ChuckViewLoader.create());
-        }
+    public ChuckViewController() {
+        super(ChuckViewLoader.create());
+    }
 
-        @Override
-        public String toString() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'toString'");
-        }
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
 }

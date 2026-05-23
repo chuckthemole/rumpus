@@ -6,5 +6,5 @@ import com.rumpus.common.Diagnostic.AbstractLibraryStartupValidator;
 
 @Component
 public class LibraryStartupValidator extends AbstractLibraryStartupValidator {
-    
+
 }

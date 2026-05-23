@@ -11,27 +11,28 @@ public class TestRunner {
             System.out.println("**********");
             runProcess("javac -d target -cp target:ModelsTest.jar AuthTest.java");
             System.out.println("**********");
-            runProcess("java -jar ModelsTest.jar --class-path target --select-class com.rumpus.rumpus.models.AuthTest");
+            runProcess(
+                    "java -jar ModelsTest.jar --class-path target --select-class com.rumpus.rumpus.models.AuthTest");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     private static void printLines(String cmd, InputStream ins) throws Exception {
         String line = null;
         BufferedReader in = new BufferedReader(
-            new InputStreamReader(ins));
+                new InputStreamReader(ins));
         while ((line = in.readLine()) != null) {
             System.out.println(cmd + " " + line);
         }
-      }
+    }
 
-      private static void runProcess(String command) throws Exception {
+    private static void runProcess(String command) throws Exception {
         Process pro = Runtime.getRuntime().exec(command);
-        printLines(command + " stdout:", pro.getInputStream());
-        printLines(command + " stderr:", pro.getErrorStream());
+        printLines(command + " stdout:",pro.getInputStream());
+        printLines(command + " stderr:",pro.getErrorStream());
         pro.waitFor();
         System.out.println(command + " exitValue() " + pro.exitValue());
-      }
+    }
 }

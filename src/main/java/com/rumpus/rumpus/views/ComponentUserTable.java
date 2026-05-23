@@ -15,5 +15,5 @@ public class ComponentUserTable extends AbstractTableBuilder {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
-    
+
 }

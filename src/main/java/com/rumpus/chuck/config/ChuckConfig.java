@@ -11,12 +11,15 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 /**
- * TODO: think about overriding dataSource() to use a different database for different packages.
+ * TODO: think about overriding dataSource() to use a different database for
+ * different packages.
  */
 @Configuration
 @ComponentScan("com.rumpus.chuck")
 @org.springframework.boot.context.properties.ConfigurationProperties(prefix = "rumpus")
-// @org.springframework.context.annotation.PropertySource(value = "classpath:properties.yml", factory = com.rumpus.common.Config.Properties.yaml.YamlPropertySourceFactory.class)
+// @org.springframework.context.annotation.PropertySource(value =
+// "classpath:properties.yml", factory =
+// com.rumpus.common.Config.Properties.yaml.YamlPropertySourceFactory.class)
 public class ChuckConfig extends AbstractCommonConfig {
 
     @Autowired
@@ -26,7 +29,8 @@ public class ChuckConfig extends AbstractCommonConfig {
 
     @Bean
     public RumpusAdminUserView chuckAdminUserView() {
-        return RumpusAdminUserView.createWithUser(RumpusUser.create("EMPTY_USERNAME", "EMPTY_PASSWORD", "EMPTY_EMAIL"));
+        return RumpusAdminUserView
+                .createWithUser(RumpusUser.create("EMPTY_USERNAME","EMPTY_PASSWORD","EMPTY_EMAIL"));
     }
 
     @Override

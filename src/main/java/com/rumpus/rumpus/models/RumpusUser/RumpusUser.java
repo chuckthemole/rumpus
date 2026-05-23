@@ -15,7 +15,8 @@ import jakarta.persistence.Table;
 @Table(name = "rumpus_user")
 public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaData> {
 
-    @JsonIgnore private static SqlIdManager idManager;
+    @JsonIgnore
+    private static SqlIdManager idManager;
 
     static {
         RumpusUser.idManager = new SqlIdManager();
@@ -41,33 +42,38 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
     }
 
     public static RumpusUser createFromMap(Map<String, Object> userMap) {
-        LOG(RumpusUser.class, "RumpusUser::createFromMap()");
+        LOG(RumpusUser.class,"RumpusUser::createFromMap()");
         RumpusUser user = new RumpusUser();
-        user.setUsername(userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
-        user.setUserPassword(userMap.containsKey(PASSWORD) ? (String) userMap.get(PASSWORD) : EMPTY_FIELD);
+        user.setUsername(
+                userMap.containsKey(USERNAME) ? (String) userMap.get(USERNAME) : EMPTY_FIELD);
+        user.setUserPassword(
+                userMap.containsKey(PASSWORD) ? (String) userMap.get(PASSWORD) : EMPTY_FIELD);
         user.setEmail(userMap.containsKey(EMAIL) ? (String) userMap.get(EMAIL) : EMPTY_FIELD);
-        user.setId(userMap.containsKey(ID) ? java.util.UUID.fromString((String) userMap.get(ID)) : EMPTY_UUID);
+        user.setId(userMap.containsKey(ID)
+                ? java.util.UUID.fromString((String) userMap.get(ID))
+                : EMPTY_UUID);
 
         // user meta data
         RumpusUserMetaData meta = null;
-        if(userMap.containsKey(USER_META_DATA)) {
-            // meta = RumpusUserMetaData.createFromListOfMaps((List<Map<String, String>>) userMap.get(USER_META_DATA));
+        if (userMap.containsKey(USER_META_DATA)) {
+            // meta = RumpusUserMetaData.createFromListOfMaps((List<Map<String, String>>)
+            // userMap.get(USER_META_DATA));
             meta = (RumpusUserMetaData) userMap.get(USER_META_DATA);
         }
 
-        if(meta == null) {
+        if (meta == null) {
             final String log = LogBuilder.logBuilderFromStringArgs(
-                RumpusUser.class,
-                "Failed building RumpusUserMetaData. Setting empty meta data.").toString();
-            LOG(RumpusUser.class, log);
+                    RumpusUser.class,
+                    "Failed building RumpusUserMetaData. Setting empty meta data.").toString();
+            LOG(RumpusUser.class,log);
             meta = RumpusUserMetaData.createEmpty();
         }
 
         final String log = LogBuilder.logBuilderFromStringArgs(
-            RumpusUser.class,
-            "Success building RumpusUserMetaData:\n",
-            meta.toString()).toString();
-        LOG(RumpusUser.class, log);
+                RumpusUser.class,
+                "Success building RumpusUserMetaData:\n",
+                meta.toString()).toString();
+        LOG(RumpusUser.class,log);
         user.setMetaData(meta);
         return user;
     }

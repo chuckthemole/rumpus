@@ -15,7 +15,8 @@ public class OAuth2Success extends AbstractOAuth2SuccesHandler {
 
     @Override
     public String getBaseRedirectUrl() {
-        return "http://localhost:3000/auth/failure"; // TODO: let's put this in env vars, something like REACT_URI
+        return "http://localhost:3000/auth/failure"; // TODO: let's put this in env vars, something
+                                                     // like REACT_URI
     }
 
 }

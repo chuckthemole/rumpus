@@ -17,8 +17,8 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 /**
  * RumpusLoader seeds the database with initial RumpusUser data.
  * <p>
- * This runner is only active in the "dev" profile to avoid
- * accidentally populating production data.
+ * This runner is only active in the "dev" profile to avoid accidentally
+ * populating production data.
  */
 @Component
 @Profile("dev")
@@ -37,7 +37,8 @@ public class RumpusLoader implements CommandLineRunner {
     /**
      * Constructor
      *
-     * @param userDao DAO for RumpusUser persistence
+     * @param userDao
+     *            DAO for RumpusUser persistence
      */
     public RumpusLoader(IRumpusUserDao userDao) {
         this.userDao = userDao;
@@ -45,14 +46,15 @@ public class RumpusLoader implements CommandLineRunner {
     }
 
     /**
-     * CommandLineRunner entry point.
-     * Executes automatically on application startup if the component is active.
+     * CommandLineRunner entry point. Executes automatically on application startup
+     * if the component is active.
      *
-     * @param args Command-line arguments
+     * @param args
+     *            Command-line arguments
      */
     @Override
     public void run(String... args) throws Exception {
-        ICommon.LOG(RumpusLoader.class, "RumpusLoader::run() - running in dev profile");
+        ICommon.LOG(RumpusLoader.class,"RumpusLoader::run() - running in dev profile");
 
         // Try to read users from JSON file
         Optional<RumpusUser[]> usersOpt = this.fileProcessor.<RumpusUser>processFile(
@@ -65,15 +67,16 @@ public class RumpusLoader implements CommandLineRunner {
             LogBuilder log = LogBuilder.logBuilderFromStringArgs("\nPopulating Rumpus users...");
             for (RumpusUser user : users) {
                 if (userDao.add(user) != null) {
-                    log.append("\n  Success adding user: ", user.getUsername());
+                    log.append("\n  Success adding user: ",user.getUsername());
                 } else {
-                    log.append("\n  ERROR adding user: ", user.toString());
+                    log.append("\n  ERROR adding user: ",user.toString());
                 }
             }
 
-            ICommon.LOG(RumpusLoader.class, log.toString());
+            ICommon.LOG(RumpusLoader.class,log.toString());
         } else {
-            ICommon.LOG(RumpusLoader.class, "RumpusLoader::run() - no users found, skipping population");
+            ICommon.LOG(RumpusLoader.class,
+                    "RumpusLoader::run() - no users found, skipping population");
         }
     }
 

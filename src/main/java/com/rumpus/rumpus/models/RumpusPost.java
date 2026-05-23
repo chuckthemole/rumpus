@@ -9,12 +9,13 @@ import com.rumpus.common.Forum.ForumPost;
 
 /**
  * RumpusPost
- * 
- * Represents a post in a Rumpus thread.
- * TODO: This class can be abstracted. We can create a CommonPost class that can be used by both Rumpus and RumpusCommon.
- * Actually look in Forum in common and see if we can use that.
- * 
- * UPDATE: I've already created a package Forum and elements like {@link ForumPost}
+ *
+ * Represents a post in a Rumpus thread. TODO: This class can be abstracted. We
+ * can create a CommonPost class that can be used by both Rumpus and
+ * RumpusCommon. Actually look in Forum in common and see if we can use that.
+ *
+ * UPDATE: I've already created a package Forum and elements like
+ * {@link ForumPost}
  */
 public class RumpusPost extends RumpusModel<RumpusPost> {
     private static SqlIdManager idManager;
@@ -30,34 +31,35 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
         RumpusPost.idManager = new SqlIdManager();
     }
 
-    private RumpusPost() {}
-    
+    private RumpusPost() {
+    }
+
     private RumpusPost(
-        String title,
-        String content,
-        String authorID,
-        String threadID,
-        String created,
-        String updated,
-        String parentPostID) {
-            this.title = title;
-            this.content = content;
-            this.authorID = authorID;
-            this.threadID = threadID;
-            this.created = created;
-            this.updated = updated;
-            this.parentPostID = parentPostID;
+            String title,
+            String content,
+            String authorID,
+            String threadID,
+            String created,
+            String updated,
+            String parentPostID) {
+        this.title = title;
+        this.content = content;
+        this.authorID = authorID;
+        this.threadID = threadID;
+        this.created = created;
+        this.updated = updated;
+        this.parentPostID = parentPostID;
     }
 
     public static RumpusPost create(
-        String title,
-        String content,
-        String authorID,
-        String threadID,
-        String created,
-        String updated,
-        String parentPostID) {
-            return new RumpusPost(title, content, authorID, threadID, created, updated, parentPostID);
+            String title,
+            String content,
+            String authorID,
+            String threadID,
+            String created,
+            String updated,
+            String parentPostID) {
+        return new RumpusPost(title, content, authorID, threadID, created, updated, parentPostID);
     }
 
     public static RumpusPost createEmpty() {
@@ -125,6 +127,7 @@ public class RumpusPost extends RumpusModel<RumpusPost> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
     }
+
     @Override
     public IModelIdManager<UUID> getIdManager() {
         return RumpusPost.idManager;

@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
@@ -33,8 +32,9 @@ import java.util.UUID;
 
 // TODO: DELETE
 // @RestController // TODO: start here maybe. I changed from Controller.
-public class RumpusAuthController extends
-        AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
+public class RumpusAuthController
+        extends
+            AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 
     @Autowired
     public RumpusAuthController(AuthenticationManager authenticationManager) {
@@ -96,17 +96,17 @@ public class RumpusAuthController extends
         String redirectUri = baseUrl + provider.getCallbackPath();
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("client_id", clientId);
-        params.add("client_secret", clientSecret);
-        params.add("code", code);
-        params.add("redirect_uri", redirectUri);
-        params.add("grant_type", "authorization_code");
+        params.add("client_id",clientId);
+        params.add("client_secret",clientSecret);
+        params.add("code",code);
+        params.add("redirect_uri",redirectUri);
+        params.add("grant_type","authorization_code");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Accept", "application/json");
+        headers.add("Accept","application/json");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-        logger.info("request: ", request.toString());
+        logger.info("request: ",request.toString());
 
         // ResponseEntity<Map> response = restTemplate.postForEntity(
         // provider.getTokenUrl(), request, Map.class);
@@ -124,21 +124,23 @@ public class RumpusAuthController extends
                 });
 
         Map<String, Object> responseBody = response.getBody();
-        logger.info("response body: ", responseBody.toString());
+        logger.info("response body: ",responseBody.toString());
         return (String) responseBody.get("access_token");
     }
 
     @Override
-    protected Map<String, Object> getUserInfo(OAuth2Provider provider, String accessToken) throws Exception {
+    protected Map<String, Object> getUserInfo(OAuth2Provider provider, String accessToken)
+            throws Exception {
         logger.info("getUserInfo");
         if (provider.getUserInfoUrl() == null) {
             logger.info("provider user info is null");
-            return new HashMap<>(); // For providers like Apple that don't have separate user info endpoint
+            return new HashMap<>(); // For providers like Apple that don't have separate user info
+                                    // endpoint
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + accessToken);
-        logger.info("accessToken: ", accessToken);
+        headers.add("Authorization","Bearer " + accessToken);
+        logger.info("accessToken: ",accessToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -151,7 +153,7 @@ public class RumpusAuthController extends
                 new ParameterizedTypeReference<Map<String, Object>>() {
                 });
 
-        logger.info("response: ", response.toString());
+        logger.info("response: ",response.toString());
 
         return response.getBody();
     }
@@ -163,7 +165,7 @@ public class RumpusAuthController extends
             String accessToken) {
         try {
             // Generate JWT token using your JwtService
-            String jwtToken = jwtService.generateToken(provider, userInfo);
+            String jwtToken = jwtService.generateToken(provider,userInfo);
 
             // Extract user details for response
             String email = provider.extractEmail(userInfo);
@@ -176,12 +178,12 @@ public class RumpusAuthController extends
             // - Set additional claims or permissions
 
             Map<String, Object> response = new HashMap<>();
-            response.put("token", jwtToken);
-            response.put("user", Map.of(
-                    "email", email,
-                    "name", name,
-                    "picture", picture,
-                    "provider", provider.getProviderId()));
+            response.put("token",jwtToken);
+            response.put("user",Map.of(
+                    "email",email,
+                    "name",name,
+                    "picture",picture,
+                    "provider",provider.getProviderId()));
 
             logger.info(MapStringObject.toString(response));
 
@@ -196,24 +198,24 @@ public class RumpusAuthController extends
 
     private String getClientId(OAuth2Provider provider) {
         switch (provider) {
-            case GOOGLE:
+            case GOOGLE :
                 return googleClientId;
             // case GITHUB:
             // return githubClientId;
             // Add other providers as needed
-            default:
+            default :
                 throw new IllegalArgumentException("Client ID not configured for " + provider);
         }
     }
 
     private String getClientSecret(OAuth2Provider provider) {
         switch (provider) {
-            case GOOGLE:
+            case GOOGLE :
                 return googleClientSecret;
             // case GITHUB:
             // return githubClientSecret;
             // Add other providers as needed
-            default:
+            default :
                 throw new IllegalArgumentException("Client secret not configured for " + provider);
         }
     }

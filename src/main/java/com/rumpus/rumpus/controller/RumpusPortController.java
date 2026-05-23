@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Not really using this right now. Had an idea to use the port manager but am not using it right now. I will keep it here for now. -chuck 2024-2-13
+ * Not really using this right now. Had an idea to use the port manager but am
+ * not using it right now. I will keep it here for now. -chuck 2024-2-13
  */
 @RestController
 @RequestMapping(ICommonController.PATH_PORTS_API)
@@ -20,14 +21,20 @@ public class RumpusPortController extends AbstractRumpusController {
 
     private static final String PORT = "8089"; // TODO: USE ENVIRONMENT
 
-    private static com.rumpus.common.Server.Port.PortManager rumpusPortManager; // TODO: should use service dao instead of direct access to the port manager
+    private static com.rumpus.common.Server.Port.PortManager rumpusPortManager; // TODO: should use
+                                                                                // service dao
+                                                                                // instead of direct
+                                                                                // access to the
+                                                                                // port manager
 
     static {
-        RumpusPortController.rumpusPortManager = com.rumpus.common.Server.Port.PortManager.getPortManager();
+        RumpusPortController.rumpusPortManager = com.rumpus.common.Server.Port.PortManager
+                .getPortManager();
         com.rumpus.common.Server.Port.PortManager.setAdminPort(RumpusPortController.PORT);
     }
 
-    public RumpusPortController() {}
+    public RumpusPortController() {
+    }
 
     @GetMapping(value = "get_ports")
     public ResponseEntity<java.util.Set<String>> getPorts(Authentication authentication) {
@@ -36,7 +43,8 @@ public class RumpusPortController extends AbstractRumpusController {
     }
 
     @PostMapping(value = "add_port/{port}")
-    public ResponseEntity<Boolean> addPort(@PathVariable("port") String port) {
+    public ResponseEntity<Boolean> addPort(@PathVariable("port")
+    String port) {
         LOG("RumpusPortController::addPort()");
         return new ResponseEntity<Boolean>(rumpusPortManager.add(port), HttpStatus.ACCEPTED);
     }

@@ -12,7 +12,7 @@ import com.rumpus.common.Integrations.*;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
 
 @Configuration
-@ComponentScan(basePackages = { "com.rumpus.buildshift" })
+@ComponentScan(basePackages = {"com.rumpus.buildshift"})
 public class BuildShiftConfig extends AbstractCommonConfig {
 
     private static final String NOTION_PROJECT_MANAGEMENT_TOKEN = "properties.notion.token.project-management";
@@ -49,8 +49,8 @@ public class BuildShiftConfig extends AbstractCommonConfig {
         NotionIntegration projectManagementIntegration = new NotionIntegration(
                 this.environment.getProperty(NOTION_PROJECT_MANAGEMENT_TOKEN));
         return Map.of(
-                "consoleIntegration", consoleIntegration,
-                "projectManagementIntegration", projectManagementIntegration);
+                "consoleIntegration",consoleIntegration,
+                "projectManagementIntegration",projectManagementIntegration);
     }
 
     @Bean
@@ -62,24 +62,24 @@ public class BuildShiftConfig extends AbstractCommonConfig {
                 registry,
                 AbstractCommonConfig.NOTION_DATABASES,
                 NotionResourceType.DATABASE,
-                postConstructDebug
-        );
+                postConstructDebug);
         this.notionRegistry = registry;
         return registry;
     }
 
     /**
-     * PostConstruct runs after all beans in this config are created.
-     * Ideal place to log diagnostic output collected during bean creation.
-     * TODO: We should move this member to AbstractCommonConfig. It would be nice to
-     * have this available for all configs.
+     * PostConstruct runs after all beans in this config are created. Ideal place to
+     * log diagnostic output collected during bean creation. TODO: We should move
+     * this member to AbstractCommonConfig. It would be nice to have this available
+     * for all configs.
      */
     @PostConstruct
     public void logPostConstructStatus() {
-        LOG(BuildShiftConfig.class, LogLevel.INFO, "===== BuildShiftConfig PostConstruct =====");
-        LOG(BuildShiftConfig.class, LogLevel.INFO, postConstructDebug.toString());
-        LOG(BuildShiftConfig.class, LogLevel.INFO,
-                "Loaded Notion registry with " + (notionRegistry != null ? notionRegistry.size() : 0) + " entries.");
+        LOG(BuildShiftConfig.class,LogLevel.INFO,"===== BuildShiftConfig PostConstruct =====");
+        LOG(BuildShiftConfig.class,LogLevel.INFO,postConstructDebug.toString());
+        LOG(BuildShiftConfig.class,LogLevel.INFO,
+                "Loaded Notion registry with "
+                        + (notionRegistry != null ? notionRegistry.size() : 0) + " entries.");
     }
 
     @Override

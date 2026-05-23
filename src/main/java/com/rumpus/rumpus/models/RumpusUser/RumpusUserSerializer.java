@@ -10,7 +10,9 @@ import com.rumpus.common.Model.AbstractMetaData;
 import com.rumpus.common.User.AbstractCommonUserMetaData;
 import com.rumpus.common.User.AbstractCommonUserSerializer;
 
-public class RumpusUserSerializer extends AbstractCommonUserSerializer<RumpusUser, RumpusUserMetaData> {
+public class RumpusUserSerializer
+        extends
+            AbstractCommonUserSerializer<RumpusUser, RumpusUserMetaData> {
 
     private RumpusUserSerializer(SerializationType serializationType) {
         super(serializationType);
@@ -22,7 +24,7 @@ public class RumpusUserSerializer extends AbstractCommonUserSerializer<RumpusUse
 
     @Override
     public void writeJson(JsonWriter out, RumpusUser object) throws IOException {
-        out.beginObject(); 
+        out.beginObject();
         out.name(ICommon.USERNAME);
         out.value(object.getUsername());
         out.name(ICommon.EMAIL);
@@ -49,33 +51,33 @@ public class RumpusUserSerializer extends AbstractCommonUserSerializer<RumpusUse
 
         while (in.hasNext()) {
             JsonToken token = in.peek();
-            
+
             if (token.equals(JsonToken.NAME)) {
-                //get the current token 
-                fieldname = in.nextName(); 
+                // get the current token
+                fieldname = in.nextName();
             }
             if (ICommon.USERNAME.equals(fieldname)) {
-                //move to next token
+                // move to next token
                 token = in.peek();
                 user.setUsername(in.nextString());
             }
-            if(ICommon.EMAIL.equals(fieldname)) {
-                //move to next token
+            if (ICommon.EMAIL.equals(fieldname)) {
+                // move to next token
                 token = in.peek();
                 user.setEmail(in.nextString());
             }
 
             // meta data
-            if(AbstractMetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
-                //move to next token
+            if (AbstractMetaData.USER_CREATION_DATE_TIME.equals(fieldname)) {
+                // move to next token
                 token = in.peek();
                 metaData.setCreationTime(in.nextString());
             }
-            if(AbstractCommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
+            if (AbstractCommonUserMetaData.USER_PHOTO_LINK.equals(fieldname)) {
                 token = in.peek();
                 metaData.setPhotoLink(in.nextString());
             }
-            if(AbstractCommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
+            if (AbstractCommonUserMetaData.USER_ABOUT_ME.equals(fieldname)) {
                 token = in.peek();
                 metaData.setAboutMe(in.nextString());
             }

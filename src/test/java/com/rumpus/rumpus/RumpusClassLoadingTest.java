@@ -17,7 +17,7 @@ public class RumpusClassLoadingTest {
         assertDoesNotThrow(() -> {
             Class.forName(RumpusClassLoadingTest.FORUM_THREAD_MANAGER);
             Class.forName(RumpusClassLoadingTest.FORUM_THREAD_THREAD);
-        }, "Common library classes should be loadable");
+        },"Common library classes should be loadable");
     }
 
     @Test
@@ -25,6 +25,6 @@ public class RumpusClassLoadingTest {
         assertDoesNotThrow(() -> {
             ForumThreadManager manager = ForumThreadManager.create();
             assertNotNull(manager);
-        }, "ForumThreadManager should be instantiable");
+        },"ForumThreadManager should be instantiable");
     }
 }

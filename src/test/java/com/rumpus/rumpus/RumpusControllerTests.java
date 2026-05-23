@@ -19,7 +19,7 @@ import com.rumpus.rumpus.views.RumpusViewLoader;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
- 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,9 +36,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @WebMvcTest(RumpusRestController.class)
 public class RumpusControllerTests extends AbstractRumpusTest {
 
-    @MockBean IRumpusUserService mockUserService;
-    @MockBean AbstractViews viewLoader;
-    @Autowired MockMvc mockMvc;
+    @MockBean
+    IRumpusUserService mockUserService;
+    @MockBean
+    AbstractViews viewLoader;
+    @Autowired
+    MockMvc mockMvc;
 
     public RumpusControllerTests() {
         super(RumpusControllerTests.class);
@@ -59,7 +62,7 @@ public class RumpusControllerTests extends AbstractRumpusTest {
     @Override
     protected void tearDown() {
     }
- 
+
     @Test
     public void testfindAll() throws Exception {
         RumpusUser user = RumpusUser.createEmptyUser();
@@ -69,9 +72,9 @@ public class RumpusControllerTests extends AbstractRumpusTest {
 
         Mockito.when(mockUserService.getAll()).thenReturn(users);
         mockMvc.perform(get(ICommonController.PATH_API_USERS + "/username")) // sorting by username
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$", Matchers.hasSize(1)))
-            .andExpect(jsonPath("$[0].username", Matchers.is("Frodo")));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].username",Matchers.is("Frodo")));
     }
 
     @Test
@@ -82,9 +85,9 @@ public class RumpusControllerTests extends AbstractRumpusTest {
         Mockito.when(viewLoader.getFooter()).thenReturn(footer);
 
         mockMvc.perform(get(ICommonController.PATH_VIEW_FOOTER))
-            .andExpect(status().isOk());
+                .andExpect(status().isOk());
 
-            // .andExpect(jsonPath("$", Matchers.hasSize(1)))
-            // .andExpect(jsonPath("$[0].name", Matchers.is("Frodo")));
+        // .andExpect(jsonPath("$", Matchers.hasSize(1)))
+        // .andExpect(jsonPath("$[0].name", Matchers.is("Frodo")));
     }
 }

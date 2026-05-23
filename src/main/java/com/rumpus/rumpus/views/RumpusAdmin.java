@@ -17,7 +17,8 @@ public class RumpusAdmin extends AbstractAdmin {
     private static final String BREADCRUMB_COMPONENT_NAME = "RumpusAdminBreadcrumb";
     private static final String WELCOME_COMPONENT_NAME = "RumpusAdminWelcome";
 
-    private RumpusAdmin() {}
+    private RumpusAdmin() {
+    }
 
     public static RumpusAdmin create() {
         return new RumpusAdmin();
@@ -33,7 +34,7 @@ public class RumpusAdmin extends AbstractAdmin {
         stringBuilder.append(",");
         stringBuilder.append(AbstractAside.GROUP_DELIMITER);
         stringBuilder.append("group2, group2-item1, group2-item2");
-        return BulmaAside.create(ASIDE_COMPONENT_NAME, stringBuilder.toString());
+        return BulmaAside.create(ASIDE_COMPONENT_NAME,stringBuilder.toString());
     }
 
     @Override
@@ -46,7 +47,7 @@ public class RumpusAdmin extends AbstractAdmin {
         sb.append(AbstractComponent.DEFAULT_LINK_DELIMITER);
         sb.append("www.google.com,");
         sb.append("Current Page");
-        return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME, sb.toString());
+        return BulmaBreadcrumb.create(BREADCRUMB_COMPONENT_NAME,sb.toString());
     }
 
     @Override
@@ -60,7 +61,7 @@ public class RumpusAdmin extends AbstractAdmin {
         sb.append(AbstractHtmlObject.HtmlTagType.H2);
         sb.append(AbstractWelcome.WELCOME_COMPONENT_DELIMITER);
         sb.append("What the hell are you doing?!,");
-        return BulmaWelcome.create(WELCOME_COMPONENT_NAME, sb.toString());
+        return BulmaWelcome.create(WELCOME_COMPONENT_NAME,sb.toString());
     }
 
     @Override

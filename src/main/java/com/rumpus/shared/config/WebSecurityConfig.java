@@ -40,14 +40,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * WebSecurityConfig
- * ------------------------------------------------------------
- * Main Spring Security configuration for the Rumpus application.
- * Handles authentication, authorization, logout, and CORS setup.
- * Uses Spring Boot Binder for YAML-driven CORS configuration.
+ * ------------------------------------------------------------ Main Spring
+ * Security configuration for the Rumpus application. Handles authentication,
+ * authorization, logout, and CORS setup. Uses Spring Boot Binder for
+ * YAML-driven CORS configuration.
  *
- * TODO:
- * - Consolidate postConstructDebug into AbstractCommonConfig for
- * shared diagnostic logging across all configuration classes.
+ * TODO: - Consolidate postConstructDebug into AbstractCommonConfig for shared
+ * diagnostic logging across all configuration classes.
  * ------------------------------------------------------------
  */
 @Configuration
@@ -79,10 +78,9 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     }
 
     /**
-     * Defines Spring Security's primary filter chain:
-     * - Configures form login, logout, and exception handling.
-     * - Sets authentication and authorization rules.
-     * - Integrates OAuth2 login and handlers.
+     * Defines Spring Security's primary filter chain: - Configures form login,
+     * logout, and exception handling. - Sets authentication and authorization
+     * rules. - Integrates OAuth2 login and handlers.
      */
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -100,7 +98,8 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                             if (authentication == null) {
                                 response.getWriter().write("{\"message\": \"No active session\"}");
                             } else {
-                                response.getWriter().write("{\"message\": \"Logged out successfully\"}");
+                                response.getWriter()
+                                        .write("{\"message\": \"Logged out successfully\"}");
                             }
                         })
                         .invalidateHttpSession(true)
@@ -110,12 +109,12 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                 .formLogin(form -> form
                         .loginProcessingUrl("/auth/login") // Matches frontend call
                         .successHandler((request, response, authentication) -> {
-                            LOG(WebSecurityConfig.class, LogLevel.DEBUG,
+                            LOG(WebSecurityConfig.class,LogLevel.DEBUG,
                                     "User logged in: " + authentication.getName());
                             response.setStatus(HttpServletResponse.SC_OK);
                         })
                         .failureHandler((request, response, exception) -> {
-                            LOG(WebSecurityConfig.class, LogLevel.WARN,
+                            LOG(WebSecurityConfig.class,LogLevel.WARN,
                                     "Login failed: " + exception.getMessage());
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                         })
@@ -126,8 +125,8 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(ICommonController.PATH_API_USERS).hasRole(ICommon.ADMIN)
                         .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/api/auth/**", "/oauth2/**", "/login/oauth2/**").permitAll()
-                        .requestMatchers("/api/public/**", "/**").permitAll()
+                        .requestMatchers("/api/auth/**","/oauth2/**","/login/oauth2/**").permitAll()
+                        .requestMatchers("/api/public/**","/**").permitAll()
                 // .anyRequest().authenticated() // enable when locking down API
                 )
                 .oauth2Login(oauth2 -> oauth2
@@ -153,7 +152,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                         .clientSecret(environment.getProperty(OAUTH2_GOOGLE_CLIENT_SECRET))
                         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                         .redirectUri("https://localhost:8888/login/oauth2/code/{registrationId}")
-                        .scope("read", "write")
+                        .scope("read","write")
                         .authorizationUri("https://provider.com/oauth2/authorize")
                         .tokenUri("https://provider.com/oauth2/token")
                         .clientName("Custom Provider")
@@ -165,8 +164,8 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     // ============================================================
 
     /**
-     * Configures CORS using Binder to properly parse YAML list properties.
-     * Adds all discovered configuration information to postConstructDebug.
+     * Configures CORS using Binder to properly parse YAML list properties. Adds all
+     * discovered configuration information to postConstructDebug.
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource(Environment environment) {
@@ -174,22 +173,24 @@ public class WebSecurityConfig extends AbstractCommonConfig {
         Binder binder = Binder.get(environment);
 
         // --- Allowed Origins ---
-        List<String> origins = bindList(binder, AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS);
-        configuration.setAllowedOrigins(!origins.isEmpty() ? origins : List.of(FRONTEND_LOCAL_HOST));
+        List<String> origins = bindList(binder,AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS);
+        configuration
+                .setAllowedOrigins(!origins.isEmpty() ? origins : List.of(FRONTEND_LOCAL_HOST));
 
         // --- Allowed Methods ---
-        List<String> methods = bindList(binder, AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS);
+        List<String> methods = bindList(binder,
+                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS);
         configuration.setAllowedMethods(!methods.isEmpty()
                 ? methods
-                : List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                : List.of("GET","POST","PUT","DELETE","OPTIONS"));
 
         // --- Allowed Headers ---
-        List<String> headers = bindList(binder, AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS);
+        List<String> headers = bindList(binder,AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS);
         configuration.setAllowedHeaders(!headers.isEmpty() ? headers : List.of("*"));
 
         // --- Allow Credentials ---
         Boolean credentials = binder
-                .bind(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS, Boolean.class)
+                .bind(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS,Boolean.class)
                 .orElse(true);
         configuration.setAllowCredentials(credentials);
 
@@ -198,7 +199,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
                 .append("\n");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**",configuration);
         return source;
     }
 
@@ -207,16 +208,19 @@ public class WebSecurityConfig extends AbstractCommonConfig {
      */
     private List<String> bindList(Binder binder, String propertyKey) {
         try {
-            List<String> list = binder.bind(propertyKey, Bindable.listOf(String.class))
+            List<String> list = binder.bind(propertyKey,Bindable.listOf(String.class))
                     .orElse(Collections.emptyList());
             if (!list.isEmpty()) {
-                postConstructDebug.append(String.format("Read property '%s': %s%n", propertyKey, list));
+                postConstructDebug
+                        .append(String.format("Read property '%s': %s%n",propertyKey,list));
             } else {
-                postConstructDebug.append(String.format("Property '%s' missing or empty%n", propertyKey));
+                postConstructDebug
+                        .append(String.format("Property '%s' missing or empty%n",propertyKey));
             }
             return list;
         } catch (Exception e) {
-            postConstructDebug.append(String.format("Error reading '%s': %s%n", propertyKey, e.getMessage()));
+            postConstructDebug
+                    .append(String.format("Error reading '%s': %s%n",propertyKey,e.getMessage()));
             return Collections.emptyList();
         }
     }
@@ -240,14 +244,14 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     // ============================================================
 
     /**
-     * PostConstruct runs after all beans in this config are created.
-     * Ideal place to log diagnostic output collected during bean creation.
-     * TODO: Move this to AbstractCommonConfig for centralized use.
+     * PostConstruct runs after all beans in this config are created. Ideal place to
+     * log diagnostic output collected during bean creation. TODO: Move this to
+     * AbstractCommonConfig for centralized use.
      */
     @PostConstruct
     public void logPostConstructStatus() {
-        LOG(WebSecurityConfig.class, LogLevel.INFO, "===== WebSecurityConfig PostConstruct =====");
-        LOG(WebSecurityConfig.class, LogLevel.INFO, postConstructDebug.toString());
+        LOG(WebSecurityConfig.class,LogLevel.INFO,"===== WebSecurityConfig PostConstruct =====");
+        LOG(WebSecurityConfig.class,LogLevel.INFO,postConstructDebug.toString());
     }
 
     // ============================================================
@@ -255,7 +259,7 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     // ============================================================
 
     private static void LOG_THIS(String... msg) {
-        LOG(WebSecurityConfig.class, LogLevel.DEBUG, msg);
+        LOG(WebSecurityConfig.class,LogLevel.DEBUG,msg);
     }
 
     @Override
