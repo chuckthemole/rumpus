@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.context.annotation.Configuration;
 
 import com.rumpus.common.Config.AbstractOpenApiConfig;
-import com.rumpus.common.Config.AbstractOpenApiConfig.ApiGroup;
 
 @Configuration
 public class OpenApiConfigRumpus extends AbstractOpenApiConfig {
+
+    private static final String VERSION = "v1.2"; // TODO: store this with other versioning
 
     /**
      * Define the API groups for this application. These will be used to create
@@ -34,6 +35,6 @@ public class OpenApiConfigRumpus extends AbstractOpenApiConfig {
 
     @Override
     protected String getVersion() {
-        return "v1.2";
+        return VERSION;
     }
 }

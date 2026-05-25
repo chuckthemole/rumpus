@@ -21,10 +21,23 @@ spring:
     ansi:
       enabled: ALWAYS # Enable ANSI colors in the console logs.
 
-  # Devtools settings (commented out here)
+  # Devtools settings
   # devtools:
+  #   livereload:
+  #       enabled: true
   #   restart:
-  #     enabled: false  # Disable automatic restart in development if needed.
+  #     enabled: true
+  #     additional-paths:
+  #       - src/main/java
+  #       - src/main/resources
+  #     exclude:
+  #       - build/**
+  #       - node_modules/**
+  #       - dist/**
+  #       - coverage/**
+  #       - tmp/**
+  #       - .gradle/**
+  #       - tmp/**
 
 management:
   # Configuration for Spring Boot actuator endpoints
@@ -78,6 +91,14 @@ logging:
       # (TODO from your note) In production, it’s common to make max-history and
       # total-size-cap configurable via environment variables
       # (e.g., dev keeps 1 day, prod keeps 30 days)
+  
+  # Log output patterns
+  pattern:
+    # Console log format
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+
+    # File log format
+    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
 
 # ------------------------------------------------------------
 # OpenAPI / Swagger Configuration
@@ -117,14 +138,6 @@ springdoc:
     title: "Rumpus API"
     description: "RESTful API documentation for the Rumpus service."
     version: "v1.0"
-
-  # Log output patterns
-  pattern:
-    # Console log format
-    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
-
-    # File log format
-    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
 
 # ------------------------------------------------------------
 # Environment-specific sections
