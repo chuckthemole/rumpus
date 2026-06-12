@@ -9,11 +9,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 
 public class RumpusUserTest {
     Long id = Long.valueOf(1);
     String name = "Pipin";
-    RumpusUser user = RumpusUser.create("Pipin", "marryandpippin", "pipin@shire.com");
+    RumpusUserFactory userFactory = new RumpusUserFactory();
+    RumpusUser user;
 
     @BeforeAll
     public static void setUpClass() {
@@ -25,6 +27,10 @@ public class RumpusUserTest {
 
     @BeforeEach
     public void setUp() {
+        user = userFactory.createEmpty();
+        user.setUsername("Pipin");
+        user.setEncodedPassword("marryandpippin");
+        user.setEmail("pipin@shire.com");
     }
 
     @AfterEach

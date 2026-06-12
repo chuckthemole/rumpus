@@ -1,4 +1,4 @@
-package com.chuck;
+package com.rumpus;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

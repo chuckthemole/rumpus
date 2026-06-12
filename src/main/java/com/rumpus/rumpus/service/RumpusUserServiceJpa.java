@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.rumpus.common.Service.AbstractUserServiceJpa;
 import com.rumpus.rumpus.data.IRumpusUserDaoJpa;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, RumpusUserMetaData> {
@@ -16,7 +17,8 @@ public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, Rum
 
     @Override
     public RumpusUser createUserWithUsername(String username) {
-        RumpusUser user = RumpusUser.createEmptyUser();
+        RumpusUserFactory userFactory = new RumpusUserFactory();
+        RumpusUser user = userFactory.createEmpty();
         user.setUsername(username);
         return user;
     }

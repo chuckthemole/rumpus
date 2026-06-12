@@ -21,6 +21,10 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
 
     // TODO: add more member variables for specific meta data here
 
+    protected RumpusUserMetaData() {
+        super(null, null, null);
+    }
+
     // ctors
     private RumpusUserMetaData(List<Map<String, String>> metaList) {
         super(null, null, null);
@@ -45,10 +49,6 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
     }
 
     // factory static ctors
-    public static RumpusUserMetaData createEmpty() {
-        return new RumpusUserMetaData(List.of());
-    }
-
     public static RumpusUserMetaData createFromListOfMaps(List<Map<String, String>> metaList) {
         return new RumpusUserMetaData(metaList);
     }

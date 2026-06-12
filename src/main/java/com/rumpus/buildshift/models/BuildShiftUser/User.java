@@ -21,20 +21,9 @@ public class User extends AbstractCommonUser<User, UserMetaData> {
         User.idManager = new SqlIdManager();
     }
 
-    private User() {
-        this.setMetaData(UserMetaData.createEmpty());
-    }
-
-    public static User createEmptyUser() {
-        return new User();
-    }
-
-    public static User create(String username, String password, String email) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        return user;
+    protected User() {
+        UserFactory factory = new UserFactory();
+        this.setMetaData(factory.createMetaData());
     }
 
     @Override

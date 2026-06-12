@@ -4,25 +4,27 @@ import com.rumpus.common.views.CSSFramework.Bulma.CSS.Layout.BulmaTile;
 import com.rumpus.common.views.Component.AbstractTile;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.Template.AbstractUserTemplate;
-
 import com.rumpus.buildshift.models.BuildShiftUser.User;
+import com.rumpus.buildshift.models.BuildShiftUser.UserFactory;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 
 public class AdminUserView extends AbstractUserTemplate<User, UserMetaData> {
 
-    private AdminUserView(User user) {
-        super(user);
+    private AdminUserView(User user, UserFactory userFactory) {
+        super(user, userFactory);
     }
 
     ///////////////////////
     /// Factory Methods ///
     ///////////////////////
     public static AdminUserView createWithEmptyUser() {
-        return new AdminUserView(User.createEmptyUser());
+        UserFactory userFactory = new UserFactory();
+        return new AdminUserView(userFactory.createEmpty(), userFactory);
     }
 
     public static AdminUserView createWithUser(User user) {
-        return new AdminUserView(user);
+        UserFactory userFactory = new UserFactory();
+        return new AdminUserView(user, userFactory);
     }
 
     @Override

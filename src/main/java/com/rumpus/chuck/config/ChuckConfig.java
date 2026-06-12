@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 
 import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 /**
@@ -29,9 +30,12 @@ public class ChuckConfig extends AbstractCommonConfig {
 
     @Bean
     public RumpusAdminUserView chuckAdminUserView() {
-        return RumpusAdminUserView
-                .createWithUser(
-                        RumpusUser.create("EMPTY_USERNAME", "EMPTY_PASSWORD", "EMPTY_EMAIL"));
+        RumpusUserFactory userFactory = new RumpusUserFactory();
+        RumpusUser user = userFactory.createEmpty();
+        user.setUsername("EMPTY_USERNAME");
+        user.setEncodedPassword("EMPTY_PASSWORD");
+        user.setEmail("EMPTY_EMAIL");
+        return new RumpusAdminUserView(user, userFactory);
     }
 
     @Override

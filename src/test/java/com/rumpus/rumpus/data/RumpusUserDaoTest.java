@@ -23,6 +23,7 @@ import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 
 @ContextConfiguration(classes = {RumpusConfig.class})
 @SpringBootTest
@@ -70,15 +71,16 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     @Override
     protected void setUp() {
         // TODO should clear db before, need to implement removeAll to do this.
-        expectedRootUser = RumpusUser.createEmptyUser();
+        RumpusUserFactory userFactory = new RumpusUserFactory();
+        expectedRootUser = userFactory.createEmpty();
         expectedRootUser.setUsername(ROOT_USER);
         expectedRootUser.setEmail(ROOT_USER_EMAIL);
-        expectedRootUser.setPassword(ROOT_USER_PASS);
+        expectedRootUser.setEncodedPassword(ROOT_USER_PASS);
         expectedRootUser.setId(ROOT_USER_ID);
-        expectedSecondaryUser = RumpusUser.createEmptyUser();
+        expectedSecondaryUser = userFactory.createEmpty();
         expectedSecondaryUser.setUsername(SECONDARY_USER);
         expectedSecondaryUser.setEmail(SECONDARY_USER_EMAIL);
-        expectedSecondaryUser.setPassword(SECONDARY_USER_PASS);
+        expectedSecondaryUser.setEncodedPassword(SECONDARY_USER_PASS);
         expectedSecondaryUser.setId(SECONDARY_USER_ID);
 
         // populate users from file

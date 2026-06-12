@@ -29,7 +29,7 @@ public class App implements WebMvcConfigurer {
         switch (targetApp.toLowerCase()) {
             case "chuck" :
                 System.out.println("Running ChuckApp");
-                appClass = com.chuck.ChuckApp.class;
+                appClass = com.rumpus.ChuckApp.class;
                 break;
             case "rumpus" :
                 System.out.println("Running RumpusApp");
@@ -37,7 +37,7 @@ public class App implements WebMvcConfigurer {
                 break;
             case "buildshift" :
                 System.out.println("Running BuildShiftApp");
-                appClass = com.buildshift.BuildShiftApp.class;
+                appClass = com.rumpus.BuildShiftApp.class;
                 break;
             default :
                 throw new IllegalArgumentException("Unknown app: " + targetApp);

@@ -15,6 +15,7 @@ import com.rumpus.common.views.Header;
 import com.rumpus.common.views.NavbarItem;
 import com.rumpus.common.views.NavbarItem.ItemType;
 import com.rumpus.common.views.ResourceManager;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.common.views.AbstractViews;
 
 /**
@@ -58,6 +59,9 @@ public class RumpusViewLoader extends AbstractViews {
     /** Navbar brand constants */
     private static final String NAVBAR_BRAND_NAME = "RUMPUSBrand";
 
+    @Autowired
+    private RumpusUserFactory userFactory;
+
     // ------------------------------------------------------------------------
     // Constructor with dependency injection
     // ------------------------------------------------------------------------
@@ -69,8 +73,9 @@ public class RumpusViewLoader extends AbstractViews {
      *            "navbarBrand".
      */
     @Autowired
-    public RumpusViewLoader(@Qualifier("navbarBrand")
-    String RUMPUS_BRAND) {
+    public RumpusViewLoader(
+            @Qualifier("navbarBrand")
+            String RUMPUS_BRAND) {
         this.RUMPUS_BRAND = RUMPUS_BRAND;
     }
 
@@ -190,7 +195,8 @@ public class RumpusViewLoader extends AbstractViews {
 
     @Override
     protected int initTemplates() {
-        this.put(RUMPUS_USER_VIEW_TEMPLATE, RumpusAdminUserView.createWithEmptyUser());
+        this.put(RUMPUS_USER_VIEW_TEMPLATE,
+                new RumpusAdminUserView(userFactory.createEmpty(), userFactory));
         return SUCCESS;
     }
 

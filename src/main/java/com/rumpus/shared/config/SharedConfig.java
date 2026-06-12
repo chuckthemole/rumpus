@@ -12,5 +12,4 @@ public class SharedConfig {
     public AuthenticationChecker authChecker() {
         return new AuthenticationChecker();
     }
-
 }

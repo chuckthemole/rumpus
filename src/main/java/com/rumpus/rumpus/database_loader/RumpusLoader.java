@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.rumpus.common.ICommon;
@@ -11,7 +12,7 @@ import com.rumpus.common.Builder.LogBuilder;
 import com.rumpus.common.FileIO.FileProcessor;
 import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
-import com.rumpus.rumpus.data.IRumpusUserDao;
+import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 
 /**
@@ -29,7 +30,9 @@ public class RumpusLoader implements CommandLineRunner {
     private final FileProcessor fileProcessor;
 
     // DAO for persisting RumpusUser objects
-    private final IRumpusUserDao userDao;
+    private final IRumpusUserService userService;
+
+    private final PasswordEncoder passwordEncoder;
 
     // Path to the JSON file containing initial users
     private static final String JSON_USERS_FILE = "src/main/java/com/rumpus/rumpus/database_loader/rumpus_users.json";
@@ -37,11 +40,12 @@ public class RumpusLoader implements CommandLineRunner {
     /**
      * Constructor
      *
-     * @param userDao
-     *            DAO for RumpusUser persistence
+     * @param userService
+     *            Serivice for RumpusUser persistence
      */
-    public RumpusLoader(IRumpusUserDao userDao) {
-        this.userDao = userDao;
+    public RumpusLoader(IRumpusUserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
         this.fileProcessor = new FileProcessor(fileReader);
     }
 
@@ -66,7 +70,11 @@ public class RumpusLoader implements CommandLineRunner {
 
             LogBuilder log = LogBuilder.logBuilderFromStringArgs("\nPopulating Rumpus users...");
             for (RumpusUser user : users) {
-                if (userDao.add(user) != null) {
+
+                // We are taking raw password from rumpus_users.json and encoding it
+                user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+
+                if (userService.add(user) != null) {
                     log.append("\n  Success adding user: ", user.getUsername());
                 } else {
                     log.append("\n  ERROR adding user: ", user.toString());

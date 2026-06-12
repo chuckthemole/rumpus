@@ -36,7 +36,8 @@ public class RumpusUserMetaDataSerializer extends AbstractMetaDataSerializer<Rum
         final String log = LogBuilder.logBuilderFromStringArgs(RumpusUserMetaData.class,
                 "RumpusUserMetaData::createTypeAdapter()::read()").toString();
         LOG(log);
-        RumpusUserMetaData userMetaData = RumpusUserMetaData.createEmpty();
+        RumpusUserFactory factory = new RumpusUserFactory();
+        RumpusUserMetaData userMetaData = factory.createMetaData();
         in.beginObject();
         String fieldname = null;
 

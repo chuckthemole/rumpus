@@ -1,14 +1,21 @@
 package com.rumpus.buildshift.service;
 
 import com.rumpus.common.Service.AbstractUserService;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
+import com.rumpus.buildshift.models.BuildShiftUser.UserFactory;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 
 public class UserService extends AbstractUserService<User, UserMetaData> implements IUserService {
 
-    public UserService(IUserDao userDao) {
-        super(userDao);
+    public UserService(
+            IUserDao userDao,
+            UserFactory userFactory,
+            PasswordEncoder passwordEncoder) {
+        super(userDao, userFactory, passwordEncoder);
     }
 
     @Override

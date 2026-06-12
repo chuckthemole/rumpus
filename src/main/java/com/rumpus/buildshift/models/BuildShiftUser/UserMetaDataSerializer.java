@@ -40,7 +40,8 @@ public class UserMetaDataSerializer extends AbstractMetaDataSerializer<UserMetaD
                         "UserMetaData::createTypeAdapter()::read()")
                 .toString();
         LOG(log);
-        UserMetaData userMetaData = UserMetaData.createEmpty();
+        UserFactory userFactory = new UserFactory();
+        UserMetaData userMetaData = userFactory.createMetaData();
         in.beginObject();
         String fieldname = null;
 

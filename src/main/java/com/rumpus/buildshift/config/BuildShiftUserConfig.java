@@ -13,6 +13,7 @@ import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
+import com.rumpus.buildshift.models.BuildShiftUser.UserFactory;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 import com.rumpus.buildshift.service.IUserService;
 import com.rumpus.buildshift.service.UserAuthenticationManager;
@@ -39,9 +40,14 @@ public class BuildShiftUserConfig
     }
 
     @Bean
+    public UserFactory userFactory() {
+        return new UserFactory();
+    }
+
+    @Bean
     @Primary
     public AdminUserView buildshiftAdminUserView() {
-        return AdminUserView.createWithUser(User.createEmptyUser());
+        return AdminUserView.createWithUser(this.userFactory().createEmpty());
     }
 
     // @Bean
@@ -62,8 +68,10 @@ public class BuildShiftUserConfig
     // }
 
     @Override
+    @DependsOn({"buildshiftUserDao", "userFactory", "passwordEncoder"})
     public IUserService childUserService() {
-        return new UserService(this.buildshiftUserDao());
+        return new UserService(this.buildshiftUserDao(), this.userFactory(),
+                this.passwordEncoder());
     }
 
     @Override

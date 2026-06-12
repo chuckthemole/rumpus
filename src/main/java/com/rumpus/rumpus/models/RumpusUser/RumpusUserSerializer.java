@@ -30,22 +30,28 @@ public class RumpusUserSerializer
         out.name(ICommon.EMAIL);
         out.value(object.getEmail());
         out.name(ICommon.PASSWORD);
-        out.value(object.getPassword());
+        out.value(object.getEncodedPassword());
 
         // meta data
-        out.name(AbstractMetaData.USER_CREATION_DATE_TIME);
-        out.value(object.getMetaData().getStandardFormattedCreationTime());
-        out.name(AbstractCommonUserMetaData.USER_PHOTO_LINK);
-        out.value(object.getMetaData().getPhotoLink());
-        out.name(AbstractCommonUserMetaData.USER_ABOUT_ME);
-        out.value(object.getMetaData().getAboutMe());
+        if (object.getMetaData() == null) {
+            RumpusUserFactory factory = new RumpusUserFactory();
+            object.setMetaData(factory.createMetaData());
+        } else {
+            out.name(AbstractMetaData.USER_CREATION_DATE_TIME);
+            out.value(object.getMetaData().getStandardFormattedCreationTime());
+            out.name(AbstractCommonUserMetaData.USER_PHOTO_LINK);
+            out.value(object.getMetaData().getPhotoLink());
+            out.name(AbstractCommonUserMetaData.USER_ABOUT_ME);
+            out.value(object.getMetaData().getAboutMe());
+        }
         out.endObject();
     }
 
     @Override
     public RumpusUser readJson(JsonReader in) throws IOException {
-        RumpusUser user = RumpusUser.createEmptyUser();
-        RumpusUserMetaData metaData = RumpusUserMetaData.createEmpty();
+        RumpusUserFactory userFactory = new RumpusUserFactory();
+        RumpusUser user = userFactory.createEmpty();
+        RumpusUserMetaData metaData = userFactory.createMetaData();
         in.beginObject();
         String fieldname = null;
 

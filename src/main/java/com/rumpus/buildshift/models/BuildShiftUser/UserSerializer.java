@@ -28,7 +28,7 @@ public class UserSerializer extends AbstractCommonUserSerializer<User, UserMetaD
         out.name(ICommon.EMAIL);
         out.value(object.getEmail());
         out.name(ICommon.PASSWORD);
-        out.value(object.getPassword());
+        out.value(object.getEncodedPassword());
 
         // meta data
         out.name(AbstractMetaData.USER_CREATION_DATE_TIME);
@@ -42,8 +42,9 @@ public class UserSerializer extends AbstractCommonUserSerializer<User, UserMetaD
 
     @Override
     public User readJson(JsonReader in) throws IOException {
-        User user = User.createEmptyUser();
-        UserMetaData metaData = UserMetaData.createEmpty();
+        UserFactory userFactory = new UserFactory();
+        User user = userFactory.createEmpty();
+        UserMetaData metaData = userFactory.createMetaData();
         in.beginObject();
         String fieldname = null;
 

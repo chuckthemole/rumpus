@@ -13,6 +13,7 @@ import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
@@ -39,16 +40,15 @@ public class RumpusUserConfig
     }
 
     @Bean
-    @Primary
-    public RumpusAdminUserView rumpusAdminUserView() {
-        return RumpusAdminUserView.createWithUser(RumpusUser.createEmptyUser());
+    public RumpusUserFactory rumpusUserFactory() {
+        return new RumpusUserFactory();
     }
 
-    // @Bean
-    // public AbstractUserTemplate<RumpusUser, RumpusUserMetaData>
-    // rumpusUserTemplate() {
-    // return RumpusAdminUserView.create(RumpusUser.createEmptyUser());
-    // }
+    @Bean
+    @Primary
+    public RumpusAdminUserView rumpusAdminUserView(RumpusUserFactory rumpusUserFactory) {
+        return new RumpusAdminUserView(rumpusUserFactory.createEmpty(), rumpusUserFactory);
+    }
 
     @Bean
     @DependsOn({"rumpusUserDao"})
@@ -56,15 +56,17 @@ public class RumpusUserConfig
         return new RumpusUserAuthenticationManager(this.rumpusUserDao());
     }
 
-    // @Bean
-    // @DependsOn({"rumpusUserDao"})
-    // public RumpusLoader rumpusLoader() {
-    // return new RumpusLoader(rumpusUserDao());
-    // }
-
+    /**
+     * TODO: can we add params to be injected here? We would need to alter the
+     * parent class to accept these dependencies.
+     */
     @Override
+    @DependsOn({"rumpusUserDao", "rumpusUserFactory", "passwordEncoder"})
     public IRumpusUserService childUserService() {
-        return new RumpusUserService(this.rumpusUserDao());
+        return new RumpusUserService(
+                this.rumpusUserDao(),
+                this.rumpusUserFactory(),
+                this.passwordEncoder());
     }
 
     @Override

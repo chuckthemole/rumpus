@@ -1,8 +1,11 @@
 package com.rumpus.rumpus.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.rumpus.common.Service.AbstractUserService;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 /**
@@ -18,8 +21,11 @@ public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUse
         implements
             IRumpusUserService {
 
-    public RumpusUserService(IRumpusUserDao userDao) {
-        super(userDao);
+    public RumpusUserService(
+            IRumpusUserDao userDao,
+            RumpusUserFactory userFactory,
+            PasswordEncoder passwordEncoder) {
+        super(userDao, userFactory, passwordEncoder);
     }
 
     @Override

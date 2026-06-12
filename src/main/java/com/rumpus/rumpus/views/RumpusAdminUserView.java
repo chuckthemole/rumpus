@@ -5,23 +5,13 @@ import com.rumpus.common.views.Component.AbstractTile;
 import com.rumpus.common.views.Html.AbstractHtmlObject;
 import com.rumpus.common.views.Template.AbstractUserTemplate;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusAdminUserView extends AbstractUserTemplate<RumpusUser, RumpusUserMetaData> {
 
-    private RumpusAdminUserView(RumpusUser user) {
-        super(user);
-    }
-
-    ///////////////////////
-    /// Factory Methods ///
-    ///////////////////////
-    public static RumpusAdminUserView createWithEmptyUser() {
-        return new RumpusAdminUserView(RumpusUser.createEmptyUser());
-    }
-
-    public static RumpusAdminUserView createWithUser(RumpusUser user) {
-        return new RumpusAdminUserView(user);
+    public RumpusAdminUserView(RumpusUser user, RumpusUserFactory userFactory) {
+        super(user, userFactory);
     }
 
     @Override

@@ -6,10 +6,10 @@ import com.rumpus.common.Dao.jdbc.AbstractJdbcRowMapper;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.util.Pair;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
+import com.rumpus.buildshift.models.BuildShiftUser.UserFactory;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.UUID;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.function.Function;
@@ -29,21 +29,22 @@ public class UserRowMapper extends AbstractJdbcRowMapper<User> {
         return ((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
-            Map<String, Object> UserMap = new HashMap<>();
+
+            UserFactory userFactory = new UserFactory();
+            User user = userFactory.createEmpty();
             try {
-                UserMap.put(ID, rs.getString(ID));
-                UserMap.put(USERNAME, rs.getString(USERNAME));
-                // UserMap.put(PASSWORD, rs.getString(PASSWORD));
-                UserMap.put(EMAIL, rs.getString(EMAIL));
+                user.setId(UUID.fromString(rs.getString(ID)));
+                user.setEmail(rs.getString(EMAIL));
+                user.setUsername(rs.getString(USERNAME));
+                // user.setPassword(rs.getString(PASSWORD));
+
                 Blob blob = rs.getBlob(USER_META_DATA);
                 if (blob != null) {
-                    // UserMap.put(USER_META_DATA,
-                    // BlobUtil.<UserMetaData>getObjectFromBlob(blob).get());
                     UserMetaData metaData = UserMetaData
                             .createFromStream(BlobUtil.getObjectInputStream(blob).get());
-                    UserMap.put(USER_META_DATA, metaData);
+                    user.setMetaData(metaData);
                 } else {
-                    UserMap.put(USER_META_DATA, UserMetaData.createEmpty());
+                    user.setMetaData(userFactory.createMetaData());
                 }
             } catch (SQLException e) {
                 final String log = LogBuilder
@@ -51,8 +52,8 @@ public class UserRowMapper extends AbstractJdbcRowMapper<User> {
                         .toString();
                 LOG(LogLevel.ERROR, log);
             }
-            // return User.createFromMap(UserMap);
-            return User.create((String) UserMap.get(USERNAME), "", (String) UserMap.get(EMAIL));
+
+            return user;
         });
     }
 

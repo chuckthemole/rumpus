@@ -100,12 +100,4 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
-
-    // @Bean
-    // @DependsOn({"rumpusDaoManager"})
-    // @ConditionalOnProperty(prefix = "database", name = "loader", havingValue =
-    // "true")
-    // public RumpusLoader rumpusLoader() {
-    // return new RumpusLoader(userDao(), rumpusAuthDao());
-    // }
 }

@@ -6,10 +6,10 @@ import com.rumpus.common.Dao.jdbc.AbstractJdbcRowMapper;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.util.Pair;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.UUID;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.function.Function;
@@ -29,21 +29,23 @@ public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
         return ((Pair<ResultSet, Integer> resultSetAndRow) -> {
             ResultSet rs = resultSetAndRow.getFirst();
             // int row = resultSetAndRow.getSecond();
-            Map<String, Object> rumpusUserMap = new HashMap<>();
+
+            RumpusUserFactory userFactory = new RumpusUserFactory();
+            RumpusUser user = userFactory.createEmpty();
+
             try {
-                rumpusUserMap.put(ID, rs.getString(ID));
-                rumpusUserMap.put(USERNAME, rs.getString(USERNAME));
-                // rumpusUserMap.put(PASSWORD, rs.getString(PASSWORD));
-                rumpusUserMap.put(EMAIL, rs.getString(EMAIL));
+                user.setEmail(rs.getString(EMAIL));
+                user.setUsername(rs.getString(USERNAME));
+                // user.setEncodedPassword(rs.getString(PASSWORD));
+                user.setId(UUID.fromString(rs.getString(ID)));
+
                 Blob blob = rs.getBlob(USER_META_DATA);
                 if (blob != null) {
-                    // rumpusUserMap.put(USER_META_DATA,
-                    // BlobUtil.<RumpusUserMetaData>getObjectFromBlob(blob).get());
                     RumpusUserMetaData metaData = RumpusUserMetaData
                             .createFromStream(BlobUtil.getObjectInputStream(blob).get());
-                    rumpusUserMap.put(USER_META_DATA, metaData);
+                    user.setMetaData(metaData);
                 } else {
-                    rumpusUserMap.put(USER_META_DATA, RumpusUserMetaData.createEmpty());
+                    user.setMetaData(userFactory.createMetaData());
                 }
             } catch (SQLException e) {
                 final String log = LogBuilder
@@ -51,7 +53,7 @@ public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
                         .toString();
                 LOG(LogLevel.ERROR, log);
             }
-            return RumpusUser.createFromMap(rumpusUserMap);
+            return user;
         });
     }
 

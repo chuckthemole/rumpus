@@ -20,6 +20,10 @@ public class UserMetaData extends AbstractCommonUserMetaData<UserMetaData> {
 
     // TODO: add more member variables for specific meta data here
 
+    protected UserMetaData() {
+        super(null, null, null);
+    }
+
     private UserMetaData(List<Map<String, String>> metaList) {
         super(null, null, null);
     }
@@ -41,10 +45,6 @@ public class UserMetaData extends AbstractCommonUserMetaData<UserMetaData> {
     }
 
     // factory static ctors
-    public static UserMetaData createEmpty() {
-        return new UserMetaData(List.of());
-    }
-
     public static UserMetaData createFromListOfMaps(List<Map<String, String>> metaList) {
         return new UserMetaData(metaList);
     }
