@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
@@ -26,7 +27,7 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusUserConfig
         extends
-            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+        AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
     @Autowired
     public RumpusUserConfig(Environment environment) {
@@ -34,8 +35,13 @@ public class RumpusUserConfig
     }
 
     @Bean
+    public UserSecurityService rumpusUserSecurityService() {
+        return new UserSecurityService(this.jdbcUserDetailsManager());
+    }
+
+    @Bean
     public IRumpusUserDao rumpusUserDao() {
-        IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
+        IRumpusUserDao userDao = new RumpusUserDao(this.dataSource());
         return userDao;
     }
 
@@ -51,7 +57,7 @@ public class RumpusUserConfig
     }
 
     @Bean
-    @DependsOn({"rumpusUserDao"})
+    @DependsOn({ "rumpusUserDao" })
     public AuthenticationManager authenticationManager() {
         return new RumpusUserAuthenticationManager(this.rumpusUserDao());
     }
@@ -61,10 +67,11 @@ public class RumpusUserConfig
      * parent class to accept these dependencies.
      */
     @Override
-    @DependsOn({"rumpusUserDao", "rumpusUserFactory", "passwordEncoder"})
+    @DependsOn({ "rumpusUserDao", "rumpusUserSecurityService", "rumpusUserFactory", "passwordEncoder" })
     public IRumpusUserService childUserService() {
         return new RumpusUserService(
                 this.rumpusUserDao(),
+                this.rumpusUserSecurityService(),
                 this.rumpusUserFactory(),
                 this.passwordEncoder());
     }

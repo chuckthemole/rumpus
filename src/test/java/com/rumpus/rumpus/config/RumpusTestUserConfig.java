@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.IRumpusUserDao;
 import com.rumpus.rumpus.data.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
@@ -28,7 +29,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusTestUserConfig
         extends
-            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+        AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
     @Autowired
     public RumpusTestUserConfig(Environment environment) {
@@ -37,7 +38,7 @@ public class RumpusTestUserConfig
 
     @Bean
     public IRumpusUserDao rumpusUserDao() {
-        IRumpusUserDao userDao = new RumpusUserDao(this.jdbcUserDetailsManager());
+        IRumpusUserDao userDao = new RumpusUserDao(this.dataSource());
         return userDao;
     }
 
@@ -53,21 +54,26 @@ public class RumpusTestUserConfig
     }
 
     @Bean
-    @DependsOn({"rumpusUserDao"})
+    @DependsOn({ "rumpusUserDao" })
     public AuthenticationManager authenticationManager() {
         return new RumpusUserAuthenticationManager(this.rumpusUserDao());
     }
 
     @Bean
-    @DependsOn({"childUserService"})
+    @DependsOn({ "childUserService" })
     public RumpusLoader rumpusLoader(IRumpusUserService rumpusUserService,
             PasswordEncoder passwordEncoder) {
         return new RumpusLoader(rumpusUserService, passwordEncoder);
     }
 
+    @Bean
+    public UserSecurityService rumpusUserSecurityService() {
+        return new UserSecurityService(this.jdbcUserDetailsManager());
+    }
+
     @Override
     public IRumpusUserService childUserService() {
-        return new RumpusUserService(this.rumpusUserDao(), this.userFactory(),
+        return new RumpusUserService(this.rumpusUserDao(), this.rumpusUserSecurityService(), this.userFactory(),
                 this.passwordEncoder());
     }
 

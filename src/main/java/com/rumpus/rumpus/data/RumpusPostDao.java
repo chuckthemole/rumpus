@@ -1,5 +1,7 @@
 package com.rumpus.rumpus.data;
 
+import java.util.UUID;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -14,15 +16,15 @@ public class RumpusPostDao extends RumpusDao<RumpusPost> implements IRumpusPostD
     }
 
     @Override
-    public RumpusPost add(RumpusPost model) {
+    protected RumpusPost doAdd(RumpusPost model) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        throw new UnsupportedOperationException("Unimplemented method 'doAdd'");
     }
 
     @Override
-    public RumpusPost update(String id, RumpusPost updatedModel) {
+    protected RumpusPost doUpdate(UUID id, RumpusPost model) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        throw new UnsupportedOperationException("Unimplemented method 'doUpdate'");
     }
 
     @Override

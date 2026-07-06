@@ -8,5 +8,5 @@ import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 
 @Repository
 @Profile("database")
-public interface IUserDao extends com.rumpus.common.Dao.IUserDao<User, UserMetaData> {
+public interface IUserDao extends com.rumpus.common.Dao.User.IUserDao<User, UserMetaData> {
 }

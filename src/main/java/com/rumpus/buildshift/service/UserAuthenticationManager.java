@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.HashSet;
 
 import com.rumpus.common.ICommon;
-import com.rumpus.common.Dao.IUserDao;
+import com.rumpus.common.Dao.User.IUserDao;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.User.AbstractCommonAuthManager;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
@@ -46,7 +46,7 @@ public class UserAuthenticationManager extends AbstractCommonAuthManager<User, U
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LOG_THIS("loadUserByUsername");
-        return this.userDao.loadUserByUsername(username);
+        return this.userSecurityService.loadUserByUsername(username);
     }
 
     @Override

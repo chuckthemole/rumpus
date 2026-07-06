@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -25,7 +26,7 @@ import com.rumpus.rumpus.config.RumpusConfig;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 
-@ContextConfiguration(classes = {RumpusConfig.class})
+@ContextConfiguration(classes = { RumpusConfig.class })
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
@@ -158,7 +159,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         for (RumpusUser user : RumpusUserDaoTest.users) {
             final String username = user.getUsername();
             if (!username.equals(ROOT_USER) && !username.equals(SECONDARY_USER)) {
-                this.userDao.remove(username);
+                this.userDao.remove(UUID.fromString(username));
                 assertNull(this.userDao.getByUsername(username));
             }
         }

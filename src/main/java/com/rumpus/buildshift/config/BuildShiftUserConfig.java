@@ -1,5 +1,7 @@
 package com.rumpus.buildshift.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
@@ -26,7 +29,7 @@ import com.rumpus.buildshift.views.AdminUserView;
 @ComponentScan("com.rumpus.buildshift")
 public class BuildShiftUserConfig
         extends
-            AbstractCommonUserConfig<User, UserMetaData, IUserService> {
+        AbstractCommonUserConfig<User, UserMetaData, IUserService> {
 
     @Autowired
     public BuildShiftUserConfig(Environment environment) {
@@ -35,7 +38,7 @@ public class BuildShiftUserConfig
 
     @Bean
     public IUserDao buildshiftUserDao() {
-        IUserDao userDao = new UserDao(this.jdbcUserDetailsManager());
+        IUserDao userDao = new UserDao(this.dataSource());
         return userDao;
     }
 
@@ -56,7 +59,7 @@ public class BuildShiftUserConfig
     // }
 
     @Bean
-    @DependsOn({"buildshiftUserDao"})
+    @DependsOn({ "buildshiftUserDao" })
     public AuthenticationManager buildshiftAuthenticationManager() {
         return new UserAuthenticationManager(this.buildshiftUserDao());
     }
@@ -67,10 +70,18 @@ public class BuildShiftUserConfig
     // return new BuildShiftLoader(buildshiftUserDao());
     // }
 
+    @Bean
+    public UserSecurityService buildshiftUserSecurityService() {
+        return new UserSecurityService(this.jdbcUserDetailsManager());
+    }
+
     @Override
-    @DependsOn({"buildshiftUserDao", "userFactory", "passwordEncoder"})
+    @DependsOn({ "buildshiftUserDao", "userFactory", "passwordEncoder" })
     public IUserService childUserService() {
-        return new UserService(this.buildshiftUserDao(), this.userFactory(),
+        return new UserService(
+                this.buildshiftUserDao(),
+                this.buildshiftUserSecurityService(),
+                this.userFactory(),
                 this.passwordEncoder());
     }
 
