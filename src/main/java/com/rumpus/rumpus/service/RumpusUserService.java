@@ -4,7 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.rumpus.common.Service.User.AbstractUserService;
 import com.rumpus.common.Service.User.UserSecurityService;
-import com.rumpus.rumpus.data.IRumpusUserDao;
+import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
@@ -20,7 +20,7 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
  */
 public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUserMetaData>
         implements
-        IRumpusUserService {
+            IRumpusUserService {
 
     public RumpusUserService(
             IRumpusUserDao userDao,

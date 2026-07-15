@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.data;
+package com.rumpus.rumpus.data.User;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;

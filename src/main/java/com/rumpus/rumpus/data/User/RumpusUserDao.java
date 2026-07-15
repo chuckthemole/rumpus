@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.data;
+package com.rumpus.rumpus.data.User;
 
 import javax.sql.DataSource;
 
@@ -8,7 +8,7 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusUserDao extends ApiDBJdbcUsers<RumpusUser, RumpusUserMetaData>
         implements
-        IRumpusUserDao {
+            IRumpusUserDao {
 
     private static final String TABLE = "user";
 

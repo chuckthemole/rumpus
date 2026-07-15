@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.data;
+package com.rumpus.rumpus.data.User;
 
 import com.rumpus.common.Dao.redis.IRedisRepository;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;

@@ -1,7 +1,5 @@
 package com.rumpus.buildshift.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -29,7 +27,7 @@ import com.rumpus.buildshift.views.AdminUserView;
 @ComponentScan("com.rumpus.buildshift")
 public class BuildShiftUserConfig
         extends
-        AbstractCommonUserConfig<User, UserMetaData, IUserService> {
+            AbstractCommonUserConfig<User, UserMetaData, IUserService> {
 
     @Autowired
     public BuildShiftUserConfig(Environment environment) {
@@ -59,7 +57,7 @@ public class BuildShiftUserConfig
     // }
 
     @Bean
-    @DependsOn({ "buildshiftUserDao" })
+    @DependsOn({"buildshiftUserDao"})
     public AuthenticationManager buildshiftAuthenticationManager() {
         return new UserAuthenticationManager(this.buildshiftUserDao());
     }
@@ -76,7 +74,7 @@ public class BuildShiftUserConfig
     }
 
     @Override
-    @DependsOn({ "buildshiftUserDao", "userFactory", "passwordEncoder" })
+    @DependsOn({"buildshiftUserDao", "userFactory", "passwordEncoder"})
     public IUserService childUserService() {
         return new UserService(
                 this.buildshiftUserDao(),

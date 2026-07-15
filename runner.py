@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 # Define paths
 src_dir = 'src/main/java'
@@ -8,7 +9,14 @@ tools_dir = 'tools'
 common_dependencies = "$(gradle -q printClasspath)"
 
 # Define base commands
-build = ".././gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/log/build.log"
+# build = ".././gradlew clean build --refresh-dependencies -x test > src/main/java/com/rumpus/rumpus/log/build.log"
+build = (
+    "bash -c '../gradlew clean build --refresh-dependencies -x test "
+    "> src/main/java/com/rumpus/rumpus/log/build.log "
+    "2> >(sed -E "
+    "\"s/([Ee][Rr][Rr][Oo][Rr])/\\x1b[31m\\1\\x1b[0m/g;"
+    "s/([Ww][Aa][Rr][Nn][Ii][Nn][Gg])/\\x1b[33m\\1\\x1b[0m/g\" >&2)'"
+)
 buildXlint = ".././gradlew clean build --refresh-dependencies -x test -Xlint:unchecked > src/main/java/com/rumpus/rumpus/log/build.log"
 buildDebug = ".././gradlew clean build --refresh-dependencies --debug -x test > src/main/java/com/rumpus/rumpus/log/build.log"
 buildTest = ".././gradlew clean build --refresh-dependencies > src/main/java/com/rumpus/rumpus/log/build.log"
@@ -24,6 +32,8 @@ moveNodeModules = "mv -vf ./frontend/node_modules ./"
 movePackage = "mv -vf ./frontend/package-lock.json ./"
 dependencies = ".././gradlew dependencies > src/main/java/com/rumpus/rumpus/log/dependencies.log"
 
+def runner(cmd):
+    subprocess.run(["bash", "-c", cmd], check=False)
 
 def compile_and_run_tool(tool_name):
     # make the out directory if it doesn't exist
@@ -61,35 +71,35 @@ if __name__ == '__main__':
     command = sys.argv[1]
 
     if command == "build":
-        os.system(build)
+        runner(build)
     elif command == "buildXlint":
-        os.system(buildXlint)
+        runner(buildXlint)
     elif command == "buildTest":
-        os.system(buildTest)
+        runner(buildTest)
     elif command == "buildDebug":
-        os.system(buildDebug)
+        runner(buildDebug)
     elif command == "buildTestInfo":
-        os.system(buildTestInfo)
+        runner(buildTestInfo)
     elif command == "buildTestDebug":
-        os.system(buildTestDebug)
+        runner(buildTestDebug)
     elif command == "test":
-        os.system(test)
+        runner(test)
     elif command == "run":
-        os.system(run)
+        runner(run)
     elif command == "run_rumpus":
-        os.system(run_rumpus)
+        runner(run_rumpus)
     elif command == "run_chuck":
-        os.system(run_chuck)
+        runner(run_chuck)
     elif command == "run_bs":
-        os.system(run_bs)
+        runner(run_bs)
     elif command == "runDebug":
-        os.system(runDebug)
+        runner(runDebug)
     elif command == "locust_test":
-        os.system(locust_test)
+        runner(locust_test)
     elif command == "locust_version":
-        os.system(locust_version)
+        runner(locust_version)
     elif command == "dependencies":
-        os.system(dependencies)
+        runner(dependencies)
     elif command == "compileTool":
         if len(sys.argv) < 3:
             print("Usage: python runner.py compileTool [tool_name]")

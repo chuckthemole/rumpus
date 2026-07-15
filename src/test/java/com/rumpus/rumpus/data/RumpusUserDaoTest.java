@@ -23,10 +23,11 @@ import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.collections.RumpusUserCollection;
 import com.rumpus.rumpus.config.RumpusConfig;
+import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 
-@ContextConfiguration(classes = { RumpusConfig.class })
+@ContextConfiguration(classes = {RumpusConfig.class})
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {

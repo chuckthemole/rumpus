@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
-import com.rumpus.rumpus.data.IRumpusUserDao;
-import com.rumpus.rumpus.data.RumpusUserDao;
+import com.rumpus.rumpus.data.User.IRumpusUserDao;
+import com.rumpus.rumpus.data.User.RumpusUserDao;
 import com.rumpus.rumpus.database_loader.RumpusLoader;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
@@ -29,7 +29,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 @ComponentScan("com.rumpus.rumpus")
 public class RumpusTestUserConfig
         extends
-        AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
 
     @Autowired
     public RumpusTestUserConfig(Environment environment) {
@@ -54,13 +54,13 @@ public class RumpusTestUserConfig
     }
 
     @Bean
-    @DependsOn({ "rumpusUserDao" })
+    @DependsOn({"rumpusUserDao"})
     public AuthenticationManager authenticationManager() {
         return new RumpusUserAuthenticationManager(this.rumpusUserDao());
     }
 
     @Bean
-    @DependsOn({ "childUserService" })
+    @DependsOn({"childUserService"})
     public RumpusLoader rumpusLoader(IRumpusUserService rumpusUserService,
             PasswordEncoder passwordEncoder) {
         return new RumpusLoader(rumpusUserService, passwordEncoder);
@@ -73,7 +73,8 @@ public class RumpusTestUserConfig
 
     @Override
     public IRumpusUserService childUserService() {
-        return new RumpusUserService(this.rumpusUserDao(), this.rumpusUserSecurityService(), this.userFactory(),
+        return new RumpusUserService(this.rumpusUserDao(), this.rumpusUserSecurityService(),
+                this.userFactory(),
                 this.passwordEncoder());
     }
 

@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.data;
+package com.rumpus.rumpus.data.User;
 
 import com.rumpus.common.Blob.BlobUtil;
 import com.rumpus.common.Builder.LogBuilder;
@@ -20,7 +20,7 @@ public class RumpusUserRowMapper extends AbstractJdbcRowMapper<RumpusUser> {
     private RumpusUserRowMapper() {
     }
 
-    protected static RumpusUserRowMapper create() {
+    public static RumpusUserRowMapper create() {
         return new RumpusUserRowMapper();
     }
 

@@ -8,7 +8,7 @@ import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.FileIO.FileProcessor;
 import com.rumpus.common.FileIO.IFileIO;
 import com.rumpus.common.FileIO.JsonIO;
-import com.rumpus.rumpus.data.RumpusUserDao;
+import com.rumpus.rumpus.data.User.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 
 /**

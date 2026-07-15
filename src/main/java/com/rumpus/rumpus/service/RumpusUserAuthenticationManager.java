@@ -20,7 +20,7 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
  */
 public class RumpusUserAuthenticationManager
         extends
-        AbstractCommonAuthManager<RumpusUser, RumpusUserMetaData> {
+            AbstractCommonAuthManager<RumpusUser, RumpusUserMetaData> {
 
     public RumpusUserAuthenticationManager(IUserDao<RumpusUser, RumpusUserMetaData> rumpusUserDao) {
         super(rumpusUserDao);

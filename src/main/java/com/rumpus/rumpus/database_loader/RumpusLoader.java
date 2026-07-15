@@ -74,7 +74,7 @@ public class RumpusLoader implements CommandLineRunner {
                 // We are taking raw password from rumpus_users.json and encoding it
                 user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
 
-                if (userService.add(user) != null) {
+                if (userService.createUser(user) != null) {
                     log.append("\n  Success adding user: ", user.getUsername());
                 } else {
                     log.append("\n  ERROR adding user: ", user.toString());
