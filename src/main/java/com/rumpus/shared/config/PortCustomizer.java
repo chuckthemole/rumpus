@@ -5,19 +5,13 @@ import com.rumpus.common.Config.AbstractServerPortCustomizer;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 @Component
 public class PortCustomizer extends AbstractServerPortCustomizer {
 
     @Autowired
-    public PortCustomizer(Environment environment, IPort port) {
-        super(environment, port);
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
+    public PortCustomizer(IPort port) {
+        super(port);
     }
 
     @Override

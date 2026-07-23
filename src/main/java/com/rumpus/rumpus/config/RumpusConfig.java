@@ -1,13 +1,16 @@
 package com.rumpus.rumpus.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Import;
 
-import com.rumpus.common.Config.AbstractCommonConfig;
+import com.rumpus.common.Config.Cloud.Aws.AwsConfig;
+import com.rumpus.common.Config.Database.DatabaseConfig;
+import com.rumpus.common.Config.Logging.LoggingConfig;
+import com.rumpus.common.Config.Security.SecurityConfig;
+import com.rumpus.common.Config.Views.ViewsConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Python.PycommonServer;
@@ -21,24 +24,22 @@ import com.rumpus.rumpus.IRumpus;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan(basePackages = {"com.rumpus.rumpus"})
-public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionApplicationInitializer
+@Import({
+        LoggingConfig.class,
+        SecurityConfig.class,
+        DatabaseConfig.class,
+        ViewsConfig.class,
+        AwsConfig.class
+})
+public class RumpusConfig { // AbstractHttpSessionApplicationInitializer
 
-    private static final String NAVBAR_BRAND = "properties.views.rumpus_brand";
-
-    @Autowired
-    public RumpusConfig(Environment environment) {
-        super(environment);
+    public RumpusConfig() {
     }
 
     // TODO: DELETE
     @Bean
     public JwtService jwtService() {
         return new JwtService();
-    }
-
-    @Bean
-    public String navbarBrand() {
-        return this.environment.getProperty(NAVBAR_BRAND);
     }
 
     @Bean
@@ -63,36 +64,9 @@ public class RumpusConfig extends AbstractCommonConfig { // AbstractHttpSessionA
         return manager;
     }
 
-    // @Bean
-    // public ForumThread forumThread() {
-    // ForumThread thread = ForumThread.createEmpty();
-    // return ForumThread.createEmpty();
-    // }
-
-    // @Bean
-    // public List<LogItem> logItems() {
-    // return new ArrayList<>();
-    // }
-
-    // @Bean
-    // public ProviderManager providerManager() {
-    // List<AuthenticationProvider> providers = new ArrayList<>();
-    // return new ProviderManager(providers);
-    // }
-
-    // @Bean
-    // public RumpusUserTypeAdapter rumpusUserTypeAdapter() {
-    // return new RumpusUserTypeAdapter();
-    // }
-
     public BeanSerializer beanSerializer() {
         BeanSerializer serializer = new BeanSerializer(null, null, null, null);
         return serializer;
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
     }
 
     @Override

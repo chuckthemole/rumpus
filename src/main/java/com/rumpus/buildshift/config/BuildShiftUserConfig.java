@@ -1,15 +1,20 @@
 package com.rumpus.buildshift.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Config.Database.DatabaseConfig;
+import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
@@ -25,18 +30,26 @@ import com.rumpus.buildshift.views.AdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.buildshift")
+@Import({
+        SecurityConfig.class,
+        DatabaseConfig.class
+})
 public class BuildShiftUserConfig
         extends
-            AbstractCommonUserConfig<User, UserMetaData, IUserService> {
+            AbstractCommonUserConfig<User, UserMetaData, IUserService, IUserDao, UserFactory> {
 
-    @Autowired
-    public BuildShiftUserConfig(Environment environment) {
-        super(environment);
+    public static final String BEAN_BUILD_SHIFT_USER_SERVICE = "buildShiftUserService";
+    public static final String BEAN_BUILD_SHIFT_USER_DAO = "buildShiftUserDao";
+    public static final String BEAN_BUILD_SHIFT_USER_FACTORY = "buildShiftUserFactory";
+    public static final String BEAN_BUILD_SHIFT_USER_SECURITY_SERVICE = "buildShiftUserSecurityService";
+
+    public BuildShiftUserConfig() {
     }
 
     @Bean
-    public IUserDao buildshiftUserDao() {
-        IUserDao userDao = new UserDao(this.dataSource());
+    @DependsOn({DatabaseConfig.BEAN_DATA_SOURCE})
+    public IUserDao buildshiftUserDao(DataSource dataSource) {
+        IUserDao userDao = new UserDao(dataSource);
         return userDao;
     }
 
@@ -57,9 +70,9 @@ public class BuildShiftUserConfig
     // }
 
     @Bean
-    @DependsOn({"buildshiftUserDao"})
-    public AuthenticationManager buildshiftAuthenticationManager() {
-        return new UserAuthenticationManager(this.buildshiftUserDao());
+    @DependsOn({BEAN_BUILD_SHIFT_USER_DAO})
+    public AuthenticationManager buildshiftAuthenticationManager(IUserDao userDao) {
+        return new UserAuthenticationManager(userDao);
     }
 
     // @Bean
@@ -69,23 +82,27 @@ public class BuildShiftUserConfig
     // }
 
     @Bean
-    public UserSecurityService buildshiftUserSecurityService() {
-        return new UserSecurityService(this.jdbcUserDetailsManager());
+    public UserSecurityService buildshiftUserSecurityService(
+            JdbcUserDetailsManager jdbcUserDetailsManager) {
+        return new UserSecurityService(jdbcUserDetailsManager);
     }
 
     @Override
-    @DependsOn({"buildshiftUserDao", "userFactory", "passwordEncoder"})
-    public IUserService childUserService() {
+    @DependsOn({
+            BEAN_BUILD_SHIFT_USER_DAO,
+            BEAN_BUILD_SHIFT_USER_SECURITY_SERVICE,
+            BEAN_BUILD_SHIFT_USER_FACTORY,
+            SecurityConfig.BEAN_PASSWORD_ENCODER})
+    public IUserService childUserService(
+            IUserDao userDao,
+            UserSecurityService userSecurityService,
+            UserFactory userFactory,
+            PasswordEncoder passwordEncoder) {
         return new UserService(
-                this.buildshiftUserDao(),
-                this.buildshiftUserSecurityService(),
-                this.userFactory(),
-                this.passwordEncoder());
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
+                userDao,
+                userSecurityService,
+                userFactory,
+                passwordEncoder);
     }
 
     @Override

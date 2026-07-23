@@ -2,7 +2,7 @@
 """
 runner.py - Developer CLI wrapper around Gradle for the Rumpus project.
 
-This replaces the old collection of ad-hoc shell-string commands
+This replaces the old collection of ad-hoc shell string commands
 (build, buildDebug, buildTest, run_chuck, run_bs, ...) with a small
 set of subcommands that take flags instead.
 

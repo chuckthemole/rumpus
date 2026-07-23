@@ -1,12 +1,10 @@
 package com.rumpus.chuck.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
-import com.rumpus.common.Config.AbstractCommonConfig;
+import com.rumpus.common.AbstractCommonObject;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
@@ -21,11 +19,9 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @org.springframework.context.annotation.PropertySource(value =
 // "classpath:properties.yml", factory =
 // com.rumpus.common.Config.Properties.yaml.YamlPropertySourceFactory.class)
-public class ChuckConfig extends AbstractCommonConfig {
+public class ChuckConfig extends AbstractCommonObject {
 
-    @Autowired
-    public ChuckConfig(Environment environment) {
-        super(environment);
+    public ChuckConfig() {
     }
 
     @Bean
@@ -36,11 +32,6 @@ public class ChuckConfig extends AbstractCommonConfig {
         user.setEncodedPassword("EMPTY_PASSWORD");
         user.setEmail("EMPTY_EMAIL");
         return new RumpusAdminUserView(user, userFactory);
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
     }
 
     @Override

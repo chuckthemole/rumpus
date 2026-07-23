@@ -1,15 +1,12 @@
 package com.rumpus.rumpus.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
-import com.rumpus.common.Config.AbstractCommonConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Log.LogItem.LogItemCollectionManager;
@@ -21,11 +18,9 @@ import com.rumpus.rumpus.IRumpus;
 
 @TestConfiguration
 @ComponentScan("com.rumpus.rumpus")
-public class RumpusTestConfig extends AbstractCommonConfig {
+public class RumpusTestConfig {
 
-    @Autowired
-    public RumpusTestConfig(Environment environment) {
-        super(environment);
+    public RumpusTestConfig() {
     }
 
     @Bean
@@ -69,11 +64,6 @@ public class RumpusTestConfig extends AbstractCommonConfig {
     @Bean(name = "mvcHandlerMappingIntrospector")
     public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
         return new HandlerMappingIntrospector();
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
     }
 
     @Bean

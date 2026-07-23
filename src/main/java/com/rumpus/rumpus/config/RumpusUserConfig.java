@@ -1,15 +1,21 @@
 package com.rumpus.rumpus.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Config.Database.DatabaseConfig;
+import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
@@ -25,23 +31,35 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
+@Import({
+        SecurityConfig.class,
+        DatabaseConfig.class
+})
 public class RumpusUserConfig
         extends
-            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService, IRumpusUserDao, RumpusUserFactory> {
+
+    public static final String BEAN_RUMPUS_USER_SERVICE = "rumpusUserService";
+    public static final String BEAN_RUMPUS_USER_DAO = "rumpusUserDao";
+    public static final String BEAN_RUMPUS_USER_FACTORY = "rumpusUserFactory";
+    public static final String BEAN_RUMPUS_USER_SECURITY_SERVICE = "rumpusUserSecurityService";
+    public static final String BEAN_RUMPUS_ADMIN_USER_VIEW = "rumpusAdminUserView";
 
     @Autowired
-    public RumpusUserConfig(Environment environment) {
-        super(environment);
+    public RumpusUserConfig() {
     }
 
     @Bean
-    public UserSecurityService rumpusUserSecurityService() {
-        return new UserSecurityService(this.jdbcUserDetailsManager());
+    @DependsOn({SecurityConfig.BEAN_JDBC_USER_DETAILS_MANAGER})
+    public UserSecurityService rumpusUserSecurityService(
+            JdbcUserDetailsManager jdbcUserDetailsManager) {
+        return new UserSecurityService(jdbcUserDetailsManager);
     }
 
     @Bean
-    public IRumpusUserDao rumpusUserDao() {
-        IRumpusUserDao userDao = new RumpusUserDao(this.dataSource());
+    @DependsOn({DatabaseConfig.BEAN_DATA_SOURCE})
+    public IRumpusUserDao rumpusUserDao(DataSource dataSource) {
+        IRumpusUserDao userDao = new RumpusUserDao(dataSource);
         return userDao;
     }
 
@@ -57,29 +75,27 @@ public class RumpusUserConfig
     }
 
     @Bean
-    @DependsOn({"rumpusUserDao"})
-    public AuthenticationManager authenticationManager() {
-        return new RumpusUserAuthenticationManager(this.rumpusUserDao());
+    @DependsOn({BEAN_RUMPUS_USER_DAO})
+    public AuthenticationManager authenticationManager(IRumpusUserDao rumpusUserDao) {
+        return new RumpusUserAuthenticationManager(rumpusUserDao);
     }
 
-    /**
-     * TODO: can we add params to be injected here? We would need to alter the
-     * parent class to accept these dependencies.
-     */
     @Override
-    @DependsOn({"rumpusUserDao", "rumpusUserSecurityService", "rumpusUserFactory",
-            "passwordEncoder"})
-    public IRumpusUserService childUserService() {
+    @DependsOn({
+            BEAN_RUMPUS_USER_DAO,
+            BEAN_RUMPUS_USER_SECURITY_SERVICE,
+            BEAN_RUMPUS_USER_FACTORY,
+            SecurityConfig.BEAN_PASSWORD_ENCODER})
+    public IRumpusUserService childUserService(
+            IRumpusUserDao rumpusUserDao,
+            UserSecurityService rumpusUserSecurityService,
+            RumpusUserFactory rumpusUserFactory,
+            PasswordEncoder passwordEncoder) {
         return new RumpusUserService(
-                this.rumpusUserDao(),
-                this.rumpusUserSecurityService(),
-                this.rumpusUserFactory(),
-                this.passwordEncoder());
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
+                rumpusUserDao,
+                rumpusUserSecurityService,
+                rumpusUserFactory,
+                passwordEncoder);
     }
 
     @Override

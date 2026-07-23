@@ -1,17 +1,22 @@
 package com.rumpus.rumpus.config;
 
-@org.springframework.stereotype.Component
-public class RumpusPortCustomizer extends com.rumpus.common.Config.AbstractServerPortCustomizer {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Component;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    public RumpusPortCustomizer(org.springframework.core.env.Environment environment,
-            com.rumpus.common.Server.Port.IPort port) {
-        super(environment, port);
-    }
+import com.rumpus.common.Config.AbstractServerPortCustomizer;
+import com.rumpus.common.Config.Server.ServerConfig;
+import com.rumpus.common.Server.Port.IPort;
 
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
+@Component
+@Import({
+        ServerConfig.class
+})
+public class RumpusPortCustomizer extends AbstractServerPortCustomizer {
+
+    @Autowired
+    public RumpusPortCustomizer(IPort port) {
+        super(port);
     }
 
     @Override

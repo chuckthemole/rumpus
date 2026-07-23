@@ -3,7 +3,6 @@ package com.rumpus.rumpus.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import com.rumpus.common.Config.AbstractCommonModelConfig;
 import com.rumpus.common.Serializer.ISerializerRegistry;
@@ -19,18 +18,12 @@ public class RumpusModelConfig
             AbstractCommonModelConfig<RumpusServiceManager, ISerializerRegistry> {
 
     @Autowired
-    public RumpusModelConfig(Environment environment) {
-        super(environment);
+    public RumpusModelConfig() {
     }
 
     @Override
     public RumpusServiceManager childServices() {
         return RumpusServiceManager.create();
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
     }
 
     @Override

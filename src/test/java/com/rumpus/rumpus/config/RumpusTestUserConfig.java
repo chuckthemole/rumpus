@@ -1,15 +1,19 @@
 package com.rumpus.rumpus.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import com.rumpus.common.Config.AbstractCommonUserConfig;
+import com.rumpus.common.Config.Database.DatabaseConfig;
+import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
@@ -27,18 +31,20 @@ import org.springframework.boot.test.context.TestConfiguration;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
+@Import({
+        DatabaseConfig.class,
+        SecurityConfig.class
+})
 public class RumpusTestUserConfig
         extends
-            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService> {
+            AbstractCommonUserConfig<RumpusUser, RumpusUserMetaData, IRumpusUserService, IRumpusUserDao, RumpusUserFactory> {
 
-    @Autowired
-    public RumpusTestUserConfig(Environment environment) {
-        super(environment);
+    public RumpusTestUserConfig() {
     }
 
     @Bean
-    public IRumpusUserDao rumpusUserDao() {
-        IRumpusUserDao userDao = new RumpusUserDao(this.dataSource());
+    public IRumpusUserDao rumpusUserDao(DataSource dataSource) {
+        IRumpusUserDao userDao = new RumpusUserDao(dataSource);
         return userDao;
     }
 
@@ -55,8 +61,8 @@ public class RumpusTestUserConfig
 
     @Bean
     @DependsOn({"rumpusUserDao"})
-    public AuthenticationManager authenticationManager() {
-        return new RumpusUserAuthenticationManager(this.rumpusUserDao());
+    public AuthenticationManager authenticationManager(IRumpusUserDao rumpusUserDao) {
+        return new RumpusUserAuthenticationManager(rumpusUserDao);
     }
 
     @Bean
@@ -67,20 +73,22 @@ public class RumpusTestUserConfig
     }
 
     @Bean
-    public UserSecurityService rumpusUserSecurityService() {
-        return new UserSecurityService(this.jdbcUserDetailsManager());
+    public UserSecurityService rumpusUserSecurityService(
+            JdbcUserDetailsManager jdbcUserDetailsManager) {
+        return new UserSecurityService(jdbcUserDetailsManager);
     }
 
     @Override
-    public IRumpusUserService childUserService() {
-        return new RumpusUserService(this.rumpusUserDao(), this.rumpusUserSecurityService(),
-                this.userFactory(),
-                this.passwordEncoder());
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
+    public IRumpusUserService childUserService(
+            IRumpusUserDao userDao,
+            UserSecurityService userSecurityService,
+            RumpusUserFactory userFactory,
+            PasswordEncoder passwordEncoder) {
+        return new RumpusUserService(
+                userDao,
+                userSecurityService,
+                userFactory,
+                passwordEncoder);
     }
 
     @Override

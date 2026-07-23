@@ -2,22 +2,35 @@ package com.rumpus.buildshift.config;
 
 import java.util.Map;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 
-import com.rumpus.common.Config.AbstractCommonConfig;
-import com.rumpus.common.Integrations.*;
+import jakarta.annotation.PostConstruct;
+
+import com.rumpus.common.AbstractCommonObject;
+import com.rumpus.common.Config.Database.DatabaseConfig;
+import com.rumpus.common.Config.Integration.Notion.NotionProperties;
+import com.rumpus.common.Config.Logging.LoggingConfig;
+import com.rumpus.common.Config.Security.SecurityConfig;
+import com.rumpus.common.Config.Views.ViewsConfig;
+import com.rumpus.common.Integrations.NotionIntegration;
+import com.rumpus.common.Integrations.NotionIntegrationLoader;
+import com.rumpus.common.Integrations.NotionIntegrationRegistry;
+import com.rumpus.common.Integrations.NotionResourceType;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
 
 @Configuration
 @ComponentScan(basePackages = {"com.rumpus.buildshift"})
-public class BuildShiftConfig extends AbstractCommonConfig {
-
-    private static final String NOTION_PROJECT_MANAGEMENT_TOKEN = "properties.notion.token.project-management";
-    private static final String NOTION_CONSOLE_TOKEN = "properties.notion.token.console";
-    private static final String NAVBAR_BRAND = "properties.views.brand";
+@Import({
+        LoggingConfig.class,
+        SecurityConfig.class,
+        DatabaseConfig.class,
+        ViewsConfig.class
+})
+public class BuildShiftConfig extends AbstractCommonObject {
 
     private NotionIntegrationRegistry notionRegistry;
 
@@ -27,40 +40,30 @@ public class BuildShiftConfig extends AbstractCommonConfig {
      */
     private final StringBuilder postConstructDebug = new StringBuilder();
 
-    @Autowired
-    public BuildShiftConfig(Environment environment) {
-        super(environment);
+    public BuildShiftConfig() {
     }
 
     @Bean
-    public String navbarBrand() {
-        return this.environment.getProperty(NAVBAR_BRAND);
-    }
+    public Map<String, NotionIntegration> projectManagementNotionIntegration(
+            NotionProperties notionProperties) {
 
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
-    }
-
-    @Bean
-    public Map<String, NotionIntegration> projectManagementNotionIntegration() {
-        NotionIntegration consoleIntegration = new NotionIntegration(
-                this.environment.getProperty(NOTION_CONSOLE_TOKEN));
-        NotionIntegration projectManagementIntegration = new NotionIntegration(
-                this.environment.getProperty(NOTION_PROJECT_MANAGEMENT_TOKEN));
         return Map.of(
-                "consoleIntegration", consoleIntegration,
-                "projectManagementIntegration", projectManagementIntegration);
+                "consoleIntegration",
+                new NotionIntegration(notionProperties.getToken().getConsole()),
+
+                "projectManagementIntegration",
+                new NotionIntegration(notionProperties.getToken().getProjectManagement()));
     }
 
     @Bean
-    @Scope(SCOPE_SINGLETON)
-    public NotionIntegrationRegistry notionIntegrationKeyValue() {
+    @Scope("singleton")
+    public NotionIntegrationRegistry notionIntegrationKeyValue(NotionProperties notionProperties) {
+
         NotionIntegrationRegistry registry = new NotionIntegrationRegistry();
+
         NotionIntegrationLoader.load(
-                this.environment,
+                notionProperties.getDatabases(),
                 registry,
-                AbstractCommonConfig.NOTION_DATABASES,
                 NotionResourceType.DATABASE,
                 postConstructDebug);
         this.notionRegistry = registry;
@@ -84,9 +87,7 @@ public class BuildShiftConfig extends AbstractCommonConfig {
 
     @Override
     public String toString() {
-        return "BuildShiftConfig{" +
-                "sqlDialect='" + sqlDialect() + '\'' +
-                ", notionRegistrySize=" + (notionRegistry != null ? notionRegistry.size() : 0) +
-                '}';
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

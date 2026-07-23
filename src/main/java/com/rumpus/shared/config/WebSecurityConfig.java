@@ -7,16 +7,9 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
-
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -25,15 +18,16 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.rumpus.common.Controller.ICommonController;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
+import com.rumpus.common.AbstractCommonObject;
 import com.rumpus.common.ICommon;
-import com.rumpus.common.Config.AbstractCommonConfig;
+import com.rumpus.common.Config.Security.CorsProperties;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractFailureHandler;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractSuccessHandler;
 import com.rumpus.common.User.ActiveUserStore;
-import com.rumpus.common.User.AuthenticationHandler;
 import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Failure;
 import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Success;
 import com.rumpus.rumpus.security.Unauthorized;
+import com.rumpus.shared.config.WebSecurity.OAuth2.Google.OAuth2GoogleProperties;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
@@ -51,9 +45,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends AbstractCommonConfig {
-
-    private static final String FRONTEND_LOCAL_HOST = "http://localhost:3000";
+@EnableConfigurationProperties({CorsProperties.class, OAuth2GoogleProperties.class})
+public class WebSecurityConfig extends AbstractCommonObject {
 
     /** Accumulates bean initialization debug info for PostConstruct logging. */
     private final StringBuilder postConstructDebug = new StringBuilder();
@@ -61,11 +54,6 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     /** OAuth2 handlers (using custom success/failure implementations). */
     private final AbstractFailureHandler oauth2FailureHandler = OAuth2Failure.create();
     private final AbstractSuccessHandler oauth2SuccessHandler = OAuth2Success.create();
-
-    @Autowired
-    public WebSecurityConfig(Environment environment) {
-        super(environment);
-    }
 
     // ============================================================
     // Security Core Configuration
@@ -84,7 +72,6 @@ public class WebSecurityConfig extends AbstractCommonConfig {
      */
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        AuthenticationHandler authHandler = new AuthenticationHandler(null);
 
         http
                 .cors().and()
@@ -142,22 +129,26 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     // ============================================================
 
     /**
-     * Defines an in-memory OAuth2 client for demonstration or local development.
-     * Replace with a real provider configuration for production.
+     * Creates the OAuth2 client registration used by Spring Security. The client
+     * configuration is loaded from {@link OAuth2GoogleProperties}.
      */
     @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(
-                ClientRegistration.withRegistrationId("custom")
-                        .clientId(environment.getProperty(OAUTH2_GOOGLE_CLIENT_ID))
-                        .clientSecret(environment.getProperty(OAUTH2_GOOGLE_CLIENT_SECRET))
-                        .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                        .redirectUri("https://localhost:8888/login/oauth2/code/{registrationId}")
-                        .scope("read", "write")
-                        .authorizationUri("https://provider.com/oauth2/authorize")
-                        .tokenUri("https://provider.com/oauth2/token")
-                        .clientName("Custom Provider")
-                        .build());
+    public ClientRegistrationRepository clientRegistrationRepository(
+            OAuth2GoogleProperties properties) {
+
+        ClientRegistration registration = ClientRegistration
+                .withRegistrationId(properties.getRegistrationId())
+                .clientId(properties.getClientId())
+                .clientSecret(properties.getClientSecret())
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .redirectUri(properties.getRedirectUri())
+                .scope(properties.getScopes())
+                .authorizationUri(properties.getAuthorizationUri())
+                .tokenUri(properties.getTokenUri())
+                .clientName(properties.getClientName())
+                .build();
+
+        return new InMemoryClientRegistrationRepository(registration);
     }
 
     // ============================================================
@@ -169,62 +160,46 @@ public class WebSecurityConfig extends AbstractCommonConfig {
      * discovered configuration information to postConstructDebug.
      */
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(Environment environment) {
+    public CorsConfigurationSource corsConfigurationSource(CorsProperties corsProperties) {
         CorsConfiguration configuration = new CorsConfiguration();
-        Binder binder = Binder.get(environment);
 
-        // --- Allowed Origins ---
-        List<String> origins = bindList(binder, AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ORIGINS);
-        configuration
-                .setAllowedOrigins(!origins.isEmpty() ? origins : List.of(FRONTEND_LOCAL_HOST));
-
-        // --- Allowed Methods ---
-        List<String> methods = bindList(binder,
-                AbstractCommonConfig.CORS_ALLOWED_FRONTEND_ALLOWED_METHODS);
-        configuration.setAllowedMethods(!methods.isEmpty()
-                ? methods
-                : List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-
-        // --- Allowed Headers ---
-        List<String> headers = bindList(binder, AbstractCommonConfig.CORS_ALLOWED_FRONTEND_HEADERS);
-        configuration.setAllowedHeaders(!headers.isEmpty() ? headers : List.of("*"));
-
-        // --- Allow Credentials ---
-        Boolean credentials = binder
-                .bind(AbstractCommonConfig.CORS_ALLOWED_FRONTEND_CREDENTIALS, Boolean.class)
-                .orElse(true);
-        configuration.setAllowCredentials(credentials);
+        configuration.setAllowedOrigins(corsProperties.getOrigins());
+        configuration.setAllowedMethods(corsProperties.getMethods());
+        configuration.setAllowedHeaders(corsProperties.getHeaders());
+        configuration.setAllowCredentials(corsProperties.isCredentials());
 
         postConstructDebug.append("Loaded CORS Configuration:\n")
                 .append(configuration)
-                .append("\n");
+                .append('\n');
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 
     /**
      * Utility to safely bind YAML list properties and record diagnostic details.
      */
-    private List<String> bindList(Binder binder, String propertyKey) {
-        try {
-            List<String> list = binder.bind(propertyKey, Bindable.listOf(String.class))
-                    .orElse(Collections.emptyList());
-            if (!list.isEmpty()) {
-                postConstructDebug
-                        .append(String.format("Read property '%s': %s%n", propertyKey, list));
-            } else {
-                postConstructDebug
-                        .append(String.format("Property '%s' missing or empty%n", propertyKey));
-            }
-            return list;
-        } catch (Exception e) {
-            postConstructDebug
-                    .append(String.format("Error reading '%s': %s%n", propertyKey, e.getMessage()));
-            return Collections.emptyList();
-        }
-    }
+    // private List<String> bindList(Binder binder, String propertyKey) {
+    // try {
+    // List<String> list = binder.bind(propertyKey, Bindable.listOf(String.class))
+    // .orElse(Collections.emptyList());
+    // if (!list.isEmpty()) {
+    // postConstructDebug
+    // .append(String.format("Read property '%s': %s%n", propertyKey, list));
+    // } else {
+    // postConstructDebug
+    // .append(String.format("Property '%s' missing or empty%n", propertyKey));
+    // }
+    // return list;
+    // } catch (Exception e) {
+    // postConstructDebug
+    // .append(String.format("Error reading '%s': %s%n", propertyKey,
+    // e.getMessage()));
+    // return Collections.emptyList();
+    // }
+    // }
 
     // ============================================================
     // Supporting Beans
@@ -233,11 +208,6 @@ public class WebSecurityConfig extends AbstractCommonConfig {
     @Bean
     public ActiveUserStore activeUserStore() {
         return new ActiveUserStore();
-    }
-
-    @Override
-    public String sqlDialect() {
-        return "MYSQL";
     }
 
     // ============================================================
