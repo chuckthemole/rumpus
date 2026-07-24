@@ -21,13 +21,13 @@ import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.AbstractCommonObject;
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Config.Security.CorsProperties;
+import com.rumpus.common.Config.Security.OAuth2.Google.OAuth2Properties;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractFailureHandler;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractSuccessHandler;
 import com.rumpus.common.User.ActiveUserStore;
 import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Failure;
 import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Success;
 import com.rumpus.rumpus.security.Unauthorized;
-import com.rumpus.shared.config.WebSecurity.OAuth2.Google.OAuth2GoogleProperties;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +45,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties({CorsProperties.class, OAuth2GoogleProperties.class})
+@EnableConfigurationProperties({CorsProperties.class, OAuth2Properties.class})
 public class WebSecurityConfig extends AbstractCommonObject {
 
     /** Accumulates bean initialization debug info for PostConstruct logging. */
@@ -130,11 +130,11 @@ public class WebSecurityConfig extends AbstractCommonObject {
 
     /**
      * Creates the OAuth2 client registration used by Spring Security. The client
-     * configuration is loaded from {@link OAuth2GoogleProperties}.
+     * configuration is loaded from {@link OAuth2Properties}.
      */
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository(
-            OAuth2GoogleProperties properties) {
+            OAuth2Properties properties) {
 
         ClientRegistration registration = ClientRegistration
                 .withRegistrationId(properties.getRegistrationId())
