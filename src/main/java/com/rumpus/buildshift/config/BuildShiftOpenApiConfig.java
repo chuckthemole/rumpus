@@ -1,4 +1,4 @@
-package com.rumpus.rumpus.config;
+package com.rumpus.buildshift.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,20 +11,14 @@ import com.rumpus.common.Config.Documentation.OpenAPI.OpenApiConfig;
 @Import({
         OpenApiConfig.class
 })
-public class OpenApiConfigRumpus {
-
+public class BuildShiftOpenApiConfig {
     @Bean
-    ApiGroup rumpusPublicApi() {
-        return new ApiGroup("public", "/api/public/**");
+    ApiGroup bsNotionApi() {
+        return new ApiGroup("notion", "/notion-api/**");
     }
 
     @Bean
-    ApiGroup rumpusAdminApi() {
-        return new ApiGroup("admin", "/api/admin/**");
-    }
-
-    @Bean
-    ApiGroup rumpusExperimentalApi() {
-        return new ApiGroup("experimental", "/api/experimental/**");
+    ApiGroup bsViewsApi() {
+        return new ApiGroup("views", "/view_bs/**");
     }
 }
