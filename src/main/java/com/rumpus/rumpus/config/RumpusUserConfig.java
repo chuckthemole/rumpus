@@ -2,7 +2,6 @@ package com.rumpus.rumpus.config;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +12,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
+import com.rumpus.common.Config.User.AbstractCommonUserConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
@@ -44,10 +43,6 @@ public class RumpusUserConfig
     public static final String BEAN_RUMPUS_USER_FACTORY = "rumpusUserFactory";
     public static final String BEAN_RUMPUS_USER_SECURITY_SERVICE = "rumpusUserSecurityService";
     public static final String BEAN_RUMPUS_ADMIN_USER_VIEW = "rumpusAdminUserView";
-
-    @Autowired
-    public RumpusUserConfig() {
-    }
 
     @Bean
     @DependsOn({SecurityConfig.BEAN_JDBC_USER_DETAILS_MANAGER})
@@ -86,7 +81,7 @@ public class RumpusUserConfig
             BEAN_RUMPUS_USER_SECURITY_SERVICE,
             BEAN_RUMPUS_USER_FACTORY,
             SecurityConfig.BEAN_PASSWORD_ENCODER})
-    public IRumpusUserService childUserService(
+    public IRumpusUserService createUserService(
             IRumpusUserDao rumpusUserDao,
             UserSecurityService rumpusUserSecurityService,
             RumpusUserFactory rumpusUserFactory,

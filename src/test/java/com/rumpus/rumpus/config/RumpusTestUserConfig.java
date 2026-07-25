@@ -11,9 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
+import com.rumpus.common.Config.User.AbstractCommonUserConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
@@ -66,7 +66,7 @@ public class RumpusTestUserConfig
     }
 
     @Bean
-    @DependsOn({"childUserService"})
+    @DependsOn({"createUserService"})
     public RumpusLoader rumpusLoader(IRumpusUserService rumpusUserService,
             PasswordEncoder passwordEncoder) {
         return new RumpusLoader(rumpusUserService, passwordEncoder);
@@ -79,7 +79,7 @@ public class RumpusTestUserConfig
     }
 
     @Override
-    public IRumpusUserService childUserService(
+    public IRumpusUserService createUserService(
             IRumpusUserDao userDao,
             UserSecurityService userSecurityService,
             RumpusUserFactory userFactory,

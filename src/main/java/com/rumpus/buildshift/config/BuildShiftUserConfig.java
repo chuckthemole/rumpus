@@ -12,9 +12,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import com.rumpus.common.Config.AbstractCommonUserConfig;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
+import com.rumpus.common.Config.User.AbstractCommonUserConfig;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
@@ -93,7 +93,7 @@ public class BuildShiftUserConfig
             BEAN_BUILD_SHIFT_USER_SECURITY_SERVICE,
             BEAN_BUILD_SHIFT_USER_FACTORY,
             SecurityConfig.BEAN_PASSWORD_ENCODER})
-    public IUserService childUserService(
+    public IUserService createUserService(
             IUserDao userDao,
             UserSecurityService userSecurityService,
             UserFactory userFactory,
