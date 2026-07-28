@@ -1,10 +1,9 @@
 package com.rumpus.rumpus.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.rumpus.common.Config.AbstractCommonModelConfig;
+import com.rumpus.common.Config.Model.AbstractCommonModelConfig;
 import com.rumpus.common.Serializer.ISerializerRegistry;
 import com.rumpus.common.Serializer.SerializerRegistry;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
@@ -17,25 +16,13 @@ public class RumpusModelConfig
         extends
             AbstractCommonModelConfig<RumpusServiceManager, ISerializerRegistry> {
 
-    @Autowired
-    public RumpusModelConfig() {
-    }
-
     @Override
-    public RumpusServiceManager childServices() {
+    public RumpusServiceManager createModelServices() {
         return RumpusServiceManager.create();
     }
 
     @Override
-    public ISerializerRegistry childSerializerRegistry() {
-        ISerializerRegistry serializerRegistry = SerializerRegistry.create();
-        serializerRegistry.registerSerializer(RumpusUser.class,
-                RumpusUserSerializer.jsonSerializer());
-        return serializerRegistry;
-    }
-
-    @Override
-    public ISerializerRegistry childSerializerService() {
+    public ISerializerRegistry createSerializerRegistry() {
         ISerializerRegistry serializerRegistry = SerializerRegistry.create();
         serializerRegistry.registerSerializer(RumpusUser.class,
                 RumpusUserSerializer.jsonSerializer());
@@ -47,5 +34,4 @@ public class RumpusModelConfig
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
-
 }
