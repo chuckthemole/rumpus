@@ -9,7 +9,6 @@ import com.rumpus.common.Controller.AbstractViewController;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 import com.rumpus.buildshift.service.IUserService;
-import com.rumpus.buildshift.service.ServiceManager;
 import com.rumpus.buildshift.views.ViewLoader;
 import com.rumpus.buildshift.views.AdminUserView;
 
@@ -22,7 +21,7 @@ import com.rumpus.buildshift.views.AdminUserView;
 @RequestMapping(ICommonController.PATH_VIEW + "_bs")
 public class BuildShiftViewController
         extends
-            AbstractViewController<ServiceManager, User, UserMetaData, IUserService, AdminUserView> {
+            AbstractViewController<User, UserMetaData, IUserService, AdminUserView> {
 
     @Autowired
     public BuildShiftViewController(ViewLoader viewLoader) {

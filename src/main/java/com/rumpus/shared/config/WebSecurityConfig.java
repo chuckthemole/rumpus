@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,10 +25,11 @@ import com.rumpus.common.Config.Security.CorsProperties;
 import com.rumpus.common.Config.Security.OAuth2.Google.OAuth2Properties;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractFailureHandler;
 import com.rumpus.common.Config.SuccessFailureHandler.AbstractSuccessHandler;
+import com.rumpus.common.Config.SuccessFailureHandler.OAuth2.OAuth2HandlerProperties;
 import com.rumpus.common.User.ActiveUserStore;
-import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Failure;
-import com.rumpus.rumpus.config.SuccessFailureHandlers.OAuth2Success;
-import com.rumpus.rumpus.security.Unauthorized;
+import com.rumpus.common.Security.Authentication.Unauthorized;
+import com.rumpus.shared.config.SuccessFailureHandlers.OAuth2Failure;
+import com.rumpus.shared.config.SuccessFailureHandlers.OAuth2Success;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,15 +47,28 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties({CorsProperties.class, OAuth2Properties.class})
+@EnableConfigurationProperties({
+        CorsProperties.class,
+        OAuth2Properties.class,
+        OAuth2HandlerProperties.class
+})
 public class WebSecurityConfig extends AbstractCommonObject {
 
     /** Accumulates bean initialization debug info for PostConstruct logging. */
     private final StringBuilder postConstructDebug = new StringBuilder();
 
     /** OAuth2 handlers (using custom success/failure implementations). */
-    private final AbstractFailureHandler oauth2FailureHandler = OAuth2Failure.create();
-    private final AbstractSuccessHandler oauth2SuccessHandler = OAuth2Success.create();
+    @Bean
+    public AbstractFailureHandler oauth2FailureHandler(
+            OAuth2HandlerProperties oAuth2HandlerProperties) {
+        return OAuth2Failure.create(oAuth2HandlerProperties);
+    }
+
+    @Bean
+    public AbstractSuccessHandler oauth2SuccessHandler(
+            OAuth2HandlerProperties oAuth2HandlerProperties) {
+        return OAuth2Success.create(oAuth2HandlerProperties);
+    }
 
     // ============================================================
     // Security Core Configuration
@@ -71,7 +86,11 @@ public class WebSecurityConfig extends AbstractCommonObject {
      * rules. - Integrates OAuth2 login and handlers.
      */
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    @DependsOn({"oauth2SuccessHandler", "oauth2FailureHandler"})
+    public SecurityFilterChain configure(
+            HttpSecurity http,
+            AbstractSuccessHandler oauth2SuccessHandler,
+            AbstractFailureHandler oauth2FailureHandler) throws Exception {
 
         http
                 .cors().and()
@@ -118,8 +137,8 @@ public class WebSecurityConfig extends AbstractCommonObject {
                 // .anyRequest().authenticated() // enable when locking down API
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(this.oauth2SuccessHandler)
-                        .failureHandler(this.oauth2FailureHandler));
+                        .successHandler(oauth2SuccessHandler)
+                        .failureHandler(oauth2FailureHandler));
 
         return http.build();
     }

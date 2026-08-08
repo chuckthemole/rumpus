@@ -3,23 +3,9 @@ package com.rumpus.chuck;
 import org.springframework.stereotype.Controller;
 
 import com.rumpus.common.Controller.AbstractCommonController;
-import com.rumpus.common.Service.User.AbstractUserService;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
-import com.rumpus.rumpus.service.RumpusServiceManager;
-import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 @Controller
-abstract public class ChuckController extends AbstractCommonController< // TODO: using rumpus stuff
-                                                                        // here for now. should
-                                                                        // change to chuck stuff
-        RumpusServiceManager, RumpusUser, RumpusUserMetaData, AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO:
-                                                                                                                   // change
-                                                                                                                   // when
-                                                                                                                   // I
-                                                                                                                   // implement
-                                                                                                                   // IChuckUserService
-        RumpusAdminUserView> {
+abstract public class ChuckController extends AbstractCommonController {
 
     // Paths for charles pikaart thomas
     protected static final String PATH_CHARLES_PIKAART_THOMAS = "/charles_pikaart_thomas";

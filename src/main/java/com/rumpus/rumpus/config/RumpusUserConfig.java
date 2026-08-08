@@ -81,7 +81,7 @@ public class RumpusUserConfig
             BEAN_RUMPUS_USER_SECURITY_SERVICE,
             BEAN_RUMPUS_USER_FACTORY,
             SecurityConfig.BEAN_PASSWORD_ENCODER})
-    public IRumpusUserService createUserService(
+    protected IRumpusUserService createUserService(
             IRumpusUserDao rumpusUserDao,
             UserSecurityService rumpusUserSecurityService,
             RumpusUserFactory rumpusUserFactory,
@@ -91,6 +91,20 @@ public class RumpusUserConfig
                 rumpusUserSecurityService,
                 rumpusUserFactory,
                 passwordEncoder);
+    }
+
+    @Bean
+    public IRumpusUserService rumpusUserService(
+            IRumpusUserDao dao,
+            UserSecurityService securityService,
+            RumpusUserFactory factory,
+            PasswordEncoder encoder) {
+
+        return new RumpusUserService(
+                dao,
+                securityService,
+                factory,
+                encoder);
     }
 
     @Override

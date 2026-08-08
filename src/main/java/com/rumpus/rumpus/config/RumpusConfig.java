@@ -14,11 +14,15 @@ import com.rumpus.common.Config.Views.ViewsConfig;
 import com.rumpus.common.Forum.ForumThread;
 import com.rumpus.common.Forum.ForumThreadManager;
 import com.rumpus.common.Python.PycommonServer;
+import com.rumpus.common.Serializer.ISerializerRegistry;
+import com.rumpus.common.Serializer.SerializerRegistry;
 import com.rumpus.common.Server.AbstractServer;
 import com.rumpus.common.Server.ServerManager;
 import com.rumpus.common.Service.JwtService;
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.rumpus.rumpus.IRumpus;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
+import com.rumpus.rumpus.models.RumpusUser.RumpusUserSerializer;
 
 @Configuration
 // @EnableSpringWebSession
@@ -49,6 +53,20 @@ public class RumpusConfig { // AbstractHttpSessionApplicationInitializer
             manager.put(forumThread.getPageID(), forumThread);
         }
         return manager;
+    }
+
+    /**
+     * TODO: I moved this from RumpusModelConfig. I don't want it to break anything.
+     * See if we can remove completely.
+     *
+     * @return
+     */
+    @Bean
+    public ISerializerRegistry createSerializerRegistry() {
+        ISerializerRegistry serializerRegistry = SerializerRegistry.create();
+        serializerRegistry.registerSerializer(RumpusUser.class,
+                RumpusUserSerializer.jsonSerializer());
+        return serializerRegistry;
     }
 
     @Bean

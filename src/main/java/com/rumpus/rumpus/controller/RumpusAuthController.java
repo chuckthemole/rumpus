@@ -7,7 +7,6 @@ import com.rumpus.common.util.Map.MapStringObject;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ import java.util.UUID;
 // @RestController // TODO: start here maybe. I changed from Controller.
 public class RumpusAuthController
         extends
-            AbstractAuthController<RumpusServiceManager, RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
+            AbstractAuthController<RumpusUser, RumpusUserMetaData, IRumpusUserService, RumpusAdminUserView> {
 
     @Autowired
     public RumpusAuthController(AuthenticationManager authenticationManager) {

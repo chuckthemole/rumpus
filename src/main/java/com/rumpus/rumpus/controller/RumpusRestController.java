@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(ICommonController.PATH_API)
-public class RumpusRestController extends AbstractRumpusController {
+public class RumpusRestController extends AbstractRumpusRestController {
 
     @Autowired
     public RumpusRestController() {
@@ -49,17 +49,18 @@ public class RumpusRestController extends AbstractRumpusController {
         return this.getClass().getSimpleName(); // TODO: look at this later
     }
 
-    @GetMapping(value = "is_authenticated")
-    public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication authentication) {
-        LOG("RumpusRestController::getAuthenticationOfUser()");
-        boolean isAuthenticated = false;
-        if (authentication != null) {
-            isAuthenticated = authentication.isAuthenticated();
-        } else {
-            LOG("Authentication is null");
-        }
-        return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
-    }
+    // @GetMapping(value = "is_authenticated")
+    // public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication
+    // authentication) {
+    // LOG("RumpusRestController::getAuthenticationOfUser()");
+    // boolean isAuthenticated = false;
+    // if (authentication != null) {
+    // isAuthenticated = authentication.isAuthenticated();
+    // } else {
+    // LOG("Authentication is null");
+    // }
+    // return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
+    // }
 
     @PostMapping(value = ICommonController.PATH_LOG_ACTION)
     public ResponseEntity<CommonSession> logAction(@RequestBody
@@ -76,7 +77,8 @@ public class RumpusRestController extends AbstractRumpusController {
 
     @GetMapping(value = "/logs/{page}")
     public ResponseEntity<LogItemCollection> getLogsForPage(@PathVariable("page")
-    String page, HttpServletRequest request) {
+    String page,
+            HttpServletRequest request) {
         LOG("RumpusRestController GET: /logs");
         LogItemCollection logs = this.logManager.get(page);
         if (logs == null || logs.isEmpty()) {
@@ -135,7 +137,7 @@ public class RumpusRestController extends AbstractRumpusController {
     @GetMapping(value = "/current_base_path")
     public ResponseEntity<String> currentBasePath() {
         LOG("RumpusRestController::getCurrentBasePath()");
-        return new ResponseEntity<String>(this.getCurrentBasePath(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<String>(this.getBasePath(), HttpStatus.ACCEPTED);
     }
 
     // @GetMapping(value = "/start_python")

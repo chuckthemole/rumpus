@@ -8,16 +8,7 @@ import com.rumpus.common.Controller.ICommonController;
 
 @RestController
 @RequestMapping(ICommonController.PATH_CLOUD)
-public class RumpusCloudController extends AbstractCloudController
-// commenting out for now. See comment in AbstractCloudController.
-// <
-// RumpusServiceManager,
-// RumpusUser,
-// RumpusUserMetaData,
-// IRumpusUserService,
-// RumpusAdminUserView
-// >
-{
+public class RumpusCloudController extends AbstractCloudController {
 
     public RumpusCloudController() {
     }

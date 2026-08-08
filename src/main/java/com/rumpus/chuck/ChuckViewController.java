@@ -9,7 +9,6 @@ import com.rumpus.common.Controller.AbstractViewController;
 import com.rumpus.common.Service.User.AbstractUserService;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
-import com.rumpus.rumpus.service.RumpusServiceManager;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
 /**
@@ -25,12 +24,12 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 public class ChuckViewController extends AbstractViewController< // TODO: using rumpus stuff here
                                                                  // for now. should change to chuck
                                                                  // stuff
-        RumpusServiceManager, RumpusUser, RumpusUserMetaData, AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO:
-                                                                                                                   // Change
-                                                                                                                   // to
-                                                                                                                   // ChuckUserService
-                                                                                                                   // when
-                                                                                                                   // created
+        RumpusUser, RumpusUserMetaData, AbstractUserService<RumpusUser, RumpusUserMetaData>, // TODO:
+                                                                                             // Change
+                                                                                             // to
+                                                                                             // ChuckUserService
+                                                                                             // when
+                                                                                             // created
         RumpusAdminUserView> {
 
     public ChuckViewController() {
