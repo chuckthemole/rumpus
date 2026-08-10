@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.chuck.views.ChuckViewLoader;
-import com.rumpus.common.Controller.AbstractViewController;
+import com.rumpus.common.Controller.View.AbstractViewController;
 import com.rumpus.common.Service.User.AbstractUserService;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;

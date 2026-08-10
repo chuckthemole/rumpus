@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rumpus.common.Controller.ICommonController;
-import com.rumpus.common.Controller.AbstractViewController;
+import com.rumpus.common.Controller.View.AbstractViewController;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 import com.rumpus.buildshift.service.IUserService;

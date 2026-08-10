@@ -1,7 +1,7 @@
 package com.rumpus.rumpus.controller;
 
 import com.rumpus.common.Auth.OAuth2Provider;
-import com.rumpus.common.Controller.AbstractAuthController;
+import com.rumpus.common.Controller.Auth.AbstractAuthController;
 import com.rumpus.common.Service.JwtService;
 import com.rumpus.common.util.Map.MapStringObject;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;

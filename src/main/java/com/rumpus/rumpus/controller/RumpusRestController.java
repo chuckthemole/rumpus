@@ -49,19 +49,6 @@ public class RumpusRestController extends AbstractRumpusRestController {
         return this.getClass().getSimpleName(); // TODO: look at this later
     }
 
-    // @GetMapping(value = "is_authenticated")
-    // public ResponseEntity<Boolean> getAuthenticationOfUser(Authentication
-    // authentication) {
-    // LOG("RumpusRestController::getAuthenticationOfUser()");
-    // boolean isAuthenticated = false;
-    // if (authentication != null) {
-    // isAuthenticated = authentication.isAuthenticated();
-    // } else {
-    // LOG("Authentication is null");
-    // }
-    // return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.ACCEPTED);
-    // }
-
     @PostMapping(value = ICommonController.PATH_LOG_ACTION)
     public ResponseEntity<CommonSession> logAction(@RequestBody
     LogItem logItem, HttpServletRequest request) {
