@@ -2,11 +2,11 @@ package com.rumpus.buildshift.data.User;
 
 import javax.sql.DataSource;
 
-import com.rumpus.common.Dao.User.ApiDBJdbcUsers;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
+import com.rumpus.common.Dao.User.jdbc.UserDaoJdbc;
 
-public class UserDao extends ApiDBJdbcUsers<User, UserMetaData> implements IUserDao {
+public class UserDao extends UserDaoJdbc<User, UserMetaData> implements IUserDao {
 
     private static final String TABLE = "user";
 

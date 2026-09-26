@@ -15,6 +15,8 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
+import com.rumpus.common.Dao.User.IAuthorityDao;
+import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
@@ -71,8 +73,12 @@ public class BuildShiftUserConfig
 
     @Bean
     @DependsOn({BEAN_BUILD_SHIFT_USER_DAO})
-    public AuthenticationManager buildshiftAuthenticationManager(IUserDao userDao) {
-        return new UserAuthenticationManager(userDao);
+    public AuthenticationManager buildshiftAuthenticationManager(
+            IUserDao userDao,
+            IUserAuthorityDao userAuthorityDao,
+            IAuthorityDao authorityDao) {
+        return new UserAuthenticationManager(
+                userDao, userAuthorityDao, authorityDao);
     }
 
     // @Bean
@@ -95,11 +101,15 @@ public class BuildShiftUserConfig
             SecurityConfig.BEAN_PASSWORD_ENCODER})
     public IUserService createUserService(
             IUserDao userDao,
+            IUserAuthorityDao userAuthorityDao,
+            IAuthorityDao authorityDao,
             UserSecurityService userSecurityService,
             UserFactory userFactory,
             PasswordEncoder passwordEncoder) {
         return new UserService(
                 userDao,
+                userAuthorityDao,
+                authorityDao,
                 userSecurityService,
                 userFactory,
                 passwordEncoder);

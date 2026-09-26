@@ -14,6 +14,8 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
+import com.rumpus.common.Dao.User.IAuthorityDao;
+import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
@@ -61,8 +63,14 @@ public class RumpusTestUserConfig
 
     @Bean
     @DependsOn({"rumpusUserDao"})
-    public AuthenticationManager authenticationManager(IRumpusUserDao rumpusUserDao) {
-        return new RumpusUserAuthenticationManager(rumpusUserDao);
+    public AuthenticationManager authenticationManager(
+            IRumpusUserDao rumpusUserDao,
+            IUserAuthorityDao rumpusUserAuthorityDao,
+            IAuthorityDao rumpusAuthorityDao) {
+        return new RumpusUserAuthenticationManager(
+                rumpusUserDao,
+                rumpusUserAuthorityDao,
+                rumpusAuthorityDao);
     }
 
     @Bean
@@ -81,11 +89,15 @@ public class RumpusTestUserConfig
     @Override
     public IRumpusUserService createUserService(
             IRumpusUserDao userDao,
+            IUserAuthorityDao userAuthorityDao,
+            IAuthorityDao authorityDao,
             UserSecurityService userSecurityService,
             RumpusUserFactory userFactory,
             PasswordEncoder passwordEncoder) {
         return new RumpusUserService(
                 userDao,
+                userAuthorityDao,
+                authorityDao,
                 userSecurityService,
                 userFactory,
                 passwordEncoder);

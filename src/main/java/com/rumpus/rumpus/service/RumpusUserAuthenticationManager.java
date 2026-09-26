@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.HashSet;
 
 import com.rumpus.common.ICommon;
+import com.rumpus.common.Dao.User.IAuthorityDao;
+import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Dao.User.IUserDao;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
 import com.rumpus.common.User.AbstractCommonAuthManager;
@@ -22,8 +24,14 @@ public class RumpusUserAuthenticationManager
         extends
             AbstractCommonAuthManager<RumpusUser, RumpusUserMetaData> {
 
-    public RumpusUserAuthenticationManager(IUserDao<RumpusUser, RumpusUserMetaData> rumpusUserDao) {
-        super(rumpusUserDao);
+    public RumpusUserAuthenticationManager(
+            IUserDao<RumpusUser, RumpusUserMetaData> rumpusUserDao,
+            IUserAuthorityDao rumpusUserAuthorityDao,
+            IAuthorityDao rumpusAuthorityDao) {
+        super(
+                rumpusUserDao,
+                rumpusUserAuthorityDao,
+                rumpusAuthorityDao);
     }
 
     @Override

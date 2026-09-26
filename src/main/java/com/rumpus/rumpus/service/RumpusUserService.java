@@ -2,6 +2,8 @@ package com.rumpus.rumpus.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.rumpus.common.Dao.User.IAuthorityDao;
+import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.AbstractUserService;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
@@ -24,10 +26,18 @@ public class RumpusUserService extends AbstractUserService<RumpusUser, RumpusUse
 
     public RumpusUserService(
             IRumpusUserDao userDao,
+            IUserAuthorityDao userAuthorityDao,
+            IAuthorityDao authorityDao,
             UserSecurityService userSecurityService,
             RumpusUserFactory userFactory,
             PasswordEncoder passwordEncoder) {
-        super(userDao, userSecurityService, userFactory, passwordEncoder);
+        super(
+                userDao,
+                userAuthorityDao,
+                authorityDao,
+                userSecurityService,
+                userFactory,
+                passwordEncoder);
     }
 
     @Override

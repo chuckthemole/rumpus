@@ -15,6 +15,8 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
+import com.rumpus.common.Dao.User.IAuthorityDao;
+import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
@@ -25,6 +27,7 @@ import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
+import com.rumpus.shared.config.UserConfig;
 
 @Configuration
 // @EnableSpringWebSession
@@ -70,9 +73,15 @@ public class RumpusUserConfig
     }
 
     @Bean
-    @DependsOn({BEAN_RUMPUS_USER_DAO})
-    public AuthenticationManager authenticationManager(IRumpusUserDao rumpusUserDao) {
-        return new RumpusUserAuthenticationManager(rumpusUserDao);
+    @DependsOn({BEAN_RUMPUS_USER_DAO, UserConfig.BEAN_USER_AUTHORITY_DAO})
+    public AuthenticationManager authenticationManager(
+            IRumpusUserDao rumpusUserDao,
+            IUserAuthorityDao rumpusUserAuthorityDao,
+            IAuthorityDao rumpusAuthorityDao) {
+        return new RumpusUserAuthenticationManager(
+                rumpusUserDao,
+                rumpusUserAuthorityDao,
+                rumpusAuthorityDao);
     }
 
     @Override
@@ -83,25 +92,43 @@ public class RumpusUserConfig
             SecurityConfig.BEAN_PASSWORD_ENCODER})
     protected IRumpusUserService createUserService(
             IRumpusUserDao rumpusUserDao,
+            IUserAuthorityDao rumpusUserAuthorityDao,
+            IAuthorityDao rumpusAuthorityDao,
             UserSecurityService rumpusUserSecurityService,
             RumpusUserFactory rumpusUserFactory,
             PasswordEncoder passwordEncoder) {
         return new RumpusUserService(
                 rumpusUserDao,
+                rumpusUserAuthorityDao,
+                rumpusAuthorityDao,
                 rumpusUserSecurityService,
                 rumpusUserFactory,
                 passwordEncoder);
     }
 
+    /**
+     * TODO: fix
+     *
+     * This seems redundant, because I have the createUserService() method above,
+     * but I think this is necessary to make the bean available for
+     * RumpusAdminUserRestController, which is a Spring component that needs to
+     * inject the IRumpusUserService bean. The createUserService() method is
+     * protected and not a Spring bean, so I need this public method to expose the
+     * IRumpusUserService as a Spring bean.
+     */
     @Bean
     public IRumpusUserService rumpusUserService(
             IRumpusUserDao dao,
+            IUserAuthorityDao authorityDao,
+            IAuthorityDao rumpusAuthorityDao,
             UserSecurityService securityService,
             RumpusUserFactory factory,
             PasswordEncoder encoder) {
 
         return new RumpusUserService(
                 dao,
+                authorityDao,
+                rumpusAuthorityDao,
                 securityService,
                 factory,
                 encoder);
