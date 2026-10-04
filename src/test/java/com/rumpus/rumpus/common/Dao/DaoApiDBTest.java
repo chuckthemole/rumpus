@@ -7,6 +7,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.rumpus.AbstractRumpusTest;
 import com.rumpus.common.FileIO.FileProcessor;
 import com.rumpus.common.FileIO.IFileIO;
+import java.util.UUID;
 import com.rumpus.common.FileIO.JsonIO;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
@@ -32,7 +33,7 @@ public class DaoApiDBTest extends AbstractRumpusDaoTest {
     protected void setUp() {
         this.LOG("DaoApiDBTest::setUp()");
         try {
-            DaoApiDBTest.users = this.fileProcessor.<RumpusUser>processFile(
+            DaoApiDBTest.users = this.fileProcessor.<RumpusUser, UUID>processFile(
                     AbstractRumpusTest.JSON_USERS_FILE,
                     RumpusUser[].class).get();
         } catch (com.google.gson.JsonSyntaxException e) {

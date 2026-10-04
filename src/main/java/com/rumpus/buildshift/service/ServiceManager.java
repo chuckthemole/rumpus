@@ -2,7 +2,7 @@ package com.rumpus.buildshift.service;
 
 import com.rumpus.common.Manager.AbstractServiceManager;
 
-public class ServiceManager extends AbstractServiceManager<IBuildShiftService<?>> {
+public class ServiceManager extends AbstractServiceManager<IBuildShiftService<?, ?>> {
 
     private ServiceManager() {
         this.registerServices();

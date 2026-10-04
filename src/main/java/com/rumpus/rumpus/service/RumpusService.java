@@ -4,10 +4,11 @@ import com.rumpus.common.Service.AbstractService;
 import com.rumpus.rumpus.data.IRumpusDao;
 import com.rumpus.rumpus.models.RumpusModel;
 
-public class RumpusService<MODEL extends RumpusModel<MODEL>> extends AbstractService<MODEL>
+public class RumpusService<MODEL extends RumpusModel<MODEL, ID>,
+        ID> extends AbstractService<MODEL, ID>
         implements
-            IRumpusService<MODEL> {
-    public RumpusService(IRumpusDao<MODEL> dao) {
+            IRumpusService<MODEL, ID> {
+    public RumpusService(IRumpusDao<MODEL, ID> dao) {
         super(dao);
     }
 

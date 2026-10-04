@@ -1,6 +1,7 @@
 package com.rumpus.rumpus.database_loader;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -61,7 +62,7 @@ public class RumpusLoader implements CommandLineRunner {
         ICommon.LOG(RumpusLoader.class, "RumpusLoader::run() - running in dev profile");
 
         // Try to read users from JSON file
-        Optional<RumpusUser[]> usersOpt = this.fileProcessor.<RumpusUser>processFile(
+        Optional<RumpusUser[]> usersOpt = this.fileProcessor.<RumpusUser, UUID>processFile(
                 JSON_USERS_FILE,
                 RumpusUser[].class);
 

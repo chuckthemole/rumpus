@@ -15,6 +15,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
+import com.rumpus.common.Config.User.UserAuthRolesConfig;
 import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
@@ -27,7 +28,6 @@ import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
-import com.rumpus.shared.config.UserConfig;
 
 @Configuration
 // @EnableSpringWebSession
@@ -73,7 +73,7 @@ public class RumpusUserConfig
     }
 
     @Bean
-    @DependsOn({BEAN_RUMPUS_USER_DAO, UserConfig.BEAN_USER_AUTHORITY_DAO})
+    @DependsOn({BEAN_RUMPUS_USER_DAO, UserAuthRolesConfig.USER_AUTHORITY_DAO_BEAN_NAME})
     public AuthenticationManager authenticationManager(
             IRumpusUserDao rumpusUserDao,
             IUserAuthorityDao rumpusUserAuthorityDao,

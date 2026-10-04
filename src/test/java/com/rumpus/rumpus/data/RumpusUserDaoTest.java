@@ -86,7 +86,7 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
         expectedSecondaryUser.setId(SECONDARY_USER_ID);
 
         // populate users from file
-        RumpusUserDaoTest.users = this.fileProcessor.<RumpusUser>processFile(
+        RumpusUserDaoTest.users = this.fileProcessor.<RumpusUser, java.util.UUID>processFile(
                 AbstractRumpusTest.JSON_USERS_FILE,
                 RumpusUser[].class).get();
 

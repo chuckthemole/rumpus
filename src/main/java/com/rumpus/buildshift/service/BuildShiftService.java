@@ -4,10 +4,11 @@ import com.rumpus.common.Service.AbstractService;
 import com.rumpus.buildshift.data.IBuildShiftDao;
 import com.rumpus.buildshift.models.BuildShiftModel;
 
-public class BuildShiftService<MODEL extends BuildShiftModel<MODEL>> extends AbstractService<MODEL>
+public class BuildShiftService<MODEL extends BuildShiftModel<MODEL, ID>,
+        ID> extends AbstractService<MODEL, ID>
         implements
-            IBuildShiftService<MODEL> {
-    public BuildShiftService(IBuildShiftDao<MODEL> dao) {
+            IBuildShiftService<MODEL, ID> {
+    public BuildShiftService(IBuildShiftDao<MODEL, ID> dao) {
         super(dao);
     }
 

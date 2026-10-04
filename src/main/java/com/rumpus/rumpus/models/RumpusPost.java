@@ -17,7 +17,7 @@ import com.rumpus.common.Forum.ForumPost;
  * UPDATE: I've already created a package Forum and elements like
  * {@link ForumPost}
  */
-public class RumpusPost extends RumpusModel<RumpusPost> {
+public class RumpusPost extends RumpusModel<RumpusPost, UUID> {
     private static SqlIdManager idManager;
     private String authorID;
     private String threadID;

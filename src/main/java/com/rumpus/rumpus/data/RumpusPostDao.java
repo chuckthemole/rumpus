@@ -8,11 +8,10 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.rumpus.rumpus.models.RumpusPost;
 
-public class RumpusPostDao extends RumpusDao<RumpusPost> implements IRumpusPostDao {
+public class RumpusPostDao extends RumpusDao<RumpusPost, UUID> implements IRumpusPostDao {
 
     public RumpusPostDao(DataSource ds, String table, RowMapper<RumpusPost> mapper) {
-        super(ds, table, mapper);
-        // TODO Auto-generated constructor stub
+        super(ds, table, mapper, UUID.class);
     }
 
     @Override

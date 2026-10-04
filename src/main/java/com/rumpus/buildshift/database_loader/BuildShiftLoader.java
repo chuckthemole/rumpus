@@ -13,6 +13,7 @@ import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * BuildShiftLoader seeds the database with initial BuildShiftUser data.
@@ -59,7 +60,7 @@ public class BuildShiftLoader implements CommandLineRunner {
         ICommon.LOG(BuildShiftLoader.class, "BuildShiftLoader::run() - executing in DEV profile");
 
         // Attempt to read users from the JSON file safely
-        Optional<User[]> usersOpt = this.fileProcessor.<User>processFile(JSON_USERS_FILE,
+        Optional<User[]> usersOpt = this.fileProcessor.<User, UUID>processFile(JSON_USERS_FILE,
                 User[].class);
 
         if (usersOpt.isPresent()) {

@@ -59,7 +59,7 @@ public class AuthorityLoader implements CommandLineRunner {
                 "AuthorityLoader::run() - running in dev profile");
 
         Optional<CommonAuthority[]> authoritiesOpt = this.fileProcessor
-                .<CommonAuthority>processFile(
+                .<CommonAuthority, Integer>processFile(
                         JSON_AUTHORITIES_FILE,
                         CommonAuthority[].class);
 
