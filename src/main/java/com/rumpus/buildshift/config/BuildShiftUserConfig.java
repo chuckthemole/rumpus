@@ -89,8 +89,9 @@ public class BuildShiftUserConfig
 
     @Bean
     public UserSecurityService buildshiftUserSecurityService(
-            JdbcUserDetailsManager jdbcUserDetailsManager) {
-        return new UserSecurityService(jdbcUserDetailsManager);
+            JdbcUserDetailsManager jdbcUserDetailsManager,
+            IUserAuthorityDao userAuthorityDao) {
+        return new UserSecurityService(jdbcUserDetailsManager, userAuthorityDao);
     }
 
     @Override

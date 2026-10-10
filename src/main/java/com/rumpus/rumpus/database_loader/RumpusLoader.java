@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
  */
 @Component
 @Profile("dev")
+@Order(1)
 public class RumpusLoader implements CommandLineRunner {
 
     // File I/O utilities for reading JSON data

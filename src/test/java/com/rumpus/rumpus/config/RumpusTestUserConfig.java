@@ -82,8 +82,9 @@ public class RumpusTestUserConfig
 
     @Bean
     public UserSecurityService rumpusUserSecurityService(
-            JdbcUserDetailsManager jdbcUserDetailsManager) {
-        return new UserSecurityService(jdbcUserDetailsManager);
+            JdbcUserDetailsManager jdbcUserDetailsManager,
+            IUserAuthorityDao rumpusUserAuthorityDao) {
+        return new UserSecurityService(jdbcUserDetailsManager, rumpusUserAuthorityDao);
     }
 
     @Override

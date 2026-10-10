@@ -7,6 +7,7 @@ spring:
       - classpath:properties/dev/admin.yml
       - classpath:properties/dev/app.yml
       - classpath:properties/dev/tables.yml
+      - classpath:properties/dev/auth-roles.yml
   devtools:
     restart:
       enabled: true

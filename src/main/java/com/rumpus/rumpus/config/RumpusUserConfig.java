@@ -50,8 +50,9 @@ public class RumpusUserConfig
     @Bean
     @DependsOn({SecurityConfig.BEAN_JDBC_USER_DETAILS_MANAGER})
     public UserSecurityService rumpusUserSecurityService(
-            JdbcUserDetailsManager jdbcUserDetailsManager) {
-        return new UserSecurityService(jdbcUserDetailsManager);
+            JdbcUserDetailsManager jdbcUserDetailsManager,
+            IUserAuthorityDao rumpusUserAuthorityDao) {
+        return new UserSecurityService(jdbcUserDetailsManager, rumpusUserAuthorityDao);
     }
 
     @Bean
