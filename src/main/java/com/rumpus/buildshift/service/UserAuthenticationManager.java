@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
 
@@ -13,6 +14,7 @@ import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Dao.User.IUserDao;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
+import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.common.User.AbstractCommonAuthManager;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
@@ -25,11 +27,15 @@ public class UserAuthenticationManager extends AbstractCommonAuthManager<User, U
     public UserAuthenticationManager(
             IUserDao<User, UserMetaData> rumpusUserDao,
             IUserAuthorityDao userAuthorityDao,
-            IAuthorityDao authorityDao) {
+            IAuthorityDao authorityDao,
+            UserSecurityService userSecurityService,
+            PasswordEncoder passwordEncoder) {
         super(
                 rumpusUserDao,
                 userAuthorityDao,
-                authorityDao);
+                authorityDao,
+                userSecurityService,
+                passwordEncoder);
     }
 
     @Override

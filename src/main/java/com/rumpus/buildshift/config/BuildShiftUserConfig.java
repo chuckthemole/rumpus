@@ -76,9 +76,15 @@ public class BuildShiftUserConfig
     public AuthenticationManager buildshiftAuthenticationManager(
             IUserDao userDao,
             IUserAuthorityDao userAuthorityDao,
-            IAuthorityDao authorityDao) {
+            IAuthorityDao authorityDao,
+            UserSecurityService userSecurityService,
+            PasswordEncoder passwordEncoder) {
         return new UserAuthenticationManager(
-                userDao, userAuthorityDao, authorityDao);
+                userDao,
+                userAuthorityDao,
+                authorityDao,
+                userSecurityService,
+                passwordEncoder);
     }
 
     // @Bean

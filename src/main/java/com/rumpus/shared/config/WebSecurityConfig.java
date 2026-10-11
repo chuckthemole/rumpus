@@ -1,5 +1,6 @@
 package com.rumpus.shared.config;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -90,9 +91,11 @@ public class WebSecurityConfig extends AbstractCommonObject {
     public SecurityFilterChain configure(
             HttpSecurity http,
             AbstractSuccessHandler oauth2SuccessHandler,
-            AbstractFailureHandler oauth2FailureHandler) throws Exception {
+            AbstractFailureHandler oauth2FailureHandler,
+            AuthenticationManager authenticationManager) throws Exception {
 
         http
+                .authenticationManager(authenticationManager)
                 .cors().and()
                 .csrf().disable() // Disable for form-based login (temporary)
                 .logout(logout -> logout

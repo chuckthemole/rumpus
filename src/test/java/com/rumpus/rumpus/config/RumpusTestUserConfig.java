@@ -66,11 +66,15 @@ public class RumpusTestUserConfig
     public AuthenticationManager authenticationManager(
             IRumpusUserDao rumpusUserDao,
             IUserAuthorityDao rumpusUserAuthorityDao,
-            IAuthorityDao rumpusAuthorityDao) {
+            IAuthorityDao rumpusAuthorityDao,
+            UserSecurityService userSecurityService,
+            PasswordEncoder passwordEncoder) {
         return new RumpusUserAuthenticationManager(
                 rumpusUserDao,
                 rumpusUserAuthorityDao,
-                rumpusAuthorityDao);
+                rumpusAuthorityDao,
+                userSecurityService,
+                passwordEncoder);
     }
 
     @Bean

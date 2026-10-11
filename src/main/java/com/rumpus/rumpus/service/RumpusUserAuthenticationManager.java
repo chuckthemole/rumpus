@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
 
@@ -13,6 +14,7 @@ import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Dao.User.IUserDao;
 import com.rumpus.common.Log.ICommonLogger.LogLevel;
+import com.rumpus.common.Service.User.UserSecurityService;
 import com.rumpus.common.User.AbstractCommonAuthManager;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
@@ -27,30 +29,44 @@ public class RumpusUserAuthenticationManager
     public RumpusUserAuthenticationManager(
             IUserDao<RumpusUser, RumpusUserMetaData> rumpusUserDao,
             IUserAuthorityDao rumpusUserAuthorityDao,
-            IAuthorityDao rumpusAuthorityDao) {
+            IAuthorityDao rumpusAuthorityDao,
+            UserSecurityService userSecurityService,
+            PasswordEncoder passwordEncoder) {
         super(
                 rumpusUserDao,
                 rumpusUserAuthorityDao,
-                rumpusAuthorityDao);
+                rumpusAuthorityDao,
+                userSecurityService,
+                passwordEncoder);
     }
 
     @Override
     public boolean userIsAuthenticated(String name, String password) {
-        LOG_THIS("userIsAuthenticated");
-        final UserDetails details = loadUserByUsername(name);
+        LOG_THIS("userIsAuthenticated: looking up user");
+
+        final UserDetails details = this.loadUserByUsername(name);
+
+        LOG_THIS("User lookup completed");
+
         if (details == null) {
+            LOG_THIS("User details are null");
             return false;
         }
-        if (!details.getUsername().equals(name)) { // prolly don't need to do this since loading by
-                                                   // username
-            LOG_THIS("User name is not equal");
-            return false;
-        }
-        if (!details.getPassword().equals(password)) {
-            LOG_THIS("Password is not equal");
-            return false;
-        }
-        return true;
+
+        LOG_THIS("Username matches: " + details.getUsername().equals(name));
+        LOG_THIS("Account enabled: " + details.isEnabled());
+        LOG_THIS("Stored password present: "
+                + (details.getPassword() != null
+                        && !details.getPassword().isBlank()));
+
+        final boolean passwordMatches = getPasswordEncoder().matches(password,
+                details.getPassword());
+
+        LOG_THIS("Password encoder matches: " + passwordMatches);
+
+        return details.getUsername().equals(name)
+                && details.isEnabled()
+                && passwordMatches;
     }
 
     @Override
