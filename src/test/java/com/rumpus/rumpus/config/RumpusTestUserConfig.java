@@ -14,6 +14,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
+import com.rumpus.common.Config.User.UserProperties;
 import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
@@ -27,12 +28,17 @@ import com.rumpus.rumpus.service.IRumpusUserService;
 import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
+
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.TestConfiguration;
 
 @TestConfiguration
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
+@EnableConfigurationProperties({
+        UserProperties.class
+})
 @Import({
         DatabaseConfig.class,
         SecurityConfig.class
@@ -45,8 +51,13 @@ public class RumpusTestUserConfig
     }
 
     @Bean
-    public IRumpusUserDao rumpusUserDao(DataSource dataSource) {
-        IRumpusUserDao userDao = new RumpusUserDao(dataSource);
+    public IRumpusUserDao rumpusUserDao(
+            DataSource dataSource,
+            UserProperties userProperties) {
+        IRumpusUserDao userDao = new RumpusUserDao(
+                dataSource,
+                userProperties.getUser(),
+                userProperties.getUserDetailsTable());
         return userDao;
     }
 
@@ -58,7 +69,10 @@ public class RumpusTestUserConfig
     @Bean
     @Primary
     public RumpusAdminUserView rumpusAdminUserView() {
-        return new RumpusAdminUserView(this.userFactory().createEmpty(), this.userFactory());
+        return new RumpusAdminUserView(
+                this.userFactory().createUser(
+                        EMPTY_UUID, USERNAME, EMAIL, PASSWORD, this.userFactory().createMetaData()),
+                this.userFactory());
     }
 
     @Bean

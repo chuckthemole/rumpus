@@ -2,6 +2,7 @@ package com.rumpus.rumpus.config;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
 import com.rumpus.common.Config.User.UserAuthRolesConfig;
+import com.rumpus.common.Config.User.UserProperties;
 import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
@@ -33,9 +35,12 @@ import com.rumpus.rumpus.views.RumpusAdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.rumpus")
+@EnableConfigurationProperties({
+        UserProperties.class
+})
 @Import({
         SecurityConfig.class,
-        DatabaseConfig.class
+        DatabaseConfig.class,
 })
 public class RumpusUserConfig
         extends
@@ -57,8 +62,13 @@ public class RumpusUserConfig
 
     @Bean
     @DependsOn({DatabaseConfig.BEAN_DATA_SOURCE})
-    public IRumpusUserDao rumpusUserDao(DataSource dataSource) {
-        IRumpusUserDao userDao = new RumpusUserDao(dataSource);
+    public IRumpusUserDao rumpusUserDao(
+            DataSource dataSource,
+            UserProperties userProperties) {
+        IRumpusUserDao userDao = new RumpusUserDao(
+                dataSource,
+                userProperties.getUser(),
+                userProperties.getUserDetailsTable());
         return userDao;
     }
 
@@ -70,7 +80,10 @@ public class RumpusUserConfig
     @Bean
     @Primary
     public RumpusAdminUserView rumpusAdminUserView(RumpusUserFactory rumpusUserFactory) {
-        return new RumpusAdminUserView(rumpusUserFactory.createEmpty(), rumpusUserFactory);
+        return new RumpusAdminUserView(
+                rumpusUserFactory.createUser(
+                        EMPTY_UUID, USERNAME, EMAIL, PASSWORD, rumpusUserFactory.createMetaData()),
+                rumpusUserFactory);
     }
 
     @Bean

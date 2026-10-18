@@ -19,7 +19,14 @@ public class AdminUserView extends AbstractUserTemplate<User, UserMetaData> {
     ///////////////////////
     public static AdminUserView createWithEmptyUser() {
         UserFactory userFactory = new UserFactory();
-        return new AdminUserView(userFactory.createEmpty(), userFactory);
+        return new AdminUserView(
+                userFactory.createUser(
+                        EMPTY_UUID,
+                        USERNAME,
+                        EMAIL,
+                        PASSWORD,
+                        null),
+                userFactory);
     }
 
     public static AdminUserView createWithUser(User user) {

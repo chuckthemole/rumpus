@@ -1,6 +1,7 @@
 package com.rumpus.rumpus.models.RumpusUser;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -50,7 +51,10 @@ public class RumpusUserSerializer
     @Override
     public RumpusUser readJson(JsonReader in) throws IOException {
         RumpusUserFactory userFactory = new RumpusUserFactory();
-        RumpusUser user = userFactory.createEmpty();
+        UUID userId = null;
+        String username = "";
+        String password = "";
+        String email = "";
         RumpusUserMetaData metaData = userFactory.createMetaData();
         in.beginObject();
         String fieldname = null;
@@ -65,12 +69,20 @@ public class RumpusUserSerializer
             if (ICommon.USERNAME.equals(fieldname)) {
                 // move to next token
                 token = in.peek();
-                user.setUsername(in.nextString());
+                username = in.nextString();
+            }
+            if (ICommon.PASSWORD.equals(fieldname)) {
+                token = in.peek();
+                password = in.nextString();
             }
             if (ICommon.EMAIL.equals(fieldname)) {
                 // move to next token
                 token = in.peek();
-                user.setEmail(in.nextString());
+                email = in.nextString();
+            }
+            if (ICommon.ID.equals(fieldname)) {
+                token = in.peek();
+                userId = UUID.fromString(in.nextString());
             }
 
             // meta data
@@ -88,7 +100,7 @@ public class RumpusUserSerializer
                 metaData.setAboutMe(in.nextString());
             }
         }
-        user.setMetaData(metaData);
+        RumpusUser user = userFactory.createUser(userId, username, email, password, metaData);
         in.endObject();
         return user;
     }

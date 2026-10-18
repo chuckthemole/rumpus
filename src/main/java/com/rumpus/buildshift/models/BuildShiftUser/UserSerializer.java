@@ -1,6 +1,7 @@
 package com.rumpus.buildshift.models.BuildShiftUser;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -43,7 +44,10 @@ public class UserSerializer extends AbstractCommonUserSerializer<User, UserMetaD
     @Override
     public User readJson(JsonReader in) throws IOException {
         UserFactory userFactory = new UserFactory();
-        User user = userFactory.createEmpty();
+        String username = "";
+        String email = "";
+        String password = "";
+        UUID userId = EMPTY_UUID;
         UserMetaData metaData = userFactory.createMetaData();
         in.beginObject();
         String fieldname = null;
@@ -58,12 +62,20 @@ public class UserSerializer extends AbstractCommonUserSerializer<User, UserMetaD
             if (ICommon.USERNAME.equals(fieldname)) {
                 // move to next token
                 token = in.peek();
-                user.setUsername(in.nextString());
+                username = in.nextString();
             }
             if (ICommon.EMAIL.equals(fieldname)) {
                 // move to next token
                 token = in.peek();
-                user.setEmail(in.nextString());
+                email = in.nextString();
+            }
+            if (ICommon.PASSWORD.equals(fieldname)) {
+                token = in.peek();
+                password = in.nextString();
+            }
+            if (ICommon.ID.equals(fieldname)) {
+                token = in.peek();
+                userId = UUID.fromString(in.nextString());
             }
 
             // meta data
@@ -81,7 +93,8 @@ public class UserSerializer extends AbstractCommonUserSerializer<User, UserMetaD
                 metaData.setAboutMe(in.nextString());
             }
         }
-        user.setMetaData(metaData);
+        User user = userFactory.createUser(
+                userId, username, email, password, metaData);
         in.endObject();
         return user;
     }

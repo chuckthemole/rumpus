@@ -2,6 +2,8 @@ package com.rumpus.rumpus.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +29,8 @@ public class RumpusUserTest {
 
     @BeforeEach
     public void setUp() {
-        user = userFactory.createEmpty();
+        user = userFactory.createUser(
+                UUID.randomUUID(), name, name, name, userFactory.createMetaData());
         user.setUsername("Pipin");
         user.setEncodedPassword("marryandpippin");
         user.setEmail("pipin@shire.com");

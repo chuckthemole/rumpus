@@ -68,7 +68,8 @@ public class RumpusControllerTests extends AbstractRumpusTest {
     @Test
     public void testfindAll() throws Exception {
         RumpusUserFactory userFactory = new RumpusUserFactory();
-        RumpusUser user = userFactory.createEmpty();
+        RumpusUser user = userFactory.createUser(
+                EMPTY_UUID, USERNAME, EMAIL, PASSWORD, userFactory.createMetaData());
         user.setUsername("Frodo");
         user.setEncodedPassword("coolpasswordbro");
         List<RumpusUser> users = Arrays.asList(user);

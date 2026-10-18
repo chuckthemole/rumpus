@@ -1,13 +1,8 @@
 package com.rumpus.rumpus.service;
 
-import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.HashSet;
 
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Dao.User.IAuthorityDao;
@@ -19,9 +14,6 @@ import com.rumpus.common.User.AbstractCommonAuthManager;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
-/**
- * TODO: is this being used? if not, delete it Look more into this.
- */
 public class RumpusUserAuthenticationManager
         extends
             AbstractCommonAuthManager<RumpusUser, RumpusUserMetaData> {
@@ -73,14 +65,6 @@ public class RumpusUserAuthenticationManager
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LOG_THIS("loadUserByUsername");
         return this.userSecurityService.loadUserByUsername(username);
-    }
-
-    @Override
-    public Set<GrantedAuthority> getAuthorities(String username) {
-        LOG_THIS("getAuthorities");
-        final Set<GrantedAuthority> authorities = new HashSet<>(
-                this.loadUserByUsername(username).getAuthorities());
-        return authorities;
     }
 
     private static void LOG_THIS(String... args) {

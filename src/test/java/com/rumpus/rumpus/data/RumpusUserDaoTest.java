@@ -74,12 +74,14 @@ public class RumpusUserDaoTest extends AbstractDaoTest<RumpusUser> {
     protected void setUp() {
         // TODO should clear db before, need to implement removeAll to do this.
         RumpusUserFactory userFactory = new RumpusUserFactory();
-        expectedRootUser = userFactory.createEmpty();
+        expectedRootUser = userFactory.createUser(ROOT_USER_ID, USERNAME, EMAIL, PASSWORD,
+                userFactory.createMetaData());
         expectedRootUser.setUsername(ROOT_USER);
         expectedRootUser.setEmail(ROOT_USER_EMAIL);
         expectedRootUser.setEncodedPassword(ROOT_USER_PASS);
         expectedRootUser.setId(ROOT_USER_ID);
-        expectedSecondaryUser = userFactory.createEmpty();
+        expectedSecondaryUser = userFactory.createUser(ROOT_USER_ID, USERNAME, EMAIL, PASSWORD,
+                userFactory.createMetaData());
         expectedSecondaryUser.setUsername(SECONDARY_USER);
         expectedSecondaryUser.setEmail(SECONDARY_USER_EMAIL);
         expectedSecondaryUser.setEncodedPassword(SECONDARY_USER_PASS);

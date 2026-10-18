@@ -10,9 +10,7 @@ public class RumpusUserDao extends UserDaoJdbc<RumpusUser, RumpusUserMetaData>
         implements
             IRumpusUserDao {
 
-    private static final String TABLE = "user"; // TODO - make this configurable
-
-    public RumpusUserDao(DataSource dataSource) {
-        super(dataSource, TABLE, RumpusUserRowMapper.create());
+    public RumpusUserDao(DataSource dataSource, String usersTable, String userDetailsTable) {
+        super(dataSource, usersTable, userDetailsTable, RumpusUserRowMapper.create());
     }
 }

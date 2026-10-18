@@ -1,11 +1,13 @@
 package com.rumpus.rumpus.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rumpus.common.Service.User.AbstractUserServiceJpa;
+import com.rumpus.common.User.UserAuthority;
 import com.rumpus.rumpus.data.User.IRumpusUserDaoJpa;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
-import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 
 public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, RumpusUserMetaData> {
@@ -17,10 +19,13 @@ public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, Rum
 
     @Override
     public RumpusUser createUserWithUsername(String username) {
-        RumpusUserFactory userFactory = new RumpusUserFactory();
-        RumpusUser user = userFactory.createEmpty();
-        user.setUsername(username);
-        return user;
+        throw new UnsupportedOperationException("Unimplemented method 'createUserWithUsername'");
+    }
+
+    @Override
+    public UserAuthority getUserRole(UUID userId, String role) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUserRole'");
     }
 
     @Override

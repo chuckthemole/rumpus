@@ -2,6 +2,7 @@ package com.rumpus.buildshift.config;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
+import com.rumpus.common.Config.User.UserProperties;
 import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
@@ -32,6 +34,9 @@ import com.rumpus.buildshift.views.AdminUserView;
 // @EnableSpringWebSession
 // @EnableJdbcHttpSession
 @ComponentScan("com.rumpus.buildshift")
+@EnableConfigurationProperties({
+        UserProperties.class
+})
 @Import({
         SecurityConfig.class,
         DatabaseConfig.class
@@ -50,8 +55,13 @@ public class BuildShiftUserConfig
 
     @Bean
     @DependsOn({DatabaseConfig.BEAN_DATA_SOURCE})
-    public IUserDao buildshiftUserDao(DataSource dataSource) {
-        IUserDao userDao = new UserDao(dataSource);
+    public IUserDao buildshiftUserDao(
+            DataSource dataSource,
+            UserProperties userProperties) {
+        IUserDao userDao = new UserDao(
+                dataSource,
+                userProperties.getUser(),
+                userProperties.getUserDetailsTable());
         return userDao;
     }
 
@@ -63,7 +73,9 @@ public class BuildShiftUserConfig
     @Bean
     @Primary
     public AdminUserView buildshiftAdminUserView() {
-        return AdminUserView.createWithUser(this.userFactory().createEmpty());
+        return AdminUserView.createWithUser(
+                this.userFactory().createUser(
+                        EMPTY_UUID, USERNAME, EMAIL, PASSWORD, null));
     }
 
     // @Bean

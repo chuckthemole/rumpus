@@ -27,7 +27,8 @@ public class ChuckConfig extends AbstractCommonObject {
     @Bean
     public RumpusAdminUserView chuckAdminUserView() {
         RumpusUserFactory userFactory = new RumpusUserFactory();
-        RumpusUser user = userFactory.createEmpty();
+        RumpusUser user = userFactory.createUser(
+                EMPTY_UUID, USERNAME, EMAIL, PASSWORD, userFactory.createMetaData());
         user.setUsername("EMPTY_USERNAME");
         user.setEncodedPassword("EMPTY_PASSWORD");
         user.setEmail("EMPTY_EMAIL");

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rumpus.common.Model.IModelIdManager;
 import com.rumpus.common.Model.SqlIdManager;
 import com.rumpus.common.User.AbstractCommonUser;
+import com.rumpus.common.User.CommonUserDetails;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -21,9 +22,12 @@ public class RumpusUser extends AbstractCommonUser<RumpusUser, RumpusUserMetaDat
         RumpusUser.idManager = new SqlIdManager();
     }
 
-    protected RumpusUser() {
-        RumpusUserFactory factory = new RumpusUserFactory();
-        this.setMetaData(factory.createMetaData());
+    protected RumpusUser(
+            UUID userId,
+            String email,
+            CommonUserDetails userDetails,
+            RumpusUserMetaData metaData) {
+        super(userId, email, userDetails, metaData);
     }
 
     @Override

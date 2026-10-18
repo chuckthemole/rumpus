@@ -1,13 +1,8 @@
 package com.rumpus.buildshift.service;
 
-import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.HashSet;
 
 import com.rumpus.common.ICommon;
 import com.rumpus.common.Dao.User.IAuthorityDao;
@@ -61,14 +56,6 @@ public class UserAuthenticationManager extends AbstractCommonAuthManager<User, U
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LOG_THIS("loadUserByUsername");
         return this.userSecurityService.loadUserByUsername(username);
-    }
-
-    @Override
-    public Set<GrantedAuthority> getAuthorities(String username) {
-        LOG_THIS("getAuthorities");
-        final Set<GrantedAuthority> authorities = new HashSet<>(
-                this.loadUserByUsername(username).getAuthorities());
-        return authorities;
     }
 
     private static void LOG_THIS(String... args) {

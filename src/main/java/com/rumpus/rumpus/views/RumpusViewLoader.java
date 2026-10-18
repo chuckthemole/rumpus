@@ -195,8 +195,16 @@ public class RumpusViewLoader extends AbstractViews {
 
     @Override
     protected int initTemplates() {
-        this.put(RUMPUS_USER_VIEW_TEMPLATE,
-                new RumpusAdminUserView(userFactory.createEmpty(), userFactory));
+        this.put(
+                RUMPUS_USER_VIEW_TEMPLATE,
+                new RumpusAdminUserView(
+                        userFactory.createUser(
+                                EMPTY_UUID,
+                                USERNAME,
+                                EMAIL,
+                                PASSWORD,
+                                userFactory.createMetaData()),
+                        userFactory));
         return SUCCESS;
     }
 
