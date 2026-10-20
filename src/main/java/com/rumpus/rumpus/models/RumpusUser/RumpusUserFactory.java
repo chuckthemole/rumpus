@@ -17,13 +17,13 @@ public class RumpusUserFactory extends AbstractUserFactory<RumpusUser, RumpusUse
             UUID userId,
             String username,
             String email,
-            String encodedPassword,
+            String password,
             RumpusUserMetaData metaData) {
 
         final CommonUserDetails userDetails = CommonUserDetails.createWithAll(
                 userId,
                 username,
-                encodedPassword,
+                password,
                 true,
                 null,
                 false,

@@ -57,8 +57,24 @@ public class RumpusUserMetaData extends AbstractCommonUserMetaData<RumpusUserMet
         return new RumpusUserMetaData(metaMap);
     }
 
+    // public static RumpusUserMetaData createFromStream(ObjectInputStream stream) {
+    // return new RumpusUserMetaData(stream);
+    // }
+
     public static RumpusUserMetaData createFromStream(ObjectInputStream stream) {
-        return new RumpusUserMetaData(stream);
+        try {
+            Object object = stream.readObject();
+
+            if (!(object instanceof RumpusUserMetaData metadata)) {
+                throw new IllegalStateException(
+                        "Stream did not contain RumpusUserMetaData.");
+            }
+
+            return metadata;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new IllegalStateException(
+                    "Failed to deserialize RumpusUserMetaData.", e);
+        }
     }
 
     // TODO: this isn't really doing anything right now. 2024/1/22 - chuck

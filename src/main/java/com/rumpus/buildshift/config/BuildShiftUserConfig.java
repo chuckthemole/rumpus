@@ -20,13 +20,13 @@ import com.rumpus.common.Config.User.UserProperties;
 import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
+import com.rumpus.common.User.CommonAuthenticationManager;
 import com.rumpus.buildshift.data.User.IUserDao;
 import com.rumpus.buildshift.data.User.UserDao;
 import com.rumpus.buildshift.models.BuildShiftUser.User;
 import com.rumpus.buildshift.models.BuildShiftUser.UserFactory;
 import com.rumpus.buildshift.models.BuildShiftUser.UserMetaData;
 import com.rumpus.buildshift.service.IUserService;
-import com.rumpus.buildshift.service.UserAuthenticationManager;
 import com.rumpus.buildshift.service.UserService;
 import com.rumpus.buildshift.views.AdminUserView;
 
@@ -84,18 +84,12 @@ public class BuildShiftUserConfig
     // }
 
     @Bean
-    @DependsOn({BEAN_BUILD_SHIFT_USER_DAO})
+    @DependsOn({BEAN_BUILD_SHIFT_USER_SERVICE})
     public AuthenticationManager buildshiftAuthenticationManager(
-            IUserDao userDao,
-            IUserAuthorityDao userAuthorityDao,
-            IAuthorityDao authorityDao,
-            UserSecurityService userSecurityService,
+            IUserService userService,
             PasswordEncoder passwordEncoder) {
-        return new UserAuthenticationManager(
-                userDao,
-                userAuthorityDao,
-                authorityDao,
-                userSecurityService,
+        return new CommonAuthenticationManager<User, UserMetaData>(
+                userService,
                 passwordEncoder);
     }
 

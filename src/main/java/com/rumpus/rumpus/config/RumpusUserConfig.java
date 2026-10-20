@@ -16,18 +16,17 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import com.rumpus.common.Config.Database.DatabaseConfig;
 import com.rumpus.common.Config.Security.SecurityConfig;
 import com.rumpus.common.Config.User.AbstractCommonUserConfig;
-import com.rumpus.common.Config.User.UserAuthRolesConfig;
 import com.rumpus.common.Config.User.UserProperties;
 import com.rumpus.common.Dao.User.IAuthorityDao;
 import com.rumpus.common.Dao.User.IUserAuthorityDao;
 import com.rumpus.common.Service.User.UserSecurityService;
+import com.rumpus.common.User.CommonAuthenticationManager;
 import com.rumpus.rumpus.data.User.IRumpusUserDao;
 import com.rumpus.rumpus.data.User.RumpusUserDao;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUser;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserFactory;
 import com.rumpus.rumpus.models.RumpusUser.RumpusUserMetaData;
 import com.rumpus.rumpus.service.IRumpusUserService;
-import com.rumpus.rumpus.service.RumpusUserAuthenticationManager;
 import com.rumpus.rumpus.service.RumpusUserService;
 import com.rumpus.rumpus.views.RumpusAdminUserView;
 
@@ -87,18 +86,12 @@ public class RumpusUserConfig
     }
 
     @Bean
-    @DependsOn({BEAN_RUMPUS_USER_DAO, UserAuthRolesConfig.USER_AUTHORITY_DAO_BEAN_NAME})
+    @DependsOn({BEAN_RUMPUS_USER_SERVICE})
     public AuthenticationManager authenticationManager(
-            IRumpusUserDao rumpusUserDao,
-            IUserAuthorityDao rumpusUserAuthorityDao,
-            IAuthorityDao rumpusAuthorityDao,
-            UserSecurityService userSecurityService,
+            IRumpusUserService rumpusUserService,
             PasswordEncoder passwordEncoder) {
-        return new RumpusUserAuthenticationManager(
-                rumpusUserDao,
-                rumpusUserAuthorityDao,
-                rumpusAuthorityDao,
-                userSecurityService,
+        return new CommonAuthenticationManager<RumpusUser, RumpusUserMetaData>(
+                rumpusUserService,
                 passwordEncoder);
     }
 
