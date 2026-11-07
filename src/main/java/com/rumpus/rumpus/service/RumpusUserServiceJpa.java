@@ -33,4 +33,10 @@ public class RumpusUserServiceJpa extends AbstractUserServiceJpa<RumpusUser, Rum
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
+
+    @Override
+    public boolean existsByAuthority(String authority) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'existsByAuthority'");
+    }
 }
